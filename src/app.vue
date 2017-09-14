@@ -1,3 +1,6 @@
+<style scoped>
+    @import 'styles/common.css';
+</style>
 <template>
     <div>
         <router-view></router-view>
@@ -5,19 +8,17 @@
 </template>
 <script>
     export default {
-        data() {
-            return {
-
-            };
+        data () {
+            return {}
         },
-        mounted() {
+        mounted () {
 
         },
-        beforeDestroy() {
+        beforeDestroy () {
 
         },
         methods: {
 
         }
-    };
+    }
 </script>
