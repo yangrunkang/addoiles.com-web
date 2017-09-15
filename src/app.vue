@@ -1,24 +1,24 @@
 <style scoped>
-    @import 'styles/common.css';
+	@import 'styles/common.css';
 </style>
 <template>
-    <div>
-        <router-view></router-view>
-    </div>
+	<div>
+		<router-view></router-view>
+	</div>
 </template>
 <script>
-    export default {
-        data () {
-            return {}
-        },
-        mounted () {
+	export default {
+		data() {
+			return {}
+		},
+		mounted() {
 
-        },
-        beforeDestroy () {
+		},
+		beforeDestroy() {
 
-        },
-        methods: {
+		},
+		methods: {
 
-        }
-    }
+		}
+	}
 </script>

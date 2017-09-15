@@ -2,7 +2,7 @@ const routers = [
     {
         path: '/',
         meta: {
-            title: ''
+            title: 'index'
         },
         component: (resolve) => require(['./views/index.vue'], resolve)
     }

@@ -40,11 +40,12 @@
     </div>
 </template>
 <script>
+	
     export default {
         methods: {
             handleStart () {
                 this.$Modal.info({
-                    title: 'Bravo',
+                    title: '标题',
                     content: 'Now, enjoy the convenience of iView.'
                 });
             }
