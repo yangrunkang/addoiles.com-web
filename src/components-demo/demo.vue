@@ -3,9 +3,10 @@
 </style>
 <template>
     <div class="index">
-       <h1><router-link to="/demo">to Demo</router-link></h1>
+      I am a demo 66
+     
     </div>
 </template>
 <script>
-	
+
 </script>
