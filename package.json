@@ -12,8 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/iview/iview-project.git"
   },
-  "author": "Aresn",
-  "license": "MIT",
+  "author": "yangrunkang",
   "dependencies": {
     "vue": "^2.2.6",
     "vue-router": "^2.2.1",
@@ -45,9 +44,5 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^3.0.0"
-  },
-  "bugs": {
-    "url": "https://github.com/iview/iview-project/issues"
-  },
-  "homepage": "https://www.iviewui.com"
+  }
 }
