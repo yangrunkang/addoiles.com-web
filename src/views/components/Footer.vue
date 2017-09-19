@@ -1,7 +1,7 @@
 <style scoped lang="less">
     .layout-copy{
         text-align: center;
-        padding: 10px 0 20px;
+        padding: 10px 0 20px 0;
         color: #9ea7b4;
     }
 </style>
