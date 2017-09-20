@@ -4,7 +4,7 @@
 		background: #f5f7f9;
 	}
 	
-	.layout-logo {
+/*	.layout-logo {
 		width: 100px;
 		height: 30px;
 		background: #5b6270;
@@ -14,7 +14,7 @@
 		top: 15px;
 		left: 20px;
 	}
-	
+	*/
 	.layout-nav {
 		width: 420px;
 		margin: 0 auto;
@@ -37,25 +37,31 @@
         text-align: center;
         border-radius: 2px;
     }
+
 </style>
 <!--页面整体框架-->
 <template>
 	<div class="layout">
 		<Menu mode="horizontal" theme="dark" active-name="1">
-			<div class="layout-logo"></div>
+			<!--<div class="layout-logo"></div>-->
 			<div class="layout-nav">
-				<Menu-item name="1">
-					<Icon type="ios-navigate"></Icon>
-					<router-link to="/" class="router-style">主页</router-link>
-				</Menu-item>
-				<Menu-item name="2">
-					<Icon type="ios-keypad"></Icon>
-					<router-link to="/Dreams" class="router-style">梦想墙</router-link>
-				</Menu-item>
-				<Menu-item name="3">
-					<Icon type="ios-analytics"></Icon>
-					<router-link to="/Experience" class="router-style">经历分享</router-link>
-				</Menu-item>
+                    <Menu-item name="1">
+                        <Icon type="ios-navigate"></Icon>
+                        <router-link to="/" class="router-style">主页</router-link>
+                    </Menu-item>
+                    <Menu-item name="2">
+                        <Icon type="ios-keypad"></Icon>
+                        <router-link to="/Dreams" class="router-style">梦想墙</router-link>
+                    </Menu-item>
+                    <Menu-item name="3">
+                        <Icon type="ios-analytics"></Icon>
+                        <router-link to="/Experience" class="router-style">经历分享</router-link>
+                    </Menu-item>
+                    <Menu-item name="2" style="padding-right: 20px">
+                        <Icon type="person"></Icon>
+                        登录
+                    </Menu-item>
+
 			</div>
 		</Menu>
 		<router-view></router-view>
@@ -71,6 +77,10 @@
 	</div>
 </template>
 <script>
+
+
+
+
 	export default {
         mounted() {
 

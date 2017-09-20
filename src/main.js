@@ -4,10 +4,13 @@ import VueRouter from 'vue-router';
 import Routers from './router'; // 引入路由配置文件
 import Util from './libs/util';
 import Index from './views/index.vue'; // //引入vue组件
+import VueQuillEditor from 'vue-quill-editor'; //安装vue-quill-editor富文本编辑器
 import 'iview/dist/styles/iview.css'; // 使用 CSS
 
 Vue.use(VueRouter);
 Vue.use(iView);
+Vue.use(VueQuillEditor);
+
 Vue.config.productionTip = false // 关闭生产模式下给出的提示
 
 // 路由配置
