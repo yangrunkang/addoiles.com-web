@@ -1,11 +1,99 @@
 <style scoped lang="less">
-    @import "../styles/main-content.css";
+	@import "../styles/common.css";
+	.row {
+		height: inherit;
+		width: inherit;
+		background: grey;
+	}
+	
+	.main-col {
+		height: inherit;
+		background: bisque;
+	}
+	
+	.secondary-col {
+		height: inherit;
+		background: brown;
+	}
+	
+	.carousel{
+		height: 400px;
+		width: inherit;
+		background: green;
+	}
 </style>
 <template>
-    <div class="layout-content">
-        主页
-    </div>
+	<div class="content">
+		<Row class="row">
+			<Col span="18" class="main-col">
+                <Carousel
+                        v-model="value3"
+                        :autoplay="setting.autoplay"
+                        :autoplay-speed="setting.autoplaySpeed"
+                        :dots="setting.dots"
+                        :trigger="setting.trigger"
+                        :arrow="setting.arrow">
+                    <Carousel-item>
+                        <div class="carousel">
+                            <img src="../images/logo.png">
+                        </div>
+                    </Carousel-item>
+                    <Carousel-item>
+                        <div class="carousel">
+                            <img src="../images/one.png">
+                        </div>
+                    </Carousel-item>
+                    <Carousel-item>
+                        <div class="carousel">
+                            <img src="../images/two.png">
+                        </div>
+                    </Carousel-item>
+                    <Carousel-item>
+                        <div class="carousel">
+                            <img src="../images/three.png">
+                        </div>
+                    </Carousel-item>
+                </Carousel>
+
+
+            </Col>
+			<Col span="6" class="secondary-col">
+			<Card :bordered="true" >
+				<p slot="title">2017年唯一一次月偏食</p>
+				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+			</Card>
+			<br />
+			<Card :bordered="true">
+				<p slot="title">2017年唯一一次月偏食</p>
+				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+			</Card>
+			<br />
+			<Card :bordered="true">
+				<p slot="title">2017年唯一一次月偏食</p>
+				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+			</Card>
+			<br />
+			<Card :bordered="true">
+				<p slot="title">2017年唯一一次月偏食</p>
+				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+			</Card>
+			</Col>
+		</Row>
+	</div>
 </template>
 <script>
-
+    export default {
+        data () {
+            return {
+                value3: 0,
+                setting: {
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    dots: 'inside',
+                    trigger: 'click',
+                    arrow: 'hover'
+                }
+            }
+        },
+    }
 </script>
