@@ -3,7 +3,7 @@ import iView from 'iview';
 import VueRouter from 'vue-router';
 import Routers from './router'; // 引入路由配置文件
 import Util from './libs/util';
-import App from './app.vue'; // //引入vue组件
+import Index from './views/index.vue'; // //引入vue组件
 import 'iview/dist/styles/iview.css'; // 使用 CSS
 
 Vue.use(VueRouter);
@@ -32,6 +32,6 @@ router.afterEach((to, from, next) => {
 new Vue({ // 创建一个 Vue 的根实例
 	el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
 	router: router, // 注入路由配置
-	render: h => h(App)
-
+	render: h => h(Index)
+	
 });

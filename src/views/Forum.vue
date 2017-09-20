@@ -1,8 +1,8 @@
 <style scoped lang="less">
-    @import "../styles/main-content.css";
+    @import "../styles/common.css";
 </style>
 <template>
-    <div class="layout-content">
+    <div class="content">
         论坛
     </div>
 </template>
