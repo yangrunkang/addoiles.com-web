@@ -10,16 +10,37 @@ const routers = [
     {
         path: '/Dreams',
         meta: {
-            title: '梦想'
+            title: '梦想墙'
         },
         component: (resolve) => require(['./views/Dreams.vue'], resolve)
     },
     {
         path: '/Experience',
         meta: {
-            title: '分享经历'
+            title: '经历分享'
         },
         component: (resolve) => require(['./views/Experience.vue'], resolve)
+    },
+    {
+        path: '/ITTech',
+        meta: {
+            title: '技术沉淀'
+        },
+        component: (resolve) => require(['./views/ITTech.vue'], resolve)
+    },
+    {
+        path: '/SoftwareTalk',
+        meta: {
+            title: '软件评测'
+        },
+        component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve)
+    },
+    {
+        path: '/LiZhiFM',
+        meta: {
+            title: '程序员的生活记录'
+        },
+        component: (resolve) => require(['./views/LiZhiFM.vue'], resolve)
     }
 
 

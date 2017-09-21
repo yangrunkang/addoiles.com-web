@@ -57,6 +57,19 @@
                         <Icon type="ios-analytics"></Icon>
                         <router-link to="/Experience" class="router-style">经历分享</router-link>
                     </Menu-item>
+                    <Menu-item name="4">
+                        <Icon type="ios-analytics"></Icon>
+                        <router-link to="/ITTech" class="router-style">技术沉淀</router-link>
+                    </Menu-item>
+                    <Menu-item name="5">
+                        <Icon type="ios-analytics"></Icon>
+                        <router-link to="/SoftwareTalk" class="router-style">软件评测</router-link>
+                    </Menu-item>
+                    <Menu-item name="6">
+                        <Icon type="ios-analytics"></Icon>
+                        <router-link to="/LiZhiFM" class="router-style">程序员的生活记录</router-link>
+                    </Menu-item>
+                    
                     <Menu-item name="2" style="padding-right: 20px">
                         <Icon type="person"></Icon>
                         <span @click="login">登录</span>
