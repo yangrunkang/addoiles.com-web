@@ -7,5 +7,9 @@
     </div>
 </template>
 <script>
+    import Vue from 'vue';
+
+    import VueWaterfall from 'vue-waterfall'; //安装vue-quill-editor富文本编辑器
+    Vue.use(VueWaterfall);
 
 </script>

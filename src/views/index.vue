@@ -67,7 +67,7 @@
 		<router-view></router-view>
 		<!--这个是显示路由的视图结果-->
 		<div class="layout-copy">
-			2017-2017 &copy; Belongs to YangRunkang
+			2017-2017 &copy; www.addoiles.com
 		</div>
 
         <!--返回到顶部-->
