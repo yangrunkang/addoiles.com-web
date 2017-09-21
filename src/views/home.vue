@@ -100,7 +100,9 @@
                     dots: 'inside',
                     trigger: 'click',
                     arrow: 'hover'
-                }
+                },
+				value13:0,
+				value6:0,
             }
         },
     }

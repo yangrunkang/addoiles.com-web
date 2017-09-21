@@ -38,5 +38,12 @@
     </div>
 </template>
 <script>
-
+    export default {
+        data () {
+            return {
+                value13:0,
+                value6:0,
+            }
+        },
+    }
 </script>
