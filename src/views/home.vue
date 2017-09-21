@@ -23,7 +23,7 @@
 	}
 </style>
 <template>
-	<div class="content">
+	<div class="main-content">
 		<Row class="row">
 			<Col span="18" class="main-col">
                 <Carousel
@@ -58,25 +58,33 @@
 
             </Col>
 			<Col span="6" class="secondary-col">
-			<Card :bordered="true" >
-				<p slot="title">2017年唯一一次月偏食</p>
-				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-			</Card>
-			<br />
-			<Card :bordered="true">
-				<p slot="title">2017年唯一一次月偏食</p>
-				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-			</Card>
-			<br />
-			<Card :bordered="true">
-				<p slot="title">2017年唯一一次月偏食</p>
-				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-			</Card>
-			<br />
-			<Card :bordered="true">
-				<p slot="title">2017年唯一一次月偏食</p>
-				<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-			</Card>
+				<h2>热门动弹</h2>
+				<Card :bordered="true" >
+					<p slot="title" style="height: auto;padding-bottom: 2px">
+						热门登记
+						<Button slot="append">发表</Button>
+						</p>
+					<p>
+						<Input v-model="value13" placeholder="热点提炼" />
+
+						<Input v-model="value6" type="textarea" :rows="4" placeholder="热门描述" />
+					</p>
+				</Card>
+				<br />
+				<Card :bordered="true">
+					<p slot="title">2017年唯一一次月偏食</p>
+					<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+				</Card>
+				<br />
+				<Card :bordered="true">
+					<p slot="title">2017年唯一一次月偏食</p>
+					<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+				</Card>
+				<br />
+				<Card :bordered="true">
+					<p slot="title">2017年唯一一次月偏食</p>
+					<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+				</Card>
 			</Col>
 		</Row>
 	</div>
