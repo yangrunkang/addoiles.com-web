@@ -65,11 +65,11 @@
                         <Icon type="ios-analytics"></Icon>
                         <router-link to="/SoftwareTalk" class="router-style">软件评测</router-link>
                     </Menu-item>
-                    <Menu-item name="6">
+  <!--                  <Menu-item name="6">
                         <Icon type="ios-analytics"></Icon>
                         <router-link to="/LiZhiFM" class="router-style">程序员的生活记录</router-link>
-                    </Menu-item>
-                    <Menu-item name="7" style="padding-right: 20px">
+                    </Menu-item>-->
+                    <Menu-item name="7">
                         <Icon type="person"></Icon>
                         <span @click="login">登录</span>
                     </Menu-item>

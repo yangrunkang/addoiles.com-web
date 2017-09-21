@@ -17,7 +17,7 @@
 
 </style>
 <template>
-    <div class="content">
+    <div class="main-content">
 
         <Affix :offset-top="50" v-show="isShowAffix">
             <span class="switch-affix"><h2 style="color: white">显示编辑器&nbsp;<i-switch size='large' @on-change="changeSwitch"><span slot='open'>显示</span><span slot='close'>关闭</span></i-switch></h2></span>

@@ -34,7 +34,7 @@ const routers = [
             title: '软件评测'
         },
         component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve)
-    },
+    }/*, TODO 抓取,现在不做
     {
         path: '/LiZhiFM',
         meta: {
@@ -42,7 +42,7 @@ const routers = [
         },
         component: (resolve) => require(['./views/LiZhiFM.vue'], resolve)
     }
-
+*/
 
 
 ];
