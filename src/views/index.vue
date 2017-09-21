@@ -3,7 +3,7 @@
 		border: 1px solid #d7dde4;
 		background: #f5f7f9;
 	}
-	
+
 /*	.layout-logo {
 		width: 100px;
 		height: 30px;
@@ -19,13 +19,13 @@
 		width: 420px;
 		margin: 0 auto;
 	}
-	
+
 	.layout-copy {
 		text-align: center;
 		padding: 10px 0 20px;
 		color: #9ea7b4;
 	}
-	
+
 	.router-style {
 		color: white;
 	}
@@ -59,7 +59,7 @@
                     </Menu-item>
                     <Menu-item name="2" style="padding-right: 20px">
                         <Icon type="person"></Icon>
-                        登录
+                        <span @click="login">登录</span>
                     </Menu-item>
 
 			</div>
@@ -74,14 +74,74 @@
         <Back-top :height="200" :bottom="50">
             <div class="top">返回顶端</div>
         </Back-top>
-	</div>
+
+
+        <!--登录模态框-->
+        <Modal
+                v-model="modal1"
+                title="登录"
+                @on-cancel="cancel"
+                @on-ok="loginBtn('formInline')"
+                ok-text="登录">
+            <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
+               <Form-item prop="user">
+                    <Input type="text" v-model="formInline.user" placeholder="Username">
+                    <Icon type="ios-person-outline" slot="prepend"></Icon>
+                    </Input>
+                </Form-item>
+                <Form-item prop="password">
+                    <Input type="password" v-model="formInline.password" placeholder="Password">
+                    <Icon type="ios-locked-outline" slot="prepend"></Icon>
+                    </Input>
+                </Form-item>
+            </Form>
+        </Modal>
+
+    </div>
+
+
 </template>
 <script>
 
 
+    export default {
+        data () {
+            return {
+                formInline: {
+                    user: '',
+                    password: ''
+                },
+                ruleInline: {
+                    user: [
+                        {required: true, message: '请填写用户名', trigger: 'blur'}
+                    ],
+                    password: [
+                        {required: true, message: '请填写密码', trigger: 'blur'},
+                        {type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur'}
+                    ]
+                },
+                modal1: false
+            }
+        },
+        methods: {
+            loginBtn(name) {
+                this.$refs[name].validate((valid)=>{
+                    if (valid) {
+                        this.$Message.success('提交成功!');
+                    }else{
+                        this.$Message.error('表单验证失败!');
+                    }
+                });
+            },
+            cancel () {
+                this.modal1 = false;
+            },
 
+            login(){
+                this.modal1 = true;
+            }
 
-	export default {
+        },
         mounted() {
 
             this.$Notice.config({
