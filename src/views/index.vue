@@ -1,8 +1,6 @@
 <style scoped>
-	.layout {
-		border: 1px solid #d7dde4;
-		background: #f5f7f9;
-	}
+
+    @import "../styles/common.css";
 
 /*	.layout-logo {
 		width: 100px;
@@ -15,16 +13,7 @@
 		left: 20px;
 	}
 	*/
-	.layout-nav {
-		width: inherit;
-		margin: 0 auto;
-	}
 
-	.layout-copy {
-		text-align: center;
-		padding: 10px 0 20px;
-		color: #9ea7b4;
-	}
 
 	.router-style {
 		color: white;
@@ -42,43 +31,46 @@
 <!--页面整体框架-->
 <template>
 	<div class="layout">
-		<Menu mode="horizontal" theme="dark" active-name="1">
-			<!--<div class="layout-logo"></div>-->
-			<div class="layout-nav">
-                    <Menu-item name="1">
-                        <Icon type="ios-navigate"></Icon>
-                        <router-link to="/" class="router-style">主页</router-link>
-                    </Menu-item>
-                    <Menu-item name="2">
-                        <Icon type="ios-keypad"></Icon>
-                        <router-link to="/Dreams" class="router-style">梦想墙</router-link>
-                    </Menu-item>
-                    <Menu-item name="3">
-                        <Icon type="ios-analytics"></Icon>
-                        <router-link to="/Experience" class="router-style">经历分享</router-link>
-                    </Menu-item>
-                    <Menu-item name="4">
-                        <Icon type="ios-analytics"></Icon>
-                        <router-link to="/ITTech" class="router-style">技术沉淀</router-link>
-                    </Menu-item>
-                    <Menu-item name="5">
-                        <Icon type="ios-analytics"></Icon>
-                        <router-link to="/SoftwareTalk" class="router-style">软件评测</router-link>
-                    </Menu-item>
-  <!--                  <Menu-item name="6">
-                        <Icon type="ios-analytics"></Icon>
-                        <router-link to="/LiZhiFM" class="router-style">程序员的生活记录</router-link>
-                    </Menu-item>-->
-                    <Menu-item name="7">
-                        <Icon type="person"></Icon>
-                        <span @click="login">登录</span>
-                    </Menu-item>
+        <!--导航栏部分-->
+        <div class="layout-nav">
+		    <Menu mode="horizontal" theme="dark" active-name="1">
+                <!--<div class="layout-logo"></div>-->
+                <Menu-item name="1">
+                    <Icon type="ios-navigate"></Icon>
+                    <router-link to="/" class="router-style">主页</router-link>
+                </Menu-item>
+                <Menu-item name="2">
+                    <Icon type="ios-keypad"></Icon>
+                    <router-link to="/Dreams" class="router-style">梦想墙</router-link>
+                </Menu-item>
+                <Menu-item name="3">
+                    <Icon type="ios-analytics"></Icon>
+                    <router-link to="/Experience" class="router-style">经历分享</router-link>
+                </Menu-item>
+                <Menu-item name="4">
+                    <Icon type="ios-analytics"></Icon>
+                    <router-link to="/ITTech" class="router-style">技术沉淀</router-link>
+                </Menu-item>
+                <Menu-item name="5">
+                    <Icon type="ios-analytics"></Icon>
+                    <router-link to="/SoftwareTalk" class="router-style">软件评测</router-link>
+                </Menu-item>
+<!--                  <Menu-item name="6">
+                    <Icon type="ios-analytics"></Icon>
+                    <router-link to="/LiZhiFM" class="router-style">程序员的生活记录</router-link>
+                </Menu-item>-->
+                <Menu-item name="7">
+                    <Icon type="person"></Icon>
+                    <span @click="login">登录</span>
+                </Menu-item>
+		    </Menu>
+        </div>
 
-			</div>
-		</Menu>
-		<router-view></router-view>
-		<!--这个是显示路由的视图结果-->
-		<div class="layout-copy">
+        <!--中间视图部分-->
+		<router-view></router-view><!--这个是显示路由的视图结果-->
+
+        <!--页面底部-->
+		<div class="layout-bottom">
 			2017-2017 &copy; www.addoiles.com
 		</div>
 
