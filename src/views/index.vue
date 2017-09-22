@@ -69,10 +69,10 @@
         <!--中间视图部分-->
 		<router-view></router-view><!--这个是显示路由的视图结果-->
 
-        <!--页面底部-->
-		<div class="layout-bottom">
+        <!--页面底部 底部可以去掉,背景色 和body颜色一样-->
+<!--		<div class="layout-bottom">
 			2017-2017 &copy; www.addoiles.com
-		</div>
+		</div>-->
 
         <!--返回到顶部-->
         <Back-top :height="200" :bottom="50">

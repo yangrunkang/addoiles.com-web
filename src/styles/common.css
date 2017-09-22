@@ -1,6 +1,6 @@
 /*整个页面*/
 .layout {
-    border: 1px solid #9ea7b4;
+    border: 0px solid #9ea7b4;
     background: #f5f7f9;
     height: inherit;
 }
@@ -14,18 +14,20 @@
 /*页面主题内容*/
 .main-content {
     /*border: 1px solid #9ea7b4;*/
-    height: 1000px;
+    /*height: 1000px; 不写height就随内容变化而变化*/
     width: 1140px;
     margin: 30px auto;
 }
 
 /*页面底部*/
+/*
 .layout-bottom {
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
     margin-bottom: 0px;
 }
+*/
 
 
 
