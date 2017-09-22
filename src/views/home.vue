@@ -67,14 +67,11 @@
 				<div class="hot-msg">
 					<h2>热门动弹</h2>
 					<Card :bordered="true" >
-						<p slot="title" style="height: auto;padding-bottom: 2px">
-							热门登记
-							<Button slot="append">发表</Button>
-						</p>
-						<p>
-							<Input v-model="value13" placeholder="热点提炼" />
+						<Button type="success" long style="margin-bottom: 5px">发表动弹</Button>
 
-							<Input v-model="value6" type="textarea" :rows="4" placeholder="热门描述" />
+						<p>
+							<Input placeholder="热点提炼" style="margin-bottom: 5px"/>
+							<Input type="textarea" :rows="4" placeholder="热门描述" />
 						</p>
 					</Card>
 					<br />
