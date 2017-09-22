@@ -42,7 +42,7 @@
 							:arrow="setting.arrow">
 						<Carousel-item>
 							<div class="carousel">
-								<img src="../images/logo.png">
+								<img src="../images/test.png">
 							</div>
 						</Carousel-item>
 						<Carousel-item>

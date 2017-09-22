@@ -26,14 +26,6 @@
                 </Card>
             </Col>
 
-            <Col span="8">
-                <Card :bordered="true">
-                    <p slot="title">见更多的人</p>
-                    <p>
-                       旅行使人豁达
-                    </p>
-                </Card>
-            </Col>
         </Row>
     </div>
 </template>
