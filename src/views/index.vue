@@ -2,23 +2,6 @@
 
     @import "../styles/common.css";
 
-/*	.layout-logo {
-		width: 100px;
-		height: 30px;
-		background: #5b6270;
-		border-radius: 3px;
-		float: left;
-		position: relative;
-		top: 15px;
-		left: 20px;
-	}
-	*/
-
-
-	.router-style {
-		color: white;
-	}
-
     .top{
         padding: 10px;
         background: rgba(0, 153, 229, .7);
@@ -35,29 +18,40 @@
         <div class="layout-nav">
 		    <Menu mode="horizontal" theme="dark" active-name="1">
                 <!--<div class="layout-logo"></div>-->
-                <Menu-item name="1">
-                    <Icon type="ios-navigate"></Icon>
-                    <router-link to="/" class="router-style">主页</router-link>
-                </Menu-item>
-                <Menu-item name="2">
+                <router-link to="/">
+                    <Menu-item name="1">
+                        <Icon type="ios-navigate"></Icon>
+                        主页
+                    </Menu-item>
+                </router-link>
+                <router-link to="/Dreams">
+                    <Menu-item name="2">
                     <Icon type="ios-keypad"></Icon>
-                    <router-link to="/Dreams" class="router-style">梦想墙</router-link>
-                </Menu-item>
-                <Menu-item name="3">
-                    <Icon type="ios-analytics"></Icon>
-                    <router-link to="/Experience" class="router-style">经历分享</router-link>
-                </Menu-item>
-                <Menu-item name="4">
-                    <Icon type="ios-analytics"></Icon>
-                    <router-link to="/ITTech" class="router-style">技术沉淀</router-link>
-                </Menu-item>
-                <Menu-item name="5">
-                    <Icon type="ios-analytics"></Icon>
-                    <router-link to="/SoftwareTalk" class="router-style">软件评测</router-link>
-                </Menu-item>
+                        梦想墙
+                    </Menu-item>
+                </router-link>
+
+                <router-link to="/Experience" >
+                    <Menu-item name="3">
+                        <Icon type="ios-analytics"></Icon>
+                        经历分享
+                    </Menu-item>
+                </router-link>
+                <router-link to="/ITTech">
+                    <Menu-item name="4">
+                        <Icon type="ios-analytics"></Icon>
+                        技术沉淀
+                    </Menu-item>
+                </router-link>
+                <router-link to="/SoftwareTalk" >
+                    <Menu-item name="5">
+                        <Icon type="ios-analytics"></Icon>
+                        软件评测
+                    </Menu-item>
+                </router-link>
 <!--                  <Menu-item name="6">
                     <Icon type="ios-analytics"></Icon>
-                    <router-link to="/LiZhiFM" class="router-style">程序员的生活记录</router-link>
+                    <router-link to="/LiZhiFM" >程序员的生活记录</router-link>
                 </Menu-item>-->
                 <Menu-item name="7">
                     <Icon type="person"></Icon>

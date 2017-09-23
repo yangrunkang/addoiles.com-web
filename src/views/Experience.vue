@@ -30,15 +30,6 @@
         padding:20px
     }
 
-    /*评论*/
-    /*.talks {*/
-        /*padding-left: 10px;*/
-        /*background: white;*/
-        /*height: inherit;*/
-        /*border-radius: 20px;*/
-    /*}*/
-
-
 </style>
 <template>
     <div class="experience">
@@ -84,7 +75,7 @@
                     <h2>感想+</h2>
                     <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" />
                     <Button type="success" long style="margin-top: 5px">评价</Button>
-                    <Alert style="margin-top: 5px;margin-bottom: 5px"><strong>评分:</strong><Rate allow-half v-model="valueHalf"></Rate></Alert>
+                    <Alert style="margin-top: 5px;margin-bottom: 5px"><strong>评分:</strong><Rate allow-half ></Rate></Alert>
                     <Tag type="border"  color="blue"><strong>作者:</strong>Tom</Tag>
                     <Tag type="border"  color="green"><strong>发布时间:</strong>2017-09-20</Tag>
                 </Col>
