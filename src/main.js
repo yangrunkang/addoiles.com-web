@@ -1,6 +1,7 @@
 import Vue from 'vue'; //引入vue模块
 import iView from 'iview';
 import VueRouter from 'vue-router';
+import axios from 'axios'
 import Routers from './router'; // 引入路由配置文件
 import Util from './libs/util';
 import Index from './views/index.vue'; // //引入vue组件
@@ -10,8 +11,8 @@ import 'iview/dist/styles/iview.css'; // 使用 CSS
 Vue.use(VueRouter);
 Vue.use(iView);
 
-
-Vue.config.productionTip = false // 关闭生产模式下给出的提示
+Vue.prototype.$http = axios;
+Vue.config.productionTip = false; // 关闭生产模式下给出的提示
 
 // 路由配置
 const RouterConfig = {
@@ -36,5 +37,4 @@ new Vue({ // 创建一个 Vue 的根实例
 	el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
 	router: router, // 注入路由配置
 	render: h => h(Index)
-	
 });

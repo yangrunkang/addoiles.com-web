@@ -110,5 +110,10 @@
 				value6:0,
             }
         },
+		mounted() {
+			this.$http.get('http://localhost:8081/addoiles.com/getLatestHots',{withCredentials:true}).then(function (res) {
+				console.log(res);
+			});
+		}
     }
 </script>

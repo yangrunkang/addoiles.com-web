@@ -1,16 +1,11 @@
 {
   "name": "Addoiles",
-  "version": "2.1.0",
-  "description": "A base project with Vue.js2、Vue-Router、webpack2 and with iView2.",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "init": "webpack --progress --config webpack.dev.config.js",
     "dev": "webpack-dev-server --content-base ./ --open --inline --hot --compress --history-api-fallback --config webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config webpack.prod.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iview/iview-project.git"
   },
   "author": "yangrunkang",
   "dependencies": {
@@ -18,7 +13,7 @@
     "vue": "^2.2.6",
     "vue-quill-editor": "^2.3.2",
     "vue-router": "^2.2.1",
-    "vue-waterfall": "^1.0.6"
+    "axios":"^0.16.2"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
@@ -46,7 +41,6 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^3.0.0",
-    "vue-quill-editor": "2.3.2",
-    "vue-waterfall":"1.0.6"
+    "vue-quill-editor": "2.3.2"
   }
 }
