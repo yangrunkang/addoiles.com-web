@@ -75,20 +75,13 @@
 						</p>
 					</Card>
 					<br />
-					<Card :bordered="true">
-						<p slot="title">2017年唯一一次月偏食</p>
-						<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
+
+					<Card :bordered="true" style="margin-top: 6px" v-for="item in hotsList" :key="item.id">
+						<p slot="title">{{ item.title }}</p>
+						<p>{{ item.content }}</p>
 					</Card>
-					<br />
-					<Card :bordered="true">
-						<p slot="title">2017年唯一一次月偏食</p>
-						<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-					</Card>
-					<br />
-					<Card :bordered="true">
-						<p slot="title">2017年唯一一次月偏食</p>
-						<p>欧洲、非洲、亚洲和澳大利亚部分地区得以观测到2017年唯一一次月偏食。</p>
-					</Card>
+
+
 				</div>
 			</Col>
 		</Row>
@@ -106,13 +99,17 @@
                     trigger: 'click',
                     arrow: 'hover'
                 },
-				value13:0,
-				value6:0,
+				hotsList:[]
             }
         },
 		mounted() {
 			this.$http.get('http://localhost:8081/addoiles.com/getLatestHots').then(function (res) {
-				console.log(res.data.data);
+				if(res.data.code == 0){
+					var resp = res.data.data;
+					for(var i =0 ;i<resp.length ; i++){
+						this.hotsList.push({title : resp[i].title , content : resp[i].content});
+					}
+				}
 			});
 		}
     }
