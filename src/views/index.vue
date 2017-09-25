@@ -151,6 +151,11 @@
                 title: '(｡･∀･)ﾉﾞ嗨！您好！',
                 desc: '在这里，你可以尽情的展现你的内心世界！'
             });
+
+            this.$http.get('http://localhost:8081/addoiles.com/getLatestHots').then(function (res) {
+                console.log(res.data);
+            });
+
         }
 	}
 </script>
