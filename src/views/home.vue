@@ -111,8 +111,8 @@
             }
         },
 		mounted() {
-			this.$http.get('http://localhost:8081/addoiles.com/getLatestHots',{withCredentials:true}).then(function (res) {
-				console.log(res);
+			this.$http.get('http://localhost:8081/addoiles.com/getLatestHots').then(function (res) {
+				console.log(res.data.data);
 			});
 		}
     }
