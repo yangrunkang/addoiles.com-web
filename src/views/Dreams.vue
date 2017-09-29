@@ -8,6 +8,11 @@
         background: white;
         border-radius: 30px;
     }
+    li {
+        float: left;
+        width: 33%;
+        margin: 1px;
+    }
 </style>
 <template>
 
@@ -21,33 +26,25 @@
             </span>
         </Affix>
         <div class="main-content">
-            <!--todo for循环 每行Card有间隔,大小相等-->
-            <Row :gutter="16">
-                <!--<Col span="8">-->
-                    <Card :bordered="true" v-for="item in dreamList" :key="item.id">
-                        <p slot="title" >{{item.dreamTitle}}</p>
-                        <p>
-                            {{item.dreamContent}}
-                        </p>
+
+            <ul>
+                <li v-for="item in dreamList" :key="item.id">
+                    <Card padding="0px" style="background: transparent;border: transparent;border-radius: 30px">
+                        <div style="margin: inherit">
+                            <Alert type="success">
+                                {{item.dreamTitle}}
+                                <span slot="desc">{{item.dreamContent}}</span>
+                            </Alert>
+                            <div>
+                                <Button type="info" shape="circle">为Ta加油</Button>
+                                <Button type="success" shape="circle">同理想</Button>
+                            </div>
+                        </div>
                     </Card>
-                <!--</Col>-->
-                <!--<Col span="8">
-                    <Card :bordered="true">
-                        <p slot="title">看更多的书</p>
-                        <p>
-                            读书使人进步
-                        </p>
-                    </Card>
-                </Col>
-                <Col span="8">
-                    <Card :bordered="true">
-                        <p slot="title">看更多的书</p>
-                        <p>
-                            读书使人进步
-                        </p>
-                    </Card>
-                </Col>-->
-            </Row>
+
+                </li>
+            </ul>
+
         </div>
     </div>
 
@@ -62,27 +59,6 @@
                 dreamContent : null,
                 dreamList:[
                     {dreamTitle:"我的萌新嘎嘎会",dreamContent:"alc"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
-                    {dreamTitle:"积分老师乱",dreamContent:"富士达"},
                     {dreamTitle:"积分老师乱",dreamContent:"富士达"},
                     {dreamTitle:"发顺丰翁",dreamContent:"as发广告"}
                 ]
