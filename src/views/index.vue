@@ -49,6 +49,12 @@
                         软件评测
                     </Menu-item>
                 </router-link>
+                <router-link to="/SoftwareTalk" >
+                    <Menu-item name="5">
+                        <Icon type="ios-analytics"></Icon>
+                        聊天机器人
+                    </Menu-item>
+                </router-link>
 <!--                  <Menu-item name="6">
                     <Icon type="ios-analytics"></Icon>
                     <router-link to="/LiZhiFM" >程序员的生活记录</router-link>
