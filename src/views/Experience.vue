@@ -65,21 +65,30 @@
                 <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
             </Alert>
             <!--经历-->
-            <Row class="experience-content" :gutter="16">
+            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="item in experienceDtoList" key="item.id">
                 <Col span="19">
+                    <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title">彰化市</p>
-                        <p>彰化市位于台湾彰化县东北角，为彰化县县治所在地。彰化市一带早期为隶属平埔族的巴布萨族半线社人的活动场域，旧称“半线”，后明郑部将刘国轩屯兵镇压原住民，在军队保护下，汉人陆续到来，开凿水利，人口渐聚，发展出村落街巷，在台中市产生前，是台湾中部的政经中心。由于彰化市居南北交通要冲，每当民变动乱，该地首当其冲，之后有地方官员植竹为城，略作防卫之用，因此古有“竹城”雅称。境内的八卦山大佛风景区为台湾著名的观光胜地。赖和纪念馆、小西街、孔庙亦为该市的重要观光景点。彰化市约有人口23万4千多人，是彰化县人口最多的行政区，亦为全国人口最多的县辖市。彰化市分为两个地形区，一为东南部的八卦台地地区，一为西北、东北部的平原区。八卦台地又称八卦山脉，在3万到50万年前是大肚溪河床，在板块挤压作用下，隆起褶曲造成八卦山背斜，背斜西翼弯曲断裂，形成彰化断层，长5.8公里。原来的河床隆升为台地，最高点在东南部的银行山，海拔232米，到了西北角的八卦山则降为96米。八卦台地部分崖壁陡峭，豪雨过后容易发生山崩，土石崩落堆置崖脚形成落石堆，地层不稳，故此处不宜建筑房舍。</p>
-                    </Card><Alert type="success"><Tag type="border" color="green">2017-09-20</Tag><Tag color="green">kite</Tag>这篇文章写的真好</Alert>
-
+                        <p slot="title">{{item.experience.title}}</p>
+                        <p>{{item.experience.content}}</p>
+                    </Card>
+                    <!--评论-->
+                    <h2>评论</h2>
+                    <Alert type="success" v-for="comment in item.experience.commentList" key="comment.id">
+                        <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
+                        {{comment.content}}
+                    </Alert>
                 </Col>
                 <Col span="5">
                     <h2>感想+</h2>
                     <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" />
-                    <Button type="success" long style="margin-top: 5px">评价</Button>
-                    <Alert style="margin-top: 5px;margin-bottom: 5px"><strong>评分:</strong><Rate allow-half ></Rate></Alert>
-                    <Tag type="border"  color="blue"><strong>作者:</strong>Tom</Tag>
-                    <Tag type="border"  color="green"><strong>发布时间:</strong>2017-09-20</Tag>
+                    <Button type="success" long style="margin-top: 5px" @click="toComment(item.experience.id)">评价</Button><!--注意这里的item.experience.id是experienceId-->
+                    <Alert style="margin-top: 5px;margin-bottom: 5px">
+                        <strong>评分:</strong>
+                        <Rate allow-half v-model="item.experience.rates"></Rate>
+                    </Alert>
+                    <Tag type="border"  color="blue"><strong>作者:</strong>{{item.experience.userName}}</Tag>
+                    <Tag type="border"  color="green"><strong>发布时间:</strong>{{item.experience.createTime}}</Tag>
                 </Col>
             </Row>
         </div>
@@ -121,13 +130,14 @@
                 //编辑器配置
                 editorOption: {
                     // something to config
-                    placeholder: '不放弃,不抛弃,追梦之路,常常伴随着孤单\n分享自己不一样的经历,同大家一起加油共勉\n如果可以,请在这里书写您独一无二的人生经历'
+                    placeholder: '不放弃,不抛弃,追梦之路,时常伴随着孤单\n分享自己不一样的经历,同大家一起加油共勉\n如果可以,请在这里书写您独一无二的人生经历'
 
                 },
                 //默认不显示编辑器
                 isShowEditor : false,
                 //确认清除模态框显示与隐藏
-                confirmModal : false
+                confirmModal : false,
+                experienceDtoList:[]
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -196,7 +206,51 @@
                         this.clearContent('false');
                     }
                 }.bind(this));
+            },
+            /*去评论*/
+            toComment(experienceId){
+                console.log(experienceId);
+            },
+            /*获取经历*/
+            getExperienceList(){
+                this.axios.get('getExperienceList').then(function (response) {
+                    if(response.data.code == 0){
+                        var experienceDtoList = response.data.data; //List<ExperienceDto>
+                        if(experienceDtoList.length >= 0){
+                            for(var i = 0; i < experienceDtoList.length; i++){ //ExperienceDto
+                                //评论
+                                var commentList = experienceDtoList[i].commentList;
+                                var _commentList = [];
+                                if(commentList.length > 0){
+                                    for(var j = 0; j < commentList.length; j++){
+                                        var comment = commentList[j];
+                                        _commentList.push(
+                                                {
+                                                    createTime:comment.createTime,
+                                                    userName:comment.userId,
+                                                    content:comment.content
+                                                }
+                                        );
+                                    }
+                                }
+                                //经历
+                                var experience = experienceDtoList[i];
+                                this.experienceDtoList.push(
+                                        {
+                                            id:experience.experienceId, //注意这里的id是experienceId
+                                            userName:experience.userName,
+                                            title:experience.title,
+                                            content:experience.content,
+                                            rates:experience.rates,
+                                            createTime:experience.createTime,
+                                            commentList:_commentList
+                                });
+                            }
+                        }
+                    }
+                }.bind(this));
             }
+
         },
         // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，
         // 实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
@@ -206,6 +260,7 @@
             }
         },
         mounted() {
+            this.getExperienceList();
         }
     }
 
