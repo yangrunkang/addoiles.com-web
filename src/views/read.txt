@@ -1,3 +1,5 @@
+# https://cn.vuejs.org/v2/guide/
+
 · 在网络请求中，为什么不能使用this.data里面的属性 -- 已解决
     http://www.cnblogs.com/wisewrong/p/6402183.html
     => 回调函数都有各自独立的作用域，如果直接在里面访问 this，无法访问到 Vue 实例,这时只要添加一个 .bind(this) 就能解决这个问题

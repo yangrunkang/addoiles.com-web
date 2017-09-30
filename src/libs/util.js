@@ -6,4 +6,11 @@ util.title = function (title) {
     window.document.title = title;
 };
 
+util.validateReq = function (content) {
+    if(content == null || content.trim() == '' || content  == undefined){
+        return false;
+    }
+    return true
+};
+
 export default util;

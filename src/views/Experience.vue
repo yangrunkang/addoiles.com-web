@@ -35,16 +35,19 @@
     <div class="experience">
 
         <!--图钉-->
-        <Affix :offset-top="10" v-show="isShowAffix">
+        <Affix :offset-top="10">
             <span class="switch-affix"><h2 style="color: white">显示编辑器&nbsp;<i-switch size='large' @on-change="changeSwitch"><span slot='open'>显示</span><span slot='close'>关闭</span></i-switch></h2></span>
         </Affix>
 
         <!--编辑器-->
         <div id="editorDiv" v-show="isShowEditor" style="height: 500px">
             <Card class="card" style="height: inherit">
-                <p slot="title" style="height: auto">分享你的经历,不论是否精彩&nbsp;&nbsp;
-                    <Button type="info" shape="circle" @click="sendExperience">发表</Button>
-                    <Button type="error" shape="circle" @click="clearContent">清空内容</Button></p>
+                <p slot="title" style="height: auto;font-size: 18px">分享你的经历,不论是否精彩&nbsp;&nbsp;
+                    <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
+                        <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large"></i-input>
+                    </Poptip>
+                    <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
+                    <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button></p>
                 <!--https://surmon-china.github.io/vue-quill-editor -->
                 <quill-editor ref="myTextEditor"
                               v-model="content"
@@ -61,7 +64,6 @@
                 <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
                 <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
             </Alert>
-
             <!--经历-->
             <Row class="experience-content" :gutter="16">
                 <Col span="19">
@@ -80,48 +82,57 @@
                     <Tag type="border"  color="green"><strong>发布时间:</strong>2017-09-20</Tag>
                 </Col>
             </Row>
-
-
-
-
         </div>
-
+        <Modal v-model="confirmModal">
+            <p slot="header" style="color:#f60;text-align:center">
+                <Icon type="information-circled"></Icon>
+                <span>确定要清空吗?</span>
+            </p>
+            <div style="text-align:center;font-size: 18px">
+                <p>如果你写了很多内容,慎重考虑一下.</p>
+                <p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>
+            </div>
+            <div slot="footer">
+                <Button type="info" size="large" long @click="sendExperience('normal')">立即分享</Button>
+            </div>
+            <div slot="footer" style="margin: 4px auto;">
+                <Button type="warning" size="large" long @click="sendExperience('draft')">保存为草稿</Button>
+            </div>
+            <div slot="footer">
+                <Button type="error" size="large" long @click="clearContent('true')">坚决删除</Button>
+            </div>
+        </Modal>
     </div>
-
 </template>
 <script>
 
     import Vue from 'vue';
-
-    import VueQuillEditor from 'vue-quill-editor'; //安装vue-quill-editor富文本编辑器
+    //安装vue-quill-editor富文本编辑器
+    import VueQuillEditor from 'vue-quill-editor';
     Vue.use(VueQuillEditor);
-
-    //鼠标焦点到编辑器编辑区内容时，清空预置内容
-    var firstFocusEditor = false;
 
     export default {
         data () {
             return {
-                content: "<h1><strong style='color: rgb(102, 163, 224);'>分享不一样的经历，共勉</strong></h1><p><span style='color: rgb(102, 163, 224);'>不放弃,不抛弃,追梦之路,不孤单</span></p>",
+                // 经历标题
+                experienceTitle : '',
+                // 经历内容
+                content : '',
+                //编辑器配置
                 editorOption: {
-                    // something config
-
+                    // something to config
+                    placeholder: '不放弃,不抛弃,追梦之路,常常伴随着孤单\n分享自己不一样的经历,同大家一起加油共勉\n如果可以,请在这里书写您独一无二的人生经历'
 
                 },
-                isShowEditor : false,  //默认不显示编辑器
-                isShowAffix : false //一开始不显示,5秒后显示
+                //默认不显示编辑器
+                isShowEditor : false,
+                //确认清除模态框显示与隐藏
+                confirmModal : false
             }
         },
-        // if you need to manually control the data synchronization, parent component needs to explicitly emit an event instead of relying on implicit binding
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
             onEditorFocus(editor) {
-
-                if(!firstFocusEditor){
-                    this.content = "";
-                    firstFocusEditor = true;
-                }
-
             },
             changeSwitch(status){
                 if(status){
@@ -130,50 +141,72 @@
                     this.isShowEditor = false;
                 }
             },
-            clearContent(){
+            //删除内容
+            clearContent(showNotice){
+                //清空标题和内容
+                this.experienceTitle = "";
                 this.content = "";
-                //todo 弹窗提示用户,是否清空
-
-                this.$Notice.success({
-                    title: '提示',
+                //关闭模态框
+                this.confirmModal = false;
+                //
+                if(showNotice) return;
+                this.$Notice.info({
                     desc: '内容已清空'
                 });
             },
-            sendExperience(){
-                //todo 调用服务端接口
-                this.$Notice.success({
-                    title: '内容',
-                    desc: this.content
-                });
-                //todo 追加 可先不做
+            sendExperience(operation){
+                // 请求对象
+                var params = new URLSearchParams();
+                if(operation == 'normal'){
+                    params.append('deleteStatus',0);
+                }else if(operation == 'draft'){
+                    params.append('deleteStatus',1);
+                }else{
+                    this.$Notice.error({desc: '不好意思,程序员失误了'});
+                }
+                //关闭模态框
+                this.confirmModal = false;
+                //数据校验
+                var experienceTitle = this.experienceTitle;
+                var experienceContent = this.content;
+                if(!this.addoileUtil.validateReq(experienceTitle) || !this.addoileUtil.validateReq(experienceContent)){
+                    this.$Notice.warning({
+                        desc: '经历标题或内容为空'
+                    });
+                    return;
+                }
+                //调用服务端接口
+                params.append('title', experienceTitle);
+                params.append('content', experienceContent);
+                this.axios.post("addExperience",params).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data == 1){
 
+                        if(operation == 'normal'){
+                            this.$Notice.success({
+                                desc: '经历已经分享'
+                            });
+                        }else if(operation == 'draft'){
+                            this.$Notice.info({
+                                desc: '经历已经保存为草稿'
+                            });
+                        }
+                        //todo 追加列表
+
+                        //清空内容
+                        this.clearContent('false');
+                    }
+                }.bind(this));
             }
         },
-        // if you need to get the current editor object, you can find the editor object like this, the $ref object is a ref attribute corresponding to the dom redefined
-        // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
+        // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，
+        // 实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
         computed: {
             editor() {
                 return this.$refs.myTextEditor.quillEditor
             }
         },
         mounted() {
-            // you can use current editor object to do something(editor methods)
-            // this.editor to do something...
-            //5秒后显示 打开/关闭 编辑框的 Affix
-            setTimeout(() => {
-               this.isShowAffix = true;
-            },1);
         }
     }
-
-
-
-//    Vue.component('switch-div', {
-//        template: "<i-switch size='large'><span slot='open'>开启</span><span slot='close'>关闭</span></i-switch>"
-//    })
-//
-//    new Vue({
-//        el: '#switch'
-//    })
 
 </script>

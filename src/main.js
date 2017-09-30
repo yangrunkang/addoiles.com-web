@@ -10,11 +10,14 @@ import 'iview/dist/styles/iview.css'; // 使用 CSS
 
 Vue.use(VueRouter);
 Vue.use(iView);
+Vue.use(Util);
 
 // axios教程:http://blog.csdn.net/binginsist/article/details/65630547
 // Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
+
+Vue.prototype.addoileUtil = Util;
 
 Vue.config.productionTip = false; // 关闭生产模式下给出的提示
 

@@ -2,6 +2,7 @@
 
     @import "../styles/common.css";
 
+    /*返回顶端css*/
     .top{
         padding: 10px;
         background: rgba(0, 153, 229, .7);
@@ -16,36 +17,11 @@
 	<div class="layout">
         <!--导航栏部分-->
         <div class="layout-nav">
-		    <Menu mode="horizontal" theme="dark" @on-select="onSelect">
-                <!--<div class="layout-logo"></div>-->
-                <Menu-item name="/">
-                        <Icon type="ios-navigate"></Icon>
-                        主页
+		    <Menu mode="horizontal" theme="dark" @on-select="onSelect" >
+                <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
+                        <Icon :type="item.navIcon"></Icon>
+                        {{ item.navName }}
                 </Menu-item>
-                <Menu-item name="/Dreams">
-                        <Icon type="ios-keypad"></Icon>
-                        梦想墙
-                </Menu-item>
-                <Menu-item name="/Experience">
-                        <Icon type="ios-analytics"></Icon>
-                        经历分享
-                </Menu-item>
-                <Menu-item name="/ITTech">
-                        <Icon type="ios-analytics"></Icon>
-                        技术沉淀
-                </Menu-item>
-                <Menu-item name="/SoftwareTalk">
-                        <Icon type="ios-analytics"></Icon>
-                        软件评测
-                </Menu-item>
-                <Menu-item name="/SoftwareTalk">
-                        <Icon type="ios-analytics"></Icon>
-                        聊天机器人
-                </Menu-item>
-<!--                  <Menu-item name="6">
-                    <Icon type="ios-analytics"></Icon>
-                    <router-link to="/LiZhiFM" >程序员的生活记录</router-link>
-                </Menu-item>-->
                 <Menu-item name="7">
                     <span @click="login">
                         <Icon type="person"></Icon>
@@ -111,7 +87,8 @@
                         {type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur'}
                     ]
                 },
-                modal1: false
+                modal1: false,
+                navList:[]
             }
         },
         methods: {
@@ -131,19 +108,33 @@
             login(){
                 this.modal1 = true;
             },
+            //初始化导航栏
+            initNavList(){
+                this.axios.get('getNavs').then(function (res) {
+                    if(res.data.code == 0){
+                        var resp = res.data.data;
+                        for(var i =0 ;i<resp.length ; i++){
+                            this.navList.push({navRouter : resp[i].navRouter , navIcon : resp[i].navIcon, navName : resp[i].navName});
+                        }
+                    }
+                }.bind(this));
+            },
+            //导航栏栏目选择
             onSelect(activeName){
                 this.$router.push(activeName);
-            }
+            },
         },
         mounted() {
             this.$Notice.config({
                 top: 5,
                 duration: 3
             });
+            this.initNavList();
 //                this.$Notice.success({
 //                    title: '(｡･∀･)ﾉﾞ嗨！您好！',
 //                    desc: '在这里，你可以尽情的展现你的内心世界！'
 //                });
         }
+
 	}
 </script>
