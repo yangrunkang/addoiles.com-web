@@ -34,7 +34,7 @@
             </i-col>
             <i-col :span="spanRight">
                 <div style="width: 100%" v-show="isShowDetail">
-                    <Card padding="0px" style="background: transparent;border: transparent;border-radius: 30px">
+                    <Card  style="background: transparent;border: transparent;border-radius: 30px">
                         <Card>
                             <p slot="title" style="height: inherit;">
                                 <!--<Icon type="ios-barcode-outline" size="40"></Icon>-->

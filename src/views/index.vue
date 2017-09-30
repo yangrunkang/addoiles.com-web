@@ -16,52 +16,41 @@
 	<div class="layout">
         <!--导航栏部分-->
         <div class="layout-nav">
-		    <Menu mode="horizontal" theme="dark" active-name="1">
+		    <Menu mode="horizontal" theme="dark" @on-select="onSelect">
                 <!--<div class="layout-logo"></div>-->
-                <router-link to="/">
-                    <Menu-item name="1">
+                <Menu-item name="/">
                         <Icon type="ios-navigate"></Icon>
                         主页
-                    </Menu-item>
-                </router-link>
-                <router-link to="/Dreams">
-                    <Menu-item name="2">
-                    <Icon type="ios-keypad"></Icon>
+                </Menu-item>
+                <Menu-item name="/Dreams">
+                        <Icon type="ios-keypad"></Icon>
                         梦想墙
-                    </Menu-item>
-                </router-link>
-
-                <router-link to="/Experience" >
-                    <Menu-item name="3">
+                </Menu-item>
+                <Menu-item name="/Experience">
                         <Icon type="ios-analytics"></Icon>
                         经历分享
-                    </Menu-item>
-                </router-link>
-                <router-link to="/ITTech">
-                    <Menu-item name="4">
+                </Menu-item>
+                <Menu-item name="/ITTech">
                         <Icon type="ios-analytics"></Icon>
                         技术沉淀
-                    </Menu-item>
-                </router-link>
-                <router-link to="/SoftwareTalk" >
-                    <Menu-item name="5">
+                </Menu-item>
+                <Menu-item name="/SoftwareTalk">
                         <Icon type="ios-analytics"></Icon>
                         软件评测
-                    </Menu-item>
-                </router-link>
-                <router-link to="/SoftwareTalk" >
-                    <Menu-item name="5">
+                </Menu-item>
+                <Menu-item name="/SoftwareTalk">
                         <Icon type="ios-analytics"></Icon>
                         聊天机器人
-                    </Menu-item>
-                </router-link>
+                </Menu-item>
 <!--                  <Menu-item name="6">
                     <Icon type="ios-analytics"></Icon>
                     <router-link to="/LiZhiFM" >程序员的生活记录</router-link>
                 </Menu-item>-->
                 <Menu-item name="7">
-                    <Icon type="person"></Icon>
-                    <span @click="login">登录</span>
+                    <span @click="login">
+                        <Icon type="person"></Icon>
+                        登录
+                    </span>
                 </Menu-item>
 		    </Menu>
         </div>
@@ -106,8 +95,6 @@
 
 </template>
 <script>
-
-
     export default {
         data () {
             return {
@@ -143,22 +130,20 @@
 
             login(){
                 this.modal1 = true;
+            },
+            onSelect(activeName){
+                this.$router.push(activeName);
             }
-
         },
         mounted() {
-
             this.$Notice.config({
                 top: 5,
                 duration: 3
             });
-
-            this.$Notice.success({
-                title: '(｡･∀･)ﾉﾞ嗨！您好！',
-                desc: '在这里，你可以尽情的展现你的内心世界！'
-            });
-
-
+//                this.$Notice.success({
+//                    title: '(｡･∀･)ﾉﾞ嗨！您好！',
+//                    desc: '在这里，你可以尽情的展现你的内心世界！'
+//                });
         }
 	}
 </script>

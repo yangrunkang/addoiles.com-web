@@ -1,0 +1,11 @@
+· 在网络请求中，为什么不能使用this.data里面的属性 -- 已解决
+    http://www.cnblogs.com/wisewrong/p/6402183.html
+    => 回调函数都有各自独立的作用域，如果直接在里面访问 this，无法访问到 Vue 实例,这时只要添加一个 .bind(this) 就能解决这个问题
+        this.$http.get('getDreams').then(function (res) {
+            //do something
+        }.bind(this));
+
+· VUE全局常量配置 http://blog.csdn.net/lindonglian/article/details/77752491
+
+· 导航栏使用 <router-link> 会改变Menu的样式,如果不想改变样式 可以加tag="span"
+    => http://blog.csdn.net/tanga842428/article/details/53052970

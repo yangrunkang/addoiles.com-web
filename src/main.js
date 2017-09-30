@@ -1,7 +1,7 @@
 import Vue from 'vue'; //引入vue模块
 import iView from 'iview';
 import VueRouter from 'vue-router';
-import axios from 'axios'
+import axios from 'axios';
 import Routers from './router'; // 引入路由配置文件
 import Util from './libs/util';
 import Index from './views/index.vue'; // //引入vue组件
@@ -11,7 +11,11 @@ import 'iview/dist/styles/iview.css'; // 使用 CSS
 Vue.use(VueRouter);
 Vue.use(iView);
 
-Vue.prototype.$http = axios;
+// axios教程:http://blog.csdn.net/binginsist/article/details/65630547
+// Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+Vue.prototype.axios = axios;
+axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
+
 Vue.config.productionTip = false; // 关闭生产模式下给出的提示
 
 // 路由配置

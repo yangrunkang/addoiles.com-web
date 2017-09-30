@@ -77,7 +77,9 @@
                 <br />
 
                 <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" key="item.title">
-                    <p slot="title">{{ item.title }}</p>
+                    <p slot="title">
+                        {{ item.title }}
+                    </p>
                     <p>{{ item.content }}</p>
                 </Card>
 
@@ -88,7 +90,6 @@
     </div>
 </template>
 <script>
-    //	let hotsList = [];
     export default {
         data () {
             return {
@@ -103,23 +104,19 @@
                 hotsList:[]
             }
         },
-
         methods: {
             init(){
-                this.$http.get('http://localhost:8081/addoiles.com/getLatestHots').then(function (res) {
+                this.axios.get('getLatestHots').then(function (res) {
                     if(res.data.code == 0){
                         var resp = res.data.data;
                         for(var i =0 ;i<resp.length ; i++){
                             this.hotsList.push({title : resp[i].title , content : resp[i].content});
                         }
                     }
-                });
+                }.bind(this));
             }
-
         },
-
         mounted() {
-
             this.init();
         }
     }
