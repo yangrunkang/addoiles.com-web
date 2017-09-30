@@ -17,39 +17,43 @@
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Timeline>
+
                     <Timeline-item>
-                        <a class="time" @click="toITArticle('id1    ')">Java序列化</a>
-                        <p class="content">真是经历</p>
+                        <a @click="toITArticle('id1')">
+                            <a class="time" >Java序列化</a>
+                            <p class="content">真是经历</p>
+                        </a>
                     </Timeline-item>
+
                     <Timeline-item>
-                        <a class="time" @click="toITArticle">Linux文件</a>
-                        <p class="content">windows和Linux文件格式</p>
+                        <a @click="showMore">
+                             查看更多(在右边显示文章列表)
+                        </a>
                     </Timeline-item>
-                    <Timeline-item>
-                        <a class="time" @click="toITArticle">灰度发布</a>
-                        <p class="content">何为灰度发布</p>
-                    </Timeline-item>
-                    <Timeline-item>
-                        <a class="time" @click="toITArticle">分布式应用</a>
-                        <p class="content">分布式应用设计</p>
-                    </Timeline-item>
-                    <Timeline-item><a href="#" @click="showMore">查看更多(在右边显示文章列表)</a></Timeline-item>
                 </Timeline>
             </i-col>
             <i-col :span="spanRight">
-                <Card v-show="isShowDetail">
-                    <p slot="title" style="height: inherit;">
-                        <!--<Icon type="ios-barcode-outline" size="40"></Icon>-->
-                       <!-- <span style="font-size: 30px;background-color: #0000f6;">{{ ITTitle}}</span>-->
-                       <!-- <a href="#" slot="extra" @click.prevent="changeLimit">
-                            <Icon type="thumbsup"></Icon>
-                        </a>-->
-                        <span style="font-size: 20px;">{{ ITTitle}}</span>
-                    </p>
-                    <p>{{ITContent}}</p>
-                </Card>
+                <div style="width: 100%" v-show="isShowDetail">
+                    <Card padding="0px" style="background: transparent;border: transparent;border-radius: 30px">
+                        <Card>
+                            <p slot="title" style="height: inherit;">
+                                <!--<Icon type="ios-barcode-outline" size="40"></Icon>-->
+                                <!-- <span style="font-size: 30px;background-color: #0000f6;">{{ ITTitle}}</span>-->
+                                <!-- <a href="#" slot="extra" @click.prevent="changeLimit">
+                                     <Icon type="thumbsup"></Icon>
+                                 </a>-->
+                                <span style="font-size: 20px;">{{ ITTitle}}</span>
+                            </p>
+                            <p>{{ITContent}}</p>
+                        </Card>
+                        <Input style="margin-top: 6px" placeholder="想说点儿"><Button slot="append" icon="compose"></Button></Input>
+                        <Alert type="success"  style="margin-top: 6px"><Tag type="border" color="green">2017-09-20</Tag><Tag color="green">kite</Tag>这篇文章写的真好</Alert>
+                    </Card>
+                </div>
+
 
                 <div v-show="isShowMoreITs" style="width: 100%">
+
                     <a @click="toITArticle('ids')" >
                         <Alert>
                             成功提示文案
@@ -86,14 +90,14 @@
             return {
                 spanLeft: 5,
                 spanRight: 19,
-                value2: '1',
-                ITTitle: '史蒂夫',
-                ITContent:'他是个很棒的人',
-                isShowDetail:true,
-                isShowMoreITs: false
+                ITTitle: '史蒂夫', //文章标题
+                ITContent:'他是个很棒的人',//文章内容
+                isShowDetail:true, //控制具体文章
+                isShowMoreITs: false //文章列表
             }
         },
         methods: {
+            //具体的文章详情
             toITArticle(id) {
                 console.log(id);
                 this.isShowDetail = true;
@@ -101,6 +105,8 @@
                 this.ITTitle = "史蒂夫" + id;
                 this.ITContent = "他是个很棒的人" + id;
             },
+
+            //文章列表
             showMore(){
                 this.isShowDetail = false;
                 this.isShowMoreITs = true;

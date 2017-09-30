@@ -4,8 +4,8 @@ const routers = [
         meta: {
             title: '主页'
         },
-        /*默认Home.vue作为主页*/
-        component: (resolve) => require(['./views/Home.vue'], resolve)
+        /*默认Addoiles.vue作为主页*/
+        component: (resolve) => require(['./views/Addoiles.vue'], resolve)
     },
     {
         path: '/Dreams',
