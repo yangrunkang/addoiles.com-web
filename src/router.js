@@ -26,10 +26,10 @@ const routers = [
         meta: {
             title: '技术沉淀'
         },
-        component: (resolve) => require(['./views/ITTech.vue'], resolve),
+        component: (resolve) => require(['./views/ITTech.vue'], resolve)/*,
         children: [
             { path: '/SoftwareTalk', component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve), name: '主页', hidden: true }
-        ]
+        ]*/
     },
     {
         path: '/SoftwareTalk',
