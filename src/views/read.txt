@@ -11,3 +11,14 @@
 
 · 导航栏使用 <router-link> 会改变Menu的样式,如果不想改变样式 可以加tag="span"
     => http://blog.csdn.net/tanga842428/article/details/53052970
+
+· 关于在v-for循环时候v-model的使用
+  有时候需要循环生成input，用v-model绑定后，利用vuejs操作它，此时我们可以在v-model中写一个数组selected[$index]，
+  这样就可以给不同的input绑定不同的v-model，从而分别操作他们
+
+    => https://github.com/MrZhang123/Vue_project/blob/master/vue1.x/src/components/dataBind.vue
+    => Experience.vue
+
+· 使用vue控件本身的事件时,想要传其他的参数过来可以照这样写 toRates(experience.id,$event)
+    => https://www.zhihu.com/question/49861262
+
