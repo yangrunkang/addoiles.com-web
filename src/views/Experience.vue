@@ -65,30 +65,30 @@
                 <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
             </Alert>
             <!--经历-->
-            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="item in experienceDtoList" key="item.id">
+            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="experience in experienceDtoList" key="experience.id">
                 <Col span="19">
                     <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title">{{item.experience.title}}</p>
-                        <p>{{item.experience.content}}</p>
+                        <p slot="title">{{experience.title}}</p>
+                        <p v-html="experience.content"></p> <!--显示html样式文本-->
                     </Card>
                     <!--评论-->
                     <h2>评论</h2>
-                    <Alert type="success" v-for="comment in item.experience.commentList" key="comment.id">
+                    <Alert type="success" v-for="comment in experience.commentList" key="comment.id" style="margin: 3px auto;">
                         <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
                         {{comment.content}}
                     </Alert>
                 </Col>
                 <Col span="5">
                     <h2>感想+</h2>
-                    <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" />
-                    <Button type="success" long style="margin-top: 5px" @click="toComment(item.experience.id)">评价</Button><!--注意这里的item.experience.id是experienceId-->
-                    <Alert style="margin-top: 5px;margin-bottom: 5px">
+                    <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent" />
+                    <Button type="success" long style="margin-top: 5px" @click="toComment(experience.id)">评价</Button><!--experience.id是experienceId-->
+                    <Alert style="margin: 3px auto;">
                         <strong>评分:</strong>
-                        <Rate allow-half v-model="item.experience.rates"></Rate>
+                        <Rate allow-half v-model="experience.rates"></Rate>
                     </Alert>
-                    <Tag type="border"  color="blue"><strong>作者:</strong>{{item.experience.userName}}</Tag>
-                    <Tag type="border"  color="green"><strong>发布时间:</strong>{{item.experience.createTime}}</Tag>
+                    <Tag type="border"  color="blue"><strong>作者:</strong>{{experience.userName}}</Tag>
+                    <Tag type="border"  color="green"><strong>发布时间:</strong>{{experience.createTime}}</Tag>
                 </Col>
             </Row>
         </div>
@@ -108,7 +108,7 @@
                 <Button type="warning" size="large" long @click="sendExperience('draft')">保存为草稿</Button>
             </div>
             <div slot="footer">
-                <Button type="error" size="large" long @click="clearContent('true')">坚决删除</Button>
+                <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
             </div>
         </Modal>
     </div>
@@ -127,6 +127,8 @@
                 experienceTitle : '',
                 // 经历内容
                 content : '',
+                //评论内容
+                commentContent:'',
                 //编辑器配置
                 editorOption: {
                     // something to config
@@ -153,15 +155,23 @@
             },
             //删除内容
             clearContent(showNotice){
+                if(!this.addoileUtil.validateReq(this.experienceTitle) && !this.addoileUtil.validateReq(this.content)){
+                    //关闭模态框
+                    this.confirmModal = false;
+                    this.$Notice.info({
+                        desc: '您还没写任何东西呢(=@__@=)'
+                    });
+                    return;
+                }
                 //清空标题和内容
                 this.experienceTitle = "";
                 this.content = "";
                 //关闭模态框
                 this.confirmModal = false;
                 //
-                if(showNotice) return;
-                this.$Notice.info({
-                    desc: '内容已清空'
+                if(!showNotice) return;
+                this.$Notice.success({
+                    desc: '遵照您的旨意,已经把内容清空'
                 });
             },
             sendExperience(operation){
@@ -190,7 +200,6 @@
                 params.append('content', experienceContent);
                 this.axios.post("addExperience",params).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data == 1){
-
                         if(operation == 'normal'){
                             this.$Notice.success({
                                 desc: '经历已经分享'
@@ -203,13 +212,14 @@
                         //todo 追加列表
 
                         //清空内容
-                        this.clearContent('false');
+                        this.clearContent(false);
                     }
                 }.bind(this));
             },
             /*去评论*/
             toComment(experienceId){
-                console.log(experienceId);
+                console.log(experienceId + this.commentContent);
+
             },
             /*获取经历*/
             getExperienceList(){
@@ -217,9 +227,11 @@
                     if(response.data.code == 0){
                         var experienceDtoList = response.data.data; //List<ExperienceDto>
                         if(experienceDtoList.length >= 0){
+
                             for(var i = 0; i < experienceDtoList.length; i++){ //ExperienceDto
+                                var experienceDto = experienceDtoList[i];
                                 //评论
-                                var commentList = experienceDtoList[i].commentList;
+                                var commentList = experienceDto.commentList;
                                 var _commentList = [];
                                 if(commentList.length > 0){
                                     for(var j = 0; j < commentList.length; j++){
@@ -232,9 +244,14 @@
                                                 }
                                         );
                                     }
+                                }else{
+                                    _commentList.push({
+                                        createTime:"Now",
+                                        userName:"系统提示",
+                                        content:"本文暂无评论,你的机会来了,快在右边写下你的感想吧"});
                                 }
                                 //经历
-                                var experience = experienceDtoList[i];
+                                var experience = experienceDto.experience;
                                 this.experienceDtoList.push(
                                         {
                                             id:experience.experienceId, //注意这里的id是experienceId
@@ -244,7 +261,7 @@
                                             rates:experience.rates,
                                             createTime:experience.createTime,
                                             commentList:_commentList
-                                });
+                                        });
                             }
                         }
                     }
