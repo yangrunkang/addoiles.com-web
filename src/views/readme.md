@@ -27,3 +27,17 @@
          ]}
     }
 ]
+
+itTechDto:{
+        pithinessList:[
+            {articleId:"8716",title:"1111",subTitle:"1"},
+            {articleId:"873246",title:"2222",subTitle:"2"},
+            {articleId:"34",title:"3333",subTitle:"3"},
+        ],
+        article:{articleId:"8716",title:"1111",content:"1"},
+        articleCommentList:[
+            {userName : '23gg45',createTime:'ffsfsdf',content:'alshfkasnfkashf'},
+            {userName : '23er54',createTime:'51w33434563',content:'asfhsqegksf'},
+            {userName : 'gdfs',createTime:'fdfgfg geqe15',content:'eg'}
+        ]
+}

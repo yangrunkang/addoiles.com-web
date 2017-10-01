@@ -8,9 +8,6 @@
     .content{
         padding-left: 5px;
     }
-
-
-
 </style>
 <template>
     <div class="main-content">
@@ -18,68 +15,49 @@
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Timeline>
 
-                    <Timeline-item>
-                        <a @click="toITArticle('id1')">
-                            <a class="time" >Java序列化</a>
-                            <p class="content">真是经历</p>
+                    <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
+                        <a @click="toITArticle(pithiness.articleId)" >
+                            <a class="time" >{{pithiness.title}}</a>
+                            <p class="content">{{pithiness.subTitle}}</p>
                         </a>
                     </Timeline-item>
 
                     <Timeline-item>
                         <a @click="showMore">
-                             查看更多(在右边显示文章列表)
+                             查看更多
                         </a>
                     </Timeline-item>
                 </Timeline>
             </i-col>
             <i-col :span="spanRight">
                 <div style="width: 100%" v-show="isShowDetail">
-                    <Card  style="background: transparent;border: transparent;border-radius: 30px">
-                        <Card>
-                            <p slot="title" style="height: inherit;">
-                                <!--<Icon type="ios-barcode-outline" size="40"></Icon>-->
-                                <!-- <span style="font-size: 30px;background-color: #0000f6;">{{ ITTitle}}</span>-->
-                                <!-- <a href="#" slot="extra" @click.prevent="changeLimit">
-                                     <Icon type="thumbsup"></Icon>
-                                 </a>-->
-                                <span style="font-size: 20px;">{{ ITTitle}}</span>
-                            </p>
-                            <p>{{ITContent}}</p>
-                        </Card>
-                        <Input style="margin-top: 6px" placeholder="想说点儿"><Button slot="append" icon="compose"></Button></Input>
-                        <Alert type="success"  style="margin-top: 6px"><Tag type="border" color="green">2017-09-20</Tag><Tag color="green">kite</Tag>这篇文章写的真好</Alert>
+                    <Card style="background: transparent;border: transparent;border-radius: 30px">
+                        <div>
+                            <Card>
+                                <p slot="title">
+                                    {{itTechDto.article.title}}
+                                </p>
+                                <p v-html="itTechDto.article.content"></p>
+                            </Card>
+                            <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
+                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
+                            </Input>
+                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" key="comment.id" style="margin-top: 6px">
+                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
+                                <Tag color="green">{{ comment.userName }}</Tag>
+                                {{ comment.content }}
+                            </Alert>
+                        </div>
                     </Card>
                 </div>
-
-
                 <div v-show="isShowMoreITs" style="width: 100%">
-
-                    <a @click="toITArticle('ids')" >
+                    <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" key="article.id" >
                         <Alert>
-                            成功提示文案
-                            <span slot="desc">成功的提示描述文案成功的提示描述文案成功的提示描述文案成功的提示描述文案成功的提示描述文案</span>
+                            {{article.title}}
+                            <span slot="desc">{{article.subTitle}}</span>
                         </Alert>
                     </a>
-
-                    <Alert>
-                        警告提示文案
-                        <template slot="desc">
-                            警告的提示描述文案警告的提示描述文案警告的提示描述文案
-                        </template>
-                    </Alert>
-                    <Alert >
-                        错误提示文案
-                    <span slot="desc">
-                        自定义错误描述文案。
-                     </span>
-                    </Alert>
-                    <Alert>
-                        自定义图标
-                        <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
-                        <template slot="desc">自定义图标文案自定义图标文案自定义图标文案自定义图标文案自定义图标文案</template>
-                    </Alert>
                 </div>
-
             </i-col>
         </Row>
     </div>
@@ -88,32 +66,140 @@
     export default {
         data () {
             return {
-                spanLeft: 5,
-                spanRight: 19,
-                ITTitle: '史蒂夫', //文章标题
-                ITContent:'他是个很棒的人',//文章内容
-                isShowDetail:true, //控制具体文章
-                isShowMoreITs: false //文章列表
+                //左边区域占 5/24
+                spanLeft : 5,
+                //右边区域占 19/24
+                spanRight : 19,
+                //是否显示具体的文章内容
+                isShowDetail : true,
+                //是否显示文章列表
+                isShowMoreITs : false,
+                //技术沉淀
+                itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
+                    pithinessList:[],
+                    article : {
+                        articleId : '',
+                        title : '',
+                        content : ''
+                    },
+                    articleCommentList:[]
+                },
+                //点击 显示更多 显示的列表
+                moreITArticleList : [],
+                //评论内容
+                commentContent : ''
             }
         },
         methods: {
-            //具体的文章详情
-            toITArticle(id) {
-                console.log(id);
+            //控制展示具体的文章详情
+            toITArticle(articleId) {
                 this.isShowDetail = true;
                 this.isShowMoreITs = false;
-                this.ITTitle = "史蒂夫" + id;
-                this.ITContent = "他是个很棒的人" + id;
+                this.initITTech(articleId);
             },
-
-            //文章列表
+            //控制右边区域是否展示文章列表
             showMore(){
                 this.isShowDetail = false;
                 this.isShowMoreITs = true;
+                //展示文章列表
+                this.axios.get('showMoreITTechArticles').then(function (resp) {
+                    if (resp.data.code == 0) {
+                        var dataArray = resp.data.data;
+                        for(var i = 0; i < dataArray.length; i++){
+                            this.moreITArticleList.push({
+                                articleId:dataArray[i].articleId,
+                                title:dataArray[i].title,
+                                subTitle:dataArray[i].subTitle
+                            });
+                        }
+                    }
+                }.bind(this));
+            },
+            showMoreITTechArticles(articleId){
+                this.toITArticle(articleId);
+                this.moreITArticleList = [];
+            },
+            //文章显示
+            initITTech(articleId){
+                console.log(articleId);
+                var url = articleId == null ? "getITTechArticleList" : "getITTechArticleList?articleId=" + articleId;
+                this.axios.get(url).then(function (resp) {
+                    if(resp.data.code == 0){
+                        var data = resp.data.data;
+                        //右侧列表简表
+                        let _pithinessList = [];
+                        for(var i = 0; i < data.pithinessList.length; i++){
+                            var _data = data.pithinessList[i];
+                            _pithinessList.push({
+                                articleId:_data.articleId,
+                                title:_data.title,
+                                subTitle:_data.subTitle
+                            });
+                            if(i == 5){ //简表只显示6条 ,显示更多 全部显示
+                                break;
+                            }
+                        }
+                        //文章评论
+                        let _articleCommentList = [];
+                        for(var i = 0; i < data.articleCommentList.length; i++){
+                            var _data = data.articleCommentList[i];
+                            _articleCommentList.push({userName : _data.userId,createTime:_data.createTime,content:_data.content});
+                        }
+                        //具体文章
+                        var _article = data.article;
+                        //封装
+                        this.itTechDto = {
+                            pithinessList : _pithinessList,
+                            article : {
+                                articleId : _article.articleId,
+                                title : _article.title,
+                                content : _article.content
+                            },
+                            articleCommentList : _articleCommentList
+                        };
+                    }
+                }.bind(this));
+            },
+            toComment(articleId){
+                var commentContent = this.commentContent;
+                /*下面的和Experience.vue不一样,不要头脑热改了..*/
+                if(!this.addoileUtil.validateReq(commentContent)){
+                    this.$Notice.info({
+                        desc: '评论内容为空'
+                    });
+                    return;
+                }
+                //请求后台
+                var params = new URLSearchParams();
+                params.append('userId', '如果没有登录,禁止评论'); //todo 如果没有登录,禁止评论
+                params.append('targetId', articleId);
+                params.append('content', commentContent);
+                this.axios.post('addComment',params).then(function (res) {
+                    var response = res.data;
+                    if(response.code == 0 && response.data == 1){
+                        //弹窗提示
+                        this.$Notice.success({
+                            title: '<h2>评论成功</h2>'
+                        });
+                        //显示评论信息
+                        this.itTechDto.articleCommentList.unshift({
+                            createTime:'刚刚',
+                            userName:'我',
+                            content:commentContent
+                        })
+                        //清空数据
+                        this.commentContent = '';
+                    }else{
+                        this.$Notice.info({
+                            title: '<h2>系统出错了,抱歉</h2>'
+                        });
+                    }
+                }.bind(this));
             }
         },
         mounted () {
-
+            //初始化文章列表 和 显示第一篇文章详情内容
+            this.initITTech(null);
         }
     }
 </script>
