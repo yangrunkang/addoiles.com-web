@@ -95,7 +95,7 @@
                 <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
-                <a href="javascript:;" class="log-btn" @click="login">注册</a>
+                <a href="javascript:;" class="log-btn" @click="register()">注册</a>
             </div>
         </div>
     </div>
@@ -111,16 +111,55 @@
             }
         },
         methods:{
-            //登录逻辑
-            login(){
-                if(this.email!='' && this.password!=''){
-                    this.toLogin();
-                }
-            },
             //登录请求
-            toLogin(){
-                console.log(this.email);
-                console.log(this.password);
+            register(){
+                var userName = this.userName;
+                var email = this.email;
+                var password = this.password;
+                var rePassword = this.rePassword;
+
+                var emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+
+                if(!this.addoileUtil.validateReq(userName)){
+                    this.$Message.warning('用户名不能为空');
+                    return;
+                }
+
+                if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
+                    this.$Message.warning('邮箱格式不正确,请检查');
+                    return;
+                }
+
+                if(!this.addoileUtil.validateReq(password) || password.length < 6){
+                    this.$Message.warning('密码长度不能少于6位');
+                    return;
+                }
+
+                if(rePassword != password){
+                    this.$Message.error('输入的两次密码不一致');
+                    return;
+                }
+
+                this.axios.post("register",{
+                    userName : userName,
+                    email : email,
+                    password : password
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data == true){
+                        this.$Notice.success({
+                            desc: '注册成功,2s后转到登录页'
+                        });
+                        setTimeout(function () {
+                            this.$router.push('/Login');
+                        }.bind(this), 2000);
+                    }else{
+                        this.$Notice.warning({
+                            desc: '注册失败,请检查信息后重新注册'
+                        });
+                    }
+                }.bind(this));
+
+
             }
         }
     }

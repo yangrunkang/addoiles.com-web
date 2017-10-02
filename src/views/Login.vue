@@ -131,9 +131,9 @@
                         this.$Notice.success({
                             desc: '登录成功,2s后转到首页'
                         });
-//                        setTimeout(function () {
-//                            this.$router.push('/');
-//                        }.bind(this), 2000);
+                        setTimeout(function () {
+                            this.$router.push('/');
+                        }.bind(this), 2000);
                     }else{
                         this.$Notice.warning({
                             desc: '登录失败,请检查信息后重新登录'
