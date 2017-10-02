@@ -13,7 +13,7 @@
     <div class="main-content">
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
-                <Timeline>
+                <Timeline pending>
 
                     <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
@@ -24,7 +24,7 @@
 
                     <Timeline-item>
                         <a @click="showMore">
-                             查看更多
+                            <a>查看更多</a>
                         </a>
                     </Timeline-item>
                 </Timeline>
@@ -52,8 +52,9 @@
                 </div>
                 <div v-show="isShowMoreITs" style="width: 100%">
                     <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" key="article.id" >
-                        <Alert>
-                            {{article.title}}
+                        <Alert show-icon>
+                            <h3>{{article.title}}</h3>
+                            <Icon :type="article.iconType" slot="icon"></Icon>
                             <span slot="desc">{{article.subTitle}}</span>
                         </Alert>
                     </a>
@@ -106,10 +107,34 @@
                     if (resp.data.code == 0) {
                         var dataArray = resp.data.data;
                         for(var i = 0; i < dataArray.length; i++){
+
+                            var iconType = "ios-lightbulb-outline";
+                            if(i % 9 == 0){
+                                iconType = "paper-airplane";
+                            }else if(i % 9 == 1){
+                                iconType = "quote";
+                            }else if(i % 9 == 2){
+                                iconType = "waterdrop";
+                            }else if(i % 9 == 3){
+                                iconType = "ios-analytics-outline";
+                            }else if(i % 9 == 4){
+                                iconType = "ios-wineglass-outline";
+                            }else if(i % 9 == 5){
+                                iconType = "android-checkbox-outline-blank";
+                            }else if(i % 9 == 6){
+                                iconType = "fireball";
+                            }else if(i % 9 == 7){
+                                iconType = "flame";
+                            }else if(i % 9 == 8){
+                                iconType = "ios-americanfootball-outline";
+                            }else{
+                                iconType = "earth";
+                            }
                             this.moreITArticleList.push({
                                 articleId:dataArray[i].articleId,
                                 title:dataArray[i].title,
-                                subTitle:dataArray[i].subTitle
+                                subTitle:dataArray[i].subTitle,
+                                iconType:iconType
                             });
                         }
                     }
@@ -121,7 +146,6 @@
             },
             //文章显示
             initITTech(articleId){
-                console.log(articleId);
                 var url = articleId == null ? "getITTechArticleList" : "getITTechArticleList?articleId=" + articleId;
                 this.axios.get(url).then(function (resp) {
                     if(resp.data.code == 0){

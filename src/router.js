@@ -32,12 +32,23 @@ const routers = [
         ]*/
     },
     {
+        path: '/OilRobot',
+        meta: {
+            title: 'OilRobot'
+        },
+        component: (resolve) => require(['./views/OilRobot.vue'], resolve)/*,
+     children: [
+     { path: '/SoftwareTalk', component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve), name: '主页', hidden: true }
+     ]*/
+    }
+    /*,
+    {
         path: '/SoftwareTalk',
         meta: {
             title: '软件评测'
         },
         component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve)
-    }/*, TODO 抓取,现在不做
+    }*//*, TODO 抓取,现在不做
     {
         path: '/LiZhiFM',
         meta: {

@@ -17,7 +17,12 @@ Vue.use(Util);
 Vue.prototype.axios = axios;
 axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
 
+//工具类
 Vue.prototype.addoileUtil = Util;
+
+//图灵机器人
+Vue.prototype.tulingAPI = "http://www.tuling123.com/openapi/api";
+Vue.prototype.tulingKey = "cce3e88c3a84482794a41a114df5c027";//已加密
 
 Vue.config.productionTip = false; // 关闭生产模式下给出的提示
 
