@@ -4,7 +4,19 @@
 
 · 可以加入互动,问答
 
-
+· 涉及的到技术栈
+    vue
+    vuex
+    vue-router
+    axios
+    iview
+    spring
+    springmvc
+        aop
+    mysql
+    mybatis
+    vue-quill-editor
+    webpack
 
 
 

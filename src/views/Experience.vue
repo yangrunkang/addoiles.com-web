@@ -197,8 +197,17 @@
                     });
                     return;
                 }
+                //如果没有登录,禁止添加分享经历
+                var userId = this.$store.getters.getUserId;
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h2>Hi,您好,访客添加分享经历</h2>'
+                    });
+                    return;
+                }
                 //调用服务端接口
                 this.axios.post("addExperience",{
+                    userId,userId,
                     title : experienceTitle,
                     content : experienceContent,
                     deleteStatus : deleteStatus
@@ -229,9 +238,17 @@
                     });
                     return;
                 }
+                //如果没有登录,禁止评论
+                var userId = this.$store.getters.getUserId;
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h2>Hi,您好,访客不允许评论</h2>'
+                    });
+                    return;
+                }
                 //请求后台
                 this.axios.post('addComment',{
-                    userId : '如果没有登录,禁止评论',//todo 如果没有登录,禁止评论
+                    userId : userId,
                     targetId : experienceId,
                     content : this.commentContent[index]
                 }).then(function (res) {
@@ -246,7 +263,7 @@
                             createTime:'刚刚',
                             userName:'我',
                             content:this.commentContent[index]
-                        })
+                        });
                         //清空数据
                         this.commentContent[index] = '';
                     }else{
@@ -289,7 +306,7 @@
                                         _commentList.push(
                                                 {
                                                     createTime:comment.createTime,
-                                                    userName:comment.userId,
+                                                    userName:comment.userName,
                                                     content:comment.content
                                                 }
                                         );

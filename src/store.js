@@ -7,10 +7,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        /*管理用户状态*/
+        /*管理用户*/
         userName: '',
-        userId: '',
-        sessionId: ''
+        userId: ''
     },
     mutations: {
         setUserName (state, userName) {

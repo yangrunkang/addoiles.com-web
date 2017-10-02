@@ -73,10 +73,6 @@
         0%{left:100px;}
         100%{left:-70px;}
     }
-
-
-
-
 </style>
 <template>
     <div class="main-content">
@@ -131,6 +127,12 @@
                         this.$Notice.success({
                             desc: '登录成功,2s后转到首页'
                         });
+                        //提交到仓库
+                        this.$store.commit('setUserName',resp.data.data.userName);
+                        this.$store.commit('setUserId',resp.data.data.userId);
+                        //todo 还要显示注销按钮,去掉登录和注册,直接操作navList即可,考虑是否交给store管理
+                        //todo 看看能不能把导航栏也放在store中管理
+                        //页面跳转
                         setTimeout(function () {
                             this.$router.push('/');
                         }.bind(this), 2000);

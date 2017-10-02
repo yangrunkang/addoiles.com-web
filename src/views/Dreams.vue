@@ -71,9 +71,6 @@
                     this.$Message.warning("一个完整的梦想有助于你梦想成真哦",3);
                     return;
                 }
-                if(dreamTitle == null || dreamContent == null || dreamTitle.trim() == '' || dreamContent.trim() == ''){
-
-                }
                 //发送至服务器
                 this.axios.post('addDream',{
                     title:dreamTitle,

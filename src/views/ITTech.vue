@@ -167,7 +167,7 @@
                         let _articleCommentList = [];
                         for(var i = 0; i < data.articleCommentList.length; i++){
                             var _data = data.articleCommentList[i];
-                            _articleCommentList.push({userName : _data.userId,createTime:_data.createTime,content:_data.content});
+                            _articleCommentList.push({userName : _data.userName,createTime:_data.createTime,content:_data.content});
                         }
                         //具体文章
                         var _article = data.article;
@@ -193,9 +193,17 @@
                     });
                     return;
                 }
+                //如果没有登录,禁止评论
+                var userId = this.$store.getters.getUserId;
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h2>Hi,您好,访客不允许评论</h2>'
+                    });
+                    return;
+                }
                 //请求后台
                 this.axios.post('addComment',{
-                    userId:'如果没有登录,禁止评论',//todo 如果没有登录,禁止评论
+                    userId:userId,
                     targetId:articleId,
                     content:commentContent
                 }).then(function (res) {
