@@ -93,7 +93,7 @@
             <div class="log-email">
                 <input type="text" placeholder="输入邮箱登录" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <a href="javascript:;" class="log-btn" @click="login">注册</a>
+                <a href="javascript:;" class="log-btn" @click="toLogin">登录</a>
             </div>
         </div>
     </div>
@@ -107,16 +107,40 @@
             }
         },
         methods:{
-            //登录逻辑
-            login(){
-                if(this.email!='' && this.password!=''){
-                    this.toLogin();
-                }
-            },
-            //登录请求
+            //登录
             toLogin(){
-                console.log(this.email);
-                console.log(this.password);
+                var email = this.email;
+                var password = this.password;
+
+                var emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
+                    this.$Message.warning('邮箱格式不正确,请检查');
+                    return;
+                }
+
+                if(!this.addoileUtil.validateReq(password) || password.length < 6){
+                    this.$Message.warning('密码长度不能少于6位');
+                    return;
+                }
+
+                this.axios.post("login",{
+                    email : email,
+                    password : password
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data.userId != null){
+                        this.$Notice.success({
+                            desc: '登录成功,2s后转到首页'
+                        });
+//                        setTimeout(function () {
+//                            this.$router.push('/');
+//                        }.bind(this), 2000);
+                    }else{
+                        this.$Notice.warning({
+                            desc: '登录失败,请检查信息后重新登录'
+                        });
+                    }
+                }.bind(this));
+
             }
         }
     }

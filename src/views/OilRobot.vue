@@ -53,12 +53,12 @@
                 var userId = "current_user";
 
                 //
-                var params = new URLSearchParams();
-                params.append('key', this.tulingKey);
-                params.append('info', this.chatContent);
-                params.append('api', this.tulingAPI);
-                params.append('userid', userId); //谁在使用
-                this.axios.post("chat",params).then(function (resp) {
+                this.axios.post("chat",{
+                    key:this.tulingKey,
+                    info:this.chatContent,
+                    api:this.tulingAPI,
+                    userid:this.userId
+                }).then(function (resp) {
                     //这里的OilRobot不变 - From Server
                     this.historyChatList.unshift({userId:"OilRobot",userName:"OilRobot",chatContent:resp.data.data});
                 }.bind(this));

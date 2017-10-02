@@ -178,11 +178,11 @@
             },
             sendExperience(operation){
                 // 请求对象
-                var params = new URLSearchParams();
+                var deleteStatus = 0;
                 if(operation == 'normal'){
-                    params.append('deleteStatus',0);
+                    deleteStatus = 0;
                 }else if(operation == 'draft'){
-                    params.append('deleteStatus',1);
+                    deleteStatus = 1;
                 }else{
                     this.$Notice.error({desc: '不好意思,程序员失误了'});
                 }
@@ -198,9 +198,11 @@
                     return;
                 }
                 //调用服务端接口
-                params.append('title', experienceTitle);
-                params.append('content', experienceContent);
-                this.axios.post("addExperience",params).then(function (resp) {
+                this.axios.post("addExperience",{
+                    title : experienceTitle,
+                    content : experienceContent,
+                    deleteStatus : deleteStatus
+                }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data == 1){
                         if(operation == 'normal'){
                             this.$Notice.success({
@@ -228,11 +230,11 @@
                     return;
                 }
                 //请求后台
-                var params = new URLSearchParams();
-                params.append('userId', '如果没有登录,禁止评论'); //todo 如果没有登录,禁止评论
-                params.append('targetId', experienceId);
-                params.append('content', this.commentContent[index]);
-                this.axios.post('addComment',params).then(function (res) {
+                this.axios.post('addComment',{
+                    userId : '如果没有登录,禁止评论',//todo 如果没有登录,禁止评论
+                    targetId : experienceId,
+                    content : this.commentContent[index]
+                }).then(function (res) {
                     var response = res.data;
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
@@ -262,10 +264,10 @@
                     title : '感谢您的评分',
                     desc : '系统将根据平局值显示结果'
                 });
-                var params = new URLSearchParams();
-                params.append('experienceId', experienceId);
-                params.append('rate', rate);
-                this.axios.post("updateRates",params).then(function (response) {
+                this.axios.post("updateRates",{
+                    experienceId:experienceId,
+                    rate:rate
+                }).then(function (response) {
                     //nothing
                 })
             },

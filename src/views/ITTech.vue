@@ -194,11 +194,11 @@
                     return;
                 }
                 //请求后台
-                var params = new URLSearchParams();
-                params.append('userId', '如果没有登录,禁止评论'); //todo 如果没有登录,禁止评论
-                params.append('targetId', articleId);
-                params.append('content', commentContent);
-                this.axios.post('addComment',params).then(function (res) {
+                this.axios.post('addComment',{
+                    userId:'如果没有登录,禁止评论',//todo 如果没有登录,禁止评论
+                    targetId:articleId,
+                    content:commentContent
+                }).then(function (res) {
                     var response = res.data;
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示

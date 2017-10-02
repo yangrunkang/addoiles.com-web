@@ -22,3 +22,5 @@
 · 使用vue控件本身的事件时,想要传其他的参数过来可以照这样写 toRates(experience.id,$event)
     => https://www.zhihu.com/question/49861262
 
+· axios发送post请求，springMVC接收不到数据问题
+    => http://www.jianshu.com/p/042632dec9fb

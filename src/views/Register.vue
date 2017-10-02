@@ -95,7 +95,7 @@
                 <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
-                <a href="javascript:;" class="log-btn" @click="login">登录</a>
+                <a href="javascript:;" class="log-btn" @click="login">注册</a>
             </div>
         </div>
     </div>

@@ -74,11 +74,11 @@
                 if(dreamTitle == null || dreamContent == null || dreamTitle.trim() == '' || dreamContent.trim() == ''){
 
                 }
-                var params = new URLSearchParams();
-                params.append('title', dreamTitle);
-                params.append('content', dreamContent);
                 //发送至服务器
-                this.axios.post('addDream',params).then(function (res) {
+                this.axios.post('addDream',{
+                    title:dreamTitle,
+                    content:dreamContent
+                }).then(function (res) {
                     var response = res.data;
                     if(response.code == 0 && response.data == 1){
                         this.dreamList.unshift({dreamTitle:dreamTitle,dreamContent:dreamContent});
