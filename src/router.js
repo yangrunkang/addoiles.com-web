@@ -26,10 +26,7 @@ const routers = [
         meta: {
             title: '技术沉淀'
         },
-        component: (resolve) => require(['./views/ITTech.vue'], resolve)/*,
-        children: [
-            { path: '/SoftwareTalk', component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve), name: '主页', hidden: true }
-        ]*/
+        component: (resolve) => require(['./views/ITTech.vue'], resolve)
     },
     {
         path: '/OilRobot',
@@ -39,11 +36,18 @@ const routers = [
         component: (resolve) => require(['./views/OilRobot.vue'], resolve)
     },
     {
-        path: '/UserInfo',
+        path: '/Login',
         meta: {
-            title: '用户中心'
+            title: '登录'
         },
-        component: (resolve) => require(['./views/UserInfo.vue'], resolve)
+        component: (resolve) => require(['./views/Login.vue'], resolve)
+    },
+    {
+        path: '/Register',
+        meta: {
+            title: '注册'
+        },
+        component: (resolve) => require(['./views/Register.vue'], resolve)
     }
 
 
