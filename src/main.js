@@ -1,4 +1,5 @@
 import Vue from 'vue'; //引入vue模块
+import store from './store';//集中式管理仓库
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import axios from 'axios';
@@ -42,11 +43,12 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, next) => {
 	iView.LoadingBar.finish();
-	window.scrollTo(0, 0);
+	window.scrollTo(0, 0); 
 });
 
 new Vue({ // 创建一个 Vue 的根实例
 	el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
+	store: store,//使用仓库
 	router: router, // 注入路由配置
 	render: h => h(Index)
 });

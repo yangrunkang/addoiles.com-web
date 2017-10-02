@@ -36,27 +36,16 @@ const routers = [
         meta: {
             title: 'OilRobot'
         },
-        component: (resolve) => require(['./views/OilRobot.vue'], resolve)/*,
-     children: [
-     { path: '/SoftwareTalk', component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve), name: '主页', hidden: true }
-     ]*/
-    }
-    /*,
+        component: (resolve) => require(['./views/OilRobot.vue'], resolve)
+    },
     {
-        path: '/SoftwareTalk',
+        path: '/UserInfo',
         meta: {
-            title: '软件评测'
+            title: '用户中心'
         },
-        component: (resolve) => require(['./views/SoftwareTalk.vue'], resolve)
-    }*//*, TODO 抓取,现在不做
-    {
-        path: '/LiZhiFM',
-        meta: {
-            title: '程序员的生活记录'
-        },
-        component: (resolve) => require(['./views/LiZhiFM.vue'], resolve)
+        component: (resolve) => require(['./views/UserInfo.vue'], resolve)
     }
-*/
+
 
 
 ];
