@@ -151,6 +151,12 @@
             changeSwitch(status){
                 if(status){
                     this.isShowEditor = true;
+                    var userId = sessionStorage.getItem("userId");
+                    if(!this.addoileUtil.validateReq(userId)){
+                        this.$Notice.info({
+                            desc: '<h3>Hi,您好,访客不允许分享经历,登录后可以分享哦</h3>'
+                        });
+                    }
                 }else if(!status){
                     this.isShowEditor = false;
                 }
@@ -201,7 +207,7 @@
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
-                        title: '<h2>Hi,您好,访客添加分享经历</h2>'
+                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
                     });
                     return;
                 }

@@ -8,13 +8,19 @@
     .content{
         padding-left: 5px;
     }
+
+    /*编辑器*/
+    #editorDiv {
+        /*margin: 0 auto;*/
+    }
+
 </style>
 <template>
     <div class="main-content">
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
+                <Button type="info" size="large" long @click="writeITArticle()" style="width: 70%;margin-bottom: 40px" >写技术文章</Button>
                 <Timeline pending>
-
                     <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
                             <a class="time" >{{pithiness.title}}</a>
@@ -28,8 +34,30 @@
                         </a>
                     </Timeline-item>
                 </Timeline>
+
             </i-col>
             <i-col :span="spanRight">
+
+                <div id="editorDiv" v-show="isShowEditor" style="height: 1010px;">
+                    <Card class="card" style="height: 998px;">
+                        <p slot="title" style="height: auto;font-size: 18px">
+                            篇名:
+                            <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
+                            <Button type="info" shape="circle" @click="sendITArticle">发表</Button>
+                            <Button type="error" shape="circle" >清空内容</Button></p>
+                        <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
+                            副标题:
+                            <Input v-model="ITSubTitle" title=""  size="small" type="text"  style="width: 70%"/>
+                        </p>
+                        <!--https://surmon-china.github.io/vue-quill-editor -->
+                        <quill-editor ref="myTextEditor"
+                                      v-model="ITContent"
+                                      :options="editorOption"
+                                      @focus="onEditorFocus($event)" style="height: 800px">
+                        </quill-editor>
+                    </Card>
+                </div>
+
                 <div style="width: 100%" v-show="isShowDetail">
                     <Card style="background: transparent;border: transparent;border-radius: 30px">
                         <div>
@@ -50,6 +78,7 @@
                         </div>
                     </Card>
                 </div>
+
                 <div v-show="isShowMoreITs" style="width: 100%">
                     <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" key="article.id" >
                         <Alert show-icon>
@@ -59,11 +88,18 @@
                         </Alert>
                     </a>
                 </div>
+
             </i-col>
         </Row>
     </div>
 </template>
 <script>
+
+    import Vue from 'vue';
+    //安装vue-quill-editor富文本编辑器
+    import VueQuillEditor from 'vue-quill-editor';
+    Vue.use(VueQuillEditor);
+
     export default {
         data () {
             return {
@@ -75,6 +111,8 @@
                 isShowDetail : true,
                 //是否显示文章列表
                 isShowMoreITs : false,
+                //是否显示编辑器
+                isShowEditor : false,
                 //技术沉淀
                 itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
                     pithinessList:[],
@@ -88,7 +126,17 @@
                 //点击 显示更多 显示的列表
                 moreITArticleList : [],
                 //评论内容
-                commentContent : ''
+                commentContent : '',
+                //编辑器配置
+                editorOption: {
+                    placeholder: '是时候展示真正的技术了\n自己脑补背景音乐'
+                },
+                // IT文章内容
+                ITContent : '',
+                // IT文章标题
+                ITTitle:'',
+                // IT副标题
+                ITSubTitle :''
             }
         },
         methods: {
@@ -96,12 +144,14 @@
             toITArticle(articleId) {
                 this.isShowDetail = true;
                 this.isShowMoreITs = false;
+                this.isShowEditor = false;
                 this.initITTech(articleId);
             },
             //控制右边区域是否展示文章列表
             showMore(){
                 this.isShowDetail = false;
                 this.isShowMoreITs = true;
+                this.isShowEditor = false;
                 //展示文章列表
                 this.axios.get('showMoreITTechArticles').then(function (resp) {
                     if (resp.data.code == 0) {
@@ -231,6 +281,74 @@
                         });
                     }
                 }.bind(this));
+            },
+            //写IT文章
+            writeITArticle(){
+                this.isShowEditor = true;
+                this.isShowDetail = false;
+                this.isShowMoreITs = false;
+
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h3>Hi,您好,访客不允许下发表IT文章,登录后展现您真正的技术哦</h3>'
+                    });
+                }
+
+            },
+            //聚焦到编辑器
+            onEditorFocus(editor) {
+            },
+            //发表IT文章
+            sendITArticle(){
+                var itTitle = this.ITTitle;
+                var itSubTitle = this.ITSubTitle;
+                var itContent = this.ITContent;
+
+                if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
+                        || !this.addoileUtil.validateReq(itSubTitle)){
+                    this.$Notice.warning({
+                        desc: 'IT技术文章的标题、副标题或者内容为空'
+                    });
+                    return;
+                }
+                //如果没有登录,禁止添加分享经历
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h2>Hi,您好,访客不允许下发表IT文章</h2>'
+                    });
+                    return;
+                }
+                //
+                this.axios.post("addArticle",{
+                    title : itTitle,
+                    subTitle : itSubTitle,
+                    content : itContent,
+                    articleType : 2
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data > 0){
+                        this.$Notice.success({
+                            desc: 'IT技术文章分享成功,2s后刷新本页面'
+                        });
+                        setTimeout(function () {
+                            this.$router.go(0);
+                        }.bind(this), 2000);
+                        this.clearContent();
+                    }
+                }.bind(this));
+
+            },
+            //清空内容
+            clearContent(){
+                this.ITContent = '';
+                this.ITTitle = '';
+                this.ITSubTitle ='';
+            }
+        },
+        computed: {
+            editor() {
+                return this.$refs.myTextEditor.quillEditor
             }
         },
         mounted () {

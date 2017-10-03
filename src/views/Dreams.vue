@@ -32,14 +32,14 @@
                 <li v-for="item in dreamList" key="item.id">
                     <Card style="background: transparent;border-radius: 30px;margin-bottom: 6px;margin-left: 6px" >
                         <div style="margin: inherit">
-                            <Alert :type="item.alertType">
-                                {{item.dreamTitle}}
+                            <Alert :type="item.alertType" style="height: inherit">
+                                <strong>{{item.dreamTitle}}</strong>
                                 <span slot="desc">{{item.dreamContent}}</span>
                             </Alert>
-                            <div>
+<!--                            <div>
                                 <Button type="info" shape="circle">为Ta加油</Button>
                                 <Button type="success" shape="circle">同理想</Button>
-                            </div>
+                            </div>-->
                         </div>
                     </Card>
                 </li>
