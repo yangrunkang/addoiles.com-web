@@ -15,15 +15,12 @@ export default new Vuex.Store({
     },
     mutations: {
         setUserName (state, userName) {
-            sessionStorage.removeItem("userName");
             sessionStorage.setItem("userName",userName);
         },
         setUserId (state, userId) {
-            sessionStorage.removeItem("userId");
             sessionStorage.setItem("userId",userId);
         },
         setNavList (state, navList) {
-            sessionStorage.removeItem("navList");
             sessionStorage.setItem("navList",JSON.stringify(navList));
         }
     },

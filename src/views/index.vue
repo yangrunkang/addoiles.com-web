@@ -76,7 +76,6 @@
                             _navList.push({navRouter : resp[i].navRouter , navIcon : resp[i].navIcon, navName : resp[i].navName});
                         }
                         //导航栏针对每个用户存储在store(到了仓库后,我把它放在session中了)
-                        this.$store.commit('setNavList',[]); //notice: is setNavList ,not to write navList!!
                         this.$store.commit('setNavList',_navList); //notice: is setNavList ,not to write navList!!
                         //从仓库中获取
                         this.navList = this.$store.getters.getNavList;//notice: not getNavList()
@@ -90,7 +89,7 @@
                 }else if(this.$store.getters.getUserId === activeRouterUrl){//如果当前用户点击了自己的名字
                     this.$Modal.success({
                                 title: '来自网站的问候',
-                                content: '<h4>祝您:</h4><h3>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h3>',
+                                content: '<h3>祝您:</h3><h2>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h2>',
                                 okText: '好嘞',
                                 cancelText: '' //为空就不显示按钮
                     });
