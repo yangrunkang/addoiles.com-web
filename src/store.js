@@ -14,12 +14,11 @@ export default new Vuex.Store({
     mutations: {
         setUserName (state, userName) {
             state.userName = userName;
+            sessionStorage.setItem("userName",userName);
         },
         setUserId (state, userId) {
             state.userId = userId;
-        },
-        setSessionId (state, sessionId) {
-            state.sessionId = sessionId;
+            sessionStorage.setItem("userId",userId);
         }
     },
     getters: {
@@ -28,9 +27,6 @@ export default new Vuex.Store({
         },
         getUserId: state => {
             return state.userId;
-        },
-        getSessionId: state => {
-            return state.sessionId;
         }
     }
 });

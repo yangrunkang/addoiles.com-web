@@ -19,12 +19,12 @@
 </style>
 <template>
     <div>
-        <Affix :offset-bottom="10" >
-            <span class="demo-affix" v-show="isShowAffix">
+        <Affix :offset-bottom="10" style="background-color: transparent">
+            <span class="demo-affix" v-show="isShowAffix" style="background-color: transparent">
                 <Input placeholder="写下你的梦想" v-model="dreamTitle">
                     <Button slot="append" @click="toDreamWall">许下</Button>
                 </Input>
-                <Input style="padding-top: 5px"  type="textarea" :rows="3" placeholder="例如:我的梦想是实现自己的价值,做自己喜欢做的事情" v-model="dreamContent"/>
+                <Input style="padding-top: 5px;"  type="textarea" :rows="3" placeholder="例如:我的梦想是实现自己的价值,做自己喜欢做的事情" v-model="dreamContent"/>
             </span>
         </Affix>
         <div class="main-content">

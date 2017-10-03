@@ -167,7 +167,11 @@
                         let _articleCommentList = [];
                         for(var i = 0; i < data.articleCommentList.length; i++){
                             var _data = data.articleCommentList[i];
-                            _articleCommentList.push({userName : _data.userName,createTime:_data.createTime,content:_data.content});
+                            _articleCommentList.push({
+                                userName : _data.userName,
+//                                createTime:this.moment(_data.createTime).format('YYYY-MM-DD HH:mm:ss'),
+                                createTime:this.addoileUtil.formatUnixTime(_data.createTime),
+                                content:_data.content});
                         }
                         //具体文章
                         var _article = data.article;
@@ -194,7 +198,7 @@
                     return;
                 }
                 //如果没有登录,禁止评论
-                var userId = this.$store.getters.getUserId;
+                var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         title: '<h2>Hi,您好,访客不允许评论</h2>'

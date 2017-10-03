@@ -198,7 +198,7 @@
                     return;
                 }
                 //如果没有登录,禁止添加分享经历
-                var userId = this.$store.getters.getUserId;
+                var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         title: '<h2>Hi,您好,访客添加分享经历</h2>'
@@ -239,7 +239,7 @@
                     return;
                 }
                 //如果没有登录,禁止评论
-                var userId = this.$store.getters.getUserId;
+                var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         title: '<h2>Hi,您好,访客不允许评论</h2>'
@@ -305,7 +305,7 @@
                                         var comment = commentList[j];
                                         _commentList.push(
                                                 {
-                                                    createTime:comment.createTime,
+                                                    createTime:this.addoileUtil.formatUnixTime(comment.createTime),
                                                     userName:comment.userName,
                                                     content:comment.content
                                                 }

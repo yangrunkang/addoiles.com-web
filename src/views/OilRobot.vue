@@ -49,7 +49,11 @@
         },
         methods: {
             toChat(){
-                this.historyChatList.unshift({userId:"用户登录后的名字",userName:"用户登录后的名字",chatContent:this.chatContent})
+                this.historyChatList.unshift({
+                    userId:sessionStorage.getItem("userId"),
+                    userName:sessionStorage.getItem("userName"),
+                    chatContent:this.chatContent
+                })
                 var userId = "current_user";
 
                 //
