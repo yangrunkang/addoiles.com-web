@@ -67,11 +67,11 @@
             <div class="hot-msg">
                 <h2>热门动弹</h2>
                 <Card :bordered="true" >
-                    <Button type="success" long style="margin-bottom: 5px">发表动弹</Button>
+                    <Button type="success" long style="margin-bottom: 5px" @click="addHots">发表动弹</Button>
 
                     <p>
-                        <Input placeholder="热点提炼" style="margin-bottom: 5px"/>
-                        <Input type="textarea" :rows="4" placeholder="热门描述" />
+                        <Input placeholder="热点标题" style="margin-bottom: 5px" v-model="hotTitle"/>
+                        <Input type="textarea" :rows="4" placeholder="热门描述" v-model="hotContent"/>
                     </p>
                 </Card>
                 <br />
@@ -101,7 +101,9 @@
                     trigger: 'click',
                     arrow: 'hover'
                 },
-                hotsList:[]
+                hotsList:[],
+                hotTitle : '',
+                hotContent : ''
             }
         },
         methods: {
@@ -114,6 +116,35 @@
                         }
                     }
                 }.bind(this));
+            },
+            addHots(){
+                var hotTitle = this.hotTitle;
+                var hotContent = this.hotContent;
+                if(!this.addoileUtil.validateReq(hotTitle) || !this.addoileUtil.validateReq(hotContent)){
+                    this.$Message.warning("热门标题或者内容不能空",3);
+                    return;
+                }
+
+                this.axios.post('addHots',{
+                    title:hotTitle,
+                    content:hotContent,
+                    userId:this.$store.getters.getUserId
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data > 0){
+                        this.$Notice.info({
+                            title: '<h3>动弹成功</h3>'
+                        });
+                        this.hotsList.unshift({title : hotTitle , content : hotContent});
+                        //清空数据
+                        this.hotTitle = '';
+                        this.hotContent = '';
+                    }else{
+                        this.$Notice.warning({
+                            title: '<h3>动弹失败</h3>'
+                        });
+                    }
+                }.bind(this));
+
             }
         },
         mounted() {
