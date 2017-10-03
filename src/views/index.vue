@@ -45,7 +45,7 @@
                 <p>退出的话,记得下次再来光顾哦^^</p>
             </div>
             <div slot="footer">
-                <Button type="success" size="large" long  @click="logOutCurrent(true)">我在逛会儿</Button>
+                <Button type="success" size="large" long  @click="logOutCurrent(true)">我再逛会儿</Button>
             </div>
             <div slot="footer" style="margin-top: 4px;">
                 <Button type="warning" size="large" long  @click="logOutCurrent(false)">退出油号</Button>
