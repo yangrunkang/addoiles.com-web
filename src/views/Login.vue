@@ -95,6 +95,7 @@
     </div>
 </template>
 <script>
+
     export default {
         data(){
             return {
@@ -130,12 +131,39 @@
                         //提交到仓库
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
-                        //todo 还要显示注销按钮,去掉登录和注册,直接操作navList即可,考虑是否交给store管理
-                        //todo 看看能不能把导航栏也放在store中管理
+                        //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         //页面跳转
                         setTimeout(function () {
                             this.$router.push('/');
                         }.bind(this), 2000);
+                        //改变到那个导航栏
+
+                        //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
+                        var navList = this.$store.getters.getNavList;
+                        var _count = 0; //计数,到2就跳出循环,以防程序多跑
+                        for(var i = 0; i < navList.length; i++){
+                            var perNav = navList[i];
+                            //移除注册/登录导航按钮
+                            if(perNav.navName === '注册' || perNav.navName === '登录'){
+                                navList.splice(i,i+1); //i:当前元素index,第二个参数是当前坐标i后的几个元素删除
+                                _count++;
+                            }
+                            if(_count == 1){//在index.vue onSelect控制,操作仓库  debug result is 1
+                                //显示当前用户
+                                navList.push({
+                                    navRouter :this.$store.getters.getUserId ,
+                                    navIcon : 'person',
+                                    navName : this.$store.getters.getUserName});
+                                //显示退出按钮
+                                navList.push({
+                                    navRouter :'logOutCurrent',
+                                    navIcon : 'power',
+                                    navName : '退出'});
+                                break;
+                            }
+                        }
+                        this.$store.commit('setNavList',navList);
+
                     }else{
                         this.$Notice.warning({
                             desc: '登录失败,请检查信息后重新登录'
