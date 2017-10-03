@@ -15,24 +15,28 @@
 <!--页面整体框架-->
 <template>
 	<div class="layout">
-        <!--导航栏部分 class="layout-nav"-->
 
-		    <Menu mode="horizontal" theme="dark" @on-select="onSelect">
-                <div class="layout-nav">
-                    <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
-                            <Icon :type="item.navIcon"></Icon>
-                            {{ item.navName }}
-                    </Menu-item>
-                </div>
-		    </Menu>
+        <Menu mode="horizontal" theme="dark" @on-select="onSelect">
+            <div class="layout-nav">
+                <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
+                        <Icon :type="item.navIcon"></Icon>
+                        {{ item.navName }}
+                </Menu-item>
+            </div>
+        </Menu>
 
 
         <!--中间视图部分-->
         <router-view></router-view><!--这个是显示路由的视图结果-->
 
         <!--返回到顶部-->
-        <Back-top :height="200" :bottom="50">
+        <Back-top :height="200" :bottom="100">
             <div class="top">返回顶端</div>
+        </Back-top>
+
+        <!--反馈及建议图钉-->
+        <Back-top :height="200" :bottom="50" @on-click="suggest">
+            <div class="top">反馈及建议</div>
         </Back-top>
 
         <!--确认注销模态框-->
@@ -86,7 +90,7 @@
             onSelect(activeRouterUrl){
                 if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
-                }else if(this.$store.getters.getUserId === activeRouterUrl){//如果当前用户点击了自己的名字
+                }else if('BestWishesToUser' === activeRouterUrl){
                     this.$Modal.success({
                                 title: '来自网站的问候',
                                 content: '<h3>祝您:</h3><h2>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h2>',
@@ -107,7 +111,9 @@
                     //会调用index.vue  mounted() 方法,因为已经sessionStorage.clear(),所以会当成新用户
                     this.$router.go(0);
                 }
-
+            },
+            suggest(){
+                this.$router.push('/Suggest');
             }
         },
         mounted() {

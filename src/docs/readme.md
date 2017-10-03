@@ -5,13 +5,13 @@
 · 可以加入互动,问答
 
 · 涉及的到技术栈
+    前后端分离
     vue
     vuex
     vue-router
     axios
     iview
-    moment
-    java
+    后端语言:java
     spring
     springmvc
     mysql

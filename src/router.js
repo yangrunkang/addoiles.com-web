@@ -48,6 +48,13 @@ const routers = [
             title: '注册'
         },
         component: (resolve) => require(['./views/Register.vue'], resolve)
+    },
+    {
+        path: '/Suggest',
+        meta: {
+            title: '反馈及建议'
+        },
+        component: (resolve) => require(['./views/Suggest.vue'], resolve)
     }
 
 

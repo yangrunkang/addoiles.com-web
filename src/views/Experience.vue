@@ -34,7 +34,7 @@
 <template>
     <div class="experience">
 
-        <!--图钉-->
+        <!--显示编辑器图钉-->
         <Affix :offset-top="10">
             <span class="switch-affix"><h2 style="color: white">显示编辑器&nbsp;<i-switch size='large' @on-change="changeSwitch"><span slot='open'>显示</span><span slot='close'>关闭</span></i-switch></h2></span>
         </Affix>
