@@ -100,15 +100,15 @@
             </p>
             <div style="text-align:center;font-size: 18px">
                 <p>如果你写了很多内容,慎重考虑一下.</p>
-                <p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>
+                <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
             </div>
             <div slot="footer">
                 <Button type="info" size="large" long @click="sendExperience('normal')">立即分享</Button>
             </div>
-            <div slot="footer" style="margin: 4px auto;">
+<!--            <div slot="footer" style="margin: 4px auto;">
                 <Button type="warning" size="large" long @click="sendExperience('draft')">保存为草稿</Button>
-            </div>
-            <div slot="footer">
+            </div>-->
+            <div slot="footer" style="margin: 4px auto;">
                 <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
             </div>
         </Modal>
