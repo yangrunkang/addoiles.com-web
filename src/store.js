@@ -29,10 +29,10 @@ export default new Vuex.Store({
     },
     getters: {
         getUserName: state => {
-            return sessionStorage.getItem("userName");
+            return sessionStorage.getItem("userName")+''; ////转换成String,否则有些地方判断getUserId后是Object对象
         },
         getUserId: state => {
-            return sessionStorage.getItem("userId");
+            return sessionStorage.getItem("userId")+''; 
         },
         getNavList: state => {
             return JSON.parse(sessionStorage.getItem("navList"));

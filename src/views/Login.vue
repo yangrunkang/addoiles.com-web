@@ -131,6 +131,7 @@
                         //提交到仓库
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
+
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         //页面跳转
                         setTimeout(function () {
@@ -151,9 +152,9 @@
                             if(_count == 1){//在index.vue onSelect控制,操作仓库  debug result is 1
                                 //显示当前用户
                                 navList.push({
-                                    navRouter : resp.data.data.userId,
+                                    navRouter : this.$store.getters.getUserId,
                                     navIcon : 'person',
-                                    navName : resp.data.data.userName
+                                    navName : this.$store.getters.getUserName
                                 });
                                 //显示退出按钮
                                 navList.push({

@@ -15,15 +15,17 @@
 <!--页面整体框架-->
 <template>
 	<div class="layout">
-        <!--导航栏部分-->
-        <div class="layout-nav">
-		    <Menu mode="horizontal" theme="dark" @on-select="onSelect" >
-                <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
-                        <Icon :type="item.navIcon"></Icon>
-                        {{ item.navName }}
-                </Menu-item>
+        <!--导航栏部分 class="layout-nav"-->
+
+		    <Menu mode="horizontal" theme="dark" @on-select="onSelect">
+                <div class="layout-nav">
+                    <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
+                            <Icon :type="item.navIcon"></Icon>
+                            {{ item.navName }}
+                    </Menu-item>
+                </div>
 		    </Menu>
-        </div>
+
 
         <!--中间视图部分-->
         <router-view></router-view><!--这个是显示路由的视图结果-->
@@ -82,10 +84,10 @@
                 }.bind(this));
             },
             //导航栏栏目选择
-            onSelect(activeName){
-                if(activeName == 'logOutCurrent'){ //点击注销,
+            onSelect(activeRouterUrl){
+                if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
-                }else if(this.$store.getters.getUserId === activeName){//如果当前用户点击了自己的名字
+                }else if(this.$store.getters.getUserId === activeRouterUrl){//如果当前用户点击了自己的名字
                     this.$Modal.success({
                                 title: '来自网站的问候',
                                 content: '<h4>祝您:</h4><h3>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h3>',
@@ -94,7 +96,7 @@
                     });
                 }
                 else{
-                    this.$router.push(activeName);
+                    this.$router.push(activeRouterUrl);
                 }
             },
             logOutCurrent(flag){
