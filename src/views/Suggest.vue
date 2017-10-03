@@ -26,6 +26,11 @@
                     return;
                 }
 
+                if(this.content.length > 3000){
+                    this.$Message.warning("不要意思,建议或反馈内容限定在3000个字数以内,你可以拆分成多条建议或反馈",10);
+                    return;
+                }
+
                 this.axios.post('suggest',{
                     userId:this.$store.getters.getUserId,
                     content:this.content

@@ -247,6 +247,12 @@
                     });
                     return;
                 }
+
+                if(commentContent.length > 100){
+                    this.$Message.warning("评论字数不能多余100个",3);
+                    return;
+                }
+
                 //如果没有登录,禁止评论
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
@@ -312,6 +318,18 @@
                     });
                     return;
                 }
+
+                if(itTitle.length > 50){
+                    this.$Message.warning("IT文章标题字数不能多余50个",3);
+                    return;
+                }
+
+
+                if(itSubTitle.length > 70){
+                    this.$Message.warning("IT文章副标题不能多余70个",3);
+                    return;
+                }
+
                 //如果没有登录,禁止添加分享经历
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){

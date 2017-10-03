@@ -71,6 +71,16 @@
                     this.$Message.warning("一个完整的梦想有助于你梦想成真哦",3);
                     return;
                 }
+
+                if(dreamTitle.length > 32){
+                    this.$Message.warning("梦想标题字数不能多余32个",3);
+                    return;
+                }
+
+                if(dreamContent.length > 500){
+                    this.$Message.warning("梦想内容字数不能多余500个",3);
+                    return;
+                }
                 //发送至服务器
                 this.axios.post('addDream',{
                     title:dreamTitle,

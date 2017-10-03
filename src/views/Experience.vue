@@ -203,6 +203,12 @@
                     });
                     return;
                 }
+
+                if(experienceTitle.length > 50){
+                    this.$Message.warning("经历标题字数不能多余50个",3);
+                    return;
+                }
+
                 //如果没有登录,禁止添加分享经历
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
@@ -244,6 +250,12 @@
                     });
                     return;
                 }
+
+                if(this.commentContent[index].length > 100){
+                    this.$Message.warning("感想字数不能多余100个",3);
+                    return;
+                }
+
                 //如果没有登录,禁止评论
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
