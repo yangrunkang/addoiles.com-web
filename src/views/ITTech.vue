@@ -44,7 +44,7 @@
                             篇名:
                             <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
                             <Button type="info" shape="circle" @click="sendITArticle">发表</Button>
-                            <Button type="error" shape="circle" >清空内容</Button></p>
+                            <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
                         <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
                             副标题:
                             <Input v-model="ITSubTitle" title=""  size="small" type="text"  style="width: 70%"/>
