@@ -145,6 +145,12 @@
                     email : email,
                     password : password
                 }).then(function (resp) {
+
+                    if(resp.data.code == 0 && resp.data.data == 1001){
+                        this.$Message.warning(email+'已经注册过');
+                        return;
+                    }
+
                     if(resp.data.code == 0 && resp.data.data == true){
                         this.$Notice.success({
                             desc: '注册成功,2s后转到登录页'
