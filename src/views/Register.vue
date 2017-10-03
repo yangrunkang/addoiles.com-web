@@ -125,13 +125,28 @@
                     return;
                 }
 
+                if(userName.length > 16){
+                    this.$Message.warning('用户名字数不能多于16个');
+                    return;
+                }
+
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;
                 }
 
+                if(email.length > 32){
+                    this.$Message.warning('邮箱字数不能多于32个');
+                    return;
+                }
+
                 if(!this.addoileUtil.validateReq(password) || password.length < 6){
                     this.$Message.warning('密码长度不能少于6位');
+                    return;
+                }
+
+                if(password.length > 32){
+                    this.$Message.warning('密码字数不能多于32个');
                     return;
                 }
 
