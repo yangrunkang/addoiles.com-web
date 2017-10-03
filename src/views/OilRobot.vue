@@ -49,19 +49,27 @@
         },
         methods: {
             toChat(){
-                this.historyChatList.unshift({
-                    userId:sessionStorage.getItem("userId"),
-                    userName:sessionStorage.getItem("userName"),
-                    chatContent:this.chatContent
-                })
-                var userId = "current_user";
 
-                //
+                var userId = this.$store.getters.getUserId;
+                var userName = this.$store.getters.getUserName;
+
+                if(!userName){
+                    userId = "www.addoiles.com"; //不是网站用户,是访客
+                    userName = "我";
+                }
+
+                //用户输入的聊天内容,更新到页面
+                this.historyChatList.unshift({
+                    userId:userId,
+                    userName:userName,
+                    chatContent:this.chatContent
+                });
+                //接口请求
                 this.axios.post("chat",{
                     key:this.tulingKey,
                     info:this.chatContent,
                     api:this.tulingAPI,
-                    userid:this.userId
+                    userid:userId
                 }).then(function (resp) {
                     //这里的OilRobot不变 - From Server
                     this.historyChatList.unshift({userId:"OilRobot",userName:"OilRobot",chatContent:resp.data.data});

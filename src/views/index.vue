@@ -45,7 +45,7 @@
             <div slot="footer">
                 <Button type="success" size="large" long  @click="logOutCurrent(true)">我在逛会儿</Button>
             </div>
-            <div slot="footer">
+            <div slot="footer" style="margin-top: 4px;">
                 <Button type="warning" size="large" long  @click="logOutCurrent(false)">退出油号</Button>
             </div>
         </Modal>
@@ -86,16 +86,12 @@
                 if(activeName == 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
                 }else if(this.$store.getters.getUserId === activeName){//如果当前用户点击了自己的名字
-//                    this.$Message.success({
-//                        content:'来自网站的问候:\nHi,'+ this.$store.getters.getUserName + ',祝您:\n',
-//                        duration: 5
-//                    });
                     this.$Modal.success({
                                 title: '来自网站的问候',
                                 content: '<h4>祝您:</h4><h3>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h3>',
                                 okText: '好嘞',
                                 cancelText: '' //为空就不显示按钮
-                        });
+                    });
                 }
                 else{
                     this.$router.push(activeName);

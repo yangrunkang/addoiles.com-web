@@ -151,14 +151,16 @@
                             if(_count == 1){//在index.vue onSelect控制,操作仓库  debug result is 1
                                 //显示当前用户
                                 navList.push({
-                                    navRouter :this.$store.getters.getUserId ,
+                                    navRouter : resp.data.data.userId,
                                     navIcon : 'person',
-                                    navName : this.$store.getters.getUserName});
+                                    navName : resp.data.data.userName
+                                });
                                 //显示退出按钮
                                 navList.push({
                                     navRouter :'logOutCurrent',
                                     navIcon : 'power',
-                                    navName : '退出'});
+                                    navName : '退出'
+                                });
                                 break;
                             }
                         }
