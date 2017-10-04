@@ -16,10 +16,10 @@
         margin: 0px 0px 10px 10px;
     }
 
-    /*图片轮播图片div大小*/
-    .carousel{
+    /*图片轮播图片img大小 就安这个截图*/
+    .pic-style{
         height: 400px;
-        width: inherit;
+        width: 813px;
     }
 
     /*热门动弹div*/
@@ -55,23 +55,23 @@
                                     @on-change="picChange"
                                     :arrow="setting.arrow">
                                 <Carousel-item>
-                                    <div class="carousel">
-                                        <img src="../images/index3.png">
+                                    <div class="carousel" style="">
+                                        <img class="pic-style" src="../images/index3.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/index0.png">
+                                        <img  class="pic-style"  src="../images/index0.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/index1.png">
+                                        <img  class="pic-style" src="../images/index1.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/index2.png">
+                                        <img  class="pic-style" src="../images/index2.png">
                                     </div>
                                 </Carousel-item>
                             </Carousel>
@@ -87,7 +87,7 @@
                     <Card style="width:100%;background-color: white;border: none" >
                         <!--提问-->
                         <div style="text-align:center">
-                            <img src="../images/index1.png" style="width: 100%;height: 200px">
+                            <img src="../images/question.png" style="width: 100%;height: 200px">
                             <h1>你敢提问吗</h1>
                             <h3>爱情,八卦,故事,亲情,笑话等等</h3>
                         </div>
@@ -340,13 +340,13 @@
             picChange($event){
                 var index = $event;
                 if(index == 0){
-                    this.picName = '黑客';
+                    this.picName = '长达才知道,童年的时光总是美好的';
                 }else if(index == 1){
-                    this.picName = 'Downing';
+                    this.picName = '人生的路你会如何选择?';
                 }else if(index == 2){
-                    this.picName = '警察';
+                    this.picName = '美';
                 }else if(index == 3){
-                    this.picName = 'GB';
+                    this.picName = '梦想不休不止,Do it!';
                 }
 
             },
