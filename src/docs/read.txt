@@ -27,6 +27,8 @@
 
 · 界面布局可以是有Row Col随便嵌套,做出来的页面很好看的
 
+· 在dev模式下install服务端程序(not this project),没有clean造成无法跨域请求数据
+
 
 
 
