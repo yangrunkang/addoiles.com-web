@@ -56,22 +56,22 @@
                                     :arrow="setting.arrow">
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/test.png">
+                                        <img src="../images/index3.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/one.png">
+                                        <img src="../images/index0.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/two.png">
+                                        <img src="../images/index1.png">
                                     </div>
                                 </Carousel-item>
                                 <Carousel-item>
                                     <div class="carousel">
-                                        <img src="../images/three.png">
+                                        <img src="../images/index2.png">
                                     </div>
                                 </Carousel-item>
                             </Carousel>
@@ -87,7 +87,7 @@
                     <Card style="width:100%;background-color: white;border: none" >
                         <!--提问-->
                         <div style="text-align:center">
-                            <img src="../images/two.png" style="width: 100%;height: 200px">
+                            <img src="../images/index1.png" style="width: 100%;height: 200px">
                             <h1>你敢提问吗</h1>
                             <h3>爱情,八卦,故事,亲情,笑话等等</h3>
                         </div>
