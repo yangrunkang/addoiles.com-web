@@ -239,6 +239,15 @@
                 }.bind(this));
             },
             toComment(articleId){
+                //如果没有登录,禁止评论
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h2>Hi,您好,访客不允许评论</h2>'
+                    });
+                    return;
+                }
+
                 var commentContent = this.commentContent;
                 /*下面的和Experience.vue不一样,不要头脑热改了..*/
                 if(!this.addoileUtil.validateReq(commentContent)){
@@ -253,14 +262,7 @@
                     return;
                 }
 
-                //如果没有登录,禁止评论
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        title: '<h2>Hi,您好,访客不允许评论</h2>'
-                    });
-                    return;
-                }
+
                 //请求后台
                 this.axios.post('addComment',{
                     userId:userId,
@@ -307,6 +309,15 @@
             },
             //发表IT文章
             sendITArticle(){
+                //如果没有登录,禁止添加分享经历
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h2>Hi,您好,访客不允许下发表IT文章</h2>'
+                    });
+                    return;
+                }
+
                 var itTitle = this.ITTitle;
                 var itSubTitle = this.ITSubTitle;
                 var itContent = this.ITContent;
@@ -330,14 +341,7 @@
                     return;
                 }
 
-                //如果没有登录,禁止添加分享经历
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h2>Hi,您好,访客不允许下发表IT文章</h2>'
-                    });
-                    return;
-                }
+
                 //
                 this.axios.post("addArticle",{
                     title : itTitle,

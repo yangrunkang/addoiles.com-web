@@ -183,6 +183,16 @@
                 });
             },
             sendExperience(operation){
+
+                //如果没有登录,禁止添加分享经历
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
+                    });
+                    return;
+                }
+
                 // 请求对象
                 var deleteStatus = 0;
                 if(operation == 'normal'){
@@ -194,6 +204,7 @@
                 }
                 //关闭模态框
                 this.confirmModal = false;
+
                 //数据校验
                 var experienceTitle = this.experienceTitle;
                 var experienceContent = this.content;
@@ -209,14 +220,6 @@
                     return;
                 }
 
-                //如果没有登录,禁止添加分享经历
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
-                    });
-                    return;
-                }
                 //调用服务端接口
                 this.axios.post("addExperience",{
                     userId,userId,
@@ -244,6 +247,16 @@
             },
             /*去评论*/
             toComment(experienceId,index){
+
+                //如果没有登录,禁止评论
+                var userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h2>Hi,您好,访客不允许评论</h2>'
+                    });
+                    return;
+                }
+
                 if(!this.addoileUtil.validateReq(this.commentContent[index])){
                     this.$Notice.info({
                         desc: '评论内容为空'
@@ -256,14 +269,6 @@
                     return;
                 }
 
-                //如果没有登录,禁止评论
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        title: '<h2>Hi,您好,访客不允许评论</h2>'
-                    });
-                    return;
-                }
                 //请求后台
                 this.axios.post('addComment',{
                     userId : userId,
