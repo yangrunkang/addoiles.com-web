@@ -2,4 +2,4 @@
     1. 更改请求路径 main.js
         axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com'
 
-    2.
+    2. 通过阿里云网站进入Alt + F1 窗口重新编译
