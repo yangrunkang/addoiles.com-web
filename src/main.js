@@ -16,7 +16,10 @@ Vue.use(Util);
 // axios教程:http://blog.csdn.net/binginsist/article/details/65630547
 // Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 Vue.prototype.axios = axios;
+//dev
 axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
+//prod
+//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com';
 
 //工具类
 Vue.prototype.addoileUtil = Util;

@@ -33,8 +33,8 @@
                     <Card style="background: transparent;border-radius: 30px;margin-bottom: 6px;margin-left: 6px" >
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
-                                <strong>{{item.dreamTitle}}</strong>
-                                <span slot="desc">{{item.dreamContent}}</span>
+                                <strong style="word-break: break-all;word-wrap: break-word;">{{item.dreamTitle}}</strong>
+                                <span slot="desc" style="word-break: break-all;word-wrap: break-word;">{{item.dreamContent}}</span>
                             </Alert>
 <!--                            <div>
                                 <Button type="info" shape="circle">为Ta加油</Button>

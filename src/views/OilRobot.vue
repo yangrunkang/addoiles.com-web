@@ -31,8 +31,8 @@
         <div class="history-chat">
             <Timeline>
                 <Timeline-item v-for="chat in historyChatList" key="chat.id">
-                    <p class="time"><span style="color: slategrey">From:</span>&nbsp;&nbsp;&nbsp;{{chat.userName}}</p>
-                    <p class="content">{{chat.chatContent}}</p>
+                    <p class="time"><span style="color: slategrey;word-break: break-all;word-wrap: break-word;">From:</span>&nbsp;&nbsp;&nbsp;{{chat.userName}}</p>
+                    <p class="content" style="word-break: break-all;word-wrap: break-word;">{{chat.chatContent}}</p>
                 </Timeline-item>
             </Timeline>
         </div>

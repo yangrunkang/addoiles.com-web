@@ -101,7 +101,7 @@
                             v-for="(questionAnswer,index) in questionAnswerList" key="questionAnswer.id"
                         >
                             <!--最新问题-->
-                            <h1>问题{{index + 1}}</h1>
+                            <h1>最新问题{{index + 1}}</h1>
                             <div>
                                 <!--具体的问题-->
                                 <Card style="width:100%;background-color:transparent;">
@@ -110,7 +110,7 @@
                                         <p><Tag type="dot" color="blue" style="width:95%;">{{questionAnswer.question.userName}}</Tag></p>
                                         <p  style="margin-top: 8px"><Tag style="width:95%;" type="dot" color="blue">{{questionAnswer.question.createTime}}</Tag></p>
                                         </Col>
-                                        <Col span="17" style="text-align: left">
+                                        <Col span="17" style="text-align: left;word-break: break-all;word-wrap: break-word;">
                                             {{questionAnswer.question.content}}
                                         </Col>
                                     </Row>
@@ -118,7 +118,7 @@
                                 <h1>回答</h1>
                                 <Card style="margin-top: 6px">
                                     <div>
-                                        <Input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent">
+                                        <Input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
                                         <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
                                         </Input>
                                     </div>
@@ -135,7 +135,7 @@
                                             </p>
                                             </Col>
                                             <Col span="19">
-                                            <Alert type="success" style="width: 100%;height: auto">
+                                            <Alert type="success" style="width: 100%;height: auto;word-break: break-all;word-wrap: break-word;">
                                                 {{answer.content}}
                                             </Alert>
                                             </Col>
@@ -161,10 +161,10 @@
                     <br />
 
                     <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" key="item.title">
-                        <p slot="title">
+                        <p slot="title" style="word-break: break-all;word-wrap: break-word;">
                             {{ item.title }}
                         </p>
-                        <p>{{ item.content }}</p>
+                        <p style="word-break: break-all;word-wrap: break-word;">{{ item.content }}</p>
                     </Card>
                 </div>
             </Col>
@@ -193,8 +193,8 @@
                 hotContent : '',
                 //问题
                 question : '',
-                //用户回答的内容
-                answerContent : '',
+                //用户回答的内容(使用数组然后通过index区别)
+                answerContent : [],
                 //问题&答案List
                 questionAnswerList : []
             }
@@ -292,7 +292,6 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                console.log(questionId);
                 var userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
@@ -300,7 +299,7 @@
                     });
                     return;
                 }
-                var answerContent = this.answerContent;
+                var answerContent = this.answerContent[index];
 
 
                 if(!this.addoileUtil.validateReq(answerContent)){
@@ -331,7 +330,7 @@
                                     content : answerContent
                                 }
                         );
-                        this.answerContent = '';
+                        this.answerContent[index] = '';
                     }
 
                 }.bind(this));
@@ -340,7 +339,7 @@
             picChange($event){
                 var index = $event;
                 if(index == 0){
-                    this.picName = '长达才知道,童年的时光总是美好的';
+                    this.picName = '长大才知道,童年的时光总是美好的';
                 }else if(index == 1){
                     this.picName = '人生的路你会如何选择?';
                 }else if(index == 2){

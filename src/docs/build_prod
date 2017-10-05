@@ -1,0 +1,5 @@
+打生产包记得:
+    1. 更改请求路径 main.js
+        axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com'
+
+    2.

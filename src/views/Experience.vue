@@ -69,8 +69,8 @@
                 <Col span="19">
                     <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title">{{experience.title}}</p>
-                        <p v-html="experience.content"></p> <!--显示html样式文本-->
+                        <p slot="title" style="word-break: break-all;word-wrap: break-word;">{{experience.title}}</p>
+                        <p v-html="experience.content" style="word-break: break-all;word-wrap: break-word;"></p> <!--显示html样式文本-->
                     </Card>
                     <!--评论-->
                     <h2>评论</h2>
@@ -257,14 +257,16 @@
                     return;
                 }
 
-                if(!this.addoileUtil.validateReq(this.commentContent[index])){
+                var commentContent = this.commentContent[index];
+
+                if(!this.addoileUtil.validateReq(commentContent)){
                     this.$Notice.info({
                         desc: '评论内容为空'
                     });
                     return;
                 }
 
-                if(this.commentContent[index].length > 100){
+                if(commentContent.length > 100){
                     this.$Message.warning("感想字数不能多余100个",3);
                     return;
                 }
@@ -273,7 +275,7 @@
                 this.axios.post('addComment',{
                     userId : userId,
                     targetId : experienceId,
-                    content : this.commentContent[index]
+                    content : commentContent
                 }).then(function (res) {
                     var response = res.data;
                     if(response.code == 0 && response.data == 1){
@@ -285,7 +287,7 @@
                         this.experienceDtoList[index].commentList.unshift({
                             createTime:'刚刚',
                             userName:'我',
-                            content:this.commentContent[index]
+                            content:commentContent
                         });
                         //清空数据
                         this.commentContent[index] = '';
@@ -349,7 +351,7 @@
                                             title:experience.title,
                                             content:experience.content,
                                             rates:experience.rates,
-                                            createTime:experience.createTime,
+                                            createTime:this.addoileUtil.formatUnixTime(experience.createTime),
                                             commentList:_commentList
                                         });
                             }
