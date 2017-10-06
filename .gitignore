@@ -1,13 +1,38 @@
-.idea
-.idea/
-.DS_Store
-node_modules/
+# maven ignore
+target/
+*.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
 .project
-dist
-dist/*
-src/config/*.tmp
-src/config/env.js
-/index.html
-/index_prod.html
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
 *.iml
+*.iws
+
+# temp ignore
 *.log
+*.cache
+*.diff
+*.patch
+*.tmp
+.logs
+logs/
+
+/bin/
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
