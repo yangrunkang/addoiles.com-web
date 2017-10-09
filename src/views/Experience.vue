@@ -48,7 +48,7 @@
                     </Poptip>
                     <span style="float: right;">
                         <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
-                        <Button type="warning" shape="circle" >保存为草稿</Button>
+                        <Button type="warning" shape="circle" @click="sendExperience('draft')">保存为草稿</Button>
                         <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                     </span>
                 </p>
@@ -205,7 +205,7 @@
                 if(operation == 'normal'){
                     deleteStatus = 0;
                 }else if(operation == 'draft'){
-                    deleteStatus = 1;
+                    deleteStatus = 2;
                 }else{
                     this.$Notice.error({desc: '不好意思,程序员失误了'});
                 }
