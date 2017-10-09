@@ -20,6 +20,11 @@
     margin: 30px auto;
 }
 
+.auto-break-line {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
 /*页面底部*/
 /*
 .layout-bottom {

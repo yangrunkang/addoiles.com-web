@@ -110,7 +110,7 @@
                                         <p><Tag type="dot" color="blue" style="width:95%;">{{questionAnswer.question.userName}}</Tag></p>
                                         <p  style="margin-top: 8px"><Tag style="width:95%;" type="dot" color="blue">{{questionAnswer.question.createTime}}</Tag></p>
                                         </Col>
-                                        <Col span="17" style="text-align: left;word-break: break-all;word-wrap: break-word;">
+                                        <Col span="17" style="text-align: left;" class="auto-break-line">
                                             {{questionAnswer.question.content}}
                                         </Col>
                                     </Row>
@@ -135,7 +135,7 @@
                                             </p>
                                             </Col>
                                             <Col span="19">
-                                            <Alert type="success" style="width: 100%;height: auto;word-break: break-all;word-wrap: break-word;">
+                                            <Alert type="success" style="width: 100%;height: auto;" class="auto-break-line">
                                                 {{answer.content}}
                                             </Alert>
                                             </Col>
@@ -161,10 +161,10 @@
                     <br />
 
                     <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" key="item.title">
-                        <p slot="title" style="word-break: break-all;word-wrap: break-word;">
+                        <p slot="title" class="auto-break-line">
                             {{ item.title }}
                         </p>
-                        <p style="word-break: break-all;word-wrap: break-word;">{{ item.content }}</p>
+                        <p class="auto-break-line">{{ item.content }}</p>
                     </Card>
                 </div>
             </Col>

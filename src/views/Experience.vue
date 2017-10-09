@@ -69,8 +69,8 @@
                 <Col span="19">
                     <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title" style="word-break: break-all;word-wrap: break-word;">{{experience.title}}</p>
-                        <p v-html="experience.content" style="word-break: break-all;word-wrap: break-word;"></p> <!--显示html样式文本-->
+                        <p slot="title" class="auto-break-line">{{experience.title}}</p>
+                        <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
                     <!--评论-->
                     <h2>评论</h2>

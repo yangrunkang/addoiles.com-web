@@ -23,8 +23,8 @@
                 <Timeline pending>
                     <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
-                            <a class="time" style="word-break: break-all;word-wrap: break-word;">{{pithiness.title}}</a>
-                            <p class="content" style="word-break: break-all;word-wrap: break-word;">{{pithiness.subTitle}}</p>
+                            <a class="time auto-break-line" >{{pithiness.title}}</a>
+                            <p class="content auto-break-line" >{{pithiness.subTitle}}</p>
                         </a>
                     </Timeline-item>
 
@@ -62,10 +62,10 @@
                     <Card style="background: transparent;border: transparent;border-radius: 30px">
                         <div>
                             <Card>
-                                <p slot="title" style="word-break: break-all;word-wrap: break-word;">
+                                <p slot="title" class="auto-break-line">
                                     {{itTechDto.article.title}}
                                 </p>
-                                <p v-html="itTechDto.article.content" style="word-break: break-all;word-wrap: break-word;"></p>
+                                <p v-html="itTechDto.article.content" class="auto-break-line"></p>
                             </Card>
                             <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
                                 <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
