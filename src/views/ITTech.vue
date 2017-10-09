@@ -152,6 +152,7 @@
                 this.isShowDetail = false;
                 this.isShowMoreITs = true;
                 this.isShowEditor = false;
+                this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 //展示文章列表
                 this.axios.get('showMoreITTechArticles').then(function (resp) {
                     if (resp.data.code == 0) {
