@@ -44,7 +44,7 @@
             <Card class="card" style="height: inherit">
                 <p slot="title" style="height: auto;font-size: 18px">分享你的经历,不论是否精彩&nbsp;&nbsp;
                     <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
-                        <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large"></i-input>
+                        <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large" style="width:605px;"></i-input>
                     </Poptip>
                     <span style="float: right;">
                         <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
@@ -75,7 +75,7 @@
                     <Card :bordered="false" style="margin-bottom: 5px">
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
                             {{experience.title}}
-                            <Button type="info" shape="circle" style="float: right;">编辑</Button>
+                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="editExperience(experience.id,experience.title,experience.content)">编辑</Button>
                         </p>
                         <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
@@ -112,9 +112,9 @@
             <div slot="footer">
                 <Button type="info" size="large" long @click="sendExperience('normal')">立即分享</Button>
             </div>
-<!--            <div slot="footer" style="margin: 4px auto;">
+            <div slot="footer" style="margin: 4px auto;">
                 <Button type="warning" size="large" long @click="sendExperience('draft')">保存为草稿</Button>
-            </div>-->
+            </div>
             <div slot="footer" style="margin: 4px auto;">
                 <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
             </div>
@@ -148,7 +148,9 @@
                 //确认清除模态框显示与隐藏
                 confirmModal : false,
                 //经历 + 评论
-                experienceDtoList:[]
+                experienceDtoList:[],
+                //列表页是否显示编辑按钮
+                isShowEditBtn : false
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -157,6 +159,9 @@
             },
             changeSwitch(status){
                 if(status){
+                    //清空内容
+                    this.clearExperienceTitleContent();
+
                     this.isShowEditor = true;
                     var userId = sessionStorage.getItem("userId");
                     if(!this.addoileUtil.validateReq(userId)){
@@ -179,8 +184,7 @@
                     return;
                 }
                 //清空标题和内容
-                this.experienceTitle = "";
-                this.content = "";
+                this.clearExperienceTitleContent();
                 //关闭模态框
                 this.confirmModal = false;
                 //
@@ -188,6 +192,11 @@
                 this.$Notice.success({
                     desc: '遵照您的旨意,已经把内容清空'
                 });
+            },
+            clearExperienceTitleContent(){
+                //清空内容
+                this.experienceTitle = '';
+                this.content = '';
             },
             sendExperience(operation){
 
@@ -320,7 +329,7 @@
                     //nothing
                 })
             },
-            /*获取经历*/
+            //获取经历
             getExperienceList(){
                 this.axios.get('getExperienceList').then(function (response) {
                     if(response.data.code == 0){
@@ -351,6 +360,8 @@
                                 }
                                 //经历
                                 var experience = experienceDto.experience;
+                                //当前用户id
+                                var currentUserId = sessionStorage.getItem("userId");
                                 this.experienceDtoList.push(
                                         {
                                             id:experience.experienceId, //注意这里的id是experienceId
@@ -359,12 +370,28 @@
                                             content:experience.content,
                                             rates:experience.rates,
                                             createTime:this.addoileUtil.formatUnixTime(experience.createTime),
-                                            commentList:_commentList
+                                            commentList:_commentList,
+                                            isShowEditBtn : this.addoileUtil.isCurrentUser(experience.userId,currentUserId)
                                         });
                             }
                         }
                     }
                 }.bind(this));
+            },
+            /**
+             * 编辑经历
+             * @param experienceId 经历id
+             * @param experienceTitle 经历标题
+             * @param experienceContent 经历内容
+             */
+            editExperience(experienceId,experienceTitle,experienceContent){
+                console.log(experienceId);
+                console.log(experienceTitle);
+                console.log(experienceContent);
+
+                this.changeSwitch(true);
+                this.experienceTitle = experienceTitle;
+                this.content = experienceContent;
             }
 
         },
