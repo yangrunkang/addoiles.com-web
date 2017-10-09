@@ -43,8 +43,11 @@
                         <p slot="title" style="height: auto;font-size: 18px">
                             篇名:
                             <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
-                            <Button type="info" shape="circle" @click="sendITArticle">发表</Button>
-                            <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
+                            <span style="float: right">
+                                <Button type="info" shape="circle" @click="sendITArticle">发表</Button>
+                                <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
+                                <Button type="warning" shape="circle" >保存为草稿</Button>
+                            </span>
                         <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
                             副标题:
                             <Input v-model="ITSubTitle" title=""  size="small" type="text"  style="width: 70%"/>
@@ -62,8 +65,9 @@
                     <Card style="background: transparent;border: transparent;border-radius: 30px">
                         <div>
                             <Card>
-                                <p slot="title" class="auto-break-line">
+                                <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                                     {{itTechDto.article.title}}
+                                    <Button type="info" shape="circle" style="float: right">编辑</Button>
                                 </p>
                                 <p v-html="itTechDto.article.content" class="auto-break-line"></p>
                             </Card>

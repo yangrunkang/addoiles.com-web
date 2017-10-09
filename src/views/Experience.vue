@@ -46,8 +46,12 @@
                     <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
                         <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large"></i-input>
                     </Poptip>
-                    <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
-                    <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button></p>
+                    <span style="float: right;">
+                        <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
+                        <Button type="warning" shape="circle" >保存为草稿</Button>
+                        <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
+                    </span>
+                </p>
                 <!--https://surmon-china.github.io/vue-quill-editor -->
                 <quill-editor ref="myTextEditor"
                               v-model="content"
@@ -69,7 +73,10 @@
                 <Col span="19">
                     <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title" class="auto-break-line">{{experience.title}}</p>
+                        <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
+                            {{experience.title}}
+                            <Button type="info" shape="circle" style="float: right;">编辑</Button>
+                        </p>
                         <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
                     <!--评论-->
