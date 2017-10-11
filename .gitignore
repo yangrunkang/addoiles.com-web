@@ -12,6 +12,7 @@ target/
 .classpath
 
 # idea ignore
+.idea
 .idea/
 *.ipr
 *.iml
@@ -37,14 +38,10 @@ logs/
 *.war
 *.ear
 
+npm-debug.log
 
-.idea
-.idea/
 .DS_Store
 node_modules/
 .project
 dist
 dist/*
-*.iml
-*.log
-

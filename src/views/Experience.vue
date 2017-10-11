@@ -388,10 +388,7 @@
                 console.log(experienceId);
                 console.log(experienceTitle);
                 console.log(experienceContent);
-
-                this.changeSwitch(true);
-                this.experienceTitle = experienceTitle;
-                this.content = experienceContent;
+                
             }
 
         },
