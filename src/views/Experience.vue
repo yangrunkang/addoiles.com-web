@@ -388,7 +388,7 @@
                 console.log(experienceId);
                 console.log(experienceTitle);
                 console.log(experienceContent);
-                
+                this.$router.push("/Edit");
             }
 
         },
