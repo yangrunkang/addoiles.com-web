@@ -1,9 +1,9 @@
 import Vue from 'vue'; //引入vue模块
-import store from './store';//集中式管理仓库
+import store from './store/store';//集中式管理仓库
 import iView from 'iview';
 import VueRouter from 'vue-router';
 import axios from 'axios';
-import Routers from './router'; // 引入路由配置文件
+import Routers from './router/router'; // 引入路由配置文件
 import Util from './libs/util';
 import Index from './views/index.vue'; // //引入vue组件
 
