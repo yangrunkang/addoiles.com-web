@@ -45,3 +45,11 @@ node_modules/
 .project
 dist
 dist/*
+
+# do not to  commit
+codeStyleSettings.xml
+iview-admin.iml
+misc.xml
+modules.xml
+npm-debug.log.1179672494
+workspace.xml
