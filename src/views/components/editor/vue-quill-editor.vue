@@ -4,7 +4,7 @@
 <template>
     <div id="editor">
         <quill-editor ref="myTextEditor"
-                      v-model="content"
+                      v-model="editorContent"
                       :options="editorOption"
                       @focus="onEditorFocus($event)" style="height: 350px">
         </quill-editor>
@@ -19,8 +19,8 @@
     export default {
         data () {
             return {
-                // 编辑器内容
-                content : '',
+                //直接使用props
+//                content:this.$props.editorContent, //父组件传递的数据显示到内容 this.props.editorContent 要加$
                 //编辑器配置
                 editorOption: {
                     // something to config
@@ -28,6 +28,10 @@
 
                 }
             }
+        },
+        props: {
+            //父组件数据传到子组件,内容接受对象
+            editorContent: String
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
