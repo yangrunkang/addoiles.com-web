@@ -11,20 +11,25 @@
         border-radius: 2px;
     }
 
+    .menu{
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+
 </style>
 <!--页面整体框架-->
 <template>
 	<div class="layout">
 
-        <Menu mode="horizontal" theme="dark" @on-select="onSelect">
-            <div class="layout-nav">
-                <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
-                        <Icon :type="item.navIcon"></Icon>
-                        {{ item.navName }}
-                </Menu-item>
-            </div>
-        </Menu>
-
+        <div class="layout-nav">
+            <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
+                    <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
+                            <Icon :type="item.navIcon"></Icon>
+                            {{ item.navName }}
+                    </Menu-item>
+            </Menu>
+        </div>
 
         <!--中间视图部分-->
         <router-view></router-view><!--这个是显示路由的视图结果-->
