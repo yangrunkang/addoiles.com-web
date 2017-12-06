@@ -63,6 +63,8 @@
     </div>
 </template>
 <script>
+    import Cookies from 'js-cookie';
+
     export default {
         data () {
             return {
@@ -112,6 +114,7 @@
                     this.showLogOutModal = false;
                 }else{//退出账号
                     sessionStorage.clear();
+                    Cookies.remove('newUser');
                     //刷新用户正在看的页面
                     //会调用index.vue  mounted() 方法,因为已经sessionStorage.clear(),所以会当成新用户
                     this.$router.go(0);
@@ -126,13 +129,15 @@
                 top: 5,
                 duration: 3
             });
-            if(sessionStorage.getItem("newUser")){
+            if(Cookies.get("newUser")){
+            // if(sessionStorage.getItem("newUser")){
                 //这个用户不再初始化导航栏,一直用他第一次进来是初始化好的导航栏
                 //声明周期一直到用户关闭浏览器
                 this.navList = this.$store.getters.getNavList;
             }else{
                 //用户第一次打开浏览器进来,标记newUser
-                sessionStorage.setItem("newUser","1");
+                // sessionStorage.setItem("newUser","1");
+                Cookies.set("newUser","1");
                 //初始化导航栏
                 this.initNavList();
                 //欢迎
