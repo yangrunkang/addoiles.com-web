@@ -9,17 +9,24 @@
         padding-left: 5px;
     }
 
-    /*编辑器*/
-    #editorDiv {
-        /*margin: 0 auto;*/
+    /*承载编辑器的Div*/
+    .editorDiv {
+        height: fit-content;
     }
+
+    /*承载编辑器的Card*/
+    .edit-card{
+        height: 1099px;
+    }
+
 
 </style>
 <template>
     <div class="main-content">
         <Row type="flex">
+            <!--左边:文章简表-->
             <i-col :span="spanLeft" class="layout-menu-left">
-                <Button type="info" size="large" long @click="writeITArticle()" style="width: 70%;margin-bottom: 40px" >写技术文章</Button>
+                <Button type="info" size="large" long @click="writeITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
                 <Timeline pending>
                     <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
@@ -36,20 +43,27 @@
                 </Timeline>
 
             </i-col>
+            <!--右边: 文章编辑/展示/添加-->
             <i-col :span="spanRight">
 
-                <div id="editorDiv" v-show="isShowEditor" style="height: 1010px;">
-                    <Card class="card" style="height: 998px;">
+                <!--未登录时展示-->
+                <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
+                    登录后才可以分享技术哦
+                </Alert>
+                <!--文章编辑器-->
+                <div class="editorDiv" v-show="isShowEditor">
+                    <Card class="edit-card">
                         <p slot="title" style="height: auto;font-size: 18px">
-                            篇名:
+                            大名:
                             <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
                             <span style="float: right">
-                                <Button type="info" shape="circle" @click="sendITArticle">发表</Button>
+                                <Button type="info" shape="circle" @click="addITArticle" v-show="isShowAddArticleBtn">发表</Button>
+                                <Button type="info" shape="circle" @click="editITArticle" v-show="isShowEditBtn">编辑完成</Button>
                                 <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
-                                <Button type="warning" shape="circle" >保存为草稿</Button>
+                                <Button type="warning" shape="circle" >保存草稿</Button>
                             </span>
                         <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
-                            副标题:
+                            小名:
                             <Input v-model="ITSubTitle" title=""  size="small" type="text"  style="width: 70%"/>
                         </p>
                         <!--https://surmon-china.github.io/vue-quill-editor -->
@@ -60,14 +74,14 @@
                         </quill-editor>
                     </Card>
                 </div>
-
+                <!--文章详情-->
                 <div style="width: 100%" v-show="isShowDetail">
                     <Card style="background: transparent;border: transparent;border-radius: 30px">
                         <div>
                             <Card>
                                 <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                                     {{itTechDto.article.title}}
-                                    <Button type="info" shape="circle" style="float: right">编辑</Button>
+                                    <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId,itTechDto.article.title,itTechDto.article.subTitle,itTechDto.article.content)">编辑</Button>
                                 </p>
                                 <p v-html="itTechDto.article.content" class="auto-break-line"></p>
                             </Card>
@@ -82,7 +96,7 @@
                         </div>
                     </Card>
                 </div>
-
+                <!--点击展示更多,显示此区域-->
                 <div v-show="isShowMoreITs" style="width: 100%">
                     <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" key="article.id" >
                         <Alert show-icon>
@@ -102,6 +116,7 @@
     import Vue from 'vue';
     //安装vue-quill-editor富文本编辑器
     import VueQuillEditor from 'vue-quill-editor';
+    import Cookies from 'js-cookie';
     Vue.use(VueQuillEditor);
 
     export default {
@@ -123,7 +138,10 @@
                     article : {
                         articleId : '',
                         title : '',
-                        content : ''
+                        subTitle:'',
+                        userId:'',
+                        content : '',
+                        isShowEditBtn:false //是否显示编辑按钮
                     },
                     articleCommentList:[]
                 },
@@ -137,10 +155,16 @@
                 },
                 // IT文章内容
                 ITContent : '',
-                // IT文章标题
+                // IT文章标题 大名
                 ITTitle:'',
-                // IT副标题
-                ITSubTitle :''
+                // IT副标题 小名
+                ITSubTitle :'',
+                //未登录显示提示
+                showNotLoginTips:false,
+                //是否显示发表文章按钮
+                isShowAddArticleBtn:true,
+                //是否显示编辑完成按钮
+                isShowEditBtn:false
             }
         },
         methods: {
@@ -160,10 +184,10 @@
                 //展示文章列表
                 this.axios.get('showMoreITTechArticles').then(function (resp) {
                     if (resp.data.code == 0) {
-                        var dataArray = resp.data.data;
-                        for(var i = 0; i < dataArray.length; i++){
+                        let dataArray = resp.data.data;
+                        for(let i = 0; i < dataArray.length; i++){
 
-                            var iconType = "ios-lightbulb-outline";
+                            let iconType = "ios-lightbulb-outline";
                             if(i % 9 == 0){
                                 iconType = "paper-airplane";
                             }else if(i % 9 == 1){
@@ -201,14 +225,14 @@
             },
             //文章显示
             initITTech(articleId){
-                var url = articleId == null ? "getITTechArticleList" : "getITTechArticleList?articleId=" + articleId;
+                let url = articleId == null ? "getITTechArticleList" : "getITTechArticleList?articleId=" + articleId;
                 this.axios.get(url).then(function (resp) {
                     if(resp.data.code == 0){
-                        var data = resp.data.data;
+                        let data = resp.data.data;
                         //右侧列表简表
                         let _pithinessList = [];
-                        for(var i = 0; i < data.pithinessList.length; i++){
-                            var _data = data.pithinessList[i];
+                        for(let i = 0; i < data.pithinessList.length; i++){
+                            let _data = data.pithinessList[i];
                             _pithinessList.push({
                                 articleId:_data.articleId,
                                 title:_data.title,
@@ -220,8 +244,8 @@
                         }
                         //文章评论
                         let _articleCommentList = [];
-                        for(var i = 0; i < data.articleCommentList.length; i++){
-                            var _data = data.articleCommentList[i];
+                        for(let i = 0; i < data.articleCommentList.length; i++){
+                            let _data = data.articleCommentList[i];
                             _articleCommentList.push({
                                 userName : _data.userName,
 //                                createTime:this.moment(_data.createTime).format('YYYY-MM-DD HH:mm:ss'),
@@ -229,14 +253,19 @@
                                 content:_data.content});
                         }
                         //具体文章
-                        var _article = data.article;
+                        let _article = data.article;
+
+                        let currentUserId = sessionStorage.getItem("userId");
                         //封装
                         this.itTechDto = {
                             pithinessList : _pithinessList,
                             article : {
                                 articleId : _article.articleId,
+                                userId:_article.userId,
                                 title : _article.title,
-                                content : _article.content
+                                subTitle:_article.subTitle,
+                                content : _article.content,
+                                isShowEditBtn:this.addoileUtil.isCurrentUser(_article.userId,currentUserId)
                             },
                             articleCommentList : _articleCommentList
                         };
@@ -245,7 +274,7 @@
             },
             toComment(articleId){
                 //如果没有登录,禁止评论
-                var userId = sessionStorage.getItem("userId");
+                let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         title: '<h2>Hi,您好,访客不允许评论</h2>'
@@ -253,7 +282,7 @@
                     return;
                 }
 
-                var commentContent = this.commentContent;
+                let commentContent = this.commentContent;
                 /*下面的和Experience.vue不一样,不要头脑热改了..*/
                 if(!this.addoileUtil.validateReq(commentContent)){
                     this.$Notice.info({
@@ -274,7 +303,7 @@
                     targetId:articleId,
                     content:commentContent
                 }).then(function (res) {
-                    var response = res.data;
+                    let response = res.data;
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
                         this.$Notice.success({
@@ -297,22 +326,25 @@
             },
             //写IT文章
             writeITArticle(){
+
+                this.clearContent();
+                this.isShowAddArticleBtn = true;
+                this.isShowEditBtn = false;
+
                 this.isShowEditor = true;
                 this.isShowDetail = false;
                 this.isShowMoreITs = false;
 
-                var userId = sessionStorage.getItem("userId");
+                let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h3>Hi,您好,访客不允许下发表IT文章,登录后展现您真正的技术哦</h3>'
-                    });
+                  this.showNotLoginTips = true;
                 }
 
             },
             //发表IT文章
-            sendITArticle(){
+            addITArticle(){
                 //如果没有登录,禁止添加分享经历
-                var userId = sessionStorage.getItem("userId");
+                let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         desc: '<h2>Hi,您好,访客不允许下发表IT文章</h2>'
@@ -320,9 +352,9 @@
                     return;
                 }
 
-                var itTitle = this.ITTitle;
-                var itSubTitle = this.ITSubTitle;
-                var itContent = this.ITContent;
+                let itTitle = this.ITTitle;
+                let itSubTitle = this.ITSubTitle;
+                let itContent = this.ITContent;
 
                 if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
                         || !this.addoileUtil.validateReq(itSubTitle)){
@@ -346,6 +378,7 @@
 
                 //
                 this.axios.post("addArticle",{
+                    userId:userId,
                     title : itTitle,
                     subTitle : itSubTitle,
                     content : itContent,
@@ -368,6 +401,95 @@
                 this.ITContent = '';
                 this.ITTitle = '';
                 this.ITSubTitle ='';
+            },
+            /**
+             * 编辑IT文章
+             * @param articleId 文章id
+             * @param title 大名
+             * @param subTitle 小名
+             * @param content 内容
+             */
+            toEditITArticle(articleId,title, subTitle,content){
+                if(!this.addoileUtil.validateReq(articleId)){
+                    return;
+                }
+                this.ITTitle = title;
+                this.ITSubTitle = subTitle;
+                this.ITContent = content;
+
+                Cookies.set('articleId',articleId);
+
+                //是否显示编辑器
+                this.isShowEditor = true;
+                //是否显示文章列表
+                this.isShowMoreITs = false;
+                //是否显示发表文章按钮
+                this.isShowAddArticleBtn = false;
+                //是否显示编辑完成按钮
+                this.isShowEditBtn = true;
+
+            },
+            /**
+             * 编辑文章
+             */
+            editITArticle(){
+                //如果没有登录,禁止添加分享经历
+                let userId = sessionStorage.getItem("userId");
+/*              理论上不会出现
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h2>Hi,您好,访客不允许下编辑IT文章</h2>'
+                    });
+                    return;
+                }*/
+                if(!this.addoileUtil.validateReq(userId)){
+                    return;
+                }
+
+                let itTitle = this.ITTitle;
+                let itSubTitle = this.ITSubTitle;
+                let itContent = this.ITContent;
+                let articleId = Cookies.get('articleId');
+
+                if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
+                    || !this.addoileUtil.validateReq(itSubTitle)){
+                    this.$Notice.warning({
+                        desc: 'IT技术文章的标题、副标题或者内容为空'
+                    });
+                    return;
+                }
+
+                if(itTitle.length > 50){
+                    this.$Message.warning("IT文章标题字数不能多余50个",3);
+                    return;
+                }
+
+
+                if(itSubTitle.length > 70){
+                    this.$Message.warning("IT文章副标题不能多余70个",3);
+                    return;
+                }
+
+
+                //
+                this.axios.post("editArticle",{
+                    articleId:articleId,
+                    title : itTitle,
+                    subTitle : itSubTitle,
+                    content : itContent,
+                    articleType : 2
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data > 0){
+                        this.$Notice.success({
+                            desc: 'IT技术编辑成功,2s后刷新本页面'
+                        });
+                        setTimeout(function () {
+                            this.$router.go(0);
+                        }.bind(this), 2000);
+                        this.clearContent();
+                        Cookies.remove('articleId');
+                    }
+                }.bind(this));
             }
         },
         computed: {
