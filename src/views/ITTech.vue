@@ -56,7 +56,7 @@
                         <quill-editor ref="myTextEditor"
                                       v-model="ITContent"
                                       :options="editorOption"
-                                      @focus="onEditorFocus($event)" style="height: 800px">
+                                      class="quill-editor-style">
                         </quill-editor>
                     </Card>
                 </div>
@@ -308,9 +308,6 @@
                     });
                 }
 
-            },
-            //聚焦到编辑器
-            onEditorFocus(editor) {
             },
             //发表IT文章
             sendITArticle(){

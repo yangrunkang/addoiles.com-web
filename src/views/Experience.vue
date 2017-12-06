@@ -19,9 +19,10 @@
         border-radius: 32px;
     }
 
-    /*编辑器*/
-    #editorDiv {
-        margin: auto 50px;
+    /*编辑器Div*/
+    .editorDiv {
+        width: 1440px;
+        margin: 0 auto;
     }
 
     /*分享内容*/
@@ -30,25 +31,40 @@
         padding:20px
     }
 
+    /*承载编辑器的Card*/
+    .edit-card{
+        height: 1047px;
+    }
+
+    .not-login-tips{
+        width:1440px;
+        margin: 0 auto;
+    }
+
 </style>
 <template>
     <div class="experience">
 
         <!--显示编辑器图钉-->
-        <Affix :offset-top="10">
+        <Affix :offset-top="10" v-show="showOnOffAffix">
             <span class="switch-affix"><h2 style="color: white">显示编辑器&nbsp;<i-switch size='large' @on-change="changeSwitch"><span slot='open'>显示</span><span slot='close'>关闭</span></i-switch></h2></span>
         </Affix>
 
+        <!--未登录时展示-->
+        <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
+            请登录后分享经历
+        </Alert>
         <!--编辑器-->
-        <div id="editorDiv" v-show="isShowEditor" style="height: 500px">
-            <Card class="card" style="height: inherit">
+        <div class="editorDiv" v-show="isShowEditor">
+            <Card class="edit-card">
                 <p slot="title" style="height: auto;font-size: 18px">分享你的经历,不论是否精彩&nbsp;&nbsp;
                     <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
                         <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large" style="width:605px;"></i-input>
                     </Poptip>
                     <span style="float: right;">
-                        <Button type="info" shape="circle" @click="sendExperience('normal')">发表</Button>
-                        <Button type="warning" shape="circle" @click="sendExperience('draft')">保存为草稿</Button>
+                        <Button type="info" shape="circle" v-show="editBtn" @click="editExperience()">编辑完成</Button>
+                        <Button type="info" shape="circle" v-show="shareBtn" @click="saveExperience('normal')">发表</Button>
+                        <Button type="warning" shape="circle" v-show="shareBtn" @click="saveExperience('draft')">保存为草稿</Button>
                         <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                     </span>
                 </p>
@@ -56,7 +72,7 @@
                 <quill-editor ref="myTextEditor"
                               v-model="content"
                               :options="editorOption"
-                              @focus="onEditorFocus($event)" style="height: 350px">
+                              class="quill-editor-style">
                 </quill-editor>
             </Card>
         </div>
@@ -75,7 +91,7 @@
                     <Card :bordered="false" style="margin-bottom: 5px">
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
                             {{experience.title}}
-                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="editExperience(experience.id,experience.title,experience.content)">编辑</Button>
+                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="toEditExperience(experience.id,experience.title,experience.content)">编辑</Button>
                         </p>
                         <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
@@ -110,10 +126,10 @@
                 <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
             </div>
             <div slot="footer">
-                <Button type="info" size="large" long @click="sendExperience('normal')">立即分享</Button>
+                <Button type="info" size="large" long @click="saveExperience('normal')">立即分享</Button>
             </div>
             <div slot="footer" style="margin: 4px auto;">
-                <Button type="warning" size="large" long @click="sendExperience('draft')">保存为草稿</Button>
+                <Button type="warning" size="large" long @click="saveExperience('draft')">保存为草稿</Button>
             </div>
             <div slot="footer" style="margin: 4px auto;">
                 <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
@@ -124,6 +140,7 @@
 <script>
 
     import Vue from 'vue';
+    import Cookies from 'js-cookie';
     //安装vue-quill-editor富文本编辑器
     import VueQuillEditor from 'vue-quill-editor';
     Vue.use(VueQuillEditor);
@@ -150,27 +167,36 @@
                 //经历 + 评论
                 experienceDtoList:[],
                 //列表页是否显示编辑按钮
-                isShowEditBtn : false
+                isShowEditBtn : false,
+                //未登录分享经历时提示
+                showNotLoginTips: false,
+                //默认显示分享和保存为草稿按钮,编辑时不显示
+                shareBtn: true,
+                //默认编辑按钮不显示
+                editBtn:false,
+                //是否显示 打开编辑器的图钉(编辑文章时不显示)
+                showOnOffAffix:true
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
-            onEditorFocus(editor) {
-            },
             changeSwitch(status){
+                //只要是点击了开启编辑器的按钮
+                this.editBtn = false;
+                this.shareBtn = true;
+
                 if(status){
                     //清空内容
                     this.clearExperienceTitleContent();
 
                     this.isShowEditor = true;
-                    var userId = sessionStorage.getItem("userId");
+                    let userId = sessionStorage.getItem("userId");
                     if(!this.addoileUtil.validateReq(userId)){
-                        this.$Notice.info({
-                            desc: '<h3>Hi,您好,访客不允许分享经历,登录后可以分享哦</h3>'
-                        });
+                        this.showNotLoginTips = true;
                     }
                 }else if(!status){
                     this.isShowEditor = false;
+                    this.showNotLoginTips = false;
                 }
             },
             //删除内容
@@ -198,10 +224,10 @@
                 this.experienceTitle = '';
                 this.content = '';
             },
-            sendExperience(operation){
+            saveExperience(operation){
 
                 //如果没有登录,禁止添加分享经历
-                var userId = sessionStorage.getItem("userId");
+                let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
@@ -210,7 +236,7 @@
                 }
 
                 // 请求对象
-                var deleteStatus = 0;
+                let deleteStatus = 0;
                 if(operation == 'normal'){
                     deleteStatus = 0;
                 }else if(operation == 'draft'){
@@ -222,8 +248,8 @@
                 this.confirmModal = false;
 
                 //数据校验
-                var experienceTitle = this.experienceTitle;
-                var experienceContent = this.content;
+                let experienceTitle = this.experienceTitle;
+                let experienceContent = this.content;
                 if(!this.addoileUtil.validateReq(experienceTitle) || !this.addoileUtil.validateReq(experienceContent)){
                     this.$Notice.warning({
                         desc: '经历标题或内容为空'
@@ -265,7 +291,7 @@
             toComment(experienceId,index){
 
                 //如果没有登录,禁止评论
-                var userId = sessionStorage.getItem("userId");
+                let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
                         title: '<h2>Hi,您好,访客不允许评论</h2>'
@@ -273,7 +299,7 @@
                     return;
                 }
 
-                var commentContent = this.commentContent[index];
+                let commentContent = this.commentContent[index];
 
                 if(!this.addoileUtil.validateReq(commentContent)){
                     this.$Notice.info({
@@ -293,7 +319,7 @@
                     targetId : experienceId,
                     content : commentContent
                 }).then(function (res) {
-                    var response = res.data;
+                    let response = res.data;
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
                         this.$Notice.success({
@@ -317,7 +343,7 @@
             },
             //去评分
             toRates(experienceId,$event){
-                var rate = $event;
+                let rate = $event;
                 this.$Notice.success({
                     title : '感谢您的评分',
                     desc : '系统将根据平局值显示结果'
@@ -333,17 +359,17 @@
             getExperienceList(){
                 this.axios.get('getExperienceList').then(function (response) {
                     if(response.data.code == 0){
-                        var experienceDtoList = response.data.data; //List<ExperienceDto>
+                        let experienceDtoList = response.data.data; //List<ExperienceDto>
                         if(experienceDtoList.length >= 0){
 
-                            for(var i = 0; i < experienceDtoList.length; i++){ //ExperienceDto
-                                var experienceDto = experienceDtoList[i];
+                            for(let i = 0; i < experienceDtoList.length; i++){ //ExperienceDto
+                                let experienceDto = experienceDtoList[i];
                                 //评论
-                                var commentList = experienceDto.commentList;
-                                var _commentList = [];
+                                let commentList = experienceDto.commentList;
+                                let _commentList = [];
                                 if(commentList.length > 0){
-                                    for(var j = 0; j < commentList.length; j++){
-                                        var comment = commentList[j];
+                                    for(let j = 0; j < commentList.length; j++){
+                                        let comment = commentList[j];
                                         _commentList.push(
                                                 {
                                                     createTime:this.addoileUtil.formatUnixTime(comment.createTime),
@@ -359,9 +385,9 @@
                                         content:"本文暂无评论,你的机会来了,快在右边写下你的感想吧"});
                                 }
                                 //经历
-                                var experience = experienceDto.experience;
+                                let experience = experienceDto.experience;
                                 //当前用户id
-                                var currentUserId = sessionStorage.getItem("userId");
+                                let currentUserId = sessionStorage.getItem("userId");
                                 this.experienceDtoList.push(
                                         {
                                             id:experience.experienceId, //注意这里的id是experienceId
@@ -379,16 +405,94 @@
                 }.bind(this));
             },
             /**
-             * 编辑经历
+             * 去编辑
              * @param experienceId 经历id
              * @param experienceTitle 经历标题
              * @param experienceContent 经历内容
              */
-            editExperience(experienceId,experienceTitle,experienceContent){
+            toEditExperience(experienceId, experienceTitle, experienceContent){
                 console.log(experienceId);
                 console.log(experienceTitle);
                 console.log(experienceContent);
-                this.$router.push("/Edit");
+                // this.$router.push("/Edit");
+                this.isShowEditor = true;
+                this.shareBtn = false;
+                this.editBtn = true;
+                this.showOnOffAffix = false;
+
+                //承载编辑器的Card下调20px
+                document.getElementsByClassName("edit-card")[0].setAttribute('style','height: 1047px;margin-top:20px');
+                //回到顶部
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+
+                this.experienceTitle = experienceTitle;
+                this.content = experienceContent;
+                //
+                Cookies.set('editExperienceId',experienceId);
+            },
+            /**
+             * 编辑完成
+             */
+            editExperience(){
+                //如果没有登录,禁止添加分享经历
+                let userId = sessionStorage.getItem("userId");
+
+                /* 按理说,只有登录后才有这个入口
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
+                    });
+                    return;
+                }
+                */
+
+                if(!this.addoileUtil.validateReq(userId)){
+                    return;
+                }
+                let editExperienceId = Cookies.get('editExperienceId');
+                if(!this.addoileUtil.validateReq(editExperienceId)){
+                    console.log("edit experience error,experienceId is null");
+                    return;
+                }
+                
+                //关闭模态框
+                this.confirmModal = false;
+
+                //数据校验
+                let experienceTitle = this.experienceTitle;
+                let experienceContent = this.content;
+                if(!this.addoileUtil.validateReq(experienceTitle) || !this.addoileUtil.validateReq(experienceContent)){
+                    this.$Notice.warning({
+                        desc: '经历标题或内容为空'
+                    });
+                    return;
+                }
+
+                if(experienceTitle.length > 50){
+                    this.$Message.warning("经历标题字数不能多余50个",3);
+                    return;
+                }
+
+                //调用服务端接口
+                this.axios.post("editExperience",{
+                    experienceId:editExperienceId,
+                    title : experienceTitle,
+                    content : experienceContent
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data == 1){
+                        this.$Notice.success({
+                            desc: '编辑完成,2s后刷新本页面'
+                        });
+                        setTimeout(function () {
+                            this.$router.go(0);
+                        }.bind(this), 2000);
+                        //清空内容
+                        this.clearContent(false); // TODO 其实刷新完了,就自动清除了
+                        //清空Cookies
+                        Cookies.remove('editExperienceId');
+                    }
+                }.bind(this));
             }
 
         },
@@ -401,6 +505,7 @@
         },
         mounted() {
             this.getExperienceList();
+
         }
     }
 

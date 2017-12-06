@@ -27,6 +27,11 @@
     word-wrap: break-word;
 }
 
+/*编辑器设置*/
+.quill-editor-style{
+    height: 900px;
+}
+
 /*页面底部*/
 /*
 .layout-bottom {
