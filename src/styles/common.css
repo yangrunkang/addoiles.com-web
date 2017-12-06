@@ -42,6 +42,18 @@
 }
 */
 
+/*专门针对编辑器Code代码样式设置,效果很棒*/
+pre.ql-syntax{
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 7px 14px;
+    border-radius: 7px;
+}
+
+
 
 
 
