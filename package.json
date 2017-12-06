@@ -12,11 +12,8 @@
     "axios": "^0.16.2",
     "iview": "^2.7.2",
     "vue": "^2.2.6",
-    "vue-quill-editor": "^2.3.2",
     "vue-router": "^2.2.1",
-    "vuex": "^2.4.1"
-  },
-  "devDependencies": {
+    "vuex": "^2.4.1",
     "autoprefixer-loader": "^2.0.0",
     "babel": "^6.23.0",
     "babel-core": "^6.23.1",
@@ -42,6 +39,11 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "webpack-merge": "^3.0.0",
-    "vue-quill-editor": "2.3.2"
+
+    "vue-quill-editor": "^2.3.2",
+    "js-cookie": "^2.2.0"
+  },
+  "devDependencies": {
+
   }
 }
