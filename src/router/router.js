@@ -55,13 +55,6 @@ const routers = [
             title: '反馈及建议'
         },
         component: (resolve) => require(['../views/Suggest.vue'], resolve)
-    },
-    {
-        path: '/Edit',
-        meta: {
-            title: '编辑'
-        },
-        component: (resolve) => require(['../views/Edit.vue'], resolve)
     }
 ];
 export default routers;
