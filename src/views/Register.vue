@@ -98,7 +98,7 @@
                 <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:注册</a>
             </div>
             <div class="log-email" v-show="verifyForm">
-                <input type="password" placeholder="验证码已发到您的邮箱,,输入" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="verificationCode">
+                <input type="text" placeholder="输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
                 <a href="javascript:;" class="log-btn" @click="register()">第二步:完成注册</a>
             </div>
         </div>
@@ -127,17 +127,10 @@
         methods:{
             //开始注册
             beginRegister(){
-                this.registerForm = false;
-                this.verifyForm=true;
-            },
-            //完成
-            register(){
                 let userName = this.userName;
                 let email = this.email;
                 let password = this.password;
                 let rePassword = this.rePassword;
-
-                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 
                 if(!this.addoileUtil.validateReq(userName)){
                     this.$Message.warning('用户名不能为空');
@@ -149,6 +142,7 @@
                     return;
                 }
 
+                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;
@@ -174,28 +168,80 @@
                     return;
                 }
 
-                this.axios.post("register",{
-                    userName : userName,
-                    email : email,
-                    password : password
-                }).then(function (resp) {
 
-                    if(resp.data.code == 0 && resp.data.data == 1001){
-                        this.$Message.warning(email+'已经注册过');
-                        return;
+                let _this = this;
+                let config = {
+                    content:'即将发送验证码到您的邮箱,请注意查收',
+                    okText:'确认',
+                    onOk() {
+                        //
+                        let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                        if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
+                            this.$Message.warning('邮箱格式不正确,请检查');
+                            return;
+                        }
+
+                        //发送验证码
+                        _this.axios.post("sendVerificationCode",{
+                            email : _this.email,
+                            type : 2
+                        }).then(function (resp) {
+                            if(resp.data.code == 0 && resp.data.data == true){
+                                //
+                                _this.registerForm = false;
+                                _this.verifyForm=true;
+                            }
+                        }.bind(_this));
+
+
                     }
+                };
+                this.$Modal.confirm(config);
 
+
+            },
+            //完成
+            register(){
+                let userName = this.userName;
+                let email = this.email;
+                let password = this.password;
+
+                this.axios.post("verifyCode",{
+                    email : this.email,
+                    code : this.verificationCode
+                }).then(function (resp) {
+                    console.log(resp);
+                    console.log('--1--');
                     if(resp.data.code == 0 && resp.data.data == true){
-                        this.$Notice.success({
-                            desc: '注册成功,2s后转到登录页'
-                        });
-                        setTimeout(function () {
-                            this.$router.push('/Login');
-                        }.bind(this), 2000);
+                        //begin to register
+                        this.axios.post("register",{
+                            userName : userName,
+                            email : email,
+                            password : password
+                        }).then(function (resp) {
+                            console.log(resp);
+                            console.log('--2--');
+                            if(resp.data.code == 0 && resp.data.data == 1001){
+                                this.$Message.warning(email+'已经注册过');
+                                return;
+                            }
+
+                            if(resp.data.code == 0 && resp.data.data == true){
+                                this.$Notice.success({
+                                    desc: '注册成功,2s后转到登录页'
+                                });
+                                setTimeout(function () {
+                                    this.$router.push('/Login');
+                                }.bind(this), 2000);
+                            }else{
+                                this.$Notice.warning({
+                                    desc: '注册失败,请检查信息后重新注册'
+                                });
+                            }
+                        }.bind(this));
+
                     }else{
-                        this.$Notice.warning({
-                            desc: '注册失败,请检查信息后重新注册'
-                        });
+                        console.log("验证码失效");
                     }
                 }.bind(this));
 

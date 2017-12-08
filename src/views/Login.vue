@@ -92,16 +92,16 @@
                 <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <a href="javascript:;" class="log-btn" @click="toLogin">登录</a>
             </div>
-            <p style="text-align: center;margin-bottom: 10px" @click.once="forgetPassword()" v-show="showLoginForm">忘记密码</p>
+            <p style="text-align: center;margin-bottom: 10px" @click="forgetPassword()" v-show="showLoginForm">忘记密码</p>
             <div class="log-email" v-show="showForgetPasswordForm">
-                <input type="text" placeholder="验证码已发到您的邮箱,请输入" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
+                <input type="text" placeholder="请输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
                 <a href="javascript:;" class="log-btn" @click="verifyCode()">验证</a>
             </div>
             <div class="log-email" v-show="resetPassword">
                 <p style="text-align: center;margin-bottom: 10px;font-size: 18px">验证成功,重设密码</p>
-                <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <input type="password" placeholder="再次输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <a href="javascript:;" class="log-btn" @click="toLogin">确认</a>
+                <input type="password" placeholder="输入密码" :class="'log-input' + (resetPassword1==''?' log-input-empty':'')"  v-model="password">
+                <input type="password" placeholder="再次输入密码" :class="'log-input' + (resetPassword2==''?' log-input-empty':'')"  v-model="password">
+                <a href="javascript:;" class="log-btn" @click="confirmResetPassword()">确认</a>
             </div>
         </div>
     </div>
@@ -122,7 +122,11 @@
                 //展示忘记密码框
                 showForgetPasswordForm:false,
                 //展示重设密码框
-                resetPassword:false
+                resetPassword:false,
+                //重设密码1
+                resetPassword1:'',
+                //重设密码2
+                resetPassword2:''
             }
         },
         methods:{
@@ -174,10 +178,8 @@
                             if(_count == 1){//在index.vue onSelect控制,操作仓库  debug result is 1
                                 //显示当前用户
                                 navList.push({
-//                                    navRouter : this.$store.getters.getUserId,
                                     navRouter : 'BestWishesToUser',
                                     navIcon : 'person',
-//                                    navName : this.$store.getters.getUserName
                                     navName : resp.data.data.userName
                                 });
                                 //显示退出按钮
@@ -200,17 +202,87 @@
 
             },
             forgetPassword(){
-                this.showForgetPasswordForm = true;
-                this.showLoginForm=false;
-                this.resetPassword = false;
+                let _this = this;
+                let config = {
+                    content:'即将发送验证码到您输入的邮箱,请注意查收',
+                    okText:'确认',
+                    onOk(){
+                        //
+                        let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                        if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
+                            this.$Message.warning('邮箱格式不正确,请检查');
+                            return;
+                        }
+
+                        //发送验证码
+                        _this.axios.post("sendVerificationCode",{
+                            email : _this.email,
+                            type : 1
+                        }).then(function (resp) {
+                            console.log(resp);
+                            if(resp.data.code == 0 && resp.data.data == true){
+                                _this.showForgetPasswordForm = true;
+                                _this.showLoginForm=false;
+                                _this.resetPassword = false;
+                            }else{
+                                console.log("验证码发送失败");
+                            }
+                        }.bind(_this));
+                    }
+                };
+                this.$Modal.confirm(config);
             },
+            //验证验证码
             verifyCode(){
-                // if(true){
-                this.resetPassword = true;
-                this.showLoginForm = false;
-                this.showForgetPasswordForm = false;
-                // }
+                this.axios.post("verifyCode",{
+                    email : this.email,
+                    code : this.verificationCode
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data == true){
+                        this.resetPassword = true;
+                        this.showLoginForm = false;
+                        this.showForgetPasswordForm = false;
+                    }else{
+                        console.log("验证码失效");
+                    }
+                }.bind(this));
+            },
+            //重设密码
+            confirmResetPassword(){
+                let resetPassword1 = this.resetPassword1;
+                let resetPassword2 = this.resetPassword2;
+
+                if(!this.addoileUtil.validateReq(resetPassword1) || resetPassword1.length < 6
+                ||!this.addoileUtil.validateReq(resetPassword2) || resetPassword2.length < 6){
+                    this.$Message.warning('密码长度不能少于6位');
+                    return;
+                }
+
+                if(resetPassword1.length > 32 || resetPassword2.length > 32){
+                    this.$Message.warning('密码字数不能多于32个');
+                    return;
+                }
+
+                if(resetPassword2 != resetPassword1){
+                    this.$Message.error('输入的两次密码不一致');
+                    return;
+                }
+
+                this.axios.post("confirmResetPassword",{
+                    email : this.email,
+                    password : this.resetPassword1
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data  > 0){
+                        console.log("重设密码成功");
+                        this.showLoginForm = true;
+                        this.showForgetPasswordForm = false;
+                        this.resetPassword = false;
+                    }else{
+                        console.log("重设密码失效");
+                    }
+                }.bind(this));
             }
+
         }
     }
 </script>
