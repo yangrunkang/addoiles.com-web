@@ -44,6 +44,10 @@ router.beforeEach((to, from, next) => {
 	next();
 });
 
+/**
+ * @param to    到那个url去
+ * @param from  从那个url来
+ */
 router.afterEach((to, from, next) => {
 	iView.LoadingBar.finish();
 	window.scrollTo(0, 0); 
