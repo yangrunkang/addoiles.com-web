@@ -1,4 +1,5 @@
-<style scoped lang="less">
+<style scoped lang="less" xmlns:javascript="http://www.w3.org/1999/xhtml"
+       xmlns:javascript="http://www.w3.org/1999/xhtml">
     @import "../styles/common.css";
 
     .login{overflow: hidden;left: 50%; top:50%; margin: 0 auto; width: 500px; min-height: 555px; z-index: 10; right: 140px; background: #fff;-webkit-border-radius: 5px;
@@ -86,10 +87,21 @@
 
                 <div class="log-logo">Welcome Addoiles!<br />Login</div>
             </div>
-            <div class="log-email">
+            <div class="log-email" v-show="showLoginForm">
                 <input type="text" placeholder="输入邮箱登录" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <a href="javascript:;" class="log-btn" @click="toLogin">登录</a>
+            </div>
+            <p style="text-align: center;margin-bottom: 10px" @click.once="forgetPassword()" v-show="showLoginForm">忘记密码</p>
+            <div class="log-email" v-show="showForgetPasswordForm">
+                <input type="text" placeholder="验证码已发到您的邮箱,请输入" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
+                <a href="javascript:;" class="log-btn" @click="verifyCode()">验证</a>
+            </div>
+            <div class="log-email" v-show="resetPassword">
+                <p style="text-align: center;margin-bottom: 10px;font-size: 18px">验证成功,重设密码</p>
+                <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+                <input type="password" placeholder="再次输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+                <a href="javascript:;" class="log-btn" @click="toLogin">确认</a>
             </div>
         </div>
     </div>
@@ -99,17 +111,27 @@
     export default {
         data(){
             return {
+                //邮箱
                 email: '',
-                password: ''
+                //密码
+                password: '',
+                //验证码
+                verificationCode:'',
+                //展示登录框
+                showLoginForm:true,
+                //展示忘记密码框
+                showForgetPasswordForm:false,
+                //展示重设密码框
+                resetPassword:false
             }
         },
         methods:{
             //登录
             toLogin(){
-                var email = this.email;
-                var password = this.password;
+                let email = this.email;
+                let password = this.password;
 
-                var emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;
@@ -140,10 +162,10 @@
                         //改变到那个导航栏
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
-                        var navList = this.$store.getters.getNavList;
-                        var _count = 0; //计数,到2就跳出循环,以防程序多跑
-                        for(var i = 0; i < navList.length; i++){
-                            var perNav = navList[i];
+                        let navList = this.$store.getters.getNavList;
+                        let _count = 0; //计数,到2就跳出循环,以防程序多跑
+                        for(let i = 0; i < navList.length; i++){
+                            let perNav = navList[i];
                             //移除注册/登录导航按钮
                             if(perNav.navName === '注册' || perNav.navName === '登录'){
                                 navList.splice(i,i+1); //i:当前元素index,第二个参数是当前坐标i后的几个元素删除
@@ -176,6 +198,18 @@
                     }
                 }.bind(this));
 
+            },
+            forgetPassword(){
+                this.showForgetPasswordForm = true;
+                this.showLoginForm=false;
+                this.resetPassword = false;
+            },
+            verifyCode(){
+                // if(true){
+                this.resetPassword = true;
+                this.showLoginForm = false;
+                this.showForgetPasswordForm = false;
+                // }
             }
         }
     }

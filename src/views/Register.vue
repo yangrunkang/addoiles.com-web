@@ -90,12 +90,16 @@
 
                 <div class="log-logo">Welcome Addoiles!<br />Register</div>
             </div>
-            <div class="log-email">
+            <div class="log-email" v-show="registerForm">
                 <input type="text" placeholder="用户名" :class="'log-input' + (userName==''?' log-input-empty':'')" v-model="userName">
                 <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
-                <a href="javascript:;" class="log-btn" @click="register()">注册</a>
+                <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:注册</a>
+            </div>
+            <div class="log-email" v-show="verifyForm">
+                <input type="password" placeholder="验证码已发到您的邮箱,,输入" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="verificationCode">
+                <a href="javascript:;" class="log-btn" @click="register()">第二步:完成注册</a>
             </div>
         </div>
     </div>
@@ -104,21 +108,36 @@
     export default {
         data(){
             return {
+                //用户名
                 userName: '',
+                //邮箱
                 email: '',
+                //密码
                 password: '',
-                rePassword: ''
+                //重新输入密码
+                rePassword: '',
+                //验证am
+                verificationCode:'',
+                //展示登录框
+                registerForm:true,
+                //展示验证框
+                verifyForm:false
             }
         },
         methods:{
-            //登录请求
+            //开始注册
+            beginRegister(){
+                this.registerForm = false;
+                this.verifyForm=true;
+            },
+            //完成
             register(){
-                var userName = this.userName;
-                var email = this.email;
-                var password = this.password;
-                var rePassword = this.rePassword;
+                let userName = this.userName;
+                let email = this.email;
+                let password = this.password;
+                let rePassword = this.rePassword;
 
-                var emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 
                 if(!this.addoileUtil.validateReq(userName)){
                     this.$Message.warning('用户名不能为空');
