@@ -8,35 +8,33 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        /*管理用户*/
+        /*用户名*/
         userName: '',
+        /*用户id*/
         userId: '',
-        /*导航栏--存储没有实际的作用,作用在于获取时做个引子,实际是获取session中的值*/
+        /*导航栏*/
         navList:[]
     },
     mutations: {
         setUserName (state, userName) {
-            // sessionStorage.setItem("userName",userName);
             Cookies.set("userName",userName);
         },
         setUserId (state, userId) {
             sessionStorage.setItem("userId",userId);
         },
         setNavList (state, navList) {
-            // sessionStorage.setItem("navList",JSON.stringify(navList));
             Cookies.set("navList",JSON.stringify(navList));
         }
     },
     getters: {
         getUserName: state => {
-            // return sessionStorage.getItem("userName")+''; //转换成String,否则有些地方判断getUserId后是Object对象
+            //转换成String,否则有些地方判断getUserId后是Object对象
             return Cookies.get("userName")+'';
         },
         getUserId: state => {
             return sessionStorage.getItem("userId")+''; 
         },
         getNavList: state => {
-            // return JSON.parse(sessionStorage.getItem("navList"));
             return JSON.parse(Cookies.get("navList"));
         }
 
