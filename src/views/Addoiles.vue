@@ -321,7 +321,7 @@
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
                         this.$Notice.success({
-                            title: '<h2>回答成功</h2>'
+                            title: '<h6>回答成功</h6>'
                         });
                         this.questionAnswerList[index].answerList.unshift(
                                 {

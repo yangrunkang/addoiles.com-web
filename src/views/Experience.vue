@@ -222,7 +222,7 @@
                 let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
-                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
+                        desc: '<h6>Hi,您好,访客不允许添加分享经历</h6>'
                     });
                     return;
                 }
@@ -286,7 +286,7 @@
                 let userId = sessionStorage.getItem("userId");
                 if(!this.addoileUtil.validateReq(userId)){
                     this.$Notice.info({
-                        title: '<h2>Hi,您好,访客不允许评论</h2>'
+                        title: '<h6>Hi,您好,访客不允许评论</h6>'
                     });
                     return;
                 }
@@ -315,7 +315,7 @@
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
                         this.$Notice.success({
-                            title: '<h2>评论成功</h2>'
+                            title: '<h6>评论成功</h6>'
                         });
                         //显示评论信息
                         this.experienceDtoList[index].commentList.unshift({
@@ -327,7 +327,7 @@
                         this.commentContent[index] = '';
                     }else{
                         this.$Notice.info({
-                            title: '<h2>系统出错了,抱歉</h2>'
+                            title: '<h6>系统出错了,抱歉</h6>'
                         });
                     }
                 }.bind(this));
