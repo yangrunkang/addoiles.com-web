@@ -39,5 +39,38 @@ util.isCurrentUser = function(userId,currentLoginUserId) {
     return userId == currentLoginUserId;
 };
 
+/**
+ * 获取随机图标
+ */
+util.getRandomIcon = function () {
+    let iconArr = ["ios-lightbulb-outline","paper-airplane","quote","waterdrop","ios-analytics-outline","ios-wineglass-outline","fireball","ios-americanfootball-outline","earth"];
+    let iconArrSize = iconArr.length;
+
+    let index = 0;
+
+    try {
+        index = Math.round(Math.random() * iconArrSize); //四舍五入
+    } catch (e) {
+        index = 0;
+    }
+
+    return iconArr[index];
+};
+
+util.getRandAlertType = function () {
+    let iconArr = ["success","warning","error"];
+    let iconArrSize = iconArr.length;
+
+    let index = 0;
+
+    try {
+        index = Math.round(Math.random() * iconArrSize); //四舍五入
+    } catch (e) {
+        index = 0;
+    }
+
+    return iconArr[index];
+};
+
 
 export default util;

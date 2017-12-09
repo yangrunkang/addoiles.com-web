@@ -176,34 +176,11 @@
                     if (resp.data.code == 0) {
                         let dataArray = resp.data.data;
                         for(let i = 0; i < dataArray.length; i++){
-
-                            let iconType = "ios-lightbulb-outline";
-                            if(i % 9 == 0){
-                                iconType = "paper-airplane";
-                            }else if(i % 9 == 1){
-                                iconType = "quote";
-                            }else if(i % 9 == 2){
-                                iconType = "waterdrop";
-                            }else if(i % 9 == 3){
-                                iconType = "ios-analytics-outline";
-                            }else if(i % 9 == 4){
-                                iconType = "ios-wineglass-outline";
-                            }else if(i % 9 == 5){
-                                iconType = "android-checkbox-outline-blank";
-                            }else if(i % 9 == 6){
-                                iconType = "fireball";
-                            }else if(i % 9 == 7){
-                                iconType = "flame";
-                            }else if(i % 9 == 8){
-                                iconType = "ios-americanfootball-outline";
-                            }else{
-                                iconType = "earth";
-                            }
                             this.moreITArticleList.push({
                                 articleId:dataArray[i].articleId,
                                 title:dataArray[i].title,
                                 subTitle:dataArray[i].subTitle,
-                                iconType:iconType
+                                iconType:this.addoileUtil.getRandomIcon()
                             });
                         }
                     }

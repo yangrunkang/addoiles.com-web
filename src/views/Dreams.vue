@@ -170,16 +170,7 @@
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
                             let dream = response[i];
-                            //遍历更换 梦想内容的背景
-                            let alertType = "success";
-                            if(i % 3 == 0){
-                                alertType = "success";
-                            }else if(i % 3 == 1){
-                                alertType = "warning";
-                            }else{
-                                alertType = "error";
-                            }
-                            this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:alertType});
+                            this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:this.addoileUtil.getRandAlertType()});
                         }
                         // 分配
                         this.splitDreamList(this.dreamList);
