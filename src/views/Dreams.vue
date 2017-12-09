@@ -112,6 +112,16 @@
         methods:{
             //许下梦想
             toDreamWall() {
+                //如果没有登录,禁止添加梦想
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+
+
                 let dreamTitle = this.dreamTitle;
                 let dreamContent = this.dreamContent;
                 //参数校验
