@@ -10,12 +10,6 @@
         border-radius: 30px;
     }
 
-    li {
-        float: left;
-        width: 33%;
-        margin: 1px;
-    }
-
     .dream-card {
         background: transparent;
         border-radius: 30px;
@@ -23,58 +17,103 @@
         margin-left: 6px
     }
 
+    .dream-btn {
+        width: 100%;
+        height: 100%;
+        font-size:xx-large;
+    }
+
+    .demo-badge-alone{
+        background: #5cb85c !important;
+    }
+
 </style>
 <template>
     <div>
 
-        <Affix :offset-bottom="10" style="background-color: transparent">
-            <span class="demo-affix" v-show="isShowAffix" style="background-color: transparent">
-                <Input placeholder="写下你的梦想" v-model="dreamTitle">
-                    <Button slot="append" @click="toDreamWall">许下</Button>
-                </Input>
-                <Input style="padding-top: 5px;"  type="textarea" :rows="3" placeholder="例如:我的梦想是实现自己的价值,做自己喜欢做的事情" v-model="dreamContent"/>
-            </span>
-        </Affix>
+        <transition name="fade">
+            <Card style="width: 94%;margin: 20px auto;" v-show="isShowAffix">
+                <Row type="flex">
+                    <i-col span="20">
+                        <Input v-model="dreamTitle" type="text"  placeholder="写下你的梦想" style="width: 99%;margin-bottom: 10px;" />
+                        <Input v-model="dreamContent" type="textarea" :rows="7" placeholder="例如:我的梦想是实现自己的价值,做自己喜欢做的事情" style="width: 99%;" />
+                    </i-col>
+                    <i-col span="4">
+                        <Button class="dream-btn" type="info"  size="large" @click="toDreamWall()">许下梦想</Button>
+                    </i-col>
+                </Row>
+            </Card>
+        </transition>
 
         <div>
-            <ul>
-                <li v-for="item in dreamList" key="item.id">
-                    <Card class="dream-card">
+
+            <Row type="flex">
+                <i-col span="8">
+                    <Card class="dream-card" v-for="item in dreamListCol1" key="item.id">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
                                 <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
                             </Alert>
-<!--                            <div>
-                                <Button type="info" shape="circle">为Ta加油</Button>
-                                <Button type="success" shape="circle">同理想</Button>
-                            </div>-->
+                            <!--<Button type="info" icon="thumbsup" style="width: 100%">点赞(99+)</Button>-->
                         </div>
                     </Card>
-                </li>
-            </ul>
+                </i-col>
+                <i-col span="8">
+                    <Card class="dream-card" v-for="item in dreamListCol2" key="item.id">
+                        <div style="margin: inherit">
+                            <Alert :type="item.alertType" style="height: inherit">
+                                <strong class="auto-break-line">{{item.dreamTitle}}</strong>
+                                <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
+                            </Alert>
+                        </div>
+                    </Card>
+                </i-col>
+                <i-col span="8">
+                    <Card class="dream-card" v-for="item in dreamListCol3" key="item.id">
+                        <div style="margin: inherit">
+                            <Alert :type="item.alertType" style="height: inherit">
+                                <strong class="auto-break-line">{{item.dreamTitle}}</strong>
+                                <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
+                            </Alert>
+                        </div>
+                    </Card>
+                </i-col>
+            </Row>
+
+
         </div>
     </div>
 </template>
 <script>
+    import ICol from "iview/src/components/grid/col";
     export default {
+        components: {ICol},
         data () {
             return {
                 isShowAffix : false, //一开始不显示,5秒后显示
                 dreamTitle : null, //梦想标题
                 dreamContent : null, //梦想内容
-                dreamList : [] //梦想列表
+                dreamList : [], //梦想列表
+                //将dreamList平分,放到下面三个列表中
+                dreamListCol1 : [], //梦想列表1
+                dreamListCol2 : [], //梦想列表2
+                dreamListCol3 : [], //梦想列表3
             }
         },
         mounted() {
-            this.isShowAffix = true;
             this.initDreams(); //初始化梦想
+
+            setTimeout(function () {
+               this.isShowAffix = true;
+            }.bind(this),3000);
+
         },
         methods:{
             //许下梦想
             toDreamWall() {
-                var dreamTitle = this.dreamTitle;
-                var dreamContent = this.dreamContent;
+                let dreamTitle = this.dreamTitle;
+                let dreamContent = this.dreamContent;
                 //参数校验
                 if(!this.addoileUtil.validateReq(dreamTitle) || !this.addoileUtil.validateReq(dreamContent)){
                     this.$Message.warning("一个完整的梦想有助于你梦想成真哦",3);
@@ -95,16 +134,17 @@
                     title:dreamTitle,
                     content:dreamContent
                 }).then(function (res) {
-                    var response = res.data;
+                    let response = res.data;
                     if(response.code == 0 && response.data == 1){
                         this.dreamList.unshift({dreamTitle:dreamTitle,dreamContent:dreamContent});
+                        this.splitDreamList(this.dreamList);
                         //弹窗提示
                         this.$Notice.success({
-                            title: '<h2>许愿成功,愿您早日实现自己的梦想,加油!</h2>'
+                            title: '<h6>许愿成功,愿您早日实现自己的梦想,加油!</h6>'
                         });
                     }else{
                         this.$Notice.info({
-                            title: '<h2>抱歉,您的梦想已经跳出系统,一定可以成真</h2><h4>其实,是我们系统出错了,抱歉</h4>'
+                            title: '<h6>抱歉,您的梦想已经跳出系统,一定可以成真</h6><h4>其实,是我们系统出错了,抱歉</h4>'
                         });
                     }
                     //清空数据
@@ -116,11 +156,11 @@
             initDreams() {
                 this.axios.get('getDreams').then(function (res) {
                     if(res.data.code == 0){
-                        var response = res.data.data;
-                        for(var i = 0 ; i < response.length ; i++){
-                            var dream = response[i];
+                        let response = res.data.data;
+                        for(let i = 0 ; i < response.length ; i++){
+                            let dream = response[i];
                             //遍历更换 梦想内容的背景
-                            var alertType = "success";
+                            let alertType = "success";
                             if(i % 3 == 0){
                                 alertType = "success";
                             }else if(i % 3 == 1){
@@ -130,8 +170,22 @@
                             }
                             this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:alertType});
                         }
+                        // 分配
+                        this.splitDreamList(this.dreamList);
                     }
                 }.bind(this));
+            },
+            splitDreamList(dreamList){
+               if(dreamList instanceof Array){
+                   if(dreamList.length == 0){
+                       return;
+                   }
+                   let dreamListSize = dreamList.length;
+                   let everyArr = dreamListSize / 3;
+                   this.dreamListCol1 = dreamList.slice(0,everyArr);
+                   this.dreamListCol2 = dreamList.slice(everyArr,everyArr*2);
+                   this.dreamListCol3 = dreamList.slice(everyArr*2,dreamListSize);
+               }
             }
         }
 
