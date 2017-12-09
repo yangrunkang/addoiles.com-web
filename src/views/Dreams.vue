@@ -25,7 +25,7 @@
 
 </style>
 <template>
-    <div class="main-content">
+    <div>
 
         <Affix :offset-bottom="10" style="background-color: transparent">
             <span class="demo-affix" v-show="isShowAffix" style="background-color: transparent">

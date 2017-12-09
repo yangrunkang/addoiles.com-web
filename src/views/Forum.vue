@@ -2,7 +2,7 @@
     @import "../styles/common.css";
 </style>
 <template>
-    <div class="main-content">
+    <div>
         论坛
     </div>
 </template>

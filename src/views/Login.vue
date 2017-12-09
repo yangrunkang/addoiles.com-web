@@ -76,7 +76,7 @@
     }
 </style>
 <template>
-    <div class="main-content">
+    <div>
         <div class="login" id="login">
             <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
             <div class="log-bg">

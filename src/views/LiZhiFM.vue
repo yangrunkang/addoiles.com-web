@@ -2,7 +2,7 @@
     @import "../styles/common.css";
 </style>
 <template>
-    <div class="main-content">
+    <div>
        励志FM<br />
        连接/播放器
     </div>

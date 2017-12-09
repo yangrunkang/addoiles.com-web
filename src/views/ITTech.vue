@@ -11,7 +11,7 @@
 
 </style>
 <template>
-    <div class="main-content">
+    <div>
         <Row type="flex">
             <!--左边:文章简表-->
             <i-col :span="spanLeft" class="layout-menu-left">

@@ -21,7 +21,7 @@
 
 </style>
 <template>
-    <div class="main-content">
+    <div>
         <h1 style="text-align: center">Hi,我是OilRobot聊天机器人</h1>
         <h2 style="text-align: center">快来同我一起聊会儿天吧</h2>
         <p style="text-align: center;height: auto"><Icon type="social-reddit-outline" size="200" color="#657180" ></Icon></p>

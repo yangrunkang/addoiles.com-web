@@ -2,7 +2,7 @@
     @import "../styles/common.css";
 </style>
 <template>
-    <div class="main-content">
+    <div>
         <Card style="background: transparent;border: transparent;border-radius: 30px">
             <Card>
                 <div>

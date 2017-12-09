@@ -40,7 +40,7 @@
 
 </style>
 <template>
-    <div class="main-content">
+    <div>
         <Row class="row">
             <Col span="18" class="main-col">
                 <div id="cycle-pics">

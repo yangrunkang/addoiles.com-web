@@ -35,7 +35,7 @@
 
 </style>
 <template>
-    <div class="main-content">
+    <div>
 
         <!--显示编辑器图钉-->
         <Affix :offset-top="10" v-show="showOnOffAffix">
