@@ -1,8 +1,7 @@
 /*整个页面*/
 .layout {
-    border: 0px solid #9ea7b4;
+    width: 100%;
     background: #f5f7f9;
-    height: inherit;
 }
 
 /*导航栏*/
@@ -14,8 +13,6 @@
 
 /*页面主题内容*/
 .main-content {
-    /*border: 1px solid #9ea7b4;*/
-    /*height: 1000px; 不写height就随内容变化而变化*/
     background: #f5f7f9;
     width: 1140px;
     margin: 30px auto;
@@ -29,8 +26,22 @@
 
 /*编辑器设置*/
 .quill-editor-style{
-    height: 900px;
+    height: 848px;
+    width: 1107px;
 }
+
+/*承载编辑器的Card*/
+.edit-card{
+    height: 1047px;
+    width: 1140px;
+}
+/*编辑器上面的提示信息栏*/
+.not-login-tips{
+    width: 1140px;
+    margin: 0 auto;
+}
+
+
 
 /*页面底部*/
 /*

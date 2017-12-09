@@ -9,17 +9,6 @@
         padding-left: 5px;
     }
 
-    /*承载编辑器的Div*/
-    .editorDiv {
-        height: fit-content;
-    }
-
-    /*承载编辑器的Card*/
-    .edit-card{
-        height: 1099px;
-    }
-
-
 </style>
 <template>
     <div class="main-content">

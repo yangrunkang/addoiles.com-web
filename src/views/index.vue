@@ -130,13 +130,11 @@
                 duration: 3
             });
             if(Cookies.get("newUser")){
-            // if(sessionStorage.getItem("newUser")){
                 //这个用户不再初始化导航栏,一直用他第一次进来是初始化好的导航栏
                 //声明周期一直到用户关闭浏览器
                 this.navList = this.$store.getters.getNavList;
             }else{
                 //用户第一次打开浏览器进来,标记newUser
-                // sessionStorage.setItem("newUser","1");
                 Cookies.set("newUser","1");
                 //初始化导航栏
                 this.initNavList();

@@ -31,19 +31,11 @@
         padding:20px
     }
 
-    /*承载编辑器的Card*/
-    .edit-card{
-        height: 1047px;
-    }
 
-    .not-login-tips{
-        width:1440px;
-        margin: 0 auto;
-    }
 
 </style>
 <template>
-    <div class="experience">
+    <div class="main-content">
 
         <!--显示编辑器图钉-->
         <Affix :offset-top="10" v-show="showOnOffAffix">

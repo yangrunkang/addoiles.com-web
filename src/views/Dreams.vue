@@ -16,9 +16,17 @@
         margin: 1px;
     }
 
+    .dream-card {
+        background: transparent;
+        border-radius: 30px;
+        margin-bottom: 6px;
+        margin-left: 6px
+    }
+
 </style>
 <template>
-    <div>
+    <div class="main-content">
+
         <Affix :offset-bottom="10" style="background-color: transparent">
             <span class="demo-affix" v-show="isShowAffix" style="background-color: transparent">
                 <Input placeholder="写下你的梦想" v-model="dreamTitle">
@@ -27,10 +35,11 @@
                 <Input style="padding-top: 5px;"  type="textarea" :rows="3" placeholder="例如:我的梦想是实现自己的价值,做自己喜欢做的事情" v-model="dreamContent"/>
             </span>
         </Affix>
-        <div class="main-content">
+
+        <div>
             <ul>
                 <li v-for="item in dreamList" key="item.id">
-                    <Card style="background: transparent;border-radius: 30px;margin-bottom: 6px;margin-left: 6px" >
+                    <Card class="dream-card">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>

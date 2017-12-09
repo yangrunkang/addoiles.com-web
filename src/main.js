@@ -38,6 +38,10 @@ const RouterConfig = {
 //vue router
 const router = new VueRouter(RouterConfig);
 
+/**
+ * @param to    到那个url去
+ * @param from  从那个url来
+ */
 router.beforeEach((to, from, next) => {
 	iView.LoadingBar.start();
 	Util.title(to.meta.title);
