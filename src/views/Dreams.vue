@@ -83,6 +83,7 @@
 
 
         </div>
+        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
     </div>
 </template>
 <script>

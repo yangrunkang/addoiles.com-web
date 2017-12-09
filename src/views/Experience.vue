@@ -106,6 +106,7 @@
                     <Tag type="border"  color="green"><strong>发布时间:</strong>{{experience.createTime}}</Tag>
                 </Col>
             </Row>
+            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
         </div>
         <!--写好的经历确认清空吗-->
         <Modal v-model="confirmModal">
