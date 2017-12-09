@@ -99,8 +99,8 @@
             </div>
             <div class="log-email" v-show="resetPassword">
                 <p style="text-align: center;margin-bottom: 10px;font-size: 18px">验证成功,重设密码</p>
-                <input type="password" placeholder="输入密码" :class="'log-input' + (resetPassword1==''?' log-input-empty':'')"  v-model="password">
-                <input type="password" placeholder="再次输入密码" :class="'log-input' + (resetPassword2==''?' log-input-empty':'')"  v-model="password">
+                <input type="password" placeholder="输入密码" :class="'log-input' + (resetPassword1==''?' log-input-empty':'')"  v-model="resetPassword1">
+                <input type="password" placeholder="再次输入密码" :class="'log-input' + (resetPassword2==''?' log-input-empty':'')"  v-model="resetPassword2">
                 <a href="javascript:;" class="log-btn" @click="confirmResetPassword()">确认</a>
             </div>
         </div>
@@ -219,13 +219,14 @@
                             email : _this.email,
                             type : 1
                         }).then(function (resp) {
-                            console.log(resp);
                             if(resp.data.code == 0 && resp.data.data == true){
                                 _this.showForgetPasswordForm = true;
                                 _this.showLoginForm=false;
                                 _this.resetPassword = false;
                             }else{
-                                console.log("验证码发送失败");
+                                this.$Notice.warn({
+                                    desc: '验证码发送失败'
+                                });
                             }
                         }.bind(_this));
                     }
@@ -243,7 +244,9 @@
                         this.showLoginForm = false;
                         this.showForgetPasswordForm = false;
                     }else{
-                        console.log("验证码失效");
+                        this.$Notice.warn({
+                            desc: '验证码已失效'
+                        });
                     }
                 }.bind(this));
             },
@@ -273,12 +276,16 @@
                     password : this.resetPassword1
                 }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data  > 0){
-                        console.log("重设密码成功");
+                        this.$Notice.success({
+                            desc: '密码重设成功,请登录'
+                        });
                         this.showLoginForm = true;
                         this.showForgetPasswordForm = false;
                         this.resetPassword = false;
                     }else{
-                        console.log("重设密码失效");
+                        this.$Notice.warn({
+                            desc: '重设密码失败'
+                        });
                     }
                 }.bind(this));
             }
