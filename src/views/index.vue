@@ -32,7 +32,14 @@
         </div>
 
         <!--中间视图部分-->
-        <router-view></router-view><!--这个是显示路由的视图结果-->
+        <div class="main-content">
+            <router-view></router-view><!--这个是显示路由的视图结果-->
+        </div>
+
+        <div class="layout-bottom">
+            <p>为梦想加油 备案号:皖ICP备17015935号-1</p>
+            <p>QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》&nbsp;&nbsp;&nbsp;微信公众号:程序员的生活记录</p>
+        </div>
 
         <!--返回到顶部-->
         <Back-top :height="200" :bottom="100">
