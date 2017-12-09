@@ -210,8 +210,6 @@
                     email : this.email,
                     code : this.verificationCode
                 }).then(function (resp) {
-                    console.log(resp);
-                    console.log('--1--');
                     if(resp.data.code == 0 && resp.data.data == true){
                         //begin to register
                         this.axios.post("register",{
@@ -219,8 +217,6 @@
                             email : email,
                             password : password
                         }).then(function (resp) {
-                            console.log(resp);
-                            console.log('--2--');
                             if(resp.data.code == 0 && resp.data.data == 1001){
                                 this.$Message.warning(email+'已经注册过');
                                 return;
@@ -241,7 +237,9 @@
                         }.bind(this));
 
                     }else{
-                        console.log("验证码失效");
+                        this.$Notice.warning({
+                            desc: '验证码失效'
+                        });
                     }
                 }.bind(this));
 

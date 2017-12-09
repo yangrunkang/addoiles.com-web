@@ -20,7 +20,6 @@
         methods: {
             suggest(){
 
-                console.log(this.$store.getters.getUserId);
                 if(!this.addoileUtil.validateReq(this.content) ){
                     this.$Message.warning("反馈内容为空",3);
                     return;

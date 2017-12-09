@@ -403,9 +403,6 @@
              * @param experienceContent 经历内容
              */
             toEditExperience(experienceId, experienceTitle, experienceContent){
-                console.log(experienceId);
-                console.log(experienceTitle);
-                console.log(experienceContent);
                 // this.$router.push("/Edit");
                 this.isShowEditor = true;
                 this.shareBtn = false;
@@ -444,7 +441,6 @@
                 }
                 let editExperienceId = Cookies.get('editExperienceId');
                 if(!this.addoileUtil.validateReq(editExperienceId)){
-                    console.log("edit experience error,experienceId is null");
                     return;
                 }
                 
