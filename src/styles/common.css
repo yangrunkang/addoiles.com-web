@@ -44,14 +44,12 @@
 
 
 /*页面底部*/
-/*
 .layout-bottom {
     text-align: center;
     padding: 10px 0 20px;
     color: #9ea7b4;
-    margin-bottom: 0px;
 }
-*/
+
 
 /*专门针对编辑器Code代码样式设置,效果很棒*/
 pre.ql-syntax{
