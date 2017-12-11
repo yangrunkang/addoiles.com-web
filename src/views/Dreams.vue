@@ -113,14 +113,8 @@
         methods:{
             //许下梦想
             toDreamWall() {
-                //如果没有登录,禁止添加梦想
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
-                    });
-                    return;
-                }
+
+                this.validateLogin();
 
 
                 let dreamTitle = this.dreamTitle;
@@ -163,7 +157,9 @@
                     this.dreamContent = null;
                 }.bind(this));
             },
-            //初始化梦想
+            /**
+             * 初始化梦想
+             */
             initDreams() {
                 this.axios.get('getDreams').then(function (res) {
                     if(res.data.code == 0){
@@ -177,6 +173,10 @@
                     }
                 }.bind(this));
             },
+            /**
+             * 布局
+             * @param dreamList
+             */
             splitDreamList(dreamList){
                if(dreamList instanceof Array){
                    if(dreamList.length == 0){
@@ -188,6 +188,19 @@
                    this.dreamListCol2 = dreamList.slice(everyArr,everyArr*2);
                    this.dreamListCol3 = dreamList.slice(everyArr*2,dreamListSize);
                }
+            },
+            /**
+             * 验证是否登录
+             */
+            validateLogin(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         }
 

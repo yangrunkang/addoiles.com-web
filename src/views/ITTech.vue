@@ -240,14 +240,8 @@
                 }.bind(this));
             },
             toComment(articleId){
-                //如果没有登录,禁止评论
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        title: '<h6>Hi,您好,访客不允许评论</h6>'
-                    });
-                    return;
-                }
+
+                let userId = this.validateLogin();
 
                 let commentContent = this.commentContent;
                 /*下面的和Experience.vue不一样,不要头脑热改了..*/
@@ -311,13 +305,7 @@
             //发表IT文章
             addITArticle(){
                 //如果没有登录,禁止添加分享经历
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您好,访客不允许下发表IT文章</h6>'
-                    });
-                    return;
-                }
+                let userId = this.validateLogin();
 
                 let itTitle = this.ITTitle;
                 let itSubTitle = this.ITSubTitle;
@@ -401,17 +389,7 @@
              */
             editITArticle(){
                 //如果没有登录,禁止添加分享经历
-                let userId = sessionStorage.getItem("userId");
-/*              理论上不会出现
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您好,访客不允许下编辑IT文章</h6>'
-                    });
-                    return;
-                }*/
-                if(!this.addoileUtil.validateReq(userId)){
-                    return;
-                }
+                this.validateLogin();
 
                 let itTitle = this.ITTitle;
                 let itSubTitle = this.ITSubTitle;
@@ -457,6 +435,19 @@
                         Cookies.remove('articleId');
                     }
                 }.bind(this));
+            },
+            /**
+             * 验证登录
+             */
+            validateLogin(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        title: '<h6>Hi,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         },
         computed: {

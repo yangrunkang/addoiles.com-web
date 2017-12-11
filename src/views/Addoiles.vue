@@ -205,8 +205,8 @@
             init(){
                 this.axios.get('getLatestHots').then(function (res) {
                     if(res.data.code == 0){
-                        var resp = res.data.data;
-                        for(var i =0 ;i<resp.length ; i++){
+                        let resp = res.data.data;
+                        for(let i =0 ;i<resp.length ; i++){
                             this.hotsList.push({title : resp[i].title , content : resp[i].content});
                         }
                     }
@@ -214,8 +214,8 @@
             },
             //发表热门
             addHots(){
-                var hotTitle = this.hotTitle;
-                var hotContent = this.hotContent;
+                let hotTitle = this.hotTitle;
+                let hotContent = this.hotContent;
                 if(!this.addoileUtil.validateReq(hotTitle) || !this.addoileUtil.validateReq(hotContent)){
                     this.$Message.warning("热门标题或者内容不能空",3);
                     return;
@@ -254,15 +254,9 @@
             //提问
             askQuestion(){
 
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h3>Hi,您好,访客不允许分享经历,登录后可以分享哦</h3>'
-                    });
-                    return;
-                }
+                let userId = this.validateLogin();
 
-                var questionContent = this.question;
+                let questionContent = this.question;
 
                 if(!this.addoileUtil.validateReq(questionContent)){
                     this.$Message.warning("问题不能为空");
@@ -293,14 +287,9 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                var userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h3>Hi,您好,访客不允许回答问题,请登录</h3>'
-                    });
-                    return;
-                }
-                var answerContent = this.answerContent[index];
+                let userId = this.validateLogin();
+
+                let answerContent = this.answerContent[index];
 
 
                 if(!this.addoileUtil.validateReq(answerContent)){
@@ -318,7 +307,7 @@
                     targetId:questionId,
                     content:answerContent
                 }).then(function (res) {
-                    var response = res.data;
+                    let response = res.data;
                     if(response.code == 0 && response.data == 1){
                         //弹窗提示
                         this.$Notice.success({
@@ -338,7 +327,7 @@
 
             },
             picChange($event){
-                var index = $event;
+                let index = $event;
                 if(index == 0){
                     this.picName = '长大才知道,童年的时光总是美好的';
                 }else if(index == 1){
@@ -353,18 +342,18 @@
             initQuestionAnswer(){
                 this.axios.get("getQuestionAnswerList").then(function (resp) {
                     if(resp.data.code == 0){
-                        var questionAnswerDtoList = resp.data.data;
-                        for(var i = 0;i < questionAnswerDtoList.length; i++){
-                            var questionAnswerDto = questionAnswerDtoList[i];
+                        let questionAnswerDtoList = resp.data.data;
+                        for(let i = 0;i < questionAnswerDtoList.length; i++){
+                            let questionAnswerDto = questionAnswerDtoList[i];
 
-                            var question = questionAnswerDto.question;
+                            let question = questionAnswerDto.question;
 
                             let answerList = [];
                             answerList = questionAnswerDto.answerList;
 
                             let _answerList = [];
-                            for(var j = 0; j < answerList.length; j++){
-                                var _answer = answerList[j];
+                            for(let j = 0; j < answerList.length; j++){
+                                let _answer = answerList[j];
                                 _answerList.push({
                                     userName:_answer.userName,
                                     createTime:this.addoileUtil.formatUnixTime(_answer.createTime),
@@ -386,6 +375,20 @@
                 }.bind(this));
 
 
+            },
+            /**
+             * 验证登录
+             * @returns {string}
+             */
+            validateLogin(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         },
         mounted() {

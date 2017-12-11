@@ -220,13 +220,7 @@
             saveExperience(operation){
 
                 //如果没有登录,禁止添加分享经历
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您好,访客不允许添加分享经历</h6>'
-                    });
-                    return;
-                }
+                let userId = this.validateLogin();
 
                 // 请求对象
                 let deleteStatus = 0;
@@ -284,13 +278,7 @@
             toComment(experienceId,index){
 
                 //如果没有登录,禁止评论
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        title: '<h6>Hi,您好,访客不允许评论</h6>'
-                    });
-                    return;
-                }
+                let userId = this.validateLogin();
 
                 let commentContent = this.commentContent[index];
 
@@ -482,6 +470,19 @@
                         Cookies.remove('editExperienceId');
                     }
                 }.bind(this));
+            },
+            /**
+             * 验证登录
+             */
+            validateLogin(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
 
         },

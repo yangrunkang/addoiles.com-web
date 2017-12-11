@@ -10,6 +10,7 @@ util.title = function (title) {
     title = title ? title + ' - Home' : 'Addoiles';
     window.document.title = title;
 };
+
 /**
  * 验证参数是否为空
  * @param content 需要验证的内容
@@ -21,6 +22,7 @@ util.validateReq = function (content) {
     }
     return true
 };
+
 /**
  * 时间格式化
  * @param unixTime 时间戳
@@ -29,6 +31,7 @@ util.validateReq = function (content) {
 util.formatUnixTime = function(unixTime) {
     return new Date(parseInt(unixTime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
 };
+
 /**
  * 检查是否是当前用户id
  * @param userId 要比对的目标id
@@ -57,6 +60,10 @@ util.getRandomIcon = function () {
     return iconArr[index];
 };
 
+/**
+ * 获取AlertType
+ * @returns {string}
+ */
 util.getRandAlertType = function () {
     let iconArr = ["success","warning","error"];
     let iconArrSize = iconArr.length;

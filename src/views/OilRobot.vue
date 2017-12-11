@@ -51,8 +51,8 @@
         methods: {
             toChat(){
 
-                var userId = this.$store.getters.getUserId;
-                var userName = this.$store.getters.getUserName;
+                let userId = this.$store.getters.getUserId;
+                let userName = this.$store.getters.getUserName;
 
                 if(userName == 'null' || userId == 'null'){
                     userId = "www.addoiles.com"; //不是网站用户,是访客
