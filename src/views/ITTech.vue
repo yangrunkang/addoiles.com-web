@@ -242,6 +242,9 @@
             toComment(articleId){
 
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let commentContent = this.commentContent;
                 /*下面的和Experience.vue不一样,不要头脑热改了..*/
@@ -306,6 +309,9 @@
             addITArticle(){
                 //如果没有登录,禁止添加分享经历
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let itTitle = this.ITTitle;
                 let itSubTitle = this.ITSubTitle;
@@ -389,7 +395,10 @@
              */
             editITArticle(){
                 //如果没有登录,禁止添加分享经历
-                this.validateLogin();
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let itTitle = this.ITTitle;
                 let itSubTitle = this.ITSubTitle;

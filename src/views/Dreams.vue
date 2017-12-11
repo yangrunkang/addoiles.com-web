@@ -114,7 +114,10 @@
             //许下梦想
             toDreamWall() {
 
-                this.validateLogin();
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
 
                 let dreamTitle = this.dreamTitle;
@@ -198,7 +201,7 @@
                     this.$Notice.info({
                         desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
                     });
-                    return;
+                    return false;
                 }
                 return userId;
             }

@@ -221,6 +221,9 @@
 
                 //如果没有登录,禁止添加分享经历
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 // 请求对象
                 let deleteStatus = 0;
@@ -279,6 +282,9 @@
 
                 //如果没有登录,禁止评论
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let commentContent = this.commentContent[index];
 

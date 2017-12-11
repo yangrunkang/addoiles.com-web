@@ -42,7 +42,7 @@
 <template>
     <div>
         <Row class="row">
-            <Col span="18" class="main-col">
+            <i-col span="18" class="main-col">
                 <div id="cycle-pics">
                     <Card style="width:100%;background-color: white;border: none">
                         <div class="play-pics">
@@ -106,39 +106,39 @@
                                 <!--具体的问题-->
                                 <Card style="width:100%;background-color:transparent;">
                                     <Row>
-                                        <Col span="7">
+                                        <i-col span="7">
                                         <p><Tag type="dot" color="blue" style="width:95%;">{{questionAnswer.question.userName}}</Tag></p>
                                         <p  style="margin-top: 8px"><Tag style="width:95%;" type="dot" color="blue">{{questionAnswer.question.createTime}}</Tag></p>
-                                        </Col>
-                                        <Col span="17" style="text-align: left;" class="auto-break-line">
+                                        </i-col>
+                                        <i-col span="17" style="text-align: left;" class="auto-break-line">
                                             {{questionAnswer.question.content}}
-                                        </Col>
+                                        </i-col>
                                     </Row>
                                 </Card>
                                 <h1>回答</h1>
                                 <Card style="margin-top: 6px">
                                     <div>
-                                        <Input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
+                                        <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
                                         <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
-                                        </Input>
+                                        </i-input>
                                     </div>
                                 </Card>
                                 <Card style="margin-top: 6px" v-for="answer in questionAnswer.answerList" key="answer.id">
                                     <div>
                                         <Row>
-                                            <Col span="5" style="vertical-align: middle">
+                                            <i-col span="5" style="vertical-align: middle">
                                             <p>
                                                 <Tag type="dot" color="green" style="width:95%;">{{answer.userName}}</Tag>
                                             </p>
                                             <p style="margin-top: 8px">
                                                 <Tag type="dot" color="green" style="width:95%;">{{answer.createTime}}</Tag>
                                             </p>
-                                            </Col>
-                                            <Col span="19">
+                                            </i-col>
+                                            <i-col span="19">
                                             <Alert type="success" style="width: 100%;height: auto;" class="auto-break-line">
                                                 {{answer.content}}
                                             </Alert>
-                                            </Col>
+                                            </i-col>
                                         </Row>
                                     </div>
                                 </Card>
@@ -147,8 +147,8 @@
                     </Card>
                 </div>
             <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
-            </Col>
-            <Col span="6" class="main-col">
+            </i-col>
+            <i-col span="6" class="main-col">
                 <div class="hot-msg">
                     <h2>热门动弹</h2>
                     <Card :bordered="true" >
@@ -168,7 +168,7 @@
                         <p class="auto-break-line">{{ item.content }}</p>
                     </Card>
                 </div>
-            </Col>
+            </i-col>
         </Row>
     </div>
 </template>
@@ -255,6 +255,9 @@
             askQuestion(){
 
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let questionContent = this.question;
 
@@ -288,6 +291,9 @@
             //回答问题
             toAnswer(questionId,index){
                 let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
                 let answerContent = this.answerContent[index];
 
@@ -378,7 +384,6 @@
             },
             /**
              * 验证登录
-             * @returns {string}
              */
             validateLogin(){
                 let userId = sessionStorage.getItem("userId");
