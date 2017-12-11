@@ -55,6 +55,13 @@ const routers = [
             title: '反馈及建议'
         },
         component: (resolve) => require(['../views/Suggest.vue'], resolve)
+    },
+    {
+        path: '/UserCenter',
+        meta: {
+            title: '用户中心'
+        },
+        component: (resolve) => require(['../views/UserCenter.vue'], resolve)
     }
 ];
 export default routers;
