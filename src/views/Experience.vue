@@ -419,21 +419,11 @@
              * 编辑完成
              */
             editExperience(){
-                //如果没有登录,禁止添加分享经历
-                let userId = sessionStorage.getItem("userId");
-
-                /* 按理说,只有登录后才有这个入口
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h2>Hi,您好,访客不允许添加分享经历</h2>'
-                    });
+                let userId = this.validateLogin();
+                if(userId == null){
                     return;
                 }
-                */
 
-                if(!this.addoileUtil.validateReq(userId)){
-                    return;
-                }
                 let editExperienceId = Cookies.get('editExperienceId');
                 if(!this.addoileUtil.validateReq(editExperienceId)){
                     return;
