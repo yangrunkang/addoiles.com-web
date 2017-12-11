@@ -24,12 +24,17 @@
     word-wrap: break-word;
 }
 
+/***************************************************/
 /*编辑器设置*/
 .quill-editor-style{
     height: 848px;
     width: 1107px;
 }
-
+/*承载编辑器的Div*/
+.editorDiv {
+    width: fit-content;
+    margin: 0 auto;
+}
 /*承载编辑器的Card*/
 .edit-card{
     height: 1047px;
@@ -40,8 +45,7 @@
     width: 1140px;
     margin: 0 auto;
 }
-
-
+/***************************************************/
 
 /*页面底部*/
 .layout-bottom {

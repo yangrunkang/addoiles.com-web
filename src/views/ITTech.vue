@@ -36,12 +36,12 @@
             <i-col :span="spanRight">
 
                 <!--未登录时展示-->
-                <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
+                <Alert type="error" style="width: 100%;margin: 9px auto;" v-show="showNotLoginTips">
                     登录后才可以分享技术哦
                 </Alert>
                 <!--文章编辑器-->
-                <div class="editorDiv" v-show="isShowEditor">
-                    <Card class="edit-card">
+                <div style="height: fit-content;width: fit-content;" v-show="isShowEditor">
+                    <Card style="height: 1087px;width: fit-content;">
                         <p slot="title" style="height: auto;font-size: 18px">
                             大名:
                             <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
@@ -59,7 +59,7 @@
                         <quill-editor ref="myTextEditor"
                                       v-model="ITContent"
                                       :options="editorOption"
-                                      class="quill-editor-style">
+                                      style="height: 888px;width: fit-content;">
                         </quill-editor>
                     </Card>
                 </div>

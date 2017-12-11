@@ -19,12 +19,6 @@
         border-radius: 32px;
     }
 
-    /*编辑器Div*/
-    .editorDiv {
-        width: 1440px;
-        margin: 0 auto;
-    }
-
     /*分享内容*/
     .experience-content {
         background:#eee;
