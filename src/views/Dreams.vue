@@ -113,12 +113,10 @@
         methods:{
             //许下梦想
             toDreamWall() {
-
                 let userId = this.validateLogin();
                 if(userId == null){
                     return;
                 }
-
 
                 let dreamTitle = this.dreamTitle;
                 let dreamContent = this.dreamContent;
@@ -201,7 +199,7 @@
                     this.$Notice.info({
                         desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
                     });
-                    return false;
+                    return;
                 }
                 return userId;
             }

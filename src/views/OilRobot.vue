@@ -16,9 +16,6 @@
         font-size: 27px;
     }
 
-
-
-
 </style>
 <template>
     <div>
@@ -50,8 +47,11 @@
         },
         methods: {
             toChat(){
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
 
-                let userId = this.$store.getters.getUserId;
                 let userName = this.$store.getters.getUserName;
 
                 if(userName == 'null' || userId == 'null'){
@@ -78,6 +78,19 @@
 
                 //清空聊天框
                 this.chatContent = '';
+            },
+            /**
+             * 验证是否登录
+             */
+            validateLogin(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         },
         mounted () {

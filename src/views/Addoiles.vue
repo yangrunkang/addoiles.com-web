@@ -214,6 +214,12 @@
             },
             //发表热门
             addHots(){
+
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
+
                 let hotTitle = this.hotTitle;
                 let hotContent = this.hotContent;
                 if(!this.addoileUtil.validateReq(hotTitle) || !this.addoileUtil.validateReq(hotContent)){
