@@ -157,6 +157,7 @@
                         //提交到仓库
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
+                        this.$store.commit('setEmail',email);
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         //页面跳转

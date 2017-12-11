@@ -121,7 +121,10 @@
                     this.showLogOutModal = false;
                 }else{//退出账号
                     sessionStorage.clear();
+                    //退出浏览器自动清除
                     Cookies.remove('newUser');
+                    Cookies.remove('userName');
+                    Cookies.remove('email');
                     //刷新用户正在看的页面
                     //会调用index.vue  mounted() 方法,因为已经sessionStorage.clear(),所以会当成新用户
                     this.$router.go(0);

@@ -12,6 +12,8 @@ export default new Vuex.Store({
         userName: '',
         /*用户id*/
         userId: '',
+        /*邮箱*/
+        email:'',
         /*导航栏*/
         navList:[]
     },
@@ -24,6 +26,9 @@ export default new Vuex.Store({
         },
         setNavList (state, navList) {
             Cookies.set("navList",JSON.stringify(navList));
+        },
+        setEmail (state, email) {
+            Cookies.set("email",email);
         }
     },
     getters: {
@@ -36,6 +41,9 @@ export default new Vuex.Store({
         },
         getNavList: state => {
             return JSON.parse(Cookies.get("navList"));
+        },
+        getEmail: state => {
+            Cookies.get("email");
         }
 
     }
