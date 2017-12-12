@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Card>
-            Logs
-        </Card>
+        Logs
     </div>
 </template>
 

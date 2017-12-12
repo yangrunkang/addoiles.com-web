@@ -1,22 +1,22 @@
 <template>
     <div>
-        <Table border :columns="hotsColumns" :data="hotsList"></Table>
+        <Table border :columns="articleColumns" :data="articleList"></Table>
     </div>
 </template>
 
 <script>
     export default {
-        name: "my-hots",
+        name: "my-articles",
         data() {
             return {
-                hotsColumns:[
+                articleColumns:[
                     {
                         title:"标题",
                         key:"title"
                     },
                     {
-                        title:"内容",
-                        key:"content"
+                        title:"小标题",
+                        key:"subTitle"
                     },
                     {
                         title:"时间",
@@ -36,7 +36,6 @@
                                     on: {
                                         click: () => {
                                             //do nothing
-
                                         }
                                     }
                                 }, '删除')
@@ -45,29 +44,30 @@
                     },
 
                 ],
-                hotsList:[]
+                articleList:[]
             }
         },
         mounted() {
-            this.initHotsList();
+            this.initITArticleList();
         },
         methods:{
-            initHotsList(){
-                this.axios.get("getHotsByUserId",{
+            initITArticleList(){
+                this.axios.get("getArticlesByUserId",{
                     params:{
-                        userId:"f21d04e26b7347f4a3484746aa846672"
+                        userId:"f21d04e26b7347f4a3484746aa846672",
+                        articleType:2
                     }
                 }).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
                         for(let i = 0; i< resp.data.length;i++){
-                            let hot = resp.data[i];
-                            this.hotsList.push({
-                                hotId:hot.hotId,
-                                title:hot.title,
-                                content:hot.content,
-                                userId:hot.userId,
-                                createTime:hot.createTime
+                            let article = resp.data[i];
+                            this.articleList.push({
+                                articleId:article.articleId,
+                                title:article.title,
+                                subTitle:article.subTitle,
+                                userId:article.userId,
+                                createTime:article.createTime
                             });
                         }
                     }
