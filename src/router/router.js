@@ -61,7 +61,15 @@ const routers = [
         meta: {
             title: '用户中心'
         },
-        component: (resolve) => require(['../views/UserCenter.vue'], resolve)
+        component: (resolve) => require(['../views/UserCenter.vue'], resolve),
+        children:[
+            {path: '/MyDreams',meta:{title:'美好梦想'},component: (resolve) => require(['../views/usercenters/MyDreams.vue'], resolve)},
+            {path: '/MyExperience',meta:{title:'经历分享'},component: (resolve) => require(['../views/usercenters/MyExperience.vue'], resolve)},
+            {path: '/MyHots',meta:{title:'热门动弹'},component: (resolve) => require(['../views/usercenters/MyHots.vue'], resolve)},
+            {path: '/MyITs',meta:{title:'技术文章'},component: (resolve) => require(['../views/usercenters/MyITs.vue'], resolve)},
+            {path: '/MyLogs',meta:{title:'网站活动'},component: (resolve) => require(['../views/usercenters/MyLogs.vue'], resolve)},
+            {path: '/MyQuestions',meta:{title:'问题疑惑'},component: (resolve) => require(['../views/usercenters/MyQuestions.vue'], resolve)}
+        ]
     }
 ];
 export default routers;

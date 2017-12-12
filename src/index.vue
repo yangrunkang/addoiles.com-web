@@ -105,14 +105,8 @@
                 if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
                 }else if('BestWishesToUser' === activeRouterUrl){
-                    this.$Modal.success({
-                                title: '来自网站的问候',
-                                content: '<h3>祝您:</h3><h2>吃嘛嘛香儿身倍棒,干嘛嘛顺儿前程好</h2>',
-                                okText: '好嘞',
-                                cancelText: '' //为空就不显示按钮
-                    });
-                }
-                else{
+                    this.$router.push("/UserCenter");
+                }else{
                     this.$router.push(activeRouterUrl);
                 }
             },
