@@ -239,7 +239,7 @@
                 this.axios.post('addHots',{
                     title:hotTitle,
                     content:hotContent,
-                    userId:this.$store.getters.getUserId
+                    userId:userId
                 }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data > 0){
                         this.$Notice.info({

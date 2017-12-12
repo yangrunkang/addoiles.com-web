@@ -1,6 +1,6 @@
 <style scoped>
 
-    @import "../styles/common.css";
+    @import "styles/common.css";
 
     /*返回顶端css*/
     .top{

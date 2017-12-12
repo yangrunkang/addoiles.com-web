@@ -1,5 +1,5 @@
 <style scoped lang="less">
-    @import "../styles/common.css";
+    @import "../../styles/common.css";
 </style>
 <template>
     <div>

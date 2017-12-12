@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import Routers from './router/router'; // 引入路由配置文件
 import Util from './libs/util';
-import Index from './views/index.vue'; // //引入vue组件
+import Index from './index.vue'; // //引入vue组件
 
 import 'iview/dist/styles/iview.css'; // 使用 CSS
 
