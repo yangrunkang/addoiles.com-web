@@ -52,6 +52,11 @@
              * 删除
              */
             remove(tableIndex){
+                let userId = this.getUserId();
+                if(userId == null){
+                    return;
+                }
+
                 let dreamId = this.dreamList[tableIndex].dreamId;
                 let _this = this;
                 let config = {
@@ -74,6 +79,11 @@
              * 初始化界面
              */
             initDreamList(){
+                let userId = this.getUserId();
+                if(userId == null){
+                    return;
+                }
+
                 this.axios.get("getDreamsByUserId",{
                     params:{userId:"no user"}
                 }).then(function (response) {
@@ -91,6 +101,16 @@
                         }
                     }
                 }.bind(this));
+            },
+            getUserId(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         },
         mounted() {

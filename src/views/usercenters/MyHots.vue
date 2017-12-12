@@ -52,6 +52,11 @@
         },
         methods:{
             remove(tableIndex){
+                let userId = this.getUserId();
+                if(userId == null){
+                    return;
+                }
+
                 let hotId = this.hotsList[tableIndex].hotId;
                 let _this = this;
                 let config = {
@@ -71,6 +76,11 @@
                 this.$Modal.confirm(config);
             },
             initHotsList(){
+                let userId = this.getUserId();
+                if(userId == null){
+                    return;
+                }
+
                 this.axios.get("getHotsByUserId",{
                     params:{
                         userId:"f21d04e26b7347f4a3484746aa846672"
@@ -90,6 +100,16 @@
                         }
                     }
                 }.bind(this));
+            },
+            getUserId(){
+                let userId = sessionStorage.getItem("userId");
+                if(!this.addoileUtil.validateReq(userId)){
+                    this.$Notice.info({
+                        desc: '<h6>Hi,您还未登录,请登录</h6>'
+                    });
+                    return;
+                }
+                return userId;
             }
         }
     }
