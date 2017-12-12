@@ -105,7 +105,8 @@
                 if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
                 }else if('BestWishesToUser' === activeRouterUrl){
-                    this.$router.push("/UserCenter");
+                    // this.$router.push("/UserCenter"); //下面的父 就是UserCenter
+                    this.$router.push("/UserCenterPage");
                 }else{
                     this.$router.push(activeRouterUrl);
                 }

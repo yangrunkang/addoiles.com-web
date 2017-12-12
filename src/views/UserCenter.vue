@@ -66,6 +66,7 @@
         computed: {},
         mounted() {
             this.initUserInfo();
+            this.routerPush("/UserCenterPage");
         }
     }
 </script>
