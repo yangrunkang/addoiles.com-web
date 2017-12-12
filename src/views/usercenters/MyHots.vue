@@ -90,7 +90,7 @@
                                 title:hot.title,
                                 content:hot.content,
                                 userId:hot.userId,
-                                createTime:hot.createTime
+                                createTime:this.addoileUtil.formatUnixTime(hot.createTime)
                             });
                         }
                     }

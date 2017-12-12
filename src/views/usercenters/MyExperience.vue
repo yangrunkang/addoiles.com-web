@@ -84,7 +84,7 @@
                                 title:experience.title,
                                 userId:experience.userId,
                                 rates:experience.rates,
-                                createTime:experience.createTime
+                                createTime:this.addoileUtil.formatUnixTime(experience.createTime)
                             });
                         }
                     }

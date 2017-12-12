@@ -91,7 +91,7 @@
                                 title:article.title,
                                 subTitle:article.subTitle,
                                 userId:article.userId,
-                                createTime:article.createTime
+                                createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });
                         }
                     }

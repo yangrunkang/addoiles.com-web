@@ -89,7 +89,7 @@
                             this.dreamList.push({
                                 title:_dream.title,
                                 content:_dream.content,
-                                createTime:_dream.createTime,
+                                createTime:this.addoileUtil.formatUnixTime(_dream.createTime),
                                 userId:_dream.userid,
                                 dreamId:_dream.dreamId
                             });

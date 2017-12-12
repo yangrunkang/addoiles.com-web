@@ -85,7 +85,7 @@
                                 questionId:question.questionId,
                                 content:question.content,
                                 userId:question.userId,
-                                createTime:question.createTime
+                                createTime:this.addoileUtil.formatUnixTime(question.createTime)
                             });
                         }
                     }
