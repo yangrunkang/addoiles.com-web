@@ -80,7 +80,7 @@
                 }
 
                 this.axios.get("getDreamsByUserId",{
-                    params:{userId:"no user"}
+                    params:{userId:userId}
                 }).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
