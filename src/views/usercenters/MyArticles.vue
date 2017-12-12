@@ -78,7 +78,7 @@
 
                 this.axios.get("getArticlesByUserId",{
                     params:{
-                        userId:"f21d04e26b7347f4a3484746aa846672",
+                        userId:userId,
                         articleType:2
                     }
                 }).then(function (response) {

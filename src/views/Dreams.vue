@@ -107,7 +107,7 @@
 
             setTimeout(function () {
                this.isShowAffix = true;
-            }.bind(this),3000);
+            }.bind(this),2000);
 
         },
         methods:{
@@ -138,7 +138,8 @@
                 //发送至服务器
                 this.axios.post('addDream',{
                     title:dreamTitle,
-                    content:dreamContent
+                    content:dreamContent,
+                    userId:userId
                 }).then(function (res) {
                     let response = res.data;
                     if(response.code == 0 && response.data == 1){

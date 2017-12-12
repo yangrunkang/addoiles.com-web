@@ -74,7 +74,7 @@
 
                 this.axios.get("getQuestionsByUserId",{
                     params:{
-                        userId:"f21d04e26b7347f4a3484746aa846672"
+                        userId:userId
                     }
                 }).then(function (response) {
                     let resp = response.data;
