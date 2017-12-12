@@ -48,11 +48,6 @@
         },
         methods:{
             remove(tableIndex){
-                let userId = this.getUserId();
-                if(userId == null){
-                    return;
-                }
-
                 let questionId = this.questionsList[tableIndex].questionId;
                 let _this = this;
                 let config = {

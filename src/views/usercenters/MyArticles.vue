@@ -52,11 +52,6 @@
         },
         methods:{
             remove(tableIndex){
-                let userId = this.getUserId();
-                if(userId == null){
-                    return;
-                }
-
                 let articleId = this.articleList[tableIndex].articleId;
                 let _this = this;
                 let config = {

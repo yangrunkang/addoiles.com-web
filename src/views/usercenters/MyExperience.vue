@@ -48,12 +48,6 @@
         },
         methods:{
             remove(tableIndex){
-                let userId = this.getUserId();
-                if(userId == null){
-                    return;
-                }
-
-
                 let experienceId = this.experienceList[tableIndex].experienceId;
                 let _this = this;
                 let config = {

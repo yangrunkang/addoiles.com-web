@@ -52,11 +52,6 @@
              * 删除
              */
             remove(tableIndex){
-                let userId = this.getUserId();
-                if(userId == null){
-                    return;
-                }
-
                 let dreamId = this.dreamList[tableIndex].dreamId;
                 let _this = this;
                 let config = {

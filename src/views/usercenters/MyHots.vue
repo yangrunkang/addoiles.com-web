@@ -52,11 +52,6 @@
         },
         methods:{
             remove(tableIndex){
-                let userId = this.getUserId();
-                if(userId == null){
-                    return;
-                }
-
                 let hotId = this.hotsList[tableIndex].hotId;
                 let _this = this;
                 let config = {
