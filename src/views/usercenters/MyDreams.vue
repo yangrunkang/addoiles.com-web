@@ -35,7 +35,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.deleteDream(params.index)
+                                            this.remove(params.index)
                                         }
                                     }
                                 }, '删除')
@@ -49,11 +49,26 @@
         },
         methods:{
             /**
-             * 删除梦想
+             * 删除
              */
-            deleteDream(tableIndex){
-                console.log("tableIndex:" + tableIndex + ",title:" + this.dreamList[tableIndex].title);
-                console.log(this.dreamList[tableIndex].dreamId + "=" + this.dreamList[tableIndex].userId);
+            remove(tableIndex){
+                let dreamId = this.dreamList[tableIndex].dreamId;
+                let _this = this;
+                let config = {
+                    content:'确定删除吗?',
+                    okText:'确认',
+                    onOk(){
+                        _this.axios.get("deleteByDreamId",{
+                            params:{dreamId:dreamId}
+                        }).then(function (response) {
+                            let resp = response.data;
+                            if(resp.code == 0 && resp.data > 0){
+                                _this.dreamList.splice(tableIndex,1);
+                            }
+                        }.bind(_this));
+                    }
+                };
+                this.$Modal.confirm(config);
             },
             /**
              * 初始化界面

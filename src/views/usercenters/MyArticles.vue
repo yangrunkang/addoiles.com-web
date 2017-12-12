@@ -35,7 +35,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            //do nothing
+                                            this.remove(params.index)
                                         }
                                     }
                                 }, '删除')
@@ -51,6 +51,25 @@
             this.initITArticleList();
         },
         methods:{
+            remove(tableIndex){
+                let articleId = this.articleList[tableIndex].articleId;
+                let _this = this;
+                let config = {
+                    content:'确定删除吗?',
+                    okText:'确认',
+                    onOk(){
+                        _this.axios.get("deleteByArticleId",{
+                            params:{articleId:articleId}
+                        }).then(function (response) {
+                            let resp = response.data;
+                            if(resp.code == 0 && resp.data > 0){
+                                _this.articleList.splice(tableIndex,1);
+                            }
+                        }.bind(_this));
+                    }
+                };
+                this.$Modal.confirm(config);
+            },
             initITArticleList(){
                 this.axios.get("getArticlesByUserId",{
                     params:{

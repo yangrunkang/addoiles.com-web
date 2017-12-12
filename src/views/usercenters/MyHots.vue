@@ -35,8 +35,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            //do nothing
-
+                                            this.remove(params.index)
                                         }
                                     }
                                 }, '删除')
@@ -52,6 +51,25 @@
             this.initHotsList();
         },
         methods:{
+            remove(tableIndex){
+                let hotId = this.hotsList[tableIndex].hotId;
+                let _this = this;
+                let config = {
+                    content:'确定删除吗?',
+                    okText:'确认',
+                    onOk(){
+                        _this.axios.get("deleteByHotId",{
+                            params:{hotId:hotId}
+                        }).then(function (response) {
+                            let resp = response.data;
+                            if(resp.code == 0 && resp.data > 0){
+                                _this.hotsList.splice(tableIndex,1);
+                            }
+                        }.bind(_this));
+                    }
+                };
+                this.$Modal.confirm(config);
+            },
             initHotsList(){
                 this.axios.get("getHotsByUserId",{
                     params:{

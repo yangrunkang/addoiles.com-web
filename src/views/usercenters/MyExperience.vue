@@ -31,7 +31,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            //do nothing
+                                            this.remove(params.index)
                                         }
                                     }
                                 }, '删除')
@@ -47,6 +47,25 @@
             this.initExperienceList();
         },
         methods:{
+            remove(tableIndex){
+                let experienceId = this.experienceList[tableIndex].experienceId;
+                let _this = this;
+                let config = {
+                    content:'确定删除吗?',
+                    okText:'确认',
+                    onOk(){
+                        _this.axios.get("deleteByExperienceId",{
+                            params:{experienceId:experienceId}
+                        }).then(function (response) {
+                            let resp = response.data;
+                            if(resp.code == 0 && resp.data > 0){
+                                _this.experienceList.splice(tableIndex,1);
+                            }
+                        }.bind(_this));
+                    }
+                };
+                this.$Modal.confirm(config);
+            },
             initExperienceList(){
                 this.axios.get("getExperienceByUserId",{
                     params:{userId:"f21d04e26b7347f4a3484746aa846672"}
