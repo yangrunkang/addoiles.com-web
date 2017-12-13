@@ -50,7 +50,7 @@
                     <span style="float: right;">
                         <Button type="info" shape="circle" v-show="editBtn" @click="editExperience()">编辑完成</Button>
                         <Button type="info" shape="circle" v-show="shareBtn" @click="saveExperience('normal')">发表</Button>
-                        <Button type="warning" shape="circle" v-show="shareBtn" @click="saveExperience('draft')">保存为草稿</Button>
+                        <!--<Button type="warning" shape="circle" v-show="shareBtn" @click="saveExperience('draft')">保存为草稿</Button>-->
                         <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                     </span>
                 </p>
@@ -112,12 +112,12 @@
                 <p>如果你写了很多内容,慎重考虑一下.</p>
                 <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
             </div>
-            <div slot="footer">
+<!--            <div slot="footer">
                 <Button type="info" size="large" long @click="saveExperience('normal')">立即分享</Button>
-            </div>
-            <div slot="footer" style="margin: 4px auto;">
+            </div>-->
+<!--            <div slot="footer" style="margin: 4px auto;">
                 <Button type="warning" size="large" long @click="saveExperience('draft')">保存为草稿</Button>
-            </div>
+            </div>-->
             <div slot="footer" style="margin: 4px auto;">
                 <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
             </div>
@@ -494,6 +494,31 @@
         },
         mounted() {
             this.getExperienceList();
+
+            //用户中心过来
+            let editExperienceId = Cookies.get('editExperienceIdFromUserCenter');
+            if(null != editExperienceId){
+
+                this.isShowEditor = true;
+                this.showOnOffAffix = false;
+                this.editBtn = true;
+                this.shareBtn = false;
+
+
+                this.axios.get('getExperienceByExperienceId',{
+                    params:{experienceId:editExperienceId}
+                }).then(function (response) {
+                    if(response.data.code == 0){
+                        let experience = response.data.data;
+                        this.experienceTitle = experience.title;
+                        this.content = experience.content;
+                        //移除从用户中心来的id
+                        Cookies.remove("editExperienceIdFromUserCenter");
+                        //存储编辑id
+                        Cookies.set('editExperienceId',experience.experienceId);
+                    }
+                }.bind(this));
+            }
         }
     }
 

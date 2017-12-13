@@ -5,6 +5,9 @@
 </template>
 
 <script>
+
+    import Cookies from 'js-cookie';
+
     export default {
         name: "my-experience",
         data() {
@@ -24,6 +27,20 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.edit(params.index)
+                                        }
+                                    }
+                                }, '编辑'),
                                 h('Button', {
                                     props: {
                                         type: 'error',
@@ -47,6 +64,17 @@
             this.initExperienceList();
         },
         methods:{
+            /**
+             * 编辑
+             * */
+            edit(tableIndex){
+                let experienceId = this.experienceList[tableIndex].experienceId;
+                Cookies.set("editExperienceIdFromUserCenter",experienceId);
+                this.$router.push('/Experience');
+            },
+            /**
+             * 移除文章
+             * */
             remove(tableIndex){
                 let experienceId = this.experienceList[tableIndex].experienceId;
                 let _this = this;

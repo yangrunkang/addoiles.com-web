@@ -5,6 +5,9 @@
 </template>
 
 <script>
+
+    import Cookies from 'js-cookie';
+
     export default {
         name: "my-articles",
         data() {
@@ -30,6 +33,20 @@
                             return h('div', [
                                 h('Button', {
                                     props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.edit(params.index)
+                                        }
+                                    }
+                                }, '编辑'),
+                                h('Button', {
+                                    props: {
                                         type: 'error',
                                         size: 'small'
                                     },
@@ -51,6 +68,17 @@
             this.initITArticleList();
         },
         methods:{
+            /**
+             * 编辑
+             * */
+            edit(tableIndex){
+                let articleId = this.articleList[tableIndex].articleId;
+                Cookies.set("editArticleIdFromUserCenter",articleId);
+                this.$router.push('/ITTech');
+            },
+            /***
+             * 删除
+             */
             remove(tableIndex){
                 let articleId = this.articleList[tableIndex].articleId;
                 let _this = this;

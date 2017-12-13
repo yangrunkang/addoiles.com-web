@@ -109,7 +109,7 @@
 
             setTimeout(function () {
                this.isShowAffix = true;
-            }.bind(this),2000);
+            }.bind(this),1000);
 
         },
         methods:{

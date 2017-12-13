@@ -7,9 +7,7 @@
         -ms-border-radius: 5px;
         -o-border-radius: 5px;
         border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow:  0px 3px 16px -5px #070707}
-    .log-close{display: block; position: absolute; top:12px; right: 12px; opacity: 1;}
-    .log-close:hover .icons{transform: rotate(180deg);}
-    .log-close .icons{opacity: 1; transition: all .3s}
+    .log-close{display: none; }
     .log-cloud{background-image: url(../images/login-cloud.png); width: 63px ;height: 40px; position: absolute; z-index: 1}
     .login .cloud1{top:21px; left: -30px; transform: scale(.6); animation: cloud1 20s linear infinite;}
     .login .cloud2{top:87px; right: 20px; animation: cloud2 19s linear infinite;}

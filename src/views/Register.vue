@@ -6,9 +6,7 @@
         -ms-border-radius: 5px;
         -o-border-radius: 5px;
         border-radius: 5px; -webkit-box-shadow:  0px 3px 16px -5px #070707; box-shadow:  0px 3px 16px -5px #070707}
-    .log-close{display: block; position: absolute; top:12px; right: 12px; opacity: 1;}
-    .log-close:hover .icons{transform: rotate(180deg);}
-    .log-close .icons{opacity: 1; transition: all .3s}
+    .log-close{display: none;}
     .log-cloud{background-image: url(../images/login-cloud.png); width: 63px ;height: 40px; position: absolute; z-index: 1}
     .login .cloud1{top:21px; left: -30px; transform: scale(.6); animation: cloud1 20s linear infinite;}
     .login .cloud2{top:87px; right: 20px; animation: cloud2 19s linear infinite;}
@@ -106,8 +104,7 @@
         <!--发送验证码时提高用户体验-->
         <Modal v-model="showSendVerifyCodeModal"
                :mask-closable="!showSendVerifyCodeModal"
-               :closable="!showSendVerifyCodeModal"
-        >
+               :closable="!showSendVerifyCodeModal">
             <p slot="header" style="color:#f60;text-align:left">
                 请稍等...木有钱买邮件服务,呜呜
             </p>
@@ -197,12 +194,6 @@
                     content:'即将发送验证码到您的邮箱,请注意查收',
                     okText:'确认',
                     onOk() {
-                        //
-                        let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-                        if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
-                            this.$Message.warning('邮箱格式不正确,请检查');
-                            return;
-                        }
 
                         _this.showSendVerifyCodeModal = true;
                         //发送验证码
@@ -220,13 +211,9 @@
 
                             }
                         }.bind(_this));
-
-
                     }
                 };
                 this.$Modal.confirm(config);
-
-
             },
             //完成
             register(){

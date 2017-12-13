@@ -49,7 +49,7 @@
                                 <Button type="info" shape="circle" @click="addITArticle" v-show="isShowAddArticleBtn">发表</Button>
                                 <Button type="info" shape="circle" @click="editITArticle" v-show="isShowEditBtn">编辑完成</Button>
                                 <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
-                                <Button type="warning" shape="circle" >保存草稿</Button>
+                                <!--<Button type="warning" shape="circle" >保存草稿</Button>-->
                             </span>
                         <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
                             小名:
@@ -153,7 +153,7 @@
                 showNotLoginTips:false,
                 //是否显示发表文章按钮
                 isShowAddArticleBtn:true,
-                //是否显示编辑完成按钮
+                //是否显示[编辑完成]按钮
                 isShowEditBtn:false,
                 pageNo:0,
                 pageSize:10
@@ -415,6 +415,10 @@
                 let itContent = this.ITContent;
                 let articleId = Cookies.get('articleId');
 
+                if(null == articleId){
+                    return;
+                }
+
                 if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
                     || !this.addoileUtil.validateReq(itSubTitle)){
                     this.$Notice.warning({
@@ -481,6 +485,30 @@
         mounted () {
             //初始化文章列表 和 显示第一篇文章详情内容
             this.initITTech(null);
+
+            //用户中心过来的
+            let editArticleId = Cookies.get("editArticleIdFromUserCenter");
+            if(null != editArticleId){
+
+                this.isShowEditor = true;
+                this.isShowDetail = false;
+                this.isShowEditBtn = true;
+                this.isShowAddArticleBtn = false;
+
+                this.axios.get('getArticlesByArticleId',{
+                    params:{articleId:editArticleId}
+                }).then(function (response) {
+                    if(response.data.code == 0){
+                        let article = response.data.data;
+                        this.ITTitle = article.title;
+                        this.ITSubTitle = article.subTitle;
+                        this.ITContent = article.content;
+                        //从用户中心过来的id
+                        Cookies.remove("editArticleIdFromUserCenter");
+                        Cookies.set("articleId",article.articleId);
+                    }
+                }.bind(this));
+            }
         }
     }
 </script>
