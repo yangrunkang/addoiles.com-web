@@ -7,6 +7,7 @@
     vue
     vuex
     vue-router
+    js-cookies
     axios
     iview
     后端语言:java
