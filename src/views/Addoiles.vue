@@ -407,11 +407,6 @@
                 return userId;
             },
             loadMore(){
-                let userId = this.validateLogin();
-                if(userId == null){
-                    return;
-                }
-
                 this.pageNo+=this.pageSize;
                 this.initQuestionAnswer();
             }

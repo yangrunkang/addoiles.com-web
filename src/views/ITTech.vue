@@ -25,7 +25,7 @@
                     </Timeline-item>
 
                     <Timeline-item>
-                        <a @click="showMore">
+                        <a @click="showMore(true)">
                             <a>查看更多</a>
                         </a>
                     </Timeline-item>
@@ -167,12 +167,17 @@
                 this.isShowEditor = false;
                 this.initITTech(articleId);
             },
-            //控制右边区域是否展示文章列表
-            showMore(){
+            /**
+             * 控制右边区域是否展示文章列表
+             * flag ：true 点击右侧[查看更多]进入 false 点击[加载更多]进入
+             */
+            showMore(flag){
                 this.isShowDetail = false;
                 this.isShowMoreITs = true;
                 this.isShowEditor = false;
-                this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
+                if(flag){
+                    this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
+                }
                 //展示文章列表
                 this.axios.post('showMoreITTechArticles',{
                     pageNo:this.pageNo,
@@ -464,13 +469,8 @@
                 return userId;
             },
             loadMore(){
-                let userId = this.validateLogin();
-                if(userId == null){
-                    return;
-                }
-
                 this.pageNo+=this.pageSize;
-                this.showMore();
+                this.showMore(false);
             }
         },
         computed: {

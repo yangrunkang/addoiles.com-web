@@ -201,11 +201,6 @@
              * 加载更多
              */
             loadMore(){
-                let userId = this.validateLogin();
-                if(userId == null){
-                    return;
-                }
-
                 this.pageNo+=this.pageSize;
                 this.initDreams();
             },
