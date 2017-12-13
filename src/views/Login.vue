@@ -102,6 +102,28 @@
                 <a href="javascript:;" class="log-btn" @click="confirmResetPassword()">确认</a>
             </div>
         </div>
+
+        <!--发送验证码时提高用户体验-->
+        <Modal v-model="showSendVerifyCodeModal"
+               :mask-closable="!showSendVerifyCodeModal"
+               :closable="!showSendVerifyCodeModal">
+            <p slot="header" style="color:#f60;text-align:left">
+                请稍等...木有钱买邮件服务,呜呜
+            </p>
+            <div style="text-align:center">
+                <Row>
+                    <i-col span="24">
+                        <h3>程序正在努力发邮件中...请稍等</h3>
+                        <Spin size="large" style="width: 10%;margin: 0 auto;"></Spin>
+                    </i-col>
+                </Row>
+            </div>
+            <div slot="footer">
+            </div>
+
+        </Modal>
+
+
     </div>
 </template>
 <script>
@@ -124,7 +146,9 @@
                 //重设密码1
                 resetPassword1:'',
                 //重设密码2
-                resetPassword2:''
+                resetPassword2:'',
+                //发送验证时展示
+                showSendVerifyCodeModal:false
             }
         },
         methods:{
@@ -212,7 +236,7 @@
                             this.$Message.warning('邮箱格式不正确,请检查');
                             return;
                         }
-
+                        _this.showSendVerifyCodeModal = true;
                         //发送验证码
                         _this.axios.post("sendVerificationCode",{
                             email : _this.email,
@@ -222,8 +246,9 @@
                                 _this.showForgetPasswordForm = true;
                                 _this.showLoginForm=false;
                                 _this.resetPassword = false;
+                                _this.showSendVerifyCodeModal = false;
                             }else{
-                                this.$Notice.warn({
+                                this.$Notice.warning({
                                     desc: '验证码发送失败'
                                 });
                             }
@@ -243,7 +268,7 @@
                         this.showLoginForm = false;
                         this.showForgetPasswordForm = false;
                     }else{
-                        this.$Notice.warn({
+                        this.$Notice.warning({
                             desc: '验证码已失效'
                         });
                     }
@@ -281,8 +306,11 @@
                         this.showLoginForm = true;
                         this.showForgetPasswordForm = false;
                         this.resetPassword = false;
+                        this.password = '';
+                        this.resetPassword1 = '';
+                        this.resetPassword2 = '';
                     }else{
-                        this.$Notice.warn({
+                        this.$Notice.warning({
                             desc: '重设密码失败'
                         });
                     }

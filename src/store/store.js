@@ -19,7 +19,7 @@ export default new Vuex.Store({
     },
     mutations: {
         setUserName (state, userName) {
-            Cookies.set("userName",userName);
+            sessionStorage.setItem("userName",userName);
         },
         setUserId (state, userId) {
             sessionStorage.setItem("userId",userId);
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     getters: {
         getUserName: state => {
             //转换成String,否则有些地方判断getUserId后是Object对象
-            return Cookies.get("userName")+'';
+            return sessionStorage.getItem("userName")+'';
         },
         getUserId: state => {
             return sessionStorage.getItem("userId")+''; 

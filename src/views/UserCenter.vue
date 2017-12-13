@@ -54,7 +54,7 @@
              * 初始化用户信息
              */
             initUserInfo() {
-                this.userName = Cookies.get("userName");
+                this.userName = sessionStorage.getItem("userName");
                 this.email = Cookies.get("email");
                 this.userId = sessionStorage.getItem("userId");
             },
