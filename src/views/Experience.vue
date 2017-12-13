@@ -100,7 +100,7 @@
                     <Tag type="border"  color="green"><strong>发布时间:</strong>{{experience.createTime}}</Tag>
                 </Col>
             </Row>
-            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
+            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
         </div>
         <!--写好的经历确认清空吗-->
         <Modal v-model="confirmModal">
@@ -162,7 +162,9 @@
                 //默认编辑按钮不显示
                 editBtn:false,
                 //是否显示 打开编辑器的图钉(编辑文章时不显示)
-                showOnOffAffix:true
+                showOnOffAffix:true,
+                pageNo:0,
+                pageSize:10
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -338,7 +340,10 @@
             },
             //获取经历
             getExperienceList(){
-                this.axios.get('getExperienceList').then(function (response) {
+                this.axios.post('getExperienceList',{
+                    pageNo:this.pageNo,
+                    pageSize:this.pageSize
+                }).then(function (response) {
                     if(response.data.code == 0){
                         let experienceDtoList = response.data.data; //List<ExperienceDto>
                         if(experienceDtoList.length >= 0){
@@ -473,6 +478,15 @@
                     return;
                 }
                 return userId;
+            },
+            loadMore(){
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
+
+                this.pageNo+=this.pageSize;
+                this.getExperienceList();
             }
 
         },
@@ -485,7 +499,6 @@
         },
         mounted() {
             this.getExperienceList();
-
         }
     }
 

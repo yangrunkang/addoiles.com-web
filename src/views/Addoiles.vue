@@ -146,7 +146,7 @@
                         </Card>
                     </Card>
                 </div>
-            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
+            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
             </i-col>
             <i-col span="6" class="main-col">
                 <div class="hot-msg">
@@ -197,7 +197,9 @@
                 //用户回答的内容(使用数组然后通过index区别)
                 answerContent : [],
                 //问题&答案List
-                questionAnswerList : []
+                questionAnswerList : [],
+                pageNo:0,
+                pageSize:10
             }
         },
         methods: {
@@ -352,7 +354,10 @@
 
             },
             initQuestionAnswer(){
-                this.axios.get("getQuestionAnswerList").then(function (resp) {
+                this.axios.post("getQuestionAnswerList",{
+                    pageNo:this.pageNo,
+                    pageSize:this.pageSize
+                }).then(function (resp) {
                     if(resp.data.code == 0){
                         let questionAnswerDtoList = resp.data.data;
                         for(let i = 0;i < questionAnswerDtoList.length; i++){
@@ -400,6 +405,15 @@
                     return;
                 }
                 return userId;
+            },
+            loadMore(){
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
+
+                this.pageNo+=this.pageSize;
+                this.initQuestionAnswer();
             }
         },
         mounted() {

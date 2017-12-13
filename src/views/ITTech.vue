@@ -94,7 +94,7 @@
                             <span slot="desc">{{article.subTitle}}</span>
                         </Alert>
                     </a>
-                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
+                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
                 </div>
 
             </i-col>
@@ -154,7 +154,9 @@
                 //是否显示发表文章按钮
                 isShowAddArticleBtn:true,
                 //是否显示编辑完成按钮
-                isShowEditBtn:false
+                isShowEditBtn:false,
+                pageNo:0,
+                pageSize:10
             }
         },
         methods: {
@@ -172,7 +174,10 @@
                 this.isShowEditor = false;
                 this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 //展示文章列表
-                this.axios.get('showMoreITTechArticles').then(function (resp) {
+                this.axios.post('showMoreITTechArticles',{
+                    pageNo:this.pageNo,
+                    pageSize:this.pageSize
+                }).then(function (resp) {
                     if (resp.data.code == 0) {
                         let dataArray = resp.data.data;
                         for(let i = 0; i < dataArray.length; i++){
@@ -457,6 +462,15 @@
                     return;
                 }
                 return userId;
+            },
+            loadMore(){
+                let userId = this.validateLogin();
+                if(userId == null){
+                    return;
+                }
+
+                this.pageNo+=this.pageSize;
+                this.showMore();
             }
         },
         computed: {
