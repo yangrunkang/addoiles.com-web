@@ -83,7 +83,7 @@
 
 
         </div>
-        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" >加载更多</Button>
+        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()" >加载更多</Button>
     </div>
 </template>
 <script>
@@ -100,6 +100,8 @@
                 dreamListCol1 : [], //梦想列表1
                 dreamListCol2 : [], //梦想列表2
                 dreamListCol3 : [], //梦想列表3
+                pageNo:0,
+                pageSize:10
             }
         },
         mounted() {
@@ -163,11 +165,15 @@
              * 初始化梦想
              */
             initDreams() {
-                this.axios.get('getDreams').then(function (res) {
+                this.axios.post('getDreams',{
+                    pageNo:this.pageNo,
+                    pageSize:this.pageSize
+                }).then(function (res) {
                     if(res.data.code == 0){
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
                             let dream = response[i];
+                            console.log(dream);
                             this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:this.addoileUtil.getRandAlertType()});
                         }
                         // 分配
@@ -190,6 +196,13 @@
                    this.dreamListCol2 = dreamList.slice(everyArr,everyArr*2);
                    this.dreamListCol3 = dreamList.slice(everyArr*2,dreamListSize);
                }
+            },
+            /**
+             * 加载更多
+             */
+            loadMore(){
+                this.pageNo+=this.pageSize;
+                this.initDreams();
             },
             /**
              * 验证是否登录
