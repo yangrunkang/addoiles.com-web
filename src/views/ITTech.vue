@@ -355,7 +355,7 @@
                     content : itContent,
                     articleType : 2
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data > 0){
+                    if(resp.data.code == 0 && resp.data.data == 1){
                         this.$Notice.success({
                             desc: 'IT技术文章分享成功,2s后刷新本页面'
                         });
@@ -363,6 +363,10 @@
                             this.$router.go(0);
                         }.bind(this), 2000);
                         this.clearContent();
+                    }else if(resp.data.data == 1002){
+                        this.$Notice.error({
+                            desc: '文本内容过长,请精简,或者减少部分图片内容'
+                        });
                     }
                 }.bind(this));
 
@@ -447,7 +451,7 @@
                     content : itContent,
                     articleType : 2
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data > 0){
+                    if(resp.data.code == 0 && resp.data.data == 1){
                         this.$Notice.success({
                             desc: 'IT技术编辑成功,2s后刷新本页面'
                         });
@@ -456,6 +460,10 @@
                         }.bind(this), 2000);
                         this.clearContent();
                         Cookies.remove('articleId');
+                    }else if(resp.data.data == 1002){
+                        this.$Notice.error({
+                            desc: '文本内容过长,请精简,或者减少部分图片内容'
+                        });
                     }
                 }.bind(this));
             },

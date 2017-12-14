@@ -162,7 +162,7 @@
                     return;
                 }
 
-                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                let emailReg = /^[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)*@[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)+$/i;
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;

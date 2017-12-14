@@ -148,7 +148,7 @@
                 //重设密码2
                 resetPassword2:'',
                 //发送验证时展示
-                showSendVerifyCodeModal:false
+                showSendVerifyCodeModal:false,
             }
         },
         methods:{
@@ -157,7 +157,7 @@
                 let email = this.email;
                 let password = this.password;
 
-                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                let emailReg = /^[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)*@[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)+$/i;
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;
@@ -225,37 +225,59 @@
 
             },
             forgetPassword(){
-                let _this = this;
-                let config = {
-                    content:'即将发送验证码到您输入的邮箱,请注意查收',
-                    okText:'确认',
-                    onOk(){
-                        //
-                        let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-                        if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
-                            this.$Message.warning('邮箱格式不正确,请检查');
-                            return;
-                        }
-                        _this.showSendVerifyCodeModal = true;
+
+                let emailReg = /^[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)*@[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)+$/i;
+                if(!this.addoileUtil.validateReq(this.email) || !emailReg.test(this.email)){
+                    this.$Message.warning('邮箱格式不正确,请检查');
+                    return;
+                }
+
+                //确认是否是网站用户
+                this.axios.get("checkHasRegister",{
+                    params:{email:this.email}
+                }).then(function (resp) {
+                    if(resp.data.code == 0 && resp.data.data < 1){
+                        this.$Notice.warning({
+                            desc: 'Hi,您未在网站注册过(又想骗我)'
+                        });
+                    }else{
                         //发送验证码
-                        _this.axios.post("sendVerificationCode",{
-                            email : _this.email,
-                            type : 1
-                        }).then(function (resp) {
-                            if(resp.data.code == 0 && resp.data.data == true){
-                                _this.showForgetPasswordForm = true;
-                                _this.showLoginForm=false;
-                                _this.resetPassword = false;
-                                _this.showSendVerifyCodeModal = false;
-                            }else{
-                                this.$Notice.warning({
-                                    desc: '验证码发送失败'
-                                });
+                        let _this = this;
+                        let config = {
+                            content:'即将发送验证码到您输入的邮箱,请注意查收',
+                            okText:'确认',
+                            onOk(){
+                                //
+                                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                                if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
+                                    this.$Message.warning('邮箱格式不正确,请检查');
+                                    return;
+                                }
+                                _this.showSendVerifyCodeModal = true;
+                                //发送验证码
+                                _this.axios.post("sendVerificationCode",{
+                                    email : _this.email,
+                                    type : 1
+                                }).then(function (resp) {
+                                    if(resp.data.code == 0 && resp.data.data == true){
+                                        _this.showForgetPasswordForm = true;
+                                        _this.showLoginForm=false;
+                                        _this.resetPassword = false;
+                                        _this.showSendVerifyCodeModal = false;
+                                    }else{
+                                        this.$Notice.warning({
+                                            desc: '验证码发送失败'
+                                        });
+                                    }
+                                }.bind(_this));
                             }
-                        }.bind(_this));
+                        };
+                        this.$Modal.confirm(config);
+
+
                     }
-                };
-                this.$Modal.confirm(config);
+                }.bind(this));
+
             },
             //验证验证码
             verifyCode(){

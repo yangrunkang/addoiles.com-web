@@ -270,6 +270,10 @@
                         }.bind(this), 2000);
                         //清空内容
                         this.clearContent(false);
+                    }else if(resp.data.data == 1002){
+                        this.$Notice.error({
+                            desc: '文本内容过长,请精简,或者减少部分图片内容'
+                        });
                     }
                 }.bind(this));
             },
@@ -463,6 +467,10 @@
                         this.clearContent(false); // TODO 其实刷新完了,就自动清除了
                         //清空Cookies
                         Cookies.remove('editExperienceId');
+                    }else if(resp.data.data == 1002){
+                        this.$Notice.error({
+                            desc: '文本内容过长,请精简,或者减少部分图片内容'
+                        });
                     }
                 }.bind(this));
             },
