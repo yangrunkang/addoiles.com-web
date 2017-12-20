@@ -47,7 +47,7 @@
         },
         methods: {
             toChat(){
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -78,19 +78,6 @@
 
                 //清空聊天框
                 this.chatContent = '';
-            },
-            /**
-             * 验证是否登录
-             */
-            validateLogin(){
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您好,您还未登录,请登录</h6>'
-                    });
-                    return;
-                }
-                return userId;
             }
         },
         mounted () {

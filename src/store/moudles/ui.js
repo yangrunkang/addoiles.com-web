@@ -9,10 +9,20 @@ const ui = {
 
     },
     mutations: {
-        testShowMessage(state,vm){
-            vm.$Notice.success({
-                desc: '登录成功,2s后转到首页'
-            });
+        /**
+         * 验证登录
+         * @param state
+         * @param vm
+         */
+        validateLogin(state,vm){
+            let userId = sessionStorage.getItem("userId");
+            if(!vm.addoileUtil.validateReq(userId)){
+                vm.$Notice.info({
+                    desc: '<h6>Hi,您还未登录,请登录</h6>'
+                });
+                return;
+            }
+            return userId;
         }
     },
     getters: {

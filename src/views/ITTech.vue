@@ -251,7 +251,7 @@
             },
             toComment(articleId){
 
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -318,7 +318,7 @@
             //发表IT文章
             addITArticle(){
                 //如果没有登录,禁止添加分享经历
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -409,7 +409,7 @@
              */
             editITArticle(){
                 //如果没有登录,禁止添加分享经历
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -466,19 +466,6 @@
                         });
                     }
                 }.bind(this));
-            },
-            /**
-             * 验证登录
-             */
-            validateLogin(){
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        title: '<h6>Hi,您还未登录,请登录</h6>'
-                    });
-                    return;
-                }
-                return userId;
             },
             loadMore(){
                 this.pageNo+=this.pageSize;

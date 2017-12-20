@@ -154,9 +154,6 @@
         methods:{
             //登录
             toLogin(){
-                // Test Success
-                // this.$store.commit('testShowMessage',this);
-
                 let email = this.email;
                 let password = this.password;
 

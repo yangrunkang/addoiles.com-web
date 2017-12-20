@@ -216,7 +216,7 @@
             },
             //发表热门
             addHots(){
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }
@@ -261,7 +261,7 @@
             //提问
             askQuestion(){
 
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -297,7 +297,7 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                let userId = this.validateLogin();
+                let userId = this.$store.commit('validateLogin',this)
                 if(userId == null){
                     return;
                 }
@@ -391,19 +391,6 @@
                 }.bind(this));
 
 
-            },
-            /**
-             * 验证登录
-             */
-            validateLogin(){
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您还未登录,请登录</h6>'
-                    });
-                    return;
-                }
-                return userId;
             },
             loadMore(){
                 this.pageNo+=this.pageSize;
