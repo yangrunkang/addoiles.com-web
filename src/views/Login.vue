@@ -154,6 +154,9 @@
         methods:{
             //登录
             toLogin(){
+                // Test Success
+                // this.$store.commit('testShowMessage',this);
+
                 let email = this.email;
                 let password = this.password;
 
@@ -226,7 +229,7 @@
             },
             forgetPassword(){
 
-                let emailReg = /^[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)*@[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)+$/i;
+                let emailReg = this.$store.getters.constant.getEmailReg;
                 if(!this.addoileUtil.validateReq(this.email) || !emailReg.test(this.email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;

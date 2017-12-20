@@ -54,7 +54,6 @@
     color: #9ea7b4;
 }
 
-
 /*专门针对编辑器Code代码样式设置,效果很棒*/
 pre.ql-syntax{
     background-color: #23241f;
@@ -66,6 +65,10 @@ pre.ql-syntax{
     border-radius: 7px;
 }
 
+/*专门针对编辑器blockquote样式设置*/
+blockquote {
+    border-left: 4px solid #ccc;
+}
 
 
 

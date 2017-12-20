@@ -95,8 +95,8 @@
                         }
                         //导航栏针对每个用户存储在store(到了仓库后,我把它放在session中了)
                         this.$store.commit('setNavList',_navList); //notice: is setNavList ,not to write navList!!
-                        //从仓库中获取
-                        this.navList = this.$store.getters.getNavList;//notice: not getNavList()
+                        //从仓库中获取 notice: not getNavList()
+                        this.navList = this.$store.getters.getNavList;
                     }
                 }.bind(this));
             },
