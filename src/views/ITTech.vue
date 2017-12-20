@@ -17,7 +17,7 @@
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Button type="info" size="large" long @click="writeITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
                 <Timeline pending>
-                    <Timeline-item v-for="pithiness in itTechDto.pithinessList" key="pithiness.id">
+                    <Timeline-item v-for="pithiness in itTechDto.pithinessList" :key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
                             <a class="time auto-break-line" >{{pithiness.title}}</a>
                             <p class="content auto-break-line" >{{pithiness.subTitle}}</p>
@@ -77,7 +77,7 @@
                             <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
                                 <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
                             </Input>
-                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" key="comment.id" style="margin-top: 6px">
+                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
                                 <Tag type="border" color="green">{{ comment.createTime }}</Tag>
                                 <Tag color="green">{{ comment.userName }}</Tag>
                                 {{ comment.content }}
@@ -87,7 +87,7 @@
                 </div>
                 <!--点击展示更多,显示此区域-->
                 <div v-show="isShowMoreITs" style="width: 100%">
-                    <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" key="article.id" >
+                    <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" :key="article.id" >
                         <Alert show-icon>
                             <h3>{{article.title}}</h3>
                             <Icon :type="article.iconType" slot="icon"></Icon>

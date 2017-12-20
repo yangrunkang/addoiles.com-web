@@ -24,7 +24,7 @@
 
         <div class="layout-nav">
             <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
-                    <Menu-item :name="item.navRouter" v-for="item in navList" key="item.id">
+                    <Menu-item :name="item.navRouter" v-for="item in navList" :key="item.id">
                             <Icon :type="item.navIcon"></Icon>
                             {{ item.navName }}
                     </Menu-item>
@@ -38,7 +38,7 @@
 
         <div class="layout-bottom">
             <p>Copyright ©2017 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
-            <p>QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》&nbsp;&nbsp;&nbsp;微信公众号:程序员的生活记录</p>
+            <p>QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
         </div>
 
         <!--返回到顶部-->

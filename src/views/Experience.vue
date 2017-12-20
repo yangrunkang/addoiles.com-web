@@ -71,7 +71,7 @@
                 <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
             </Alert>
             <!--经历-->
-            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="(experience,index) in experienceDtoList" key="experience.id">
+            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="(experience,index) in experienceDtoList" :key="experience.id">
                 <Col span="19">
                     <!--具体的经历-->
                     <Card :bordered="false" style="margin-bottom: 5px">
@@ -83,7 +83,7 @@
                     </Card>
                     <!--评论-->
                     <h2>评论</h2>
-                    <Alert type="success" v-for="comment in experience.commentList" key="comment.id" style="margin: 3px auto;">
+                    <Alert type="success" v-for="comment in experience.commentList" :key="comment.id" style="margin: 3px auto;">
                         <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
                         {{comment.content}}
                     </Alert>

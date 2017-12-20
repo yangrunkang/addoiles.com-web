@@ -49,7 +49,7 @@
 
             <Row type="flex">
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol1" key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol1" :key="item.id">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
@@ -60,7 +60,7 @@
                     </Card>
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol2" key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol2" :key="item.id">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
@@ -70,7 +70,7 @@
                     </Card>
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol3" key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol3" :key="item.id">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
@@ -173,7 +173,6 @@
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
                             let dream = response[i];
-                            console.log(dream);
                             this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:this.addoileUtil.getRandAlertType()});
                         }
                         // 分配

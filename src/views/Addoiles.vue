@@ -98,7 +98,7 @@
 
                         <!--解答-->
                         <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
-                            v-for="(questionAnswer,index) in questionAnswerList" key="questionAnswer.id"
+                            v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id"
                         >
                             <!--最新问题-->
                             <h1>最新问题{{index + 1}}</h1>
@@ -123,7 +123,7 @@
                                         </i-input>
                                     </div>
                                 </Card>
-                                <Card style="margin-top: 6px" v-for="answer in questionAnswer.answerList" key="answer.id">
+                                <Card style="margin-top: 6px" v-for="answer in questionAnswer.answerList" :key="answer.id">
                                     <div>
                                         <Row>
                                             <i-col span="5" style="vertical-align: middle">
@@ -161,7 +161,7 @@
                     </Card>
                     <br />
 
-                    <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" key="item.title">
+                    <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" :key="item.title">
                         <p slot="title" class="auto-break-line">
                             {{ item.title }}
                         </p>
