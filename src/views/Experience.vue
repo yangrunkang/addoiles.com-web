@@ -215,8 +215,9 @@
             },
             saveExperience(operation){
 
-                //如果没有登录,禁止添加分享经历
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -280,8 +281,9 @@
             /*去评论*/
             toComment(experienceId,index){
 
-                //如果没有登录,禁止评论
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -330,6 +332,13 @@
             },
             //去评分
             toRates(experienceId,$event){
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return;
+                }
+
                 let rate = $event;
                 this.$Notice.success({
                     title : '感谢您的评分',
@@ -422,7 +431,9 @@
              * 编辑完成
              */
             editExperience(){
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }

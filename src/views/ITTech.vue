@@ -251,7 +251,9 @@
             },
             toComment(articleId){
 
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -317,8 +319,9 @@
             },
             //发表IT文章
             addITArticle(){
-                //如果没有登录,禁止添加分享经历
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -408,8 +411,9 @@
              * 编辑文章
              */
             editITArticle(){
-                //如果没有登录,禁止添加分享经历
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }

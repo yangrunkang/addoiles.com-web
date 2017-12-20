@@ -216,7 +216,9 @@
             },
             //发表热门
             addHots(){
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -261,11 +263,12 @@
             //提问
             askQuestion(){
 
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
-
                 let questionContent = this.question;
 
                 if(!this.addoileUtil.validateReq(questionContent)){
@@ -297,7 +300,9 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                let userId = this.$store.commit('validateLogin',this);
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }

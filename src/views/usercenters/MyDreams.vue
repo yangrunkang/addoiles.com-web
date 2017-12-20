@@ -74,7 +74,9 @@
              * 初始化界面
              */
             initDreamList(){
-                let userId = this.getUserId();
+                this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
                 }
@@ -96,16 +98,6 @@
                         }
                     }
                 }.bind(this));
-            },
-            getUserId(){
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                    this.$Notice.info({
-                        desc: '<h6>Hi,您还未登录,请登录</h6>'
-                    });
-                    return;
-                }
-                return userId;
             }
         },
         mounted() {
