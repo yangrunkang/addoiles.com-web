@@ -15,7 +15,9 @@ export default new Vuex.Store({
         /*邮箱*/
         email:'',
         /*导航栏*/
-        navList:[]
+        navList:[],
+        /*邮箱正则表达式*/
+        emailReg: ''
     },
     mutations: {
         setUserName (state, userName) {
@@ -44,7 +46,10 @@ export default new Vuex.Store({
         },
         getEmail: state => {
             Cookies.get("email");
+        },
+        getEmailReg: state => {
+            //转换成String,否则有些地方判断getUserId后是Object对象
+            return /^[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)*@[-!#-'*+\/-9=?^-~]+(?:\.[-!#-'*+\/-9=?^-~]+)+$/i;
         }
-
     }
 });
