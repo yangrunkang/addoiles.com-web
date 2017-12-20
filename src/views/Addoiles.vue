@@ -261,7 +261,7 @@
             //提问
             askQuestion(){
 
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }
@@ -297,7 +297,7 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }

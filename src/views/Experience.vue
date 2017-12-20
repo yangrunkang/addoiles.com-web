@@ -216,7 +216,7 @@
             saveExperience(operation){
 
                 //如果没有登录,禁止添加分享经历
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }
@@ -281,7 +281,7 @@
             toComment(experienceId,index){
 
                 //如果没有登录,禁止评论
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }
@@ -422,7 +422,7 @@
              * 编辑完成
              */
             editExperience(){
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }

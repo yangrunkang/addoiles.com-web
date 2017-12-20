@@ -115,7 +115,7 @@
         methods:{
             //许下梦想
             toDreamWall() {
-                let userId = this.$store.commit('validateLogin',this)
+                let userId = this.$store.commit('validateLogin',this);
                 if(userId == null){
                     return;
                 }
