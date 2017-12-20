@@ -162,7 +162,7 @@
                     return;
                 }
 
-                let emailReg = this.$store.getters.constant.getEmailReg;
+                let emailReg = this.$store.getters.getEmailReg;
                 if(!this.addoileUtil.validateReq(email) || !emailReg.test(email)){
                     this.$Message.warning('邮箱格式不正确,请检查');
                     return;
