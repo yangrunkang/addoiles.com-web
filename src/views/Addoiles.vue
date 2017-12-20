@@ -161,7 +161,7 @@
                     </Card>
                     <br />
 
-                    <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" :key="item.title">
+                    <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" :key="item.id">
                         <p slot="title" class="auto-break-line">
                             {{ item.title }}
                         </p>
@@ -209,14 +209,13 @@
                     if(res.data.code == 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){
-                            this.hotsList.push({title : resp[i].title , content : resp[i].content});
+                            this.hotsList.push({title : resp[i].title , content : resp[i].content,id:resp[i].id});
                         }
                     }
                 }.bind(this));
             },
             //发表热门
             addHots(){
-
                 let userId = this.validateLogin();
                 if(userId == null){
                     return;
