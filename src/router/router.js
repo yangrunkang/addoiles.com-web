@@ -19,14 +19,20 @@ const routers = [
         meta: {
             title: '经历分享'
         },
-        component: (resolve) => require(['../views/Experience.vue'], resolve)
+        component: (resolve) => require(['../views/Experience.vue'], resolve),
+        children:[
+            {path: '/OilEditor',meta:{title:'油站编辑器'},component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)}
+        ]
     },
     {
         path: '/ITTech',
         meta: {
             title: '技术沉淀'
         },
-        component: (resolve) => require(['../views/ITTech.vue'], resolve)
+        component: (resolve) => require(['../views/ITTech.vue'], resolve),
+        children:[
+            {path: '/OilEditor',meta:{title:'油站编辑器'},component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)}
+        ]
     },
     {
         path: '/OilRobot',
