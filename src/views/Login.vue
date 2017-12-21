@@ -247,12 +247,6 @@
                             content:'即将发送验证码到您输入的邮箱,请注意查收',
                             okText:'确认',
                             onOk(){
-                                //
-                                let emailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-                                if(!this.addoileUtil.validateReq(_this.email) || !emailReg.test(_this.email)){
-                                    this.$Message.warning('邮箱格式不正确,请检查');
-                                    return;
-                                }
                                 _this.showSendVerifyCodeModal = true;
                                 //发送验证码
                                 _this.axios.post("sendVerificationCode",{
