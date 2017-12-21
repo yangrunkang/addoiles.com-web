@@ -64,7 +64,7 @@
         </div>
 
         <!--页面主体内容-->
-        <div class="main-content">
+        <div>
             <Alert show-icon>
                 已分享的经历列表
                 <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
