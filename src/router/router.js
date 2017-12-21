@@ -19,20 +19,14 @@ const routers = [
         meta: {
             title: '经历分享'
         },
-        component: (resolve) => require(['../views/Experience.vue'], resolve),
-        children:[
-            {path: '/OilEditor',meta:{title:'油站编辑器'},component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)}
-        ]
+        component: (resolve) => require(['../views/Experience.vue'], resolve)
     },
     {
         path: '/ITTech',
         meta: {
             title: '技术沉淀'
         },
-        component: (resolve) => require(['../views/ITTech.vue'], resolve),
-        children:[
-            {path: '/OilEditor',meta:{title:'油站编辑器'},component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)}
-        ]
+        component: (resolve) => require(['../views/ITTech.vue'], resolve)
     },
     {
         path: '/OilRobot',
@@ -77,6 +71,13 @@ const routers = [
             {path: '/MyQuestions',meta:{title:'问题疑惑'},component: (resolve) => require(['../views/usercenters/MyQuestions.vue'], resolve)},
             {path: '/UserCenterPage',meta:{title:'用户中心'},component: (resolve) => require(['../views/usercenters/UserCenterPage.vue'], resolve)}
         ]
+    },
+    {
+        path: '/OilEditor',
+        meta: {
+            title: '油站编辑器'
+        },
+        component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)
     }
 ];
 export default routers;

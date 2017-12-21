@@ -10,9 +10,7 @@
         <!--编辑器-->
         <Card class="edit-card">
             <p slot="title" style="height: auto;font-size: 18px">
-                <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
-                    <i-input v-model="title" placeholder="标题" size="large" style="width:605px;"></i-input>
-                </Poptip>
+                <i-input v-model="title" placeholder="标题" size="large" style="width:605px;"></i-input>
                 <span style="float: right;">
                         <Button type="info" shape="circle" v-show="editBtn" @click="editExperience()">编辑完成</Button>
                         <Button type="info" shape="circle" v-show="shareBtn" @click="saveExperience('normal')">发表</Button>
@@ -97,7 +95,12 @@
             }
         },
         mounted() {
-
+            /*
+                {
+                    from : 来源(ITArticle Experience)
+                    editId : id(to db to get content)
+                }
+            */
         }
     }
 
