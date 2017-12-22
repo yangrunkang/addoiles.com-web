@@ -38,7 +38,7 @@
 
         <div class="layout-bottom">
             <p>Copyright ©2017 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
-            <p>QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
+            <p>网站当前版本:v1.1&nbsp;&nbsp;&nbsp;QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
         </div>
 
         <!--返回到顶部-->
