@@ -88,9 +88,9 @@
             initNavList(){
                 this.axios.get('getNavs').then(function (res) {
                     if(res.data.code == 0){
-                        var resp = res.data.data;
+                        let resp = res.data.data;
                         let _navList = [];
-                        for(var i =0 ;i<resp.length ; i++){
+                        for(let i =0 ;i<resp.length ; i++){
                             _navList.push({navRouter : resp[i].navRouter , navIcon : resp[i].navIcon, navName : resp[i].navName});
                         }
                         //导航栏针对每个用户存储在store(到了仓库后,我把它放在session中了)
