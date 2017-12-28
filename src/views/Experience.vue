@@ -33,6 +33,7 @@
 
         <!--页面主体内容-->
         <div>
+            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="toShareExperience()">分享</Button>
             <Alert show-icon>
                 已分享的经历列表
                 <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
@@ -101,6 +102,15 @@
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
+            toShareExperience(){
+                let editObj = {
+                    articleType:0,
+                };
+
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
+
+                this.$router.push("/OilEditor");
+            },
             /*去评论*/
             toComment(experienceId,index){
 
@@ -233,9 +243,7 @@
             toEditExperience(experienceId){
 
                 let editObj = {
-                    type:1,
                     businessId:experienceId,
-                    businessType:0
                 };
 
                 sessionStorage.setItem("editObj",JSON.stringify(editObj));

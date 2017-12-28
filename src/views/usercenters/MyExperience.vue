@@ -69,8 +69,14 @@
              * */
             edit(tableIndex){
                 let experienceId = this.experienceList[tableIndex].experienceId;
-                Cookies.set("editExperienceIdFromUserCenter",experienceId);
-                this.$router.push('/Experience');
+
+                let editObj = {
+                    businessId:experienceId,
+                };
+
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
+
+                this.$router.push("/OilEditor");
             },
             /**
              * 移除文章
@@ -113,8 +119,8 @@
                         for(let i = 0; i< resp.data.length;i++){
                             let experience = resp.data[i];
                             this.experienceList.push({
-                                experienceId:experience.experienceId,
-                                title:experience.title,
+                                experienceId:experience.articleId,
+                                title:this.addoileUtil.isDraft(experience.deleteStatus) + experience.title,
                                 userId:experience.userId,
                                 rates:experience.rates,
                                 createTime:this.addoileUtil.formatUnixTime(experience.createTime)

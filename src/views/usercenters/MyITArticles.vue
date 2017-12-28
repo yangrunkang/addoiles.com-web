@@ -18,10 +18,6 @@
                         key:"title"
                     },
                     {
-                        title:"小标题",
-                        key:"subTitle"
-                    },
-                    {
                         title:"时间",
                         key:"createTime"
                     },
@@ -73,8 +69,13 @@
              * */
             edit(tableIndex){
                 let articleId = this.articleList[tableIndex].articleId;
-                Cookies.set("editArticleIdFromUserCenter",articleId);
-                this.$router.push('/ITTech');
+                let editObj = {
+                    businessId:articleId,
+                };
+
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
+
+                this.$router.push("/OilEditor");
             },
             /***
              * 删除
@@ -116,9 +117,8 @@
                         for(let i = 0; i< resp.data.length;i++){
                             let article = resp.data[i];
                             this.articleList.push({
-                                articleId:article.articleId,
+                                articleId:this.addoileUtil.isDraft(article.deleteStatus) + article.articleId,
                                 title:article.title,
-                                subTitle:article.subTitle,
                                 userId:article.userId,
                                 createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });

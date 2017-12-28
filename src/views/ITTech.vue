@@ -15,12 +15,11 @@
         <Row type="flex">
             <!--左边:文章简表-->
             <i-col :span="spanLeft" class="layout-menu-left">
-                <Button type="info" size="large" long @click="writeITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
+                <Button type="info" size="large" long @click="toWriteITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
                 <Timeline pending>
                     <Timeline-item v-for="pithiness in itTechDto.pithinessList" :key="pithiness.id">
                         <a @click="toITArticle(pithiness.articleId)" >
                             <a class="time auto-break-line" >{{pithiness.title}}</a>
-                            <p class="content auto-break-line" >{{pithiness.subTitle}}</p>
                         </a>
                     </Timeline-item>
 
@@ -34,33 +33,35 @@
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
             <i-col :span="spanRight">
-                <!--文章详情-->
-                <Card style="background: transparent;border: transparent;border-radius: 30px">
-                    <div>
-                        <Card>
-                            <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
-                                {{itTechDto.article.title}}
-                                <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
-                            </p>
-                            <p v-html="itTechDto.article.content" class="auto-break-line"></p>
-                        </Card>
-                        <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
+                <div v-show="showDetailITTech">
+                    <!--文章详情-->
+                    <Card style="background: transparent;border: transparent;border-radius: 30px">
+                        <div>
+                            <Card>
+                                <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
+                                    {{itTechDto.article.title}}
+                                    <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
+                                </p>
+                                <p v-html="itTechDto.article.content" class="auto-break-line"></p>
+                            </Card>
+                            <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
                             <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
-                        </Input>
-                        <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
-                            <Tag type="border" color="green">{{ comment.createTime }}</Tag>
-                            <Tag color="green">{{ comment.userName }}</Tag>
-                            {{ comment.content }}
-                        </Alert>
-                    </div>
-                </Card>
+                            </Input>
+                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
+                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
+                                <Tag color="green">{{ comment.userName }}</Tag>
+                                {{ comment.content }}
+                            </Alert>
+                        </div>
+                    </Card>
+                </div>
+
                 <!--点击展示更多,显示此区域-->
                 <div v-show="isShowMoreITs" style="width: 100%">
                     <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" :key="article.id" >
                         <Alert show-icon>
                             <h3>{{article.title}}</h3>
                             <Icon :type="article.iconType" slot="icon"></Icon>
-                            <span slot="desc">{{article.subTitle}}</span>
                         </Alert>
                     </a>
                     <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
@@ -87,13 +88,14 @@
                 spanRight : 19,
                 //是否显示文章列表
                 isShowMoreITs : false,
+                //是否显示文章详情
+                showDetailITTech: true,
                 //技术沉淀
                 itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
                     pithinessList:[],
                     article : {
                         articleId : '',
                         title : '',
-                        subTitle:'',
                         userId:'',
                         content : '',
                         isShowEditBtn:false //是否显示编辑按钮
@@ -106,10 +108,8 @@
                 commentContent : '',
                 // IT文章内容
                 ITContent : '',
-                // IT文章标题 大名
+                // IT文章标题
                 ITTitle:'',
-                // IT副标题 小名
-                ITSubTitle :'',
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -120,9 +120,20 @@
             }
         },
         methods: {
+
+            toWriteITArticle(){
+                let editObj = {
+                    articleType:2,
+                };
+
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
+
+                this.$router.push("/OilEditor");
+            },
             //控制展示具体的文章详情
             toITArticle(articleId) {
                 this.isShowMoreITs = false;
+                this.showDetailITTech = true;
                 this.initITTech(articleId);
             },
             /**
@@ -132,6 +143,7 @@
             showMore(flag){
                 this.isShowMoreITs = true;
                 if(flag){
+                    this.showDetailITTech = false;
                     this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 }
 
@@ -170,10 +182,9 @@
                             let _data = data.pithinessList[i];
                             _pithinessList.push({
                                 articleId:_data.articleId,
-                                title:_data.title,
-                                subTitle:_data.subTitle
+                                title:_data.title
                             });
-                            if(i == 5){ //简表只显示6条 ,显示更多 全部显示
+                            if(i == 10){ //简表只显示10条 ,显示更多 全部显示
                                 break;
                             }
                         }
@@ -267,9 +278,7 @@
              */
             toEditITArticle(articleId){
                 let editObj = {
-                    type:1,
                     businessId:articleId,
-                    businessType:0
                 };
 
                 sessionStorage.setItem("editObj",JSON.stringify(editObj));
