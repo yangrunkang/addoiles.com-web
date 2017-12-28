@@ -105,13 +105,12 @@
                 if(userId == null){
                     return;
                 }
+                let queryDto = {
+                    userId:userId,
+                    articleType:2
+                };
 
-                this.axios.get("getArticlesByUserId",{
-                    params:{
-                        userId:userId,
-                        articleType:2
-                    }
-                }).then(function (response) {
+                this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
                         for(let i = 0; i< resp.data.length;i++){

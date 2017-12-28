@@ -102,9 +102,12 @@
                     return;
                 }
 
-                this.axios.get("getExperienceByUserId",{
-                    params:{userId:userId}
-                }).then(function (response) {
+                let queryDto = {
+                    userId:userId,
+                    articleType:0
+                };
+
+                this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
                         for(let i = 0; i< resp.data.length;i++){

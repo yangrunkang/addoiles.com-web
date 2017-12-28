@@ -163,8 +163,13 @@
                 editBtn:false,
                 //是否显示 打开编辑器的图钉(编辑文章时不显示)
                 showOnOffAffix:true,
-                pageNo:0,
-                pageSize:10
+                //页面查询基础Dto
+                queryDto : {
+                    page : {
+                        pageNo: 0,
+                        pageSize: 10
+                    }
+                }
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -353,10 +358,12 @@
             },
             //获取经历
             getExperienceList(){
-                this.axios.post('getExperienceList',{
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
-                }).then(function (response) {
+
+
+                this.queryDto.articleType = 0;
+
+
+                this.axios.post('getExperienceList',this.queryDto).then(function (response) {
                     if(response.data.code == 0){
                         let experienceDtoList = response.data.data; //List<ExperienceDto>
                         if(experienceDtoList.length >= 0){
@@ -384,19 +391,19 @@
                                         content:"本文暂无评论,你的机会来了,快在右边写下你的感想吧"});
                                 }
                                 //经历
-                                let experience = experienceDto.experience;
+                                let article = experienceDto.article;
                                 //当前用户id
                                 let currentUserId = sessionStorage.getItem("userId");
                                 this.experienceDtoList.push(
                                         {
-                                            id:experience.experienceId, //注意这里的id是experienceId
-                                            userName:experience.userName,
-                                            title:experience.title,
-                                            content:experience.content,
-                                            rates:experience.rates,
-                                            createTime:this.addoileUtil.formatUnixTime(experience.createTime),
+                                            id:article.experienceId, //注意这里的id是experienceId
+                                            userName:article.userName,
+                                            title:article.title,
+                                            content:article.content,
+                                            rates:article.rates,
+                                            createTime:this.addoileUtil.formatUnixTime(article.createTime),
                                             commentList:_commentList,
-                                            isShowEditBtn : this.addoileUtil.isCurrentUser(experience.userId,currentUserId)
+                                            isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
                                         });
                             }
                         }
@@ -486,7 +493,7 @@
                 }.bind(this));
             },
             loadMore(){
-                this.pageNo+=this.pageSize;
+                this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.getExperienceList();
             }
 

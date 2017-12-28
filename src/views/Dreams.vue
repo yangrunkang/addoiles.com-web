@@ -100,8 +100,13 @@
                 dreamListCol1 : [], //梦想列表1
                 dreamListCol2 : [], //梦想列表2
                 dreamListCol3 : [], //梦想列表3
-                pageNo:0,
-                pageSize:10
+                //页面查询基础Dto
+                queryDto : {
+                    page : {
+                        pageNo: 0,
+                        pageSize: 10
+                    }
+                }
             }
         },
         mounted() {
@@ -140,10 +145,11 @@
                     return;
                 }
                 //发送至服务器
-                this.axios.post('addDream',{
+                this.axios.post('addMicroContent',{
                     title:dreamTitle,
                     content:dreamContent,
-                    userId:userId
+                    userId:userId,
+                    microType:1
                 }).then(function (res) {
                     let response = res.data;
                     if(response.code == 0 && response.data == 1){
@@ -167,10 +173,11 @@
              * 初始化梦想
              */
             initDreams() {
-                this.axios.post('getDreams',{
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
-                }).then(function (res) {
+
+
+                this.queryDto.microType=1;
+
+                this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
                     if(res.data.code == 0){
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
@@ -202,7 +209,7 @@
              * 加载更多
              */
             loadMore(){
-                this.pageNo+=this.pageSize;
+                this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.initDreams();
             }
         }

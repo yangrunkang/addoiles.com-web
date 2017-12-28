@@ -78,11 +78,12 @@
                     return;
                 }
 
-                this.axios.get("getHotsByUserId",{
-                    params:{
-                        userId:userId
-                    }
-                }).then(function (response) {
+                let queryDto = {
+                    userId:userId,
+                    microType:0
+                };
+
+                this.axios.post("getMicroContentList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
                         for(let i = 0; i< resp.data.length;i++){

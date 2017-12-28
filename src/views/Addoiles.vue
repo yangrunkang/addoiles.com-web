@@ -198,14 +198,25 @@
                 answerContent : [],
                 //问题&答案List
                 questionAnswerList : [],
-                pageNo:0,
-                pageSize:10
+                //页面查询基础Dto
+                queryDto : {
+                    page : {
+                        pageNo: 0,
+                        pageSize: 10
+                    }
+                }
             }
         },
         methods: {
-            //初始化
-            init(){
-                this.axios.get('getLatestHots').then(function (res) {
+            //初始化热门动弹
+            initHots(){
+
+
+                this.queryDto.microType = 0;
+                this.queryDto.pageNo = 0;
+                this.queryDto.pageSize = 10;
+
+                this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
                     if(res.data.code == 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){
@@ -239,10 +250,11 @@
                     this.$Message.warning("动弹内容字数不能多余50个",3);
                     return;
                 }
-                this.axios.post('addHots',{
+                this.axios.post('addMicroContent',{
                     title:hotTitle,
                     content:hotContent,
-                    userId:userId
+                    userId:userId,
+                    microType:0
                 }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data > 0){
                         this.$Notice.info({
@@ -357,11 +369,12 @@
                 }
 
             },
+            //初始化问题区域
             initQuestionAnswer(){
-                this.axios.post("getQuestionAnswerList",{
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
-                }).then(function (resp) {
+
+                let queryDto = this.$store.getters.getQueryDto;
+
+                this.axios.post("getQuestionAnswerList",this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
                         let questionAnswerDtoList = resp.data.data;
                         for(let i = 0;i < questionAnswerDtoList.length; i++){
@@ -398,12 +411,12 @@
 
             },
             loadMore(){
-                this.pageNo+=this.pageSize;
+                this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.initQuestionAnswer();
             }
         },
         mounted() {
-            this.init();
+            this.initHots();
             this.initQuestionAnswer();
         }
     }

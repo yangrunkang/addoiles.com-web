@@ -74,11 +74,11 @@
                     return;
                 }
 
-                this.axios.get("getQuestionsByUserId",{
-                    params:{
-                        userId:userId
-                    }
-                }).then(function (response) {
+                let queryDto = {
+                    userId:userId
+                };
+
+                this.axios.post("getQuestionsByUserId",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
                         for(let i = 0; i< resp.data.length;i++){

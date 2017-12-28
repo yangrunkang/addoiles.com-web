@@ -155,8 +155,13 @@
                 isShowAddArticleBtn:true,
                 //是否显示[编辑完成]按钮
                 isShowEditBtn:false,
-                pageNo:0,
-                pageSize:10
+                //页面查询基础Dto
+                queryDto : {
+                    page : {
+                        pageNo: 0,
+                        pageSize: 10
+                    }
+                }
             }
         },
         methods: {
@@ -178,11 +183,10 @@
                 if(flag){
                     this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 }
+
+                this.queryDto.articleType = 2;
                 //展示文章列表
-                this.axios.post('showMoreITTechArticles',{
-                    pageNo:this.pageNo,
-                    pageSize:this.pageSize
-                }).then(function (resp) {
+                this.axios.post('showMoreITTechArticles',this.queryDto).then(function (resp) {
                     if (resp.data.code == 0) {
                         let dataArray = resp.data.data;
                         for(let i = 0; i < dataArray.length; i++){
@@ -202,8 +206,13 @@
             },
             //文章显示
             initITTech(articleId){
-                let url = articleId == null ? "getITTechArticleList" : "getITTechArticleList?articleId=" + articleId;
-                this.axios.get(url).then(function (resp) {
+
+
+                this.queryDto.articleType=2;
+                 this.queryDto.businessId=articleId;
+
+
+                this.axios.post('getITArticleList',this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
                         let data = resp.data.data;
                         //右侧列表简表
@@ -472,8 +481,8 @@
                 }.bind(this));
             },
             loadMore(){
-                this.pageNo+=this.pageSize;
-                this.showMore(false);
+                this.queryDto.page.pageNo += this.queryDto.page.pageSize;
+                this.showMore(true);
             }
         },
         computed: {
