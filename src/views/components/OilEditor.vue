@@ -5,15 +5,16 @@
     <div>
         <!--未登录时展示-->
         <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
-            请登录后编辑
+            您还未登录
         </Alert>
         <!--编辑器-->
         <Card class="edit-card">
             <p slot="title" style="height: auto;font-size: 18px">
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;"></i-input>
                 <span style="float: right;">
-                        <Button type="info" shape="circle" v-show="editBtn" @click="editExperience()">编辑完成</Button>
-                        <Button type="info" shape="circle" v-show="shareBtn" @click="saveExperience('normal')">发表</Button>
+                        <Button type="info" shape="circle" v-show="editBtn" @click="editOk()">编辑完成</Button>
+                        <Button type="info" shape="circle" v-show="shareBtn" @click="saveArticle('normal')">发表</Button>
+                        <Button type="info" shape="circle" v-show="shareBtn" @click="saveArticle('draft')">为草稿发表</Button>
                     <!--<Button type="warning" shape="circle" v-show="shareBtn" @click="saveExperience('draft')">保存为草稿</Button>-->
                         <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                     </span>
@@ -48,7 +49,7 @@
     </div>
 </template>
 <script>
-    //编辑器: 统一发表内容编辑内容
+    //编辑器: 统一发表/编辑内容
 
     //安装vue-quill-editor富文本编辑器
     import Vue from 'vue';
@@ -80,6 +81,10 @@
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
+            //编辑完成
+            editOk(){
+
+            },
             clearContent(showNotice){
                 if(!showNotice) return;
                 this.$Notice.success({
@@ -96,11 +101,44 @@
         },
         mounted() {
             /*
-                {
-                    from : 来源(ITArticle Experience)
-                    editId : id(to db to get content)
-                }
+            编辑完回到上一个页面 $router.go(-1)
+
+            目前是这种结构:
+                let editObject = {
+                    type: 0-发表 1-编辑
+                    businessId:业务id,eg.IT文章id,经历分享,
+                    // businessId唯一,不需要Type//businessType:businessId对应的businessType,eg,IT文章id对应的IT文章Type是2,
+                };
             */
+
+            let editObj = JSON.parse(sessionStorage.getItem("editObj"));
+            //sessionStorage.removeItem("editObj");
+
+            if(editObj.type == 0){
+                this.title = '';
+                this.content = '';
+
+                return null;
+            }
+
+            if(editObj.type == 1){
+
+               let queryDto = {
+                   businessId:editObj.businessId
+               };
+
+               this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
+                   let db_return_data = resp.data.data;
+                   if(resp.data.code == 0 && db_return_data != null){
+                       console.log(db_return_data);
+                       this.title = db_return_data.title;
+                       this.content = db_return_data.content;
+                   }
+               }.bind(this));
+
+
+               return null;
+            }
         }
     }
 

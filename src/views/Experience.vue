@@ -31,38 +31,6 @@
 <template>
     <div>
 
-        <!--显示编辑器图钉-->
-        <Affix :offset-top="10" v-show="showOnOffAffix">
-            <span class="switch-affix"><h2 style="color: white">显示编辑器&nbsp;<i-switch size='large' @on-change="changeSwitch"><span slot='open'>显示</span><span slot='close'>关闭</span></i-switch></h2></span>
-        </Affix>
-
-        <!--未登录时展示-->
-        <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
-            请登录后分享经历
-        </Alert>
-        <!--编辑器-->
-        <div class="editorDiv" v-show="isShowEditor">
-            <Card class="edit-card">
-                <p slot="title" style="height: auto;font-size: 18px">分享你的经历,不论是否精彩&nbsp;&nbsp;
-                    <Poptip trigger="focus" title="要走心❤" content="不要走肾的">
-                        <i-input v-model="experienceTitle" placeholder="给你的经历起个名字吧" size="large" style="width:605px;"></i-input>
-                    </Poptip>
-                    <span style="float: right;">
-                        <Button type="info" shape="circle" v-show="editBtn" @click="editExperience()">编辑完成</Button>
-                        <Button type="info" shape="circle" v-show="shareBtn" @click="saveExperience('normal')">发表</Button>
-                        <!--<Button type="warning" shape="circle" v-show="shareBtn" @click="saveExperience('draft')">保存为草稿</Button>-->
-                        <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
-                    </span>
-                </p>
-                <!--https://surmon-china.github.io/vue-quill-editor -->
-                <quill-editor ref="myTextEditor"
-                              v-model="content"
-                              :options="editorOption"
-                              class="quill-editor-style">
-                </quill-editor>
-            </Card>
-        </div>
-
         <!--页面主体内容-->
         <div>
             <Alert show-icon>
@@ -77,7 +45,7 @@
                     <Card :bordered="false" style="margin-bottom: 5px">
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
                             {{experience.title}}
-                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="toEditExperience(experience.id,experience.title,experience.content)">编辑</Button>
+                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="toEditExperience(experience.id)">编辑</Button>
                         </p>
                         <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
@@ -102,35 +70,12 @@
             </Row>
             <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
         </div>
-        <!--写好的经历确认清空吗-->
-        <Modal v-model="confirmModal">
-            <p slot="header" style="color:#f60;text-align:center">
-                <Icon type="information-circled"></Icon>
-                <span>确定要清空吗?</span>
-            </p>
-            <div style="text-align:center;font-size: 18px">
-                <p>如果你写了很多内容,慎重考虑一下.</p>
-                <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
-            </div>
-<!--            <div slot="footer">
-                <Button type="info" size="large" long @click="saveExperience('normal')">立即分享</Button>
-            </div>-->
-<!--            <div slot="footer" style="margin: 4px auto;">
-                <Button type="warning" size="large" long @click="saveExperience('draft')">保存为草稿</Button>
-            </div>-->
-            <div slot="footer" style="margin: 4px auto;">
-                <Button type="error" size="large" long @click="clearContent(true)">坚决删除</Button>
-            </div>
-        </Modal>
     </div>
 </template>
 <script>
 
     import Vue from 'vue';
     import Cookies from 'js-cookie';
-    //安装vue-quill-editor富文本编辑器
-    import VueQuillEditor from 'vue-quill-editor';
-    Vue.use(VueQuillEditor);
 
     export default {
         data () {
@@ -141,28 +86,10 @@
                 content : '',
                 //评论内容
                 commentContent:[],
-                //编辑器配置
-                editorOption: {
-                    // something to config
-                    placeholder: '不放弃,不抛弃,追梦之路,时常伴随着孤单\n分享自己不一样的经历,同大家一起加油共勉\n如果可以,请在这里书写您独一无二的人生经历'
-
-                },
-                //默认不显示编辑器
-                isShowEditor : false,
-                //确认清除模态框显示与隐藏
-                confirmModal : false,
                 //经历 + 评论
                 experienceDtoList:[],
                 //列表页是否显示编辑按钮
                 isShowEditBtn : false,
-                //未登录分享经历时提示
-                showNotLoginTips: false,
-                //默认显示分享和保存为草稿按钮,编辑时不显示
-                shareBtn: true,
-                //默认编辑按钮不显示
-                editBtn:false,
-                //是否显示 打开编辑器的图钉(编辑文章时不显示)
-                showOnOffAffix:true,
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -174,115 +101,6 @@
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
-            changeSwitch(status){
-                //只要是点击了开启编辑器的按钮
-                this.editBtn = false;
-                this.shareBtn = true;
-
-                if(status){
-                    //清空内容
-                    this.clearExperienceTitleContent();
-
-                    this.isShowEditor = true;
-                    let userId = sessionStorage.getItem("userId");
-                    if(!this.addoileUtil.validateReq(userId)){
-                        this.showNotLoginTips = true;
-                    }
-                }else if(!status){
-                    this.isShowEditor = false;
-                    this.showNotLoginTips = false;
-                }
-            },
-            //删除内容
-            clearContent(showNotice){
-                if(!this.addoileUtil.validateReq(this.experienceTitle) && !this.addoileUtil.validateReq(this.content)){
-                    //关闭模态框
-                    this.confirmModal = false;
-                    this.$Notice.info({
-                        desc: '您还没写任何东西呢(=@__@=)'
-                    });
-                    return;
-                }
-                //清空标题和内容
-                this.clearExperienceTitleContent();
-                //关闭模态框
-                this.confirmModal = false;
-                //
-                if(!showNotice) return;
-                this.$Notice.success({
-                    desc: '遵照您的旨意,已经把内容清空'
-                });
-            },
-            clearExperienceTitleContent(){
-                //清空内容
-                this.experienceTitle = '';
-                this.content = '';
-            },
-            saveExperience(operation){
-
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
-                // 请求对象
-                let deleteStatus = 0;
-                if(operation == 'normal'){
-                    deleteStatus = 0;
-                }else if(operation == 'draft'){
-                    deleteStatus = 2;
-                }else{
-                    this.$Notice.error({desc: '不好意思,程序员失误了'});
-                }
-                //关闭模态框
-                this.confirmModal = false;
-
-                //数据校验
-                let experienceTitle = this.experienceTitle;
-                let experienceContent = this.content;
-                if(!this.addoileUtil.validateReq(experienceTitle) || !this.addoileUtil.validateReq(experienceContent)){
-                    this.$Notice.warning({
-                        desc: '经历标题或内容为空'
-                    });
-                    return;
-                }
-
-                if(experienceTitle.length > 50){
-                    this.$Message.warning("经历标题字数不能多余50个",3);
-                    return;
-                }
-
-                //调用服务端接口
-                this.axios.post("addExperience",{
-                    userId,userId,
-                    title : experienceTitle,
-                    content : experienceContent,
-                    deleteStatus : deleteStatus
-                }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
-                        if(operation == 'normal'){
-                            this.$Notice.success({
-                                desc: '经历已经分享,2s后刷新本页面'
-                            });
-                        }else if(operation == 'draft'){
-                            this.$Notice.info({
-                                desc: '经历已经保存为草稿'
-                            });
-                        }
-                        setTimeout(function () {
-                            this.$router.go(0);
-                        }.bind(this), 2000);
-                        //清空内容
-                        this.clearContent(false);
-                    }else if(resp.data.data == 1002){
-                        this.$Notice.error({
-                            desc: '文本内容过长,请精简,或者减少部分图片内容'
-                        });
-                    }
-                }.bind(this));
-            },
             /*去评论*/
             toComment(experienceId,index){
 
@@ -359,9 +177,7 @@
             //获取经历
             getExperienceList(){
 
-
                 this.queryDto.articleType = 0;
-
 
                 this.axios.post('getExperienceList',this.queryDto).then(function (response) {
                     if(response.data.code == 0){
@@ -396,7 +212,7 @@
                                 let currentUserId = sessionStorage.getItem("userId");
                                 this.experienceDtoList.push(
                                         {
-                                            id:article.experienceId, //注意这里的id是experienceId
+                                            id:article.articleId, //注意这里的id是articleId
                                             userName:article.userName,
                                             title:article.title,
                                             content:article.content,
@@ -413,125 +229,30 @@
             /**
              * 去编辑
              * @param experienceId 经历id
-             * @param experienceTitle 经历标题
-             * @param experienceContent 经历内容
              */
-            toEditExperience(experienceId, experienceTitle, experienceContent){
-                // this.$router.push("/Edit");
-                this.isShowEditor = true;
-                this.shareBtn = false;
-                this.editBtn = true;
-                this.showOnOffAffix = false;
+            toEditExperience(experienceId){
 
-                //承载编辑器的Card下调20px
-                document.getElementsByClassName("edit-card")[0].setAttribute('style','height: 1047px;margin-top:20px');
-                //回到顶部
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
+                let editObj = {
+                    type:1,
+                    businessId:experienceId,
+                    businessType:0
+                };
 
-                this.experienceTitle = experienceTitle;
-                this.content = experienceContent;
-                //
-                Cookies.set('editExperienceId',experienceId);
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
+
+                this.$router.push("/OilEditor");
+
             },
-            /**
-             * 编辑完成
-             */
-            editExperience(){
-                this.$store.commit('validateLogin',this);
 
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
-                let editExperienceId = Cookies.get('editExperienceId');
-                if(!this.addoileUtil.validateReq(editExperienceId)){
-                    return;
-                }
-                
-                //关闭模态框
-                this.confirmModal = false;
-
-                //数据校验
-                let experienceTitle = this.experienceTitle;
-                let experienceContent = this.content;
-                if(!this.addoileUtil.validateReq(experienceTitle) || !this.addoileUtil.validateReq(experienceContent)){
-                    this.$Notice.warning({
-                        desc: '经历标题或内容为空'
-                    });
-                    return;
-                }
-
-                if(experienceTitle.length > 50){
-                    this.$Message.warning("经历标题字数不能多余50个",3);
-                    return;
-                }
-
-                //调用服务端接口
-                this.axios.post("editExperience",{
-                    experienceId:editExperienceId,
-                    title : experienceTitle,
-                    content : experienceContent
-                }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
-                        this.$Notice.success({
-                            desc: '编辑完成,2s后刷新本页面'
-                        });
-                        setTimeout(function () {
-                            this.$router.go(0);
-                        }.bind(this), 2000);
-                        //清空内容
-                        this.clearContent(false); // TODO 其实刷新完了,就自动清除了
-                        //清空Cookies
-                        Cookies.remove('editExperienceId');
-                    }else if(resp.data.data == 1002){
-                        this.$Notice.error({
-                            desc: '文本内容过长,请精简,或者减少部分图片内容'
-                        });
-                    }
-                }.bind(this));
-            },
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.getExperienceList();
             }
 
         },
-        // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，
-        // 实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
-        computed: {
-            editor() {
-                return this.$refs.myTextEditor.quillEditor
-            }
-        },
+
         mounted() {
             this.getExperienceList();
-
-            //用户中心过来
-            let editExperienceId = Cookies.get('editExperienceIdFromUserCenter');
-            if(null != editExperienceId){
-
-                this.isShowEditor = true;
-                this.showOnOffAffix = false;
-                this.editBtn = true;
-                this.shareBtn = false;
-
-
-                this.axios.get('getExperienceByExperienceId',{
-                    params:{experienceId:editExperienceId}
-                }).then(function (response) {
-                    if(response.data.code == 0){
-                        let experience = response.data.data;
-                        this.experienceTitle = experience.title;
-                        this.content = experience.content;
-                        //移除从用户中心来的id
-                        Cookies.remove("editExperienceIdFromUserCenter");
-                        //存储编辑id
-                        Cookies.set('editExperienceId',experience.experienceId);
-                    }
-                }.bind(this));
-            }
         }
     }
 

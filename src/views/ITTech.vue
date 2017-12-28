@@ -34,57 +34,26 @@
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
             <i-col :span="spanRight">
-
-                <!--未登录时展示-->
-                <Alert type="error" style="width: 100%;margin: 9px auto;" v-show="showNotLoginTips">
-                    登录后才可以分享技术哦
-                </Alert>
-                <!--文章编辑器-->
-                <div style="height: fit-content;width: fit-content;" v-show="isShowEditor">
-                    <Card style="height: 1087px;width: fit-content;">
-                        <p slot="title" style="height: auto;font-size: 18px">
-                            大名:
-                            <Input v-model="ITTitle" title=""  size="large" type="text"  style="width: 75%"/>
-                            <span style="float: right">
-                                <Button type="info" shape="circle" @click="addITArticle" v-show="isShowAddArticleBtn">发表</Button>
-                                <Button type="info" shape="circle" @click="editITArticle" v-show="isShowEditBtn">编辑完成</Button>
-                                <!--<Button type="error" shape="circle" >清空内容</Button></p>-->
-                                <!--<Button type="warning" shape="circle" >保存草稿</Button>-->
-                            </span>
-                        <p slot="title" style="height: auto;font-size: 13px;margin-top: 6px">
-                            小名:
-                            <Input v-model="ITSubTitle" title=""  size="small" type="text"  style="width: 70%"/>
-                        </p>
-                        <!--https://surmon-china.github.io/vue-quill-editor -->
-                        <quill-editor ref="myTextEditor"
-                                      v-model="ITContent"
-                                      :options="editorOption"
-                                      style="height: 888px;width: fit-content;">
-                        </quill-editor>
-                    </Card>
-                </div>
                 <!--文章详情-->
-                <div style="width: 100%" v-show="isShowDetail">
-                    <Card style="background: transparent;border: transparent;border-radius: 30px">
-                        <div>
-                            <Card>
-                                <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
-                                    {{itTechDto.article.title}}
-                                    <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId,itTechDto.article.title,itTechDto.article.subTitle,itTechDto.article.content)">编辑</Button>
-                                </p>
-                                <p v-html="itTechDto.article.content" class="auto-break-line"></p>
-                            </Card>
-                            <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
-                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
-                            </Input>
-                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
-                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
-                                <Tag color="green">{{ comment.userName }}</Tag>
-                                {{ comment.content }}
-                            </Alert>
-                        </div>
-                    </Card>
-                </div>
+                <Card style="background: transparent;border: transparent;border-radius: 30px">
+                    <div>
+                        <Card>
+                            <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
+                                {{itTechDto.article.title}}
+                                <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
+                            </p>
+                            <p v-html="itTechDto.article.content" class="auto-break-line"></p>
+                        </Card>
+                        <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
+                            <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
+                        </Input>
+                        <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
+                            <Tag type="border" color="green">{{ comment.createTime }}</Tag>
+                            <Tag color="green">{{ comment.userName }}</Tag>
+                            {{ comment.content }}
+                        </Alert>
+                    </div>
+                </Card>
                 <!--点击展示更多,显示此区域-->
                 <div v-show="isShowMoreITs" style="width: 100%">
                     <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" :key="article.id" >
@@ -116,12 +85,8 @@
                 spanLeft : 5,
                 //右边区域占 19/24
                 spanRight : 19,
-                //是否显示具体的文章内容
-                isShowDetail : true,
                 //是否显示文章列表
                 isShowMoreITs : false,
-                //是否显示编辑器
-                isShowEditor : false,
                 //技术沉淀
                 itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
                     pithinessList:[],
@@ -139,22 +104,12 @@
                 moreITArticleList : [],
                 //评论内容
                 commentContent : '',
-                //编辑器配置
-                editorOption: {
-                    placeholder: '是时候展示真正的技术了\n自己脑补背景音乐'
-                },
                 // IT文章内容
                 ITContent : '',
                 // IT文章标题 大名
                 ITTitle:'',
                 // IT副标题 小名
                 ITSubTitle :'',
-                //未登录显示提示
-                showNotLoginTips:false,
-                //是否显示发表文章按钮
-                isShowAddArticleBtn:true,
-                //是否显示[编辑完成]按钮
-                isShowEditBtn:false,
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -167,9 +122,7 @@
         methods: {
             //控制展示具体的文章详情
             toITArticle(articleId) {
-                this.isShowDetail = true;
                 this.isShowMoreITs = false;
-                this.isShowEditor = false;
                 this.initITTech(articleId);
             },
             /**
@@ -177,9 +130,7 @@
              * flag ：true 点击右侧[查看更多]进入 false 点击[加载更多]进入
              */
             showMore(flag){
-                this.isShowDetail = false;
                 this.isShowMoreITs = true;
-                this.isShowEditor = false;
                 if(flag){
                     this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 }
@@ -207,10 +158,8 @@
             //文章显示
             initITTech(articleId){
 
-
                 this.queryDto.articleType=2;
-                 this.queryDto.businessId=articleId;
-
+                this.queryDto.businessId=articleId;
 
                 this.axios.post('getITArticleList',this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
@@ -309,86 +258,6 @@
                     }
                 }.bind(this));
             },
-            //写IT文章
-            writeITArticle(){
-
-                this.clearContent();
-                this.isShowAddArticleBtn = true;
-                this.isShowEditBtn = false;
-
-                this.isShowEditor = true;
-                this.isShowDetail = false;
-                this.isShowMoreITs = false;
-
-                let userId = sessionStorage.getItem("userId");
-                if(!this.addoileUtil.validateReq(userId)){
-                  this.showNotLoginTips = true;
-                }
-
-            },
-            //发表IT文章
-            addITArticle(){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
-                let itTitle = this.ITTitle;
-                let itSubTitle = this.ITSubTitle;
-                let itContent = this.ITContent;
-
-                if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
-                        || !this.addoileUtil.validateReq(itSubTitle)){
-                    this.$Notice.warning({
-                        desc: 'IT技术文章的标题、副标题或者内容为空'
-                    });
-                    return;
-                }
-
-                if(itTitle.length > 50){
-                    this.$Message.warning("IT文章标题字数不能多余50个",3);
-                    return;
-                }
-
-
-                if(itSubTitle.length > 70){
-                    this.$Message.warning("IT文章副标题不能多余70个",3);
-                    return;
-                }
-
-
-                //
-                this.axios.post("addArticle",{
-                    userId:userId,
-                    title : itTitle,
-                    subTitle : itSubTitle,
-                    content : itContent,
-                    articleType : 2
-                }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
-                        this.$Notice.success({
-                            desc: 'IT技术文章分享成功,2s后刷新本页面'
-                        });
-                        setTimeout(function () {
-                            this.$router.go(0);
-                        }.bind(this), 2000);
-                        this.clearContent();
-                    }else if(resp.data.data == 1002){
-                        this.$Notice.error({
-                            desc: '文本内容过长,请精简,或者减少部分图片内容'
-                        });
-                    }
-                }.bind(this));
-
-            },
-            //清空内容
-            clearContent(){
-                this.ITContent = '';
-                this.ITTitle = '';
-                this.ITSubTitle ='';
-            },
             /**
              * 编辑IT文章
              * @param articleId 文章id
@@ -396,127 +265,27 @@
              * @param subTitle 小名
              * @param content 内容
              */
-            toEditITArticle(articleId,title, subTitle,content){
-                if(!this.addoileUtil.validateReq(articleId)){
-                    return;
-                }
-                this.ITTitle = title;
-                this.ITSubTitle = subTitle;
-                this.ITContent = content;
+            toEditITArticle(articleId){
+                let editObj = {
+                    type:1,
+                    businessId:articleId,
+                    businessType:0
+                };
 
-                Cookies.set('articleId',articleId);
+                sessionStorage.setItem("editObj",JSON.stringify(editObj));
 
-                //是否显示编辑器
-                this.isShowEditor = true;
-                //是否显示文章列表
-                this.isShowMoreITs = false;
-                //是否显示发表文章按钮
-                this.isShowAddArticleBtn = false;
-                //是否显示编辑完成按钮
-                this.isShowEditBtn = true;
+                this.$router.push("/OilEditor");
 
             },
-            /**
-             * 编辑文章
-             */
-            editITArticle(){
-                this.$store.commit('validateLogin',this);
 
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
-                let itTitle = this.ITTitle;
-                let itSubTitle = this.ITSubTitle;
-                let itContent = this.ITContent;
-                let articleId = Cookies.get('articleId');
-
-                if(null == articleId){
-                    return;
-                }
-
-                if(!this.addoileUtil.validateReq(itTitle) || !this.addoileUtil.validateReq(itContent)
-                    || !this.addoileUtil.validateReq(itSubTitle)){
-                    this.$Notice.warning({
-                        desc: 'IT技术文章的标题、副标题或者内容为空'
-                    });
-                    return;
-                }
-
-                if(itTitle.length > 50){
-                    this.$Message.warning("IT文章标题字数不能多余50个",3);
-                    return;
-                }
-
-
-                if(itSubTitle.length > 70){
-                    this.$Message.warning("IT文章副标题不能多余70个",3);
-                    return;
-                }
-
-
-                //
-                this.axios.post("editArticle",{
-                    articleId:articleId,
-                    title : itTitle,
-                    subTitle : itSubTitle,
-                    content : itContent,
-                    articleType : 2
-                }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
-                        this.$Notice.success({
-                            desc: 'IT技术编辑成功,2s后刷新本页面'
-                        });
-                        setTimeout(function () {
-                            this.$router.go(0);
-                        }.bind(this), 2000);
-                        this.clearContent();
-                        Cookies.remove('articleId');
-                    }else if(resp.data.data == 1002){
-                        this.$Notice.error({
-                            desc: '文本内容过长,请精简,或者减少部分图片内容'
-                        });
-                    }
-                }.bind(this));
-            },
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.showMore(true);
             }
         },
-        computed: {
-            editor() {
-                return this.$refs.myTextEditor.quillEditor
-            }
-        },
         mounted () {
             //初始化文章列表 和 显示第一篇文章详情内容
             this.initITTech(null);
-
-            //用户中心过来的
-            let editArticleId = Cookies.get("editArticleIdFromUserCenter");
-            if(null != editArticleId){
-
-                this.isShowEditor = true;
-                this.isShowDetail = false;
-                this.isShowEditBtn = true;
-                this.isShowAddArticleBtn = false;
-
-                this.axios.get('getArticlesByArticleId',{
-                    params:{articleId:editArticleId}
-                }).then(function (response) {
-                    if(response.data.code == 0){
-                        let article = response.data.data;
-                        this.ITTitle = article.title;
-                        this.ITSubTitle = article.subTitle;
-                        this.ITContent = article.content;
-                        //从用户中心过来的id
-                        Cookies.remove("editArticleIdFromUserCenter");
-                        Cookies.set("articleId",article.articleId);
-                    }
-                }.bind(this));
-            }
         }
     }
 </script>
