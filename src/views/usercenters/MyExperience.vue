@@ -88,8 +88,8 @@
                     content:'确定删除吗?',
                     okText:'确认',
                     onOk(){
-                        _this.axios.get("deleteByExperienceId",{
-                            params:{experienceId:experienceId}
+                        _this.axios.post("delete",{
+                            experienceId:experienceId
                         }).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){

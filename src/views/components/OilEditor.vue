@@ -13,9 +13,9 @@
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
                 <span style="float: right;">
                     <!--如果是草稿文章,点击编辑完成应该变成正正常文章;编辑完成按钮显示时,保存为草稿也应该显示;如何保证操作是我想要的？-->
-                    <Button type="success" shape="circle" v-show="editBtn" @click="saveArticle('editArticle',deleteStatus)">编辑完成</Button>
-                    <Button type="info" shape="circle" v-show="shareBtn" @click="saveArticle('addArticle',0)">发表</Button>
-                    <Button type="warning" shape="circle" v-show="shareBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',deleteStatus)">编辑完成</Button>
+                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">发表</Button>
+                    <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
             </p>
@@ -83,10 +83,12 @@
                 confirmModal : false,
                 //未登录分享经历时提示
                 showNotLoginTips: false,
-                //默认显示分享和保存为草稿按钮,编辑时不显示
-                shareBtn: true,
-                //默认编辑按钮不显示
-                editBtn:false,
+                //发表按钮
+                saveBtn: true,
+                //编辑完成
+                editDownBtn:false,
+                //保存为草稿按钮
+                draftBtn:true
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -135,6 +137,10 @@
 
                 console.log(article);
 
+                //保存为草稿,说明之前已经有了,改为编辑
+                // if(deleteStatus === 2){
+                //     operation = 'editArticle';
+                // }
                 //调用服务端接口
                 this.axios.post(operation,article).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data == 1){
@@ -186,7 +192,8 @@
 
                     //发表
                     if(editObj.businessId == null){
-                        this.editBtn = false;
+                        this.editDownBtn = false;
+
                         this.clearContent();
                         this.articleType = editObj.articleType;
                         this.deleteStatus = 0; //默认新增,状态为正常
@@ -196,9 +203,9 @@
                     //编辑
                     if(editObj.businessId != null){
                         this.businessId = editObj.businessId;
-                        this.editBtn = true;
-                        this.shareBtn = false;
-
+                        this.editDownBtn = false;
+                        this.saveBtn = true;
+                        this.draftBtn = false;
 
                         let queryDto = {
                             businessId:editObj.businessId

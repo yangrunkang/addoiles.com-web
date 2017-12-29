@@ -53,14 +53,18 @@
              */
             remove(tableIndex){
                 let dreamId = this.dreamList[tableIndex].dreamId;
+                console.log(dreamId);
                 let _this = this;
                 let config = {
                     content:'确定删除吗?',
                     okText:'确认',
                     onOk(){
-                        _this.axios.get("deleteByDreamId",{
-                            params:{dreamId:dreamId}
-                        }).then(function (response) {
+                        let queryDto = {
+                            businessId:dreamId
+                        };
+                        _this.axios.post("deleteMicroContent",
+                            queryDto
+                        ).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){
                                 _this.dreamList.splice(tableIndex,1);
@@ -96,7 +100,7 @@
                                 content:_dream.content,
                                 createTime:this.addoileUtil.formatUnixTime(_dream.createTime),
                                 userId:_dream.userid,
-                                dreamId:_dream.dreamId
+                                dreamId:_dream.microId
                             });
                         }
                     }
