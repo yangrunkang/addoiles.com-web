@@ -33,7 +33,7 @@
                 <span>确定要清空吗?</span>
             </p>
             <div style="text-align:center;font-size: 18px">
-                <p>如果你写了很多内容,慎重考虑一下.</p>
+                <p>如果您写了很多内容,慎重考虑一下.</p>
                 <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
             </div>
 <!--            <div slot="footer">
@@ -159,9 +159,11 @@
 
             },
             confirmClearContent(showNotice){
+
                 if(!showNotice) return;
 
                 this.clearContent();
+
                 this.$Notice.success({
                     desc: '遵照您的旨意,已经把内容清空'
                 });
