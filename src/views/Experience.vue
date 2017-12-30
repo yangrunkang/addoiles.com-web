@@ -25,49 +25,53 @@
         padding:20px
     }
 
+    /*分享按钮*/
+    .share-btn {
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: xx-large;
+        text-align: center;
+    }
 </style>
 <template>
     <div>
-        <!--页面主体内容-->
-        <div>
-            <Button type="success" size="large" long style="width: 100%;" @click="toShareExperience()">我要分享</Button>
-            <Alert show-icon>
-                已分享的经历列表
-                <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
-                <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
-            </Alert>
-            <!--经历-->
-            <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="(experience,index) in experienceDtoList" :key="experience.id">
-                <Col span="19">
-                    <!--具体的经历-->
-                    <Card :bordered="false" style="margin-bottom: 5px">
-                        <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
-                            {{experience.title}}
-                            <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="toEditExperience(experience.id)">编辑</Button>
-                        </p>
-                        <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
-                    </Card>
-                    <!--评论-->
-                    <h2>评论</h2>
-                    <Alert type="success" v-for="comment in experience.commentList" :key="comment.id" style="margin: 3px auto;">
-                        <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
-                        {{comment.content}}
-                    </Alert>
-                </Col>
-                <Col span="5">
-                    <h2>感想+</h2>
-                    <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent[index]" />
-                    <Button type="success" long style="margin-top: 5px" @click="toComment(experience.id,index)">评价</Button><!--experience.id是experienceId-->
-                    <Alert style="margin: 3px auto;">
-                        <strong>评分:</strong>
-                        <Rate v-model="experience.rates" @on-change="toRates(experience.id,$event)"></Rate>
-                    </Alert>
-                    <Tag type="border"  color="blue"><strong>作者:</strong>{{experience.userName}}</Tag>
-                    <Tag type="border"  color="green"><strong>发布时间:</strong>{{experience.createTime}}</Tag>
-                </Col>
-            </Row>
-            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
-        </div>
+        <Button class="share-btn" type="info" size="large" @click="toShareExperience()">我要分享</Button>
+        <Alert show-icon>
+            已分享的经历列表
+            <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
+            <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
+        </Alert>
+        <!--经历-->
+        <Row class="experience-content" :gutter="16" style="margin-bottom: 10px" v-for="(experience,index) in experienceDtoList" :key="experience.id">
+            <i-col span="19">
+                <!--具体的经历-->
+                <Card :bordered="false" style="margin-bottom: 5px">
+                    <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
+                        {{experience.title}}
+                        <Button type="info" shape="circle" style="float: right;" v-show="experience.isShowEditBtn" @click="toEditExperience(experience.id)">编辑</Button>
+                    </p>
+                    <p v-html="experience.content" class="auto-break-line"></p> <!--显示html样式文本-->
+                </Card>
+                <!--评论-->
+                <h2>评论</h2>
+                <Alert type="success" v-for="comment in experience.commentList" :key="comment.id" style="margin: 3px auto;">
+                    <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
+                    {{comment.content}}
+                </Alert>
+            </i-col>
+            <i-col span="5">
+                <h2>感想+</h2>
+                <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent[index]" />
+                <Button type="success" long style="margin-top: 5px" @click="toComment(experience.id,index)">评价</Button><!--experience.id是experienceId-->
+                <Alert style="margin: 3px auto;">
+                    <strong>评分:</strong>
+                    <Rate v-model="experience.rates" @on-change="toRates(experience.id,$event)"></Rate>
+                </Alert>
+                <Tag type="border"  color="blue"><strong>作者:</strong>{{experience.userName}}</Tag>
+                <Tag type="border"  color="green"><strong>发布时间:</strong>{{experience.createTime}}</Tag>
+            </i-col>
+        </Row>
+        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
     </div>
 </template>
 <script>
