@@ -44,6 +44,10 @@
                                 </p>
                                 <p v-html="itTechDto.article.content" class="auto-break-line"></p>
                             </Card>
+                                <p>
+                                    <Tag type="dot" color="green">{{itTechDto.article.userName}}</Tag>
+                                    <Tag type="dot" color="green">{{itTechDto.article.createTime}}</Tag>
+                                </p>
                             <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
                             <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
                             </Input>
@@ -194,9 +198,9 @@
                             let _data = data.articleCommentList[i];
                             _articleCommentList.push({
                                 userName : _data.userName,
-//                                createTime:this.moment(_data.createTime).format('YYYY-MM-DD HH:mm:ss'),
                                 createTime:this.addoileUtil.formatUnixTime(_data.createTime),
-                                content:_data.content});
+                                content:_data.content
+                            });
                         }
                         //具体文章
                         let _article = data.article;
@@ -209,8 +213,9 @@
                                 articleId : _article.articleId,
                                 userId:_article.userId,
                                 title : _article.title,
-                                subTitle:_article.subTitle,
                                 content : _article.content,
+                                userName : _article.userName,
+                                createTime:this.addoileUtil.formatUnixTime(_article.createTime),
                                 isShowEditBtn:this.addoileUtil.isCurrentUser(_article.userId,currentUserId)
                             },
                             articleCommentList : _articleCommentList
