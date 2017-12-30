@@ -25,15 +25,12 @@
         padding:20px
     }
 
-
-
 </style>
 <template>
     <div>
-
         <!--页面主体内容-->
         <div>
-            <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="toShareExperience()">分享</Button>
+            <Button type="success" size="large" long style="width: 100%;" @click="toShareExperience()">我要分享</Button>
             <Alert show-icon>
                 已分享的经历列表
                 <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
@@ -177,10 +174,13 @@
                     title : '感谢您的评分',
                     desc : '系统将根据平局值显示结果'
                 });
-                this.axios.post("updateRates",{
-                    experienceId:experienceId,
-                    rate:rate
-                }).then(function (response) {
+
+                let rateDto = {
+                  businessId:experienceId,
+                  rate:rate
+                };
+
+                this.axios.post("updateRates",rateDto).then(function (response) {
                     //nothing
                 })
             },
