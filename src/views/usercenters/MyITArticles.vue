@@ -87,12 +87,16 @@
                     content:'确定删除吗?',
                     okText:'确认',
                     onOk(){
-                        _this.axios.get("deleteByArticleId",{
-                            params:{articleId:articleId}
-                        }).then(function (response) {
+                        let queryDto = {
+                            businessId:articleId
+                        };
+                        _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){
                                 _this.articleList.splice(tableIndex,1);
+                                this.$store.commit('deleteSuccess',_this);
+                            }else {
+                                this.$store.commit('deleteFailed',_this);
                             }
                         }.bind(_this));
                     }
@@ -117,8 +121,8 @@
                         for(let i = 0; i< resp.data.length;i++){
                             let article = resp.data[i];
                             this.articleList.push({
-                                articleId:this.addoileUtil.isDraft(article.deleteStatus) + article.articleId,
-                                title:article.title,
+                                articleId:article.articleId,
+                                title:this.addoileUtil.isDraft(article.deleteStatus) + article.title,
                                 userId:article.userId,
                                 createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });

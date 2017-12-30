@@ -23,7 +23,29 @@ const ui = {
                 return;
             }
             return userId;
-        }
+        },
+        /**
+         * 删除成功
+         * @param state
+         * @param vm
+         */
+        deleteSuccess(state,vm){
+            vm.$Notice.info({
+                desc: '<h6>删除成功</h6>'
+            });
+        },
+        /**
+         * 删除失败
+         * @param state
+         * @param vm
+         */
+        deleteFailed(state,vm){
+            vm.$Notice.error({
+                desc: '<h6>系统故障,删除失败</h6>'
+            });
+        },
+
+
     },
     getters: {
 

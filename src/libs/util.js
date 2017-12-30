@@ -87,7 +87,7 @@ util.getRandAlertType = function () {
  */
 util.isDraft = function(delete_status) {
 
-    return delete_status === 2 ? "【草稿】" : "";
+    return delete_status === 2 ? "[草稿]" : "";
 };
 
 

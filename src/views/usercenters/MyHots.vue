@@ -58,12 +58,16 @@
                     content:'确定删除吗?',
                     okText:'确认',
                     onOk(){
-                        _this.axios.get("deleteByHotId",{
-                            params:{hotId:hotId}
-                        }).then(function (response) {
+                        let queryDto = {
+                            businessId:hotId
+                        };
+                        _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){
                                 _this.hotsList.splice(tableIndex,1);
+                                this.$store.commit('deleteSuccess',_this);
+                            }else {
+                                this.$store.commit('deleteFailed',_this);
                             }
                         }.bind(_this));
                     }
@@ -89,7 +93,7 @@
                         for(let i = 0; i< resp.data.length;i++){
                             let hot = resp.data[i];
                             this.hotsList.push({
-                                hotId:hot.hotId,
+                                hotId:hot.microId,
                                 title:hot.title,
                                 content:hot.content,
                                 userId:hot.userId,

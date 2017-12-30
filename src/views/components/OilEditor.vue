@@ -13,7 +13,7 @@
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
                 <span style="float: right;">
                     <!--如果是草稿文章,点击编辑完成应该变成正正常文章;编辑完成按钮显示时,保存为草稿也应该显示;如何保证操作是我想要的？-->
-                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',deleteStatus)">编辑完成</Button>
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',0)">编辑完成</Button>
                     <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">发表</Button>
                     <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
@@ -203,8 +203,9 @@
                     //编辑
                     if(editObj.businessId != null){
                         this.businessId = editObj.businessId;
-                        this.editDownBtn = false;
-                        this.saveBtn = true;
+
+                        this.editDownBtn = true;
+                        this.saveBtn = false;
                         this.draftBtn = false;
 
                         let queryDto = {

@@ -62,12 +62,13 @@
                         let queryDto = {
                             businessId:dreamId
                         };
-                        _this.axios.post("deleteMicroContent",
-                            queryDto
-                        ).then(function (response) {
+                        _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){
                                 _this.dreamList.splice(tableIndex,1);
+                                this.$store.commit('deleteSuccess',_this);
+                            }else {
+                                this.$store.commit('deleteFailed',_this);
                             }
                         }.bind(_this));
                     }

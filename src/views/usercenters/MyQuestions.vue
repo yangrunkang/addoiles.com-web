@@ -54,12 +54,16 @@
                     content:'确定删除吗?',
                     okText:'确认',
                     onOk(){
-                        _this.axios.get("deleteByQuestionId",{
-                            params:{questionId:questionId}
-                        }).then(function (response) {
+                        let queryDto = {
+                            businessId:questionId
+                        };
+                        _this.axios.post("deleteByQuestionId",queryDto).then(function (response) {
                             let resp = response.data;
                             if(resp.code == 0 && resp.data > 0){
                                 _this.questionsList.splice(tableIndex,1);
+                                this.$store.commit('deleteSuccess',_this);
+                            }else {
+                                this.$store.commit('deleteFailed',_this);
                             }
                         }.bind(_this));
                     }
