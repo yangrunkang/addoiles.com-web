@@ -79,15 +79,19 @@ util.getRandAlertType = function () {
     return iconArr[index];
 };
 
-
 /**
- * 时间格式化
- * @param unixTime 时间戳
- * @returns {string} 格式化后获得时间字符串
+ * 是否是草稿
  */
 util.isDraft = function(delete_status) {
 
     return delete_status === 2 ? "[草稿]" : "";
+};
+
+/**
+ * 是否公开
+ */
+util.isHide = function(is_hide) {
+    return is_hide === 1 ? "[不公开]" : "";
 };
 
 

@@ -122,7 +122,7 @@
                             let article = resp.data[i];
                             this.articleList.push({
                                 articleId:article.articleId,
-                                title:this.addoileUtil.isDraft(article.deleteStatus) + article.title,
+                                title:this.addoileUtil.isDraft(article.deleteStatus) + this.addoileUtil.isHide(article.isHide) + article.title,
                                 userId:article.userId,
                                 createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });

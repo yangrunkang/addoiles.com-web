@@ -13,9 +13,10 @@
                         <span slot="open">公开</span>
                         <span slot="close">隐藏</span>
                     </Switch>
-                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">编辑完成</Button>
+                    <!--编辑完成:是在有文章的基础上编辑,不论文章时什么状态,此时编辑完成就有歧义了,应该为:保存为草稿;下面的立即发表应该为:发表-->
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">{{this.editDownBtnText}}</Button>
                     <!--在发表的时候检测是否有businessId,如果有,是编辑完成了,想发表;这样文章可以随意编辑多少次-->
-                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">立即发表</Button>
+                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">{{this.saveBtnText}}</Button>
                     <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
@@ -92,7 +93,10 @@
                 //编辑完成
                 editDownBtn:false,
                 //保存为草稿按钮
-                draftBtn:true
+                draftBtn:true,
+                //解决不同操作 歧义的按钮文字
+                editDownBtnText:"编辑完成",
+                saveBtnText:"立即发表",
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -138,10 +142,14 @@
                     // addOilArticle时后台生成,editOilArticle需要这个值
                     //不写businessId:this.businessId,因为是Entity入库,不是Query
                     articleId:this.businessId,
+                    articleType:this.articleType,
                     userId:sessionStorage.getItem("userId"),
                     title:this.title,
                     content:this.content,
-                    articleType:this.articleType,
+                    // 不能带业务字段
+                    // rates:0,
+                    // rateCount:0,
+                    isHide:this.isHide?0:1,
                     deleteStatus:deleteStatus
                 };
 
@@ -219,6 +227,8 @@
                         this.editDownBtn = true;
                         this.saveBtn = true;
                         this.draftBtn = false;
+                        this.editDownBtnText = "保存为草稿";
+                        this.saveBtnText = "发表";
 
                         let queryDto = {
                             businessId:editObj.businessId
@@ -231,6 +241,7 @@
                                 this.content = db_return_data.content;
                                 this.articleType = db_return_data.articleType;
                                 this.deleteStatus = db_return_data.deleteStatus;
+                                this.isHide = db_return_data.isHide == 0 ? true : false;
                             }
                         }.bind(this));
                         return null;

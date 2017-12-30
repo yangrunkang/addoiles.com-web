@@ -124,7 +124,7 @@
                             let experience = resp.data[i];
                             this.experienceList.push({
                                 experienceId:experience.articleId,
-                                title:this.addoileUtil.isDraft(experience.deleteStatus) + experience.title,
+                                title:this.addoileUtil.isDraft(experience.deleteStatus) + this.addoileUtil.isHide(experience.isHide) + experience.title,
                                 userId:experience.userId,
                                 rates:experience.rates,
                                 createTime:this.addoileUtil.formatUnixTime(experience.createTime)
