@@ -3,18 +3,19 @@
 </style>
 <template>
     <div>
-        <!--未登录时展示-->
-        <Alert type="error" class="not-login-tips" v-show="showNotLoginTips">
-            您还未登录
-        </Alert>
         <!--编辑器-->
         <Card class="edit-card">
             <p slot="title" style="height: auto;font-size: 18px">
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
                 <span style="float: right;">
-                    <!--如果是草稿文章,点击编辑完成应该变成正正常文章;编辑完成按钮显示时,保存为草稿也应该显示;如何保证操作是我想要的？-->
-                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',0)">编辑完成</Button>
-                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">发表</Button>
+                    是否公开:
+                     <Switch size="large" :value="isHide" @on-change="changeHide">
+                        <span slot="open">公开</span>
+                        <span slot="close">隐藏</span>
+                    </Switch>
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">编辑完成</Button>
+                    <!--在发表的时候检测是否有businessId,如果有,是编辑完成了,想发表;这样文章可以随意编辑多少次-->
+                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">立即发表</Button>
                     <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
@@ -36,14 +37,17 @@
                 <p>如果您写了很多内容,慎重考虑一下.</p>
                 <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
             </div>
-<!--            <div slot="footer">
-                <Button type="info" size="large" long @click="saveExperience('normal')">立即分享</Button>
+           <!-- <div slot="footer">
+                <Button type="info" size="large" v-show="editDownBtn" long @click="saveArticle('addArticle',0)">编辑完成发表</Button>
+            </div>
+            <div slot="footer">
+                <Button type="info" size="large" v-show="saveBtn" long @click="saveArticle('addArticle',0)">立即发表</Button>
             </div>
             <div slot="footer" style="margin: 4px auto;">
-                <Button type="warning" size="large" long @click="saveExperience('draft')">保存为草稿</Button>
+                <Button type="warning" size="large" v-show="draftBtn" long @click="saveArticle('addArticle',2)">保存为草稿</Button>
             </div>-->
             <div slot="footer" style="margin: 4px auto;">
-                <Button type="error" size="large" long @click="confirmClearContent(true)">坚决删除</Button>
+                <Button type="error" size="large" long @click="confirmClearContent(true)">坚决清空内容</Button>
             </div>
         </Modal>
     </div>
@@ -71,6 +75,8 @@
                 content : '',
                 //删除状态
                 deleteStatus:-1,
+                //文章是否公开
+                isHide:true,
                 /*****************/
 
                 //编辑器配置
@@ -81,8 +87,6 @@
                 },
                 //确认清除模态框显示与隐藏
                 confirmModal : false,
-                //未登录分享经历时提示
-                showNotLoginTips: false,
                 //发表按钮
                 saveBtn: true,
                 //编辑完成
@@ -122,6 +126,12 @@
                 if(title.length > 50){
                     this.$Message.warning("标题字数不能多余50个",3);
                     return null;
+                }
+
+                //在点击发表的时候检测是否有businessId,如果有,是编辑完成了,想发表;这样文章可以随意编辑多少次
+                if(this.addoileUtil.validateReq(this.businessId) && operation === 'addArticle'){
+                    operation = 'editArticle'; // 是更新操作,因为有businessId
+                    deleteStatus = 0; //更新为正常状态
                 }
 
                 let article = {
@@ -207,7 +217,7 @@
                         this.businessId = editObj.businessId;
 
                         this.editDownBtn = true;
-                        this.saveBtn = false;
+                        this.saveBtn = true;
                         this.draftBtn = false;
 
                         let queryDto = {
@@ -233,6 +243,13 @@
 
                 //safe
                 sessionStorage.removeItem("editObj");
+            },
+            /**
+             * 是否公开
+             * @param status
+             */
+            changeHide(status){
+                this.isHide = status;
             }
         },
         // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，
