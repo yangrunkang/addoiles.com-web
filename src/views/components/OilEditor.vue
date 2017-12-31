@@ -13,10 +13,10 @@
                         <span slot="open">公开</span>
                         <span slot="close">隐藏</span>
                     </Switch>
-                    <!--编辑完成:是在有文章的基础上编辑,不论文章时什么状态,此时编辑完成就有歧义了,应该为:保存为草稿;下面的立即发表应该为:发表-->
-                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">{{this.editDownBtnText}}</Button>
                     <!--在发表的时候检测是否有businessId,如果有,是编辑完成了,想发表;这样文章可以随意编辑多少次-->
                     <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">{{this.saveBtnText}}</Button>
+                    <!--编辑完成:是在有文章的基础上编辑,不论文章时什么状态,此时编辑完成就有歧义了,应该为:保存为草稿;下面的立即发表应该为:发表-->
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">{{this.editDownBtnText}}</Button>
                     <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>

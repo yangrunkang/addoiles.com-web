@@ -125,7 +125,11 @@
         },
         methods: {
 
+            /*去写文章*/
             toWriteITArticle(){
+
+                this.$store.commit('validateLogin',this);
+
                 let editObj = {
                     articleType:2,
                 };

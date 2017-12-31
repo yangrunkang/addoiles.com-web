@@ -103,7 +103,11 @@
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
+            /*去分享*/
             toShareExperience(){
+
+                this.$store.commit('validateLogin',this);
+
                 let editObj = {
                     articleType:0,
                 };
