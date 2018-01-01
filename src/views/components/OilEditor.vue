@@ -168,6 +168,7 @@
                         setTimeout(function () {
                             this.$router.go(-1);
                         }.bind(this), 1000);
+                        this.clearContent();
                     }else if(resp.data.data == 1002){
                         this.$Notice.error({
                             desc: '文本内容过长,请精简,或者减少部分图片内容'
