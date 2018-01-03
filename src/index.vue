@@ -22,24 +22,32 @@
 <template>
 	<div class="layout">
 
-        <div class="layout-nav">
-            <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
-                    <Menu-item :name="item.navRouter" v-for="item in navList" :key="item.id">
+        <Layout>
+            <Header>
+                <div class="layout-nav">
+                    <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
+                        <Menu-item :name="item.navRouter" v-for="item in navList" :key="item.id">
                             <Icon :type="item.navIcon"></Icon>
                             {{ item.navName }}
-                    </Menu-item>
-            </Menu>
-        </div>
-
-        <!--中间视图部分-->
-        <div class="main-content">
-            <router-view></router-view><!--这个是显示路由的视图结果-->
-        </div>
-
-        <div class="layout-bottom">
-            <p>Copyright ©2017-2018 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
-            <p>网站当前版本:v1.2(20171230)&nbsp;&nbsp;&nbsp;QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
-        </div>
+                        </Menu-item>
+                    </Menu>
+                </div>
+            </Header>
+            <Layout>
+                <Content>
+                    <!--中间视图部分-->
+                    <div class="main-content">
+                        <router-view></router-view><!--这个是显示路由的视图结果-->
+                    </div>
+                </Content>
+            </Layout>
+            <Footer>
+                <div class="layout-bottom">
+                    <p>Copyright ©2017-2018 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
+                    <p>网站当前版本:v1.2(20171230)&nbsp;&nbsp;&nbsp;QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
+                </div>
+            </Footer>
+        </Layout>
 
         <!--返回到顶部-->
         <Back-top :height="200" :bottom="100">
