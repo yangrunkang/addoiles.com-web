@@ -10,7 +10,7 @@
   "author": "yangrunkang",
   "dependencies": {
     "axios": "^0.16.2",
-    "iview": "^2.7.2",
+    "iview": "^2.8.0",
     "vue": "^2.2.6",
     "vue-router": "^2.2.1",
     "vuex": "^2.4.1",
