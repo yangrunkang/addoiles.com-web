@@ -180,9 +180,7 @@
             initITTech(articleId){
 
                 if(articleId == null){
-                    console.log(this.pithinessList[0]);
                     articleId = this.pithinessList[0].articleId;
-                    // articleId = '586e743f08f34d7e85875299700a06b4';
                 }
 
                 this.queryDto.articleType=2;
@@ -230,7 +228,6 @@
                 this.axios.post('getITArticlePithinessList',this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
                         let data = resp.data.data;
-                        console.log(data);
                         //右侧列表简表
                         let _pithinessList = [];
                         for(let i = 0; i < data.length; i++){
