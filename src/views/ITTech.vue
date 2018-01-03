@@ -17,8 +17,8 @@
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Button type="info" size="large" long @click="toWriteITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
                 <Timeline pending>
-                    <Timeline-item v-for="pithiness in itTechDto.pithinessList" :key="pithiness.id">
-                        <a @click="toITArticle(pithiness.articleId)" >
+                    <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
+                        <a @click="getITArticleDetail(pithiness.articleId)" >
                             <a class="time auto-break-line" >{{pithiness.title}}</a>
                         </a>
                     </Timeline-item>
@@ -94,13 +94,14 @@
                 isShowMoreITs : false,
                 //是否显示文章详情
                 showDetailITTech: true,
-                //技术沉淀
+                //IT文章简表
+                pithinessList:[],
+                //IT文章详情
                 itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
-                    pithinessList:[],
                     article : {
                         articleId : '',
-                        title : '',
                         userId:'',
+                        title : '',
                         content : '',
                         isShowEditBtn:false //是否显示编辑按钮
                     },
@@ -139,7 +140,7 @@
                 this.$router.push("/OilEditor");
             },
             //控制展示具体的文章详情
-            toITArticle(articleId) {
+            getITArticleDetail(articleId) {
                 this.isShowMoreITs = false;
                 this.showDetailITTech = true;
                 this.initITTech(articleId);
@@ -172,11 +173,17 @@
                 }.bind(this));
             },
             showMoreITTechArticles(articleId){
-                this.toITArticle(articleId);
+                this.getITArticleDetail(articleId);
                 this.moreITArticleList = [];
             },
             //文章显示
             initITTech(articleId){
+
+                if(articleId == null){
+                    console.log(this.pithinessList[0]);
+                    articleId = this.pithinessList[0].articleId;
+                    // articleId = '586e743f08f34d7e85875299700a06b4';
+                }
 
                 this.queryDto.articleType=2;
                 this.queryDto.businessId=articleId;
@@ -184,18 +191,7 @@
                 this.axios.post('getITArticleList',this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
                         let data = resp.data.data;
-                        //右侧列表简表
-                        let _pithinessList = [];
-                        for(let i = 0; i < data.pithinessList.length; i++){
-                            let _data = data.pithinessList[i];
-                            _pithinessList.push({
-                                articleId:_data.articleId,
-                                title:_data.title
-                            });
-                            if(i == 10){ //简表只显示10条 ,显示更多 全部显示
-                                break;
-                            }
-                        }
+
                         //文章评论
                         let _articleCommentList = [];
                         for(let i = 0; i < data.articleCommentList.length; i++){
@@ -212,7 +208,6 @@
                         let currentUserId = sessionStorage.getItem("userId");
                         //封装
                         this.itTechDto = {
-                            pithinessList : _pithinessList,
                             article : {
                                 articleId : _article.articleId,
                                 userId:_article.userId,
@@ -224,6 +219,35 @@
                             },
                             articleCommentList : _articleCommentList
                         };
+                    }
+                }.bind(this));
+            },
+            /**
+             * 初始化文章简表
+             */
+            initPithinessList(){
+                this.queryDto.articleType=2;
+                this.axios.post('getITArticlePithinessList',this.queryDto).then(function (resp) {
+                    if(resp.data.code == 0){
+                        let data = resp.data.data;
+                        console.log(data);
+                        //右侧列表简表
+                        let _pithinessList = [];
+                        for(let i = 0; i < data.length; i++){
+                            let _data = data[i];
+                            _pithinessList.push({
+                                articleId:_data.articleId,
+                                title:_data.title
+                            });
+                            if(i === 10){ //简表只显示10+1条 ,显示更多 全部显示
+                                break;
+                            }
+                        }
+                        //封装
+                        this.pithinessList = _pithinessList;
+
+                        //显示第一篇文章详情
+                        this.getITArticleDetail(this.pithinessList[0].articleId);
                     }
                 }.bind(this));
             },
@@ -302,8 +326,7 @@
             }
         },
         mounted () {
-            //初始化文章列表 和 显示第一篇文章详情内容
-            this.initITTech(null);
+            this.initPithinessList();
         }
     }
 </script>
