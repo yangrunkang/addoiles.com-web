@@ -32,12 +32,33 @@
         height: fit-content;
     }
 
-    #QA {
+    #qa {
         width: 100%;
         height: fit-content;
         margin-top: 10px;
     }
 
+    /*问题提问 用户名和创建时间*/
+    .p-right {
+        text-align: right;
+        color: rgba(91, 106, 97, 0.45);
+        padding-right: 7px;
+    }
+
+    /*提问-回答列表div*/
+    .qa-list-div {
+        border-left:4px solid #1da1f2;
+        margin-top: 5px;
+        border-radius: 4px;
+        background-color: #E8F5FD;
+    }
+
+    /*提问-回答内容*/
+    .qa-content {
+        font-size: 18px;
+        text-indent: 8px;
+        padding-left: 7px;
+    }
 </style>
 <template>
     <div>
@@ -83,7 +104,7 @@
                 </div>
 
                 <!--问答区域-->
-                <div id="QA">
+                <div id="qa">
                     <Card style="width:100%;background-color: white;border: none" >
                         <!--提问-->
                         <div style="text-align:center">
@@ -95,56 +116,33 @@
                             <Input  type="textarea" :rows="6" size="large" placeholder="随意提问区(新闻,八卦,火星······只要你能想的到)" v-model="question" style="width: 100%" />
                             <Button type="info" size="large" long  style="width: 100%;margin-top: 10px" @click="askQuestion" >我要提问</Button>
                         </p>
-
-                        <!--解答-->
-                        <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
-                            v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id"
-                        >
-                            <!--最新问题-->
-                            <h1>最新问题{{index + 1}}</h1>
-                            <div>
-                                <!--具体的问题-->
-                                <Card style="width:100%;background-color:transparent;">
-                                    <Row>
-                                        <i-col span="7">
-                                        <p><Tag type="dot" color="blue" style="width:95%;">{{questionAnswer.question.userName}}</Tag></p>
-                                        <p  style="margin-top: 8px"><Tag style="width:95%;" type="dot" color="blue">{{questionAnswer.question.createTime}}</Tag></p>
-                                        </i-col>
-                                        <i-col span="17" style="text-align: left;" class="auto-break-line">
-                                            {{questionAnswer.question.content}}
-                                        </i-col>
-                                    </Row>
-                                </Card>
-                                <h1>回答</h1>
-                                <Card style="margin-top: 6px">
-                                    <div>
-                                        <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
-                                        <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
-                                        </i-input>
-                                    </div>
-                                </Card>
-                                <Card style="margin-top: 6px" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                                    <div>
-                                        <Row>
-                                            <i-col span="5" style="vertical-align: middle">
-                                            <p>
-                                                <Tag type="dot" color="green" style="width:95%;">{{answer.userName}}</Tag>
-                                            </p>
-                                            <p style="margin-top: 8px">
-                                                <Tag type="dot" color="green" style="width:95%;">{{answer.createTime}}</Tag>
-                                            </p>
-                                            </i-col>
-                                            <i-col span="19">
-                                            <Alert type="success" style="width: 100%;height: auto;" class="auto-break-line">
-                                                {{answer.content}}
-                                            </Alert>
-                                            </i-col>
-                                        </Row>
-                                    </div>
-                                </Card>
-                            </div>
-                        </Card>
                     </Card>
+                    <!--解答-->
+                    <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
+                        v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
+                        <!--最新问题-->
+                        <h2>最新问题{{index + 1}}</h2>
+                        <div>
+                            <!--具体的问题-->
+                            <div class="qa-list-div">
+                                <p class="qa-content">{{questionAnswer.question.content}}</p>
+                                <p class="p-right">{{questionAnswer.question.userName}}</p>
+                                <p class="p-right">{{questionAnswer.question.createTime}}</p>
+                            </div>
+                            <h2>回答</h2>
+                            <div>
+                                <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
+                                    <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
+                                </i-input>
+                            </div>
+                            <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
+                                <p class="qa-content">{{answer.content}}</p>
+                                <p class="p-right">{{answer.userName}}</p>
+                                <p class="p-right">{{answer.createTime}}</p>
+                            </div>
+                        </div>
+                    </Card>
+
                 </div>
             <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
             </i-col>
@@ -398,7 +396,8 @@
                                 question : {
                                     userName:question.userName,
                                     createTime:this.addoileUtil.formatUnixTime(question.createTime),
-                                    content : question.content,questionId:question.questionId
+                                    content : question.content,
+                                    questionId:question.questionId
                                 },
                                 answerList : _answerList
                             });
