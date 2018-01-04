@@ -31,10 +31,9 @@
 
     /*问答区-右边部分*/
     .qa-area-right {
-        width:100%;
-        background-color: white;
+        width:81%;
         border: none;
-        margin-left: 15px;
+        margin:35px auto auto 45px;
     }
 </style>
 <template>
@@ -80,21 +79,23 @@
                             </div>
                         </Card>
                     </Card>
+                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
                 </div>
-                <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
             </i-col>
             <i-col span="6" class="main-col">
-                <Card class="qa-area-right" >
-                    <p>编程语言</p>
-                    <p>开发问题</p>
-                    <p>缓存技术</p>
-                    <p>框架</p>
-                    <p>操作系统</p>
-                    <p>网页开发</p>
-                    <p>学习</p>
-                    <p>旅游</p>
-                    <p>八卦</p>
-                </Card>
+                <div class="qa-area-right">
+                    <Row><i-col><Button type="info" shape="circle" long>编程语言</Button></i-col></Row>
+                    <br/>
+                    <Row><i-col><Button type="primary" shape="circle" long>开发问题</Button></i-col></Row>
+                    <br/>
+                    <Row><i-col><Button type="success" shape="circle" long>缓存技术</Button></i-col></Row>
+                    <br/>
+                    <Row><i-col><Button type="info" shape="circle" long>操作系统</Button></i-col></Row>
+                    <br/>
+                    <Row><i-col><Button type="ghost" shape="circle" long>学习</Button></i-col></Row>
+                    <br/>
+                    <Row><i-col><Button type="warning" shape="circle" long>八卦</Button></i-col></Row>
+                </div>
             </i-col>
         </Row>
     </div>
