@@ -12,8 +12,9 @@
     }
 
     .menu{
-        width: fit-content;
-        margin: 0 auto;
+        display:table;
+        margin-left:auto;
+        margin-right:auto;
     }
 
 
@@ -24,23 +25,19 @@
 
         <Layout>
             <Header>
-                <div class="layout-nav">
-                    <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
-                        <Menu-item :name="item.navRouter" v-for="item in navList" :key="item.id">
-                            <Icon :type="item.navIcon"></Icon>
-                            {{ item.navName }}
-                        </Menu-item>
-                    </Menu>
-                </div>
+                <Menu mode="horizontal" theme="dark" @on-select="onSelect" class="menu">
+                    <Menu-item :name="item.navRouter" v-for="item in navList" :key="item.id" >
+                        <Icon :type="item.navIcon"></Icon>
+                        {{ item.navName }}
+                    </Menu-item>
+                </Menu>
             </Header>
-            <Layout>
-                <Content>
-                    <!--中间视图部分-->
-                    <div class="main-content">
-                        <router-view></router-view><!--这个是显示路由的视图结果-->
-                    </div>
-                </Content>
-            </Layout>
+            <Content>
+                <!--中间视图部分-->
+                <div class="main-content">
+                    <router-view></router-view><!--这个是显示路由的视图结果-->
+                </div>
+            </Content>
             <Footer>
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2018 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
