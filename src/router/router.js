@@ -22,6 +22,13 @@ const routers = [
         component: (resolve) => require(['../views/Experience.vue'], resolve)
     },
     {
+        path: '/QAArea',
+        meta: {
+            title: '问答区'
+        },
+        component: (resolve) => require(['../views/QAArea.vue'], resolve)
+    },
+    {
         path: '/ITTech',
         meta: {
             title: '技术沉淀'
