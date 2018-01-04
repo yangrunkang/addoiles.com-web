@@ -22,11 +22,11 @@ const routers = [
         component: (resolve) => require(['../views/Experience.vue'], resolve)
     },
     {
-        path: '/QAArea',
+        path: '/OilForm',
         meta: {
-            title: '问答区'
+            title: '油站论坛'
         },
-        component: (resolve) => require(['../views/QAArea.vue'], resolve)
+        component: (resolve) => require(['../views/OilForm.vue'], resolve)
     },
     {
         path: '/ITTech',

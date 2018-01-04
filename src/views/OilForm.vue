@@ -4,7 +4,6 @@
     #qa {
         width: 100%;
         height: fit-content;
-        margin-top: 10px;
     }
 
     /*问题提问 用户名和创建时间*/
@@ -29,50 +28,75 @@
         text-indent: 8px;
         padding-left: 7px;
     }
+
+    /*问答区-右边部分*/
+    .qa-area-right {
+        width:100%;
+        background-color: white;
+        border: none;
+        margin-left: 15px;
+    }
 </style>
 <template>
     <div>
-        <!--问答区域-->
-        <div id="qa">
-            <Card style="width:100%;background-color: white;border: none" >
-                <!--提问-->
-                <div style="text-align:center">
-                    <img src="../images/question.png" style="width: 100%;height: 200px">
-                    <h1>你敢提问吗</h1>
-                    <h3>爱情,八卦,故事,亲情,笑话等等</h3>
+        <Row class="row">
+            <i-col span="18" class="main-col">
+                <!--问答区域-->
+                <div id="qa">
+                    <Card style="width:100%;background-color: white;border: none" >
+                        <!--提问-->
+                        <div style="text-align:center">
+                            <img src="../images/question.png" style="width: 100%;height: 200px">
+                            <h1>提问是门艺术</h1>
+                            <h3>爱情,八卦,故事,亲情,笑话等等</h3>
+                        </div>
+                        <p style="text-align: center;margin-top: 1%">
+                            <Input  type="textarea" :rows="6" size="large" placeholder="随意提问区(新闻,八卦,火星······只要你能想的到)" v-model="question" style="width: 100%" />
+                            <Button type="info" size="large" long  style="width: 100%;margin-top: 10px" @click="askQuestion" >我要提问</Button>
+                        </p>
+                        <!--解答-->
+                        <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
+                              v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
+                            <!--最新问题-->
+                            <h2>最新问题{{index + 1}}</h2>
+                            <div>
+                                <!--具体的问题-->
+                                <div class="qa-list-div">
+                                    <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
+                                    <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
+                                    <p class="p-right">{{questionAnswer.question.createTime}}</p>
+                                </div>
+                                <h2>回答</h2>
+                                <div>
+                                    <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
+                                        <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
+                                    </i-input>
+                                </div>
+                                <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
+                                    <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
+                                    <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
+                                    <p class="p-right">{{answer.createTime}}</p>
+                                </div>
+                            </div>
+                        </Card>
+                    </Card>
                 </div>
-                <p style="text-align: center;margin-top: 1%">
-                    <Input  type="textarea" :rows="6" size="large" placeholder="随意提问区(新闻,八卦,火星······只要你能想的到)" v-model="question" style="width: 100%" />
-                    <Button type="info" size="large" long  style="width: 100%;margin-top: 10px" @click="askQuestion" >我要提问</Button>
-                </p>
-                <!--解答-->
-                <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
-                      v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
-                    <!--最新问题-->
-                    <h2>最新问题{{index + 1}}</h2>
-                    <div>
-                        <!--具体的问题-->
-                        <div class="qa-list-div">
-                            <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
-                            <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
-                            <p class="p-right">{{questionAnswer.question.createTime}}</p>
-                        </div>
-                        <h2>回答</h2>
-                        <div>
-                            <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
-                                <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
-                            </i-input>
-                        </div>
-                        <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                            <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
-                            <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
-                            <p class="p-right">{{answer.createTime}}</p>
-                        </div>
-                    </div>
+                <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
+            </i-col>
+            <i-col span="6" class="main-col">
+                <Card class="qa-area-right" >
+                    <p>编程语言</p>
+                    <p>开发问题</p>
+                    <p>缓存技术</p>
+                    <p>框架</p>
+                    <p>操作系统</p>
+                    <p>网页开发</p>
+                    <p>学习</p>
+                    <p>旅游</p>
+                    <p>八卦</p>
                 </Card>
-            </Card>
-        </div>
-        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
+            </i-col>
+        </Row>
     </div>
 </template>
 <script>
