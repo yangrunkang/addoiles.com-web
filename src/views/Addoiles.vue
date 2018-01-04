@@ -117,33 +117,32 @@
                             <Input  type="textarea" :rows="6" size="large" placeholder="随意提问区(新闻,八卦,火星······只要你能想的到)" v-model="question" style="width: 100%" />
                             <Button type="info" size="large" long  style="width: 100%;margin-top: 10px" @click="askQuestion" >我要提问</Button>
                         </p>
-                    </Card>
-                    <!--解答-->
-                    <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
-                        v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
-                        <!--最新问题-->
-                        <h2>最新问题{{index + 1}}</h2>
-                        <div>
-                            <!--具体的问题-->
-                            <div class="qa-list-div">
-                                <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
-                                <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
-                                <p class="p-right">{{questionAnswer.question.createTime}}</p>
-                            </div>
-                            <h2>回答</h2>
+                        <!--解答-->
+                        <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
+                            v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
+                            <!--最新问题-->
+                            <h2>最新问题{{index + 1}}</h2>
                             <div>
-                                <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
-                                    <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
-                                </i-input>
+                                <!--具体的问题-->
+                                <div class="qa-list-div">
+                                    <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
+                                    <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
+                                    <p class="p-right">{{questionAnswer.question.createTime}}</p>
+                                </div>
+                                <h2>回答</h2>
+                                <div>
+                                    <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
+                                        <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
+                                    </i-input>
+                                </div>
+                                <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
+                                    <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
+                                    <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
+                                    <p class="p-right">{{answer.createTime}}</p>
+                                </div>
                             </div>
-                            <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                                <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
-                                <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
-                                <p class="p-right">{{answer.createTime}}</p>
-                            </div>
-                        </div>
+                        </Card>
                     </Card>
-
                 </div>
             <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
             </i-col>
