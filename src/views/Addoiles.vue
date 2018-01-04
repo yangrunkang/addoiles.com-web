@@ -47,6 +47,7 @@
 
     /*提问-回答列表div*/
     .qa-list-div {
+        font-size: 18px;
         border-left:4px solid #1da1f2;
         margin-top: 5px;
         border-radius: 4px;
@@ -125,8 +126,8 @@
                         <div>
                             <!--具体的问题-->
                             <div class="qa-list-div">
-                                <p class="qa-content">{{questionAnswer.question.content}}</p>
-                                <p class="p-right">{{questionAnswer.question.userName}}</p>
+                                <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
+                                <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
                                 <p class="p-right">{{questionAnswer.question.createTime}}</p>
                             </div>
                             <h2>回答</h2>
@@ -136,8 +137,8 @@
                                 </i-input>
                             </div>
                             <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                                <p class="qa-content">{{answer.content}}</p>
-                                <p class="p-right">{{answer.userName}}</p>
+                                <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
+                                <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
                                 <p class="p-right">{{answer.createTime}}</p>
                             </div>
                         </div>
