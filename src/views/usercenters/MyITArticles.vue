@@ -10,7 +10,7 @@
             <div class="auto-break-line" v-html="content"/>
 
             <div slot="footer">
-
+                <p style="text-align: center;font-weight: bold">来自油站:Show Yourself</p>
             </div>
         </Modal>
     </div>
@@ -102,7 +102,7 @@
                 let queryDto = {
                     businessId : articleId,
                 };
-
+                this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
                     if(resp.data.code == 0 && db_return_data != null){
@@ -116,8 +116,6 @@
                         // this.$Modal.info(config);
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
-
-                        this.showModal = true;
                     }
                 }.bind(this));
 

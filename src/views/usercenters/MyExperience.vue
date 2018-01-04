@@ -10,7 +10,7 @@
             <div class="auto-break-line" v-html="content"/>
 
             <div slot="footer">
-
+                <p style="text-align: center;font-weight: bold">来自油站:不虚度人生,让自己的人生少点遗憾</p>
             </div>
         </Modal>
     </div>
@@ -22,8 +22,8 @@
         name: "my-experience",
         data() {
             return {
-                title:'',
-                content:'',
+                title:'加载中',
+                content:'正在加载...请稍等~~',
                 showModal:false,
                 experienceColumns:[
                     {
@@ -101,6 +101,7 @@
                     businessId : experienceId,
                 };
 
+                this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
                     if(resp.data.code == 0 && db_return_data != null){
@@ -114,8 +115,6 @@
                         // this.$Modal.info(config);
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
-
-                        this.showModal = true;
                     }
                 }.bind(this));
 
