@@ -5,7 +5,7 @@
 <template>
     <div>
         <p style="text-align: center;margin-top: 6%">
-            <Input v-model="content" type="textarea" :rows="7" size="large" placeholder="如果有,请写下你的建议或者问题反馈" style="width: 70%" />
+            <Input v-model="content" type="textarea" :rows="7" size="large" placeholder="如果有,请写下你的建议或者问题反馈" style="width: 69%" />
             <Button type="info" size="large" long @click="suggest()" style="width: 70%;margin-top: 10px" >反馈</Button>
         </p>
     </div>
