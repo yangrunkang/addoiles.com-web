@@ -1,6 +1,18 @@
 <template>
     <div>
         <Table border :columns="articleColumns" :data="articleList"></Table>
+
+        <!--查看模态框-->
+        <Modal width="1140" v-model="showModal">
+            <p slot="header">
+                <strong>{{title}}</strong>
+            </p>
+            <div class="auto-break-line" v-html="content"/>
+
+            <div slot="footer">
+
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -12,6 +24,9 @@
         name: "my-articles",
         data() {
             return {
+                title:'',
+                content:'',
+                showModal:false,
                 articleColumns:[
                     {
                         title:"标题",
@@ -27,6 +42,20 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.view(params.index)
+                                        }
+                                    }
+                                }, '查看'),
                                 h('Button', {
                                     props: {
                                         type: 'info',
@@ -64,6 +93,35 @@
             this.initITArticleList();
         },
         methods:{
+            /**
+             * 查看
+             * */
+            view(tableIndex){
+                let articleId = this.articleList[tableIndex].articleId;
+
+                let queryDto = {
+                    businessId : articleId,
+                };
+
+                this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
+                    let db_return_data = resp.data.data;
+                    if(resp.data.code == 0 && db_return_data != null){
+                        // let config = {
+                        //     title:db_return_data.title,
+                        //     content:db_return_data.content,
+                        //     width:832,
+                        //     scrollable:false,
+                        //     closable:true
+                        // };
+                        // this.$Modal.info(config);
+                        this.title = db_return_data.title;
+                        this.content = db_return_data.content;
+
+                        this.showModal = true;
+                    }
+                }.bind(this));
+
+            },
             /**
              * 编辑
              * */

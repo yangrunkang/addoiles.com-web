@@ -1,17 +1,30 @@
 <template>
     <div>
         <Table border :columns="experienceColumns" :data="experienceList"></Table>
+
+        <!--查看模态框-->
+        <Modal width="1140" v-model="showModal">
+            <p slot="header">
+                <strong>{{title}}</strong>
+            </p>
+            <div class="auto-break-line" v-html="content"/>
+
+            <div slot="footer">
+
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
 
-    import Cookies from 'js-cookie';
-
     export default {
         name: "my-experience",
         data() {
             return {
+                title:'',
+                content:'',
+                showModal:false,
                 experienceColumns:[
                     {
                         title:"标题",
@@ -27,6 +40,20 @@
                         align: 'center',
                         render: (h, params) => {
                             return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.view(params.index)
+                                        }
+                                    }
+                                }, '查看'),
                                 h('Button', {
                                     props: {
                                         type: 'info',
@@ -64,6 +91,35 @@
             this.initExperienceList();
         },
         methods:{
+            /**
+             * 查看
+             * */
+            view(tableIndex){
+                let experienceId = this.experienceList[tableIndex].experienceId;
+
+                let queryDto = {
+                    businessId : experienceId,
+                };
+
+                this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
+                    let db_return_data = resp.data.data;
+                    if(resp.data.code == 0 && db_return_data != null){
+                        // let config = {
+                        //     title:db_return_data.title,
+                        //     content:db_return_data.content,
+                        //     width:832,
+                        //     scrollable:false,
+                        //     closable:true
+                        // };
+                        // this.$Modal.info(config);
+                        this.title = db_return_data.title;
+                        this.content = db_return_data.content;
+
+                        this.showModal = true;
+                    }
+                }.bind(this));
+
+            },
             /**
              * 编辑
              * */
