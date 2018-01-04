@@ -31,35 +31,6 @@
         width: 100%;
         height: fit-content;
     }
-
-    #qa {
-        width: 100%;
-        height: fit-content;
-        margin-top: 10px;
-    }
-
-    /*问题提问 用户名和创建时间*/
-    .p-right {
-        text-align: right;
-        color: rgba(91, 106, 97, 0.45);
-        padding-right: 7px;
-    }
-
-    /*提问-回答列表div*/
-    .qa-list-div {
-        font-size: 18px;
-        border-left:4px solid #1da1f2;
-        margin-top: 5px;
-        border-radius: 4px;
-        background-color: #E8F5FD;
-    }
-
-    /*提问-回答内容*/
-    .qa-content {
-        font-size: 18px;
-        text-indent: 8px;
-        padding-left: 7px;
-    }
 </style>
 <template>
     <div>
