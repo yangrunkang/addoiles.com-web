@@ -14,7 +14,8 @@
 /*页面主题内容*/
 .main-content {
     background: #f5f7f9;
-    width: 1140px;
+    width: 1145px;
+    /*width: 1400px;*/
     margin: 30px auto;
 }
 
