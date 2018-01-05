@@ -202,10 +202,6 @@
             //文章显示
             initITTech(articleId){
 
-                this.itTechDto.article.title = "请稍等客官";
-                this.itTechDto.article.content = "正在马不停蹄的从服务器上加载资源,请稍等";
-
-
                 if(articleId == null){
                     articleId = this.pithinessList[0].articleId;
                 }
