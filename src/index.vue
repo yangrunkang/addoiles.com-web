@@ -47,12 +47,12 @@
         </Layout>
 
         <!--返回到顶部-->
-        <Back-top :height="200" :bottom="100">
+        <Back-top :height="100" :bottom="100">
             <div class="top">返回顶端</div>
         </Back-top>
 
         <!--反馈及建议图钉-->
-        <Back-top :height="200" :bottom="50" @on-click="suggest">
+        <Back-top :height="100" :bottom="50" @on-click="suggest">
             <div class="top">反馈及建议</div>
         </Back-top>
 
@@ -131,7 +131,7 @@
                 }
             },
             suggest(){
-                this.$router.push('/Suggest');
+                this.$store.commit('toSuggest',this);
             }
         },
         mounted() {

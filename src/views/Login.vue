@@ -72,6 +72,11 @@
         0%{left:100px;}
         100%{left:-70px;}
     }
+
+    .a-tips {
+        color: #9ea7b4;
+    }
+
 </style>
 <template>
     <div>
@@ -90,7 +95,11 @@
                 <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <a href="javascript:;" class="log-btn" @click="toLogin">登录</a>
             </div>
-            <p style="text-align: center;margin-bottom: 10px" @click="forgetPassword()" v-show="showLoginForm">忘记密码</p>
+            <p style="text-align: center;margin-bottom: 10px" v-show="showLoginForm">
+                <a class="a-tips" @click="forgetPassword()">忘记密码</a> &nbsp;&nbsp;
+                <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+            </p>
+
             <div class="log-email" v-show="showForgetPasswordForm">
                 <input type="text" placeholder="请输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
                 <a href="javascript:;" class="log-btn" @click="verifyCode()">验证</a>
@@ -331,8 +340,10 @@
                         });
                     }
                 }.bind(this));
+            },
+            receiveEmailFailed(){
+                this.$store.commit('toSuggest',this);
             }
-
         }
     }
 </script>

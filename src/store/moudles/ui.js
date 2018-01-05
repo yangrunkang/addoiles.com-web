@@ -63,6 +63,14 @@ const ui = {
             vm.$Notice.error({
                 desc: '<h6>目标资源加载失败,请重试</h6>'
             });
+        },
+        /**
+         * 去建议
+         * @param state
+         * @param vm
+         */
+        toSuggest(state,vm){
+            vm.$router.push('/Suggest');
         }
 
     },

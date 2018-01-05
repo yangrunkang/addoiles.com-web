@@ -72,7 +72,9 @@
         100%{left:-70px;}
     }
 
-
+    .a-tips {
+        color: #9ea7b4;
+    }
 
 
 </style>
@@ -94,6 +96,9 @@
                 <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
                 <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:注册</a>
+                <p style="text-align: center;margin-bottom: 10px">
+                    <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+                </p>
             </div>
             <div class="log-email" v-show="verifyForm">
                 <input type="text" placeholder="输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
@@ -257,8 +262,9 @@
                         });
                     }
                 }.bind(this));
-
-
+            },
+            receiveEmailFailed(){
+                this.$store.commit('toSuggest',this);
             }
         }
     }
