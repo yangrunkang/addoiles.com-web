@@ -15,16 +15,16 @@
 
     /*提问-回答列表div*/
     .qa-list-div {
-        font-size: 18px;
-        border-left:4px solid #1da1f2;
+        font-size: 14px;
+        border-left:4px solid rgb(220, 230, 240);
         margin-top: 5px;
         border-radius: 4px;
-        background-color: #E8F5FD;
+        background-color: rgb(242, 247, 251);
     }
 
     /*提问-回答内容*/
     .qa-content {
-        font-size: 18px;
+        font-size: 16px;
         text-indent: 8px;
         padding-left: 7px;
     }
