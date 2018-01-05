@@ -9,6 +9,19 @@
         padding-left: 5px;
     }
 
+    .p-left {
+        text-align: left;
+        font-size: 13px;
+    }
+
+    .it-article-list {
+        margin-bottom: 5px;
+    }
+
+    .it-article-title {
+        font-size: 19px;
+        color: black;
+    }
 </style>
 <template>
     <div>
@@ -49,7 +62,7 @@
                                     <Tag type="dot" color="green">{{itTechDto.article.createTime}}</Tag>
                                 </p>
                             <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
-                            <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
+                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
                             </Input>
                             <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
                                 <Tag type="border" color="green">{{ comment.createTime }}</Tag>
@@ -62,12 +75,15 @@
 
                 <!--点击展示更多,显示此区域-->
                 <div v-show="isShowMoreITs" style="width: 100%">
-                    <a @click="showMoreITTechArticles(article.articleId)" v-for="article in moreITArticleList" :key="article.id" >
-                        <Alert show-icon>
-                            <h3>{{article.title}}</h3>
-                            <Icon :type="article.iconType" slot="icon"></Icon>
-                        </Alert>
-                    </a>
+
+                    <Card v-for="article in moreITArticleList" :key="article.id" class="it-article-list">
+                        <a class="it-article-title" @click="showMoreITTechArticles(article.articleId)">
+                            <Icon :type="article.iconType"></Icon> &nbsp; {{article.title}}
+                        </a>
+                        <p class="p-left">
+                            <Icon type="calendar"></Icon>&nbsp;{{article.createTime}}
+                        </p>
+                    </Card>
                     <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
                 </div>
 
@@ -153,7 +169,14 @@
                 this.isShowMoreITs = true;
                 if(flag){
                     this.showDetailITTech = false;
-                    // this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
+                    this.moreITArticleList = [];
+                    //分页要恢复,如果不恢复再回去点击[查看更多]会查不到数据,因为分页数已经超过实际条数了
+                    this.queryDto = {
+                        page : {
+                            pageNo: 0,
+                            pageSize: 10
+                        }
+                    }
                 }
 
                 this.queryDto.articleType = 2;
@@ -166,8 +189,8 @@
                                 this.moreITArticleList.push({
                                     articleId:dataArray[i].articleId,
                                     title:dataArray[i].title,
-                                    subTitle:dataArray[i].subTitle,
-                                    iconType:this.addoileUtil.getRandomIcon()
+                                    iconType:this.addoileUtil.getRandomIcon(),
+                                    createTime:this.addoileUtil.formatUnixTime(dataArray[i].createTime)
                                 });
                             }
                         }else{
@@ -293,7 +316,7 @@
                             createTime:'刚刚',
                             userName:'我',
                             content:commentContent
-                        })
+                        });
                         //清空数据
                         this.commentContent = '';
                     }else{
@@ -307,7 +330,6 @@
              * 编辑IT文章
              * @param articleId 文章id
              * @param title 大名
-             * @param subTitle 小名
              * @param content 内容
              */
             toEditITArticle(articleId){
@@ -323,7 +345,7 @@
 
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
-                this.showMore(true);
+                this.showMore(false);
             }
         },
         mounted () {
