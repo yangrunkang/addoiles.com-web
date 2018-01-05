@@ -127,10 +127,6 @@
                 moreITArticleList : [],
                 //评论内容
                 commentContent : '',
-                // IT文章内容
-                ITContent : '',
-                // IT文章标题
-                ITTitle:'',
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -206,6 +202,10 @@
             //文章显示
             initITTech(articleId){
 
+                this.itTechDto.article.title = "请稍等客官";
+                this.itTechDto.article.content = "正在马不停蹄的从服务器上加载资源,请稍等";
+
+
                 if(articleId == null){
                     articleId = this.pithinessList[0].articleId;
                 }
@@ -244,7 +244,10 @@
                             },
                             articleCommentList : _articleCommentList
                         };
+                    }else{
+                        this.$store.commit('loadingFailed',this);
                     }
+
                 }.bind(this));
             },
             /**

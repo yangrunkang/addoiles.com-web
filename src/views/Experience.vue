@@ -123,6 +123,7 @@
                 <p style="text-align: center;font-weight: bold">来自油站:不虚度人生,让自己的人生少点遗憾</p>
             </div>
         </Modal>
+
     </div>
 </template>
 <script>
@@ -134,10 +135,6 @@
             return {
                 //是否展示具体经历的模态框
                 showExperienceModal:false,
-                // 经历标题
-                experienceTitle : '',
-                // 经历内容
-                content : '',
                 //评论内容
                 commentContent:'',
                 //经历列表
@@ -278,6 +275,10 @@
             //获取具体经历
             getExperience(experienceId){
 
+                this.experienceDto.title = "请稍等...客官~";
+                this.experienceDto.content = "正在马不停蹄的从服务器上加载资源,请稍等";
+                this.showExperienceModal = true;
+
                 this.queryDto.businessId = experienceId;
 
                 this.axios.post('getExperience',this.queryDto).then(function (response) {
@@ -318,7 +319,9 @@
                             commentList:_commentList,
                             isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
                         };
-                        this.showExperienceModal = true;
+                    }else{
+                        this.$store.commit('loadingFailed',this);
+                        this.showExperienceModal = false;
                     }
                 }.bind(this));
             },

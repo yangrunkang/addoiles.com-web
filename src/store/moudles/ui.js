@@ -54,7 +54,16 @@ const ui = {
                 desc: '<h6>文章已全部加载</h6>'
             });
         },
-
+        /**
+         * 目标资源加载失败
+         * @param state
+         * @param vm
+         */
+        loadingFailed(state,vm){
+            vm.$Notice.error({
+                desc: '<h6>目标资源加载失败,请重试</h6>'
+            });
+        }
 
     },
     getters: {
