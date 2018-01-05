@@ -153,7 +153,7 @@
                 this.isShowMoreITs = true;
                 if(flag){
                     this.showDetailITTech = false;
-                    this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
+                    // this.moreITArticleList = []; //每次显示前 清空,否则狂点这个会出问题
                 }
 
                 this.queryDto.articleType = 2;
@@ -161,13 +161,17 @@
                 this.axios.post('showMoreITTechArticles',this.queryDto).then(function (resp) {
                     if (resp.data.code == 0) {
                         let dataArray = resp.data.data;
-                        for(let i = 0; i < dataArray.length; i++){
-                            this.moreITArticleList.push({
-                                articleId:dataArray[i].articleId,
-                                title:dataArray[i].title,
-                                subTitle:dataArray[i].subTitle,
-                                iconType:this.addoileUtil.getRandomIcon()
-                            });
+                        if(dataArray.length > 0){
+                            for(let i = 0; i < dataArray.length; i++){
+                                this.moreITArticleList.push({
+                                    articleId:dataArray[i].articleId,
+                                    title:dataArray[i].title,
+                                    subTitle:dataArray[i].subTitle,
+                                    iconType:this.addoileUtil.getRandomIcon()
+                                });
+                            }
+                        }else{
+                            this.$store.commit('loadAll',this);
                         }
                     }
                 }.bind(this));
