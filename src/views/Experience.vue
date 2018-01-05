@@ -52,6 +52,12 @@
         margin-bottom: 10px;
     }
 
+    .experience-list-title {
+        font-size: 19px;
+        color: black;
+        font-weight: initial;
+    }
+
 
 </style>
 <template>
@@ -65,12 +71,10 @@
 
         <div>
             <Card class="experience-list" v-for="experience in experienceList" :key="experience.id">
-                <h2 class="auto-break-line">
+                <a class="experience-list-title auto-break-line" @click="getExperience(experience.id)">
                     {{experience.title}}
-                </h2>
+                </a>
                 <p class="p-left">
-                    <span  @click="getExperience(experience.id)"><Icon type="paper-airplane"></Icon>&nbsp;查看详情</span>
-                    &nbsp;&nbsp;&nbsp;
                     <Icon type="calendar"></Icon>&nbsp;{{experience.createTime}}
                     &nbsp;&nbsp;&nbsp;
                     <Icon type="ios-speedometer-outline"></Icon>&nbsp;获得评分:{{experience.rates}}
