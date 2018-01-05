@@ -77,7 +77,7 @@
                 <div v-show="isShowMoreITs" style="width: 100%">
 
                     <Card v-for="article in moreITArticleList" :key="article.id" class="it-article-list">
-                        <a class="it-article-title" @click="showMoreITTechArticles(article.articleId)">
+                        <a class="it-article-title auto-break-line" @click="showMoreITTechArticles(article.articleId)">
                             <Icon :type="article.iconType"></Icon> &nbsp; {{article.title}}
                         </a>
                         <p class="p-left">
