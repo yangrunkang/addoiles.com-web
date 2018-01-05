@@ -196,6 +196,9 @@
             },
             //初始化编辑器
             initOilEditor(){
+
+                this.clearContent();
+
                 try{
                   /*
                   编辑完回到上一个页面 $router.go(-1)
@@ -235,6 +238,8 @@
                             businessId:editObj.businessId
                         };
 
+                        //safe
+                        sessionStorage.removeItem("editObj");
                         this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                             let db_return_data = resp.data.data;
                             if(resp.data.code == 0 && db_return_data != null){
@@ -249,12 +254,11 @@
                     }
                 }catch (e){
                     this.$Notice.error({
-                        desc: '初始化编辑器:非正常途径访问该页面,不要乱搞哦'
+                        desc: '初始化编辑器:非正常途径访问该页面,或者您刷新了整个页面'
                     });
                 }
 
-                //safe
-                sessionStorage.removeItem("editObj");
+
             },
             /**
              * 是否公开
