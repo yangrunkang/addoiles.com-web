@@ -15,7 +15,7 @@
         <Row type="flex">
             <!--左边:文章简表-->
             <i-col :span="spanLeft" class="layout-menu-left">
-                <Button type="info" size="large" long @click="toWriteITArticle()" style="width: 70%;margin-bottom: 40px" >技术分享</Button>
+                <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 40px" >技术分享</Button>
                 <Timeline pending>
                     <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
                         <a @click="getITArticleDetail(pithiness.articleId)" >
