@@ -3,7 +3,7 @@
         <Table border :columns="experienceColumns" :data="experienceList"></Table>
 
         <!--查看模态框-->
-        <Modal width="1140" v-model="showModal">
+        <Modal width="1140" v-model="showModal" :styles="{top: '20px'}">
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>
