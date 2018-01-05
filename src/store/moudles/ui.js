@@ -44,6 +44,16 @@ const ui = {
                 desc: '<h6>系统故障,删除失败</h6>'
             });
         },
+        /**
+         * 文章已全部加载
+         * @param state
+         * @param vm
+         */
+        loadAll(state,vm){
+            vm.$Notice.info({
+                desc: '<h6>文章已全部加载</h6>'
+            });
+        },
 
 
     },
