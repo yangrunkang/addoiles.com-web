@@ -153,8 +153,6 @@
                     deleteStatus:deleteStatus
                 };
 
-                console.log(article);
-
                 //保存为草稿,说明之前已经有了,改为编辑
                 // if(deleteStatus === 2){
                 //     operation = 'editArticle';
