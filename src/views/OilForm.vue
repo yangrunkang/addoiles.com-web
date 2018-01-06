@@ -6,13 +6,6 @@
         height: fit-content;
     }
 
-    /*问题提问 用户名和创建时间*/
-    .p-right {
-        text-align: right;
-        color: rgba(91, 106, 97, 0.45);
-        padding-right: 7px;
-    }
-
     /*提问-回答列表div*/
     .qa-list-div {
         font-size: 14px;

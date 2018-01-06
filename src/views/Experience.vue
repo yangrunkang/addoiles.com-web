@@ -33,15 +33,6 @@
         text-align: center;
     }
 
-
-
-    .p-right {
-        text-align: right;
-        color: rgba(91, 106, 97, 0.45);
-        padding-right: 7px;
-        font-size: 14px;
-    }
-
     .p-left {
         text-align: left;
         margin-top: 7px;
