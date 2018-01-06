@@ -159,11 +159,15 @@
                 // if(deleteStatus === 2){
                 //     operation = 'editArticle';
                 // }
+                this.$Notice.info({
+                    desc: '正在执行操作,请稍等',
+                    duration: 3
+                });
                 //调用服务端接口
                 this.axios.post(operation,article).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data == 1){
                         this.$Notice.success({
-                            desc: '完成'
+                            desc: '操作执行完成'
                         });
                         setTimeout(function () {
                             this.$router.go(-1);
