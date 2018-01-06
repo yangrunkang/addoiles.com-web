@@ -31,6 +31,8 @@
         width: 100%;
         height: fit-content;
     }
+
+
 </style>
 <template>
     <div>
@@ -80,7 +82,6 @@
                     <h2>热门动弹</h2>
                     <Card :bordered="true" >
                         <Button type="success" long style="margin-bottom: 5px" @click="addHots">发表动弹</Button>
-
                         <p>
                             <Input placeholder="热点标题" style="margin-bottom: 5px" v-model="hotTitle"/>
                             <Input type="textarea" :rows="4" placeholder="热门描述" v-model="hotContent"/>
@@ -88,12 +89,27 @@
                     </Card>
                     <br />
 
-                    <Card :bordered="true" style="margin-top: 6px"  v-for="item in hotsList" :key="item.id">
-                        <p slot="title" class="auto-break-line">
-                            {{ item.title }}
-                        </p>
-                        <p class="auto-break-line">{{ item.content }}</p>
-                    </Card>
+                    <Carousel
+                            v-model="value4"
+                            :autoplay="hotsSetting.autoplay"
+                            :autoplay-speed="hotsSetting.autoplaySpeed"
+                            :dots="hotsSetting.dots"
+                            :radius-dot="hotsSetting.radiusDot"
+                            :trigger="hotsSetting.trigger"
+                            :arrow="hotsSetting.arrow">
+                        <CarouselItem  v-for="item in hotsList" :key="item.id">
+                            <Card :bordered="false">
+                                <p slot="title" class="auto-break-line">
+                                    {{ item.title }}
+                                </p>
+                                <p class="auto-break-line" style="font-size: 20px">{{ item.content }}</p>
+                                <p class="p-right"><Icon type="person"></Icon>&nbsp;{{ item.userName }}</p>
+                                <p class="p-right"><Icon type="calendar"></Icon>&nbsp;{{ item.createTime }}</p>
+                            </Card>
+                        </CarouselItem>
+                    </Carousel>
+
+
                 </div>
             </i-col>
         </Row>
@@ -110,6 +126,17 @@
                     dots: 'inside',
                     trigger: 'click',
                     arrow: 'hover'
+                },
+                value4: 0,
+                hotsSetting: {
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    loop:true,
+                    dots: 'none',
+                    radiusDot: false,
+                    trigger: 'click',
+                    arrow: 'never',
+                    easing:"ease"
                 },
                 //图片简洁
                 picName : '该图无简介',
@@ -131,8 +158,6 @@
         methods: {
             //初始化热门动弹
             initHots(){
-
-
                 this.queryDto.microType = 0;
                 this.queryDto.pageNo = 0;
                 this.queryDto.pageSize = 10;
@@ -141,7 +166,13 @@
                     if(res.data.code == 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){
-                            this.hotsList.push({title : resp[i].title , content : resp[i].content,id:resp[i].id});
+                            this.hotsList.push({
+                                title : resp[i].title ,
+                                content : resp[i].content,
+                                id:resp[i].id,
+                                createTime:this.addoileUtil.formatUnixTime(resp[i].createTime),
+                                userName:resp[i].userName
+                            });
                         }
                     }
                 }.bind(this));
@@ -167,8 +198,8 @@
                     return;
                 }
 
-                if(hotContent.length > 50){
-                    this.$Message.warning("动弹内容字数不能多余50个",3);
+                if(hotContent.length >= 500){
+                    this.$Message.warning("动弹内容字数不能多余500个",3);
                     return;
                 }
                 this.axios.post('addMicroContent',{
@@ -181,7 +212,12 @@
                         this.$Notice.info({
                             title: '<h3>动弹成功</h3>'
                         });
-                        this.hotsList.unshift({title : hotTitle , content : hotContent});
+                        this.hotsList.unshift({
+                            title : hotTitle,
+                            content : hotContent,
+                            userName : sessionStorage.getItem('userName'),
+                            createTime : '刚刚'
+                        });
                         //清空数据
                         this.hotTitle = '';
                         this.hotContent = '';
