@@ -54,6 +54,13 @@
                             <h3>新书推荐</h3>
                         </div>
                     </Card>
+                    <br />
+                    <Card>
+                        <div style="text-align:center">
+                            <img src="../images/index1.png">
+                            <h3>图片分享</h3>
+                        </div>
+                    </Card>
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
@@ -87,6 +94,11 @@
                             </Card>
                         </CarouselItem>
                     </Carousel>
+                </div>
+
+                <div>
+                    Do what????<br />
+                    服务器
                 </div>
 
 
