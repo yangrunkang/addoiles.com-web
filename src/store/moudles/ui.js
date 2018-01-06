@@ -51,7 +51,7 @@ const ui = {
          */
         loadAll(state,vm){
             vm.$Notice.info({
-                desc: '<h6>文章已全部加载</h6>'
+                desc: '<h6>已全部加载啦~~</h6>'
             });
         },
         /**
