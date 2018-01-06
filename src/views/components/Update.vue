@@ -15,7 +15,7 @@
                 <p>&nbsp;&nbsp;·&nbsp;文章可以保存为草稿</p>
                 <p>&nbsp;&nbsp;·&nbsp;精简前端代码-访问更快</p>
                 <p>&nbsp;&nbsp;·&nbsp;支持文章是否公开</p>
-                <p>&nbsp;&nbsp;·&nbsp;后端服务整体优化</p>
+                <p>&nbsp;&nbsp;·&nbsp;后端服务整体优化(BigVersion)</p>
                 <h4>修复:</h4>
                 <p>&nbsp;&nbsp;·&nbsp;修复验证码验证时正好撞到清除操作</p>
             </div>
