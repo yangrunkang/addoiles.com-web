@@ -39,42 +39,7 @@
         <Row class="row">
             <i-col span="18" class="main-col">
                 <div id="cycle-pics">
-                    <Card style="width:100%;background-color: white;border: none">
-                        <div class="play-pics">
-                            <Carousel
-                                    v-model="value3"
-                                    :autoplay="setting.autoplay"
-                                    :autoplay-speed="setting.autoplaySpeed"
-                                    :dots="setting.dots"
-                                    :trigger="setting.trigger"
-                                    @on-change="picChange"
-                                    :arrow="setting.arrow">
-                                <Carousel-item>
-                                    <div class="carousel" style="">
-                                        <img class="pic-style" src="../images/index3.png">
-                                    </div>
-                                </Carousel-item>
-                                <Carousel-item>
-                                    <div class="carousel">
-                                        <img  class="pic-style"  src="../images/index0.png">
-                                    </div>
-                                </Carousel-item>
-                                <Carousel-item>
-                                    <div class="carousel">
-                                        <img  class="pic-style" src="../images/index1.png">
-                                    </div>
-                                </Carousel-item>
-                                <Carousel-item>
-                                    <div class="carousel">
-                                        <img  class="pic-style" src="../images/index2.png">
-                                    </div>
-                                </Carousel-item>
-                            </Carousel>
-                        </div>
-                        <p style="text-align: center">
-                            {{picName}}
-                        </p>
-                    </Card>
+                    test
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
@@ -90,7 +55,7 @@
                     <br />
 
                     <Carousel
-                            v-model="value4"
+                            v-model="hotsCarousel"
                             :autoplay="hotsSetting.autoplay"
                             :autoplay-speed="hotsSetting.autoplaySpeed"
                             :dots="hotsSetting.dots"
@@ -108,9 +73,9 @@
                             </Card>
                         </CarouselItem>
                     </Carousel>
-
-
                 </div>
+
+
             </i-col>
         </Row>
     </div>
@@ -119,15 +84,7 @@
     export default {
         data () {
             return {
-                value3: 0,
-                setting: {
-                    autoplay: true,
-                    autoplaySpeed: 2500,
-                    dots: 'inside',
-                    trigger: 'click',
-                    arrow: 'hover'
-                },
-                value4: 0,
+                hotsCarousel: 0,
                 hotsSetting: {
                     autoplay: true,
                     autoplaySpeed: 2000,
@@ -138,8 +95,6 @@
                     arrow: 'never',
                     easing:"ease"
                 },
-                //图片简洁
-                picName : '该图无简介',
                 //热门列表
                 hotsList:[],
                 //热门标题
@@ -227,19 +182,6 @@
                         });
                     }
                 }.bind(this));
-
-            },
-            picChange($event){
-                let index = $event;
-                if(index == 0){
-                    this.picName = '长大才知道,童年的时光总是美好的';
-                }else if(index == 1){
-                    this.picName = '人生的路你会如何选择?';
-                }else if(index == 2){
-                    this.picName = '美';
-                }else if(index == 3){
-                    this.picName = '梦想不休不止,Do it!';
-                }
 
             },
         },
