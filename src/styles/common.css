@@ -71,6 +71,12 @@ blockquote {
     border-left: 4px solid #ccc;
 }
 
+/*统一P标签内容右移*/
+.p-right {
+    text-align: right;
+    color: rgba(91, 106, 97, 0.45);
+    padding-right: 7px;
+}
 
 
 
