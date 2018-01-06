@@ -177,6 +177,11 @@
                     return;
                 }
 
+                this.$Notice.info({
+                    desc: '正在登录请稍等',
+                    duration : 3
+                });
+
                 this.axios.post("login",{
                     email : email,
                     password : password

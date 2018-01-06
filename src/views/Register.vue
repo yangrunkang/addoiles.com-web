@@ -231,6 +231,9 @@
                     code : this.verificationCode
                 }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data == true){
+                        this.$Notice.info({
+                            desc: '正在注册请稍等'
+                        });
                         //begin to register
                         this.axios.post("register",{
                             userName : userName,
