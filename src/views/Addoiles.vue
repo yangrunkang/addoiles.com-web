@@ -39,7 +39,21 @@
         <Row class="row">
             <i-col span="18" class="main-col">
                 <div id="cycle-pics">
-                    test
+                    <!--电影推荐-->
+                    <!--书本推荐-->
+                    <Card>
+                        <div style="text-align:center">
+                            <img src="../images/index0.png">
+                            <h3>电影推荐</h3>
+                        </div>
+                    </Card>
+                    <br />
+                    <Card>
+                        <div style="text-align:center">
+                            <img src="../images/index2.png">
+                            <h3>新书推荐</h3>
+                        </div>
+                    </Card>
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
