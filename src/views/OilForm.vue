@@ -25,6 +25,7 @@
     /*问答区-右边部分*/
     .qa-area-right {
         width:81%;
+        height: 100%;
         border: none;
         margin:35px auto auto 45px;
     }
@@ -43,51 +44,51 @@
                             <h3>爱情,八卦,故事,亲情,笑话等等</h3>
                         </div>
                         <p style="text-align: center;margin-top: 1%">
-                            <Input  type="textarea" :rows="6" size="large" placeholder="随意提问区(新闻,八卦,火星······只要你能想的到)" v-model="question" style="width: 100%" />
+                            <Input  type="textarea" :rows="6" size="large" :placeholder="inputTypeDesc" v-model="question" style="width: 100%" />
                             <Button type="info" size="large" long  style="width: 100%;margin-top: 10px" @click="askQuestion" >我要提问</Button>
                         </p>
-                        <!--解答-->
-                        <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
-                              v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
-                            <!--最新问题-->
-                            <h2>最新问题{{index + 1}}</h2>
-                            <div>
-                                <!--具体的问题-->
-                                <div class="qa-list-div">
-                                    <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
-                                    <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
-                                    <p class="p-right">{{questionAnswer.question.createTime}}</p>
-                                </div>
-                                <h2>回答</h2>
-                                <div>
-                                    <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
-                                        <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
-                                    </i-input>
-                                </div>
-                                <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                                    <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
-                                    <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
-                                    <p class="p-right">{{answer.createTime}}</p>
-                                </div>
+                    </Card>
+                    <!--解答-->
+                    <Card style="width:100%;background-color: white;border: none;margin-top: 6px"
+                          v-for="(questionAnswer,index) in questionAnswerList" :key="questionAnswer.id">
+                        <!--最新问题-->
+                        <h2>最新问题{{index + 1}}</h2>
+                        <div>
+                            <!--具体的问题-->
+                            <div class="qa-list-div">
+                                <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
+                                <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
+                                <p class="p-right">{{questionAnswer.question.createTime}}</p>
                             </div>
-                        </Card>
+                            <h2>回答</h2>
+                            <div>
+                                <i-input style="margin-top: 6px" placeholder="我要回答" v-model="answerContent[index]">
+                                    <Button slot="append" icon="compose" @click="toAnswer(questionAnswer.question.questionId,index)"></Button>
+                                </i-input>
+                            </div>
+                            <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
+                                <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
+                                <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
+                                <p class="p-right">{{answer.createTime}}</p>
+                            </div>
+                        </div>
                     </Card>
                     <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
                 <div class="qa-area-right">
-                    <Row><i-col><Button type="info" shape="circle" long>编程语言</Button></i-col></Row>
+                    <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(0)">编程语言</Button></i-col></Row>
                     <br/>
-                    <Row><i-col><Button type="primary" shape="circle" long>开发问题</Button></i-col></Row>
+                    <Row><i-col><Button type="primary" shape="circle" long @click="toQuestionType(1)">开发问题</Button></i-col></Row>
                     <br/>
-                    <Row><i-col><Button type="success" shape="circle" long>缓存技术</Button></i-col></Row>
+                    <Row><i-col><Button type="success" shape="circle" long @click="toQuestionType(2)">缓存技术</Button></i-col></Row>
                     <br/>
-                    <Row><i-col><Button type="info" shape="circle" long>操作系统</Button></i-col></Row>
+                    <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(3)">操作系统</Button></i-col></Row>
                     <br/>
-                    <Row><i-col><Button type="ghost" shape="circle" long>学习</Button></i-col></Row>
-                    <br/>
-                    <Row><i-col><Button type="warning" shape="circle" long>八卦</Button></i-col></Row>
+                    <Row><i-col><Button type="ghost" shape="circle" long @click="toQuestionType(4)">学习</Button></i-col></Row>
+                    <!--<br/>-->
+                    <!--<Row><i-col><Button type="warning" shape="circle" long @click="initQuestionAnswer(5)">八卦</Button></i-col></Row>-->
                 </div>
             </i-col>
         </Row>
@@ -99,6 +100,8 @@
             return {
                 //问题
                 question : '',
+                //提问时,问题类型的placeholder
+                inputTypeDesc:'',
                 //用户回答的内容(使用数组然后通过index区别)
                 answerContent : [],
                 //问题&答案List
@@ -108,7 +111,8 @@
                     page : {
                         pageNo: 0,
                         pageSize: 10
-                    }
+                    },
+                    questionType:0
                 }
             }
         },
@@ -135,6 +139,7 @@
                 }
 
                 this.axios.post("addQuestion",{
+                    type : this.queryDto.questionType,
                     content : questionContent,
                     userId : userId
                 }).then(function (resp) {
@@ -142,7 +147,7 @@
                         this.$Notice.success({
                             desc: '已经提问,2s后刷新本页面'
                         });
-                        this.question = '';
+                        this.clearContent();
                         setTimeout(function () {
                             this.$router.go(0);
                         }.bind(this), 2000);
@@ -191,55 +196,80 @@
                                     content : answerContent
                                 }
                         );
-                        this.answerContent[index] = '';
+                        this.clearContent();
                     }
 
                 }.bind(this));
 
             },
+            /**
+             * 切换不同的类型
+             *  之前重复点击某一类型会追加list,解决不了,就重新封装了一层
+             * */
+            toQuestionType(questionType){
+
+                this.clearContent();
+
+                this.inputTypeDesc = this.addoileUtil.getInputTypePlaceHolder(questionType);
+
+                this.questionAnswerList = [];
+                this.queryDto = {
+                    page : {
+                        pageNo: 0,
+                        pageSize: 10
+                    }
+                };
+                this.queryDto.questionType = questionType;
+
+                this.initQuestionAnswer()
+            },
             //初始化问题区域
             initQuestionAnswer(){
-
                 this.axios.post("getQuestionAnswerList",this.queryDto).then(function (resp) {
                     if(resp.data.code == 0){
                         let questionAnswerDtoList = resp.data.data;
-                        for(let i = 0;i < questionAnswerDtoList.length; i++){
-                            let questionAnswerDto = questionAnswerDtoList[i];
+                        if(questionAnswerDtoList.length > 0){
+                            for(let i = 0;i < questionAnswerDtoList.length; i++){
+                                let questionAnswerDto = questionAnswerDtoList[i];
 
-                            let question = questionAnswerDto.question;
+                                let question = questionAnswerDto.question;
 
-                            let answerList = [];
-                            answerList = questionAnswerDto.answerList;
+                                let answerList = [];
+                                answerList = questionAnswerDto.answerList;
 
-                            let _answerList = [];
-                            for(let j = 0; j < answerList.length; j++){
-                                let _answer = answerList[j];
-                                _answerList.push({
-                                    userName:_answer.userName,
-                                    createTime:this.addoileUtil.formatUnixTime(_answer.createTime),
-                                    content : _answer.content});
+                                let _answerList = [];
+                                for(let j = 0; j < answerList.length; j++){
+                                    let _answer = answerList[j];
+                                    _answerList.push({
+                                        userName:_answer.userName,
+                                        createTime:this.addoileUtil.formatUnixTime(_answer.createTime),
+                                        content : _answer.content});
+                                }
+
+                                this.questionAnswerList.push({
+                                    question : {
+                                        userName:question.userName,
+                                        createTime:this.addoileUtil.formatUnixTime(question.createTime),
+                                        content : question.content,
+                                        questionId:question.questionId
+                                    },
+                                    answerList : _answerList
+                                });
+
                             }
-
-                            this.questionAnswerList.push({
-                                question : {
-                                    userName:question.userName,
-                                    createTime:this.addoileUtil.formatUnixTime(question.createTime),
-                                    content : question.content,
-                                    questionId:question.questionId
-                                },
-                                answerList : _answerList
-                            });
-
+                        }else{
+                            this.$store.commit('loadAll',this);
                         }
-
                     }
                 }.bind(this));
-
-
             },
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.initQuestionAnswer();
+            },
+            clearContent(){
+                this.question = '';
+                this.answerContent = [];
             }
         },
         mounted() {
