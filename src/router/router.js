@@ -85,6 +85,13 @@ const routers = [
             title: '油站编辑器'
         },
         component: (resolve) => require(['../views/components/OilEditor.vue'], resolve)
+    },
+    {
+        path: '/Update',
+        meta: {
+            title: '更新日志'
+        },
+        component: (resolve) => require(['../views/components/Update.vue'], resolve)
     }
 ];
 export default routers;
