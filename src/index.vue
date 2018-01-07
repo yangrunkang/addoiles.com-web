@@ -91,16 +91,11 @@
         methods: {
             //初始化导航栏
             initNavList(){
-                this.axios.get('getNavs').then(function (res) {
+                this.axios.get('getNavList').then(function (res) {
                     if(res.data.code == 0){
-                        let resp = res.data.data;
-                        let _navList = [];
-                        for(let i =0 ;i<resp.length ; i++){
-                            _navList.push({navRouter : resp[i].navRouter , navIcon : resp[i].navIcon, navName : resp[i].navName});
-                        }
-                        //导航栏针对每个用户存储在store(到了仓库后,我把它放在session中了)
-                        this.$store.commit('setNavList',_navList); //notice: is setNavList ,not to write navList!!
-                        //从仓库中获取 notice: not getNavList()
+                        let navListJson = res.data.data;
+                        console.log(navListJson);
+                        this.$store.commit('setNavList',navListJson);
                         this.navList = this.$store.getters.getNavList;
                     }
                 }.bind(this));

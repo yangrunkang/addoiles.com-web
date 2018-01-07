@@ -23,8 +23,8 @@ const business = {
         setUserId (state, userId) {
             sessionStorage.setItem("userId",userId);
         },
-        setNavList (state, navList) {
-            Cookies.set("navList",JSON.stringify(navList));
+        setNavList (state, navListJson) {
+            Cookies.set("navList",navListJson);
         },
         setEmail (state, email) {
             Cookies.set("email",email);

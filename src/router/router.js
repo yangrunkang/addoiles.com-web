@@ -22,7 +22,7 @@ const routers = [
         component: (resolve) => require(['../views/Experience.vue'], resolve)
     },
     {
-        path: '/OilForm',
+        path: '/OilForum',
         meta: {
             title: '油站论坛'
         },
