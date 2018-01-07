@@ -7,8 +7,11 @@
 <template>
     <div>
         <Card>
-            <Upload action="localhost:8081/addoiles.com/addFirstPage">
+            <Upload
+                    accept="image/*"
+                    action="http://localhost:8081/addoiles.com/addFirstPage">
                 <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
+                <p>action 后的连接要加http://</p>
             </Upload>
         </Card>
     </div>
@@ -19,7 +22,7 @@ export default {
     name: 'file-upload',
     data () {
         return {
-            uploadList: []
+
         };
     },
     methods: {

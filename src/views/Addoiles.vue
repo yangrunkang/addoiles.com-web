@@ -43,22 +43,22 @@
                     <!--书本推荐-->
                     <Card>
                         <div style="text-align:center">
-                            <img src="../images/index0.png">
-                            <h3>电影推荐</h3>
+                            <img :src="filmDto.image">
+                            <h3>电影推荐之{{filmDto.title}}</h3>
                         </div>
                     </Card>
                     <br />
                     <Card>
                         <div style="text-align:center">
-                            <img src="../images/index2.png">
-                            <h3>新书推荐</h3>
+                            <img :src="bookDto.image">
+                            <h3>新书推荐{{bookDto.title}}</h3>
                         </div>
                     </Card>
                     <br />
                     <Card>
                         <div style="text-align:center">
-                            <img src="../images/index1.png">
-                            <h3>图片分享</h3>
+                            <img :src="picDto.image">
+                            <h3>图片分享{{picDto.title}}</h3>
                         </div>
                     </Card>
                 </div>
@@ -133,7 +133,10 @@
                         pageNo: 0,
                         pageSize: 10
                     }
-                }
+                },
+                filmDto:{},
+                bookDto:{},
+                picDto:{}
             }
         },
         methods: {
@@ -154,6 +157,37 @@
                                 createTime:this.addoileUtil.formatUnixTime(resp[i].createTime),
                                 userName:resp[i].userName
                             });
+                        }
+                    }
+                }.bind(this));
+            },
+            initImages(){
+                this.axios.post('getFistPageImage').then(function (res) {
+                    if(res.data.code == 0){
+                        let resp = res.data.data;
+                        for(let i =0 ;i<resp.length ; i++){
+                            let image = resp[i];
+                            if(image.type === 0){
+                                this.filmDto.title = image.title;
+                                this.filmDto.content = image.content;
+                                this.filmDto.image = image.image;
+                                console.log('0');
+                            }
+
+                            if(image.type === 1){
+                                this.bookDto.title = image.title;
+                                this.bookDto.content = image.content;
+                                this.bookDto.image = image.image;
+                                console.log('1');
+                            }
+
+                            if(image.type === 2){
+                                this.picDto.title = image.title;
+                                this.picDto.content = image.content;
+                                this.picDto.image = image.image;
+                                console.log('2');
+                            }
+
                         }
                     }
                 }.bind(this));
@@ -213,6 +247,7 @@
         },
         mounted() {
             this.initHots();
+             this.initImages();
         }
     }
 </script>
