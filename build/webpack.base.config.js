@@ -12,7 +12,7 @@ module.exports = {
         vendors: '@/vendors/vendors.js'
     },
     output: {
-        path: path.join(__dirname, './dist')
+        path: path.join(__dirname, '../dist')
     },
     module: {
         rules: [
