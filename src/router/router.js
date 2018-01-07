@@ -26,7 +26,7 @@ const routers = [
         meta: {
             title: '油站论坛'
         },
-        component: (resolve) => require(['../views/OilForm.vue'], resolve)
+        component: (resolve) => require(['../views/OilForum.vue'], resolve)
     },
     {
         path: '/ITTech',
