@@ -51,14 +51,14 @@
                     <Card>
                         <div style="text-align:center">
                             <img :src="bookDto.image">
-                            <h3>新书推荐{{bookDto.title}}</h3>
+                            <h3>新书推荐之{{bookDto.title}}</h3>
                         </div>
                     </Card>
                     <br />
                     <Card>
                         <div style="text-align:center">
                             <img :src="picDto.image">
-                            <h3>图片分享{{picDto.title}}</h3>
+                            <h3>图片分享之{{picDto.title}}</h3>
                         </div>
                     </Card>
                 </div>
