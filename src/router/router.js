@@ -92,13 +92,6 @@ const routers = [
             title: '更新日志'
         },
         component: (resolve) => require(['../views/components/Update.vue'], resolve)
-    },
-    {
-        path: '/file-upload',
-        meta: {
-            title: 'file-upload'
-        },
-        component: (resolve) => require(['../views/manager/file-upload.vue'], resolve)
     }
 ];
 export default routers;
