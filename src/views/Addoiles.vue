@@ -25,6 +25,7 @@
     /*热门动弹div*/
     .hot-msg {
         margin: 0px 0px 10px 10px;
+        height: fit-content;
     }
 
     /*梦想*/
@@ -37,6 +38,20 @@
         height: fit-content;
     }
 
+    .scroll-wrap{
+        width: inherit;
+        height: 800px;
+        overflow: hidden;
+    }
+
+    .scroll-content{
+        position: relative;
+        transition: top 0.5s;
+
+        li{
+            line-height: inherit;
+        }
+    }
 
 </style>
 <template>
@@ -78,50 +93,24 @@
                             <Input type="textarea" :rows="4" placeholder="热门描述" v-model="hotContent"/>
                         </p>
                         <br />
+                        <div class="scroll-wrap">
+                            <ul class="scroll-content" :style="{ top }">
+                                <li  v-for="item in hotsList" :key="item.id">
+                                    <div>
+                                        <strong class="auto-break-line" style="font-size: 18px">
+                                            {{ item.title }}
+                                        </strong>
+                                        <p class="auto-break-line" style="font-size: 20px">{{ item.content }}</p>
+                                        <p class="p-right"><Icon type="person"></Icon>&nbsp;{{ item.userName }}</p>
+                                        <p class="p-right"><Icon type="calendar"></Icon>&nbsp;{{ item.createTime }}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
-                        <Carousel
-                                v-model="hotsCarousel"
-                                :autoplay="hotsSetting.autoplay"
-                                :autoplay-speed="hotsSetting.autoplaySpeed"
-                                :dots="hotsSetting.dots"
-                                :radius-dot="hotsSetting.radiusDot"
-                                :trigger="hotsSetting.trigger"
-                                :arrow="hotsSetting.arrow">
-                            <CarouselItem  v-for="item in hotsList" :key="item.id">
-                                <strong class="auto-break-line" style="font-size: 18px">
-                                    {{ item.title }}
-                                </strong>
-                                <p class="auto-break-line" style="font-size: 20px">{{ item.content }}</p>
-                                <p class="p-right"><Icon type="person"></Icon>&nbsp;{{ item.userName }}</p>
-                                <p class="p-right"><Icon type="calendar"></Icon>&nbsp;{{ item.createTime }}</p>
-                            </CarouselItem>
-                        </Carousel>
+
                     </Card>
                 </div>
-
-                <div class="dreams">
-                    <Card>
-                        <h2>梦想</h2>
-                        <Carousel
-                                v-model="dreamsCarousel"
-                                :autoplay="dreamsSetting.autoplay"
-                                :autoplay-speed="dreamsSetting.autoplaySpeed"
-                                :dots="dreamsSetting.dots"
-                                :radius-dot="dreamsSetting.radiusDot"
-                                :trigger="dreamsSetting.trigger"
-                                :arrow="dreamsSetting.arrow">
-                            <CarouselItem  v-for="item in dreamList" :key="item.id">
-                                <strong class="auto-break-line" style="font-size: 18px">
-                                    {{ item.title }}
-                                </strong>
-                                <p class="auto-break-line" style="font-size: 20px">{{ item.content }}</p>
-                                <p class="p-right"><Icon type="person"></Icon>&nbsp;{{ item.userName }}</p>
-                                <p class="p-right"><Icon type="calendar"></Icon>&nbsp;{{ item.createTime }}</p>
-                            </CarouselItem>
-                        </Carousel>
-                    </Card>
-                </div>
-
                 <div class="dreams">
                     <Card style="color: rgb(158, 167, 180);">
                         首页内容图片展示可投稿至yangrunkang53@gmail.com
@@ -141,37 +130,10 @@
     export default {
         data () {
             return {
-                hotsCarousel: 0,
-                hotsSetting: {
-                    autoplay: true,
-                    autoplaySpeed: 2000,
-                    loop:true,
-                    dots: 'none',
-                    radiusDot: false,
-                    trigger: 'click',
-                    arrow: 'never',
-                    easing:"ease"
-                },
+
                 //热门列表
                 hotsList:[],
-
-
-
-                dreamsCarousel: 0,
-                dreamsSetting: {
-                    autoplay: true,
-                    autoplaySpeed: 4000,
-                    loop:true,
-                    dots: 'none',
-                    radiusDot: false,
-                    trigger: 'click',
-                    arrow: 'hover',
-                    easing:"ease"
-                },
-                //梦想列表
-                dreamList:[],
-
-
+                hotsActiveIndex: 0,
 
                 //热门标题
                 hotTitle : '',
@@ -187,6 +149,11 @@
                 filmDto:{},
                 bookDto:{},
                 picDto:{}
+            }
+        },
+        computed: {
+            top: function () {
+                return -this.hotsActiveIndex * 50 + 'px';
             }
         },
         methods: {
@@ -208,6 +175,14 @@
                         }
                     }
                 }.bind(this));
+
+                setInterval(_ => {
+                    if(this.hotsActiveIndex < this.hotsList.length) {
+                        this.hotsActiveIndex += 1;
+                    } else {
+                        this.hotsActiveIndex = 0;
+                    }
+                }, 1000);
             },
             initImages(){
                 this.axios.post('getFistPageImage').then(function (res) {
@@ -233,25 +208,6 @@
                                 this.picDto.image = image.image;
                             }
 
-                        }
-                    }
-                }.bind(this));
-            },
-            initDreams(){
-
-                this.axios.post('getAllDreams').then(function (res) {
-                    if(res.data.code == 0 && res.data.data.length > 0){
-                        let response = res.data.data;
-                        console.log(response);
-                        for(let i = 0 ; i < response.length ; i++){
-                            let dream = response[i];
-                            this.dreamList.push({
-                                title : dream.title ,
-                                content : dream.content,
-                                id:dream.id,
-                                createTime:this.addoileUtil.formatUnixTime(dream.createTime),
-                                userName:dream.userName
-                            });
                         }
                     }
                 }.bind(this));
@@ -312,7 +268,6 @@
         mounted() {
             this.initHots();
             this.initImages();
-            this.initDreams();
         }
     }
 </script>
