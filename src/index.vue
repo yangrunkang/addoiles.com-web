@@ -94,7 +94,6 @@
                 this.axios.get('getNavList').then(function (res) {
                     if(res.data.code == 0){
                         let navListJson = res.data.data;
-                        console.log(navListJson);
                         this.$store.commit('setNavList',navListJson);
                         this.navList = this.$store.getters.getNavList;
                     }

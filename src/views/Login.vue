@@ -179,7 +179,7 @@
 
                 this.$Notice.info({
                     desc: '正在登录请稍等',
-                    duration : 3
+                    duration : 1
                 });
 
                 this.axios.post("login",{

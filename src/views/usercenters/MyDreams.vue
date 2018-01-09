@@ -53,7 +53,6 @@
              */
             remove(tableIndex){
                 let dreamId = this.dreamList[tableIndex].dreamId;
-                console.log(dreamId);
                 let _this = this;
                 let config = {
                     content:'确定删除吗?',
