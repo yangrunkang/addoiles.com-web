@@ -122,6 +122,16 @@
                     </Card>
                 </div>
 
+                <div class="dreams">
+                    <Card style="color: rgb(158, 167, 180);">
+                        首页内容图片展示可投稿至yangrunkang53@gmail.com
+                        <br /><br />
+                        图片要求:813px*400px(宽*高)
+                        <br /><br />
+                        Tips:可使用截图工具截取指定尺寸
+                    </Card>
+                </div>
+
 
             </i-col>
         </Row>
