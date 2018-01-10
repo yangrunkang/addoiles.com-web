@@ -27,7 +27,6 @@
                 <h4>修复:</h4>
                 <p>&nbsp;&nbsp;·&nbsp;再一次修复导航栏在部分浏览器中不居中的问题</p>
                 <p>&nbsp;&nbsp;·&nbsp;修复用户管理部分内容未按照时间倒叙排列Bug</p>
-                <p>&nbsp;&nbsp;·&nbsp;修复用户管理部分内容未按照时间倒叙排列Bug</p>
             </div>
         </Card>
         <br />
