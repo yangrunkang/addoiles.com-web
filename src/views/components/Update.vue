@@ -7,6 +7,31 @@
     <div>
 
         <Card>
+            <p slot="title">V1.3</p>
+            <div>
+                <h4>新增:</h4>
+                <p>&nbsp;&nbsp;·&nbsp;增添论坛页面,第一版较为简单</p>
+                <p>&nbsp;&nbsp;·&nbsp;用户管理页面支持文章预览</p>
+                <p>&nbsp;&nbsp;·&nbsp;经历分享页面改版,所有的经历内容点击后展示独立阅读页面</p>
+                <p>&nbsp;&nbsp;·&nbsp;首页改版,更新为展示推荐内容</p>
+                <p>&nbsp;&nbsp;·&nbsp;添加更新日志页面,可以看到每次的更新内容</p>
+                <p>&nbsp;&nbsp;·&nbsp;注册登录框下添加[未收到邮件请反馈]入口</p>
+                <p>&nbsp;&nbsp;·&nbsp;首页热门动弹滚动效果</p>
+                <p>&nbsp;&nbsp;·&nbsp;页面某个地方有彩蛋哦</p>
+                <h4>优化:</h4>
+                <p>&nbsp;&nbsp;·&nbsp;加载文章时,提示正在加载</p>
+                <p>&nbsp;&nbsp;·&nbsp;未登录注册成功前显示请稍等</p>
+                <p>&nbsp;&nbsp;·&nbsp;分页无数据时,登录/注册时,页面提示相关信息</p>
+                <p>&nbsp;&nbsp;·&nbsp;文章入库时,显示操作提示</p>
+                <p>&nbsp;&nbsp;·&nbsp;所有页面优化,去除沉重代码,减少请求次数</p>
+                <h4>修复:</h4>
+                <p>&nbsp;&nbsp;·&nbsp;再一次修复导航栏在部分浏览器中不居中的问题</p>
+                <p>&nbsp;&nbsp;·&nbsp;修复用户管理部分内容未按照时间倒叙排列Bug</p>
+                <p>&nbsp;&nbsp;·&nbsp;修复用户管理部分内容未按照时间倒叙排列Bug</p>
+            </div>
+        </Card>
+        <br />
+        <Card>
             <p slot="title">V1.2</p>
             <div>
                 <h4>新增/优化:</h4>
