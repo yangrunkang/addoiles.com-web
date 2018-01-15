@@ -52,6 +52,10 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
+                test: /iview.src.*?js$/,
+                loader: 'babel-loader'
+            },
+            {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     use: ['css-loader?minimize', 'autoprefixer-loader'],
