@@ -24,9 +24,11 @@ const business = {
             sessionStorage.setItem("userId",userId);
         },
         setNavList (state, navListJson) {
+            Cookies.remove('navList');
             Cookies.set("navList",navListJson);
         },
         setEmail (state, email) {
+            Cookies.remove('email');
             Cookies.set("email",email);
         }
     },
@@ -39,7 +41,7 @@ const business = {
             return sessionStorage.getItem("userId")+'';
         },
         getNavList: state => {
-            return JSON.parse(Cookies.get("navList"));
+            return Cookies.getJSON("navList");
         },
         getEmail: state => {
             Cookies.get("email");
