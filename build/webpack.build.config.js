@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const fs = require('fs');
 
 fs.open('./src/config/env.js', 'w', function (err, fd) {
@@ -39,6 +40,7 @@ module.exports = merge(webpackBaseConfig, {
             filename: '../dist/index.html',
             template: './src/template/index.ejs',
             inject: false
-        })
+        }),
+        new BundleAnalyzerPlugin()
     ]
 });
