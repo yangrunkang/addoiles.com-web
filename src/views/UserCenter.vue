@@ -1,6 +1,5 @@
 <style scoped lang="less">
     @import "../styles/common.css";
-
 </style>
 <template>
     <div>
@@ -38,7 +37,6 @@
     </div>
 </template>
 <script>
-    import ICol from "iview/src/components/grid/col";
     import Cookies from 'js-cookie';
 
     export default {

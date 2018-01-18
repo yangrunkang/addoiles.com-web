@@ -140,6 +140,8 @@
                 //声明周期一直到用户关闭浏览器
                 this.navList = this.$store.getters.getNavList;
             }else{
+                //默认到首页
+                this.$router.push('/');
                 //用户第一次打开浏览器进来,标记newUser
                 Cookies.set("newUser","1");
                 //初始化导航栏

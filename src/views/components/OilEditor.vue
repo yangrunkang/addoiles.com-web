@@ -58,7 +58,6 @@
 
     //安装vue-quill-editor富文本编辑器
     import Vue from 'vue';
-    import Cookies from 'js-cookie';
     import VueQuillEditor from 'vue-quill-editor';
     Vue.use(VueQuillEditor);
     export default {

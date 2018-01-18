@@ -87,9 +87,7 @@
     </div>
 </template>
 <script>
-    import ICol from "iview/src/components/grid/col";
     export default {
-        components: {ICol},
         data () {
             return {
                 isShowAffix : false, //一开始不显示,5秒后显示

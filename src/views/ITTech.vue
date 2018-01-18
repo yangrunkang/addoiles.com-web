@@ -92,13 +92,6 @@
     </div>
 </template>
 <script>
-
-    import Vue from 'vue';
-    //安装vue-quill-editor富文本编辑器
-    import VueQuillEditor from 'vue-quill-editor';
-    import Cookies from 'js-cookie';
-    Vue.use(VueQuillEditor);
-
     export default {
         data () {
             return {
