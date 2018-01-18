@@ -5,7 +5,8 @@
   "scripts": {
     "init": "webpack --progress --config build/webpack.dev.config.js",
     "dev": "webpack-dev-server --content-base ./  --inline --hot --compress --history-api-fallback --config build/webpack.dev.config.js",
-    "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js"
+    "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js",
+    "bundleAnalyzer": "webpack --config build/webpack.dev.config.js --profile --json  > stats.json"
   },
   "author": "yangrunkang",
   "dependencies": {
