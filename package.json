@@ -6,7 +6,7 @@
     "init": "webpack --progress --config build/webpack.dev.config.js",
     "dev": "webpack-dev-server --content-base ./  --inline --hot --compress --history-api-fallback --config build/webpack.dev.config.js",
     "build": "webpack --progress --hide-modules --config build/webpack.prod.config.js",
-    "bundleAnalyzer": "webpack --config build/webpack.build.config.js --profile --json  > stats.json"
+    "bundle-analyzer": "webpack --config build/webpack.build.analyzer.config.js --profile --json  > stats.json"
   },
   "author": "yangrunkang",
   "dependencies": {
@@ -29,6 +29,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
+    "text-loader": "0.0.1",
     "url-loader": "^0.5.7",
     "vue": "^2.2.6",
     "vue-hot-reload-api": "^1.3.3",
