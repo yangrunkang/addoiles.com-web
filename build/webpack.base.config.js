@@ -9,7 +9,6 @@ function resolve (dir) {
 module.exports = {
     entry: {
         main: '@/main.js',
-        vendors: '@/vendors/vendors.js'
     },
     output: {
         path: path.join(__dirname, '../dist')
