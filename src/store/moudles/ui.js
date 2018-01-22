@@ -18,7 +18,8 @@ const ui = {
             let userId = sessionStorage.getItem("userId");
             if(!vm.addoileUtil.validateReq(userId)){
                 vm.$Notice.info({
-                    desc: '<h6>Hi,您还未登录,请登录</h6>'
+                    title:'您还未登录,请登录',
+                    desc:'登录提示'
                 });
                 return;
             }
@@ -31,7 +32,8 @@ const ui = {
          */
         deleteSuccess(state,vm){
             vm.$Notice.info({
-                desc: '<h6>删除成功</h6>'
+                title: '删除成功',
+                desc:'操作提示'
             });
         },
         /**
@@ -41,7 +43,8 @@ const ui = {
          */
         deleteFailed(state,vm){
             vm.$Notice.error({
-                desc: '<h6>系统故障,删除失败</h6>'
+                title: '系统故障,删除失败',
+                desc:'出错啦'
             });
         },
         /**
@@ -51,7 +54,8 @@ const ui = {
          */
         loadAll(state,vm){
             vm.$Notice.info({
-                desc: '<h6>已全部加载啦~~</h6>'
+                title: '已全部加载啦~~',
+                desc:'操作提示'
             });
         },
         /**
@@ -61,7 +65,8 @@ const ui = {
          */
         loadingFailed(state,vm){
             vm.$Notice.error({
-                desc: '<h6>目标资源加载失败,请重试</h6>'
+                title: '目标资源加载失败,请重试',
+                desc: '出错啦'
             });
         },
         /**
