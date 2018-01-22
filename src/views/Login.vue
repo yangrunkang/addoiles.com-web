@@ -196,13 +196,6 @@
                         this.$store.commit('setEmail',email);
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
-                        //页面跳转
-                        setTimeout(function () {
-                            this.$router.push('/');
-                        }.bind(this), 2000);
-                        //改变到那个导航栏
-
-                        //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         let navList = this.$store.getters.getNavList;
                         let _count = 0; //计数,到2就跳出循环,以防程序多跑
                         for(let i = 0; i < navList.length; i++){
@@ -212,12 +205,12 @@
                                 navList.splice(i,i+1); //i:当前元素index,第二个参数是当前坐标i后的几个元素删除
                                 _count++;
                             }
-                            if(_count == 1){//在index.vue onSelect控制,操作仓库  debug result is 1
+                            if(_count === 1){//在index.vue onSelect控制,操作仓库  debug result is 1
                                 //显示当前用户
                                 navList.push({
                                     navRouter : 'BestWishesToUser',
                                     navIcon : 'person',
-                                    navName : resp.data.data.userName
+                                    navName : this.$store.getters.getUserName
                                 });
                                 //显示退出按钮
                                 navList.push({
@@ -229,7 +222,11 @@
                             }
                         }
                         this.$store.commit('setNavList',navList);
-
+                        console.log(navList);
+                        //页面跳转
+                        setTimeout(function () {
+                            this.$router.push('/');
+                        }.bind(this), 2000);
                     }else{
                         this.$Notice.warning({
                             desc: '登录失败,请检查信息后重新登录'

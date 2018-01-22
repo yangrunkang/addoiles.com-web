@@ -6,7 +6,7 @@
 <template>
     <div>
 
-        <Card dis-hover="false">
+        <Card shadow>
             <p slot="title">V1.3</p>
             <div>
                 <h4>新增:</h4>
@@ -30,7 +30,7 @@
             </div>
         </Card>
         <br />
-        <Card dis-hover="false">
+        <Card shadow>
             <p slot="title">V1.2</p>
             <div>
                 <h4>新增/优化:</h4>
@@ -45,7 +45,7 @@
             </div>
         </Card>
         <br />
-        <Card dis-hover="false">
+        <Card shadow>
             <p slot="title">V1.1</p>
             <div>
                 <h4>新增/优化:</h4>
@@ -69,7 +69,7 @@
             </div>
         </Card>
         <br />
-        <Card dis-hover="false">
+        <Card shadow>
             <p slot="title">V1.0&nbsp;网站第一版</p>
             <p>&nbsp;&nbsp;经过国庆没日没夜的疯狂码字,网站终于上线了，www.addoiles.com网站第一次和大家见面,算是比较正式的第一版V1.0</p>
             <p>&nbsp;&nbsp;网站域名:www.addoiles.com</p>

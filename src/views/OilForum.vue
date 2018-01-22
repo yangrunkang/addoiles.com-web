@@ -36,7 +36,7 @@
             <i-col span="18" class="main-col">
                 <!--问答区域-->
                 <div id="qa">
-                    <Card style="width:100%;background-color: white;" dis-hover="false">
+                    <Card style="width:100%;background-color: white;" shadow>
                         <!--提问-->
                         <div style="text-align:center">
                             <img src="../images/question.png" style="width: 100%;height: 200px">

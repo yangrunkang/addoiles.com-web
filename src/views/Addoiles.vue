@@ -61,21 +61,21 @@
                 <div id="cycle-pics">
                     <!--电影推荐-->
                     <!--书本推荐-->
-                    <Card dis-hover="false">
+                    <Card shadow>
                         <div style="text-align:center">
                             <img :src="filmDto.image">
                             <h3>电影推荐之{{filmDto.title}}</h3>
                         </div>
                     </Card>
                     <br />
-                    <Card dis-hover="false">
+                    <Card shadow>
                         <div style="text-align:center">
                             <img :src="bookDto.image">
                             <h3>新书推荐之{{bookDto.title}}</h3>
                         </div>
                     </Card>
                     <br />
-                    <Card dis-hover="false">
+                    <Card shadow>
                         <div style="text-align:center">
                             <img :src="picDto.image">
                             <h3>图片分享之{{picDto.title}}</h3>
@@ -85,7 +85,7 @@
             </i-col>
             <i-col span="6" class="main-col">
                 <div class="hot-msg">
-                    <Card dis-hover="false">
+                    <Card shadow>
                         <h2>热门动弹</h2>
                         <Button type="success" long style="margin-bottom: 5px" @click="addHots">发表动弹</Button>
                         <p>
@@ -112,7 +112,7 @@
                     </Card>
                 </div>
                 <div class="public-info">
-                    <Card dis-hover="false" style="color: rgb(158, 167, 180);">
+                    <Card shadow style="color: rgb(158, 167, 180);">
                         首页内容图片展示可投稿至yangrunkang53@gmail.com
                         <br /><br />
                         图片要求:813px*400px(宽*高)

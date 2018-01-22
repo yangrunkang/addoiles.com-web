@@ -61,7 +61,7 @@
         </Alert>
 
         <div>
-            <Card class="experience-list" v-for="experience in experienceList" :key="experience.id"  dis-hover="false">
+            <Card class="experience-list" v-for="experience in experienceList" :key="experience.id"  shadow>
                 <a class="experience-list-title auto-break-line" @click="getExperience(experience.id)">
                     {{experience.title}}
                 </a>
@@ -84,7 +84,7 @@
             <Row class="experience-content" :gutter="16" style="margin-bottom: 10px">
                 <i-col span="18">
                     <!--具体的经历-->
-                    <Card  dis-hover="false" style="margin-bottom: 5px">
+                    <Card  shadow style="margin-bottom: 5px">
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
                             {{experienceDto.title}}
                             <Button type="info" shape="circle" style="float: right;" v-show="experienceDto.isShowEditBtn" @click="toEditExperience(experienceDto.id)">编辑</Button>

@@ -49,7 +49,7 @@
                 <div v-show="showDetailITTech">
                     <!--文章详情-->
                     <div>
-                        <Card  dis-hover="false">
+                        <Card  shadow>
                             <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                                 {{itTechDto.article.title}}
                                 <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
