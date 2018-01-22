@@ -7,7 +7,7 @@
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>
-            <div class="auto-break-line" v-html="content"/>
+            <p class="web-content-font-size auto-break-line" v-html="content"></p>
 
             <div slot="footer">
                 <p style="text-align: center;font-weight: bold">来自油站:Show Yourself</p>

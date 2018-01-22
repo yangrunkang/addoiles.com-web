@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="web-content-font-size">
         这里是用户中心,欢迎您
     </div>
 </template>

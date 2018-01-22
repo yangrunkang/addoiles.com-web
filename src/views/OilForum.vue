@@ -17,7 +17,6 @@
 
     /*提问-回答内容*/
     .qa-content {
-        font-size: 16px;
         text-indent: 8px;
         padding-left: 7px;
     }
@@ -56,7 +55,7 @@
                         <div>
                             <!--具体的问题-->
                             <div class="qa-list-div">
-                                <p class="qa-content"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
+                                <p class="qa-content web-content-font-size"><Icon type="pound"></Icon>&nbsp;&nbsp;{{questionAnswer.question.content}}</p>
                                 <p class="p-right"><Icon type="person"></Icon>{{questionAnswer.question.userName}}</p>
                                 <p class="p-right">{{questionAnswer.question.createTime}}</p>
                             </div>
@@ -67,7 +66,7 @@
                                 </i-input>
                             </div>
                             <div class="qa-list-div" v-for="answer in questionAnswer.answerList" :key="answer.id">
-                                <p class="qa-content"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
+                                <p class="qa-content web-content-font-size"><Icon type="quote"></Icon>&nbsp;&nbsp;{{answer.content}}</p>
                                 <p class="p-right"><Icon type="person"></Icon>{{answer.userName}}</p>
                                 <p class="p-right">{{answer.createTime}}</p>
                             </div>

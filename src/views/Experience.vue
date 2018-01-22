@@ -89,7 +89,7 @@
                             {{experienceDto.title}}
                             <Button type="info" shape="circle" style="float: right;" v-show="experienceDto.isShowEditBtn" @click="toEditExperience(experienceDto.id)">编辑</Button>
                         </p>
-                        <p v-html="experienceDto.content" class="auto-break-line"></p> <!--显示html样式文本-->
+                        <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
                     <!--评论-->
                     <h2>评论</h2>

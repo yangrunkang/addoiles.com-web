@@ -54,7 +54,7 @@
                                 {{itTechDto.article.title}}
                                 <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                             </p>
-                            <p v-html="itTechDto.article.content" class="auto-break-line"></p>
+                            <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
                         </Card>
                             <p>
                                 <Tag type="dot" color="green">{{itTechDto.article.userName}}</Tag>

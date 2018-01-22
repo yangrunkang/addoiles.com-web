@@ -53,7 +53,7 @@
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
+                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
                             </Alert>
                             <!--<Button type="info" icon="thumbsup" style="width: 100%">点赞(99+)</Button>-->
                         </div>
@@ -64,7 +64,7 @@
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
+                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
                             </Alert>
                         </div>
                     </Card>
@@ -74,7 +74,7 @@
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line" >{{item.dreamContent}}</span>
+                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
                             </Alert>
                         </div>
                     </Card>

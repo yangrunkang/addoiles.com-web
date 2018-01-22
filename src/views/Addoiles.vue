@@ -100,7 +100,7 @@
                                         <strong class="auto-break-line" style="font-size: 18px">
                                             {{ item.title }}
                                         </strong>
-                                        <p class="auto-break-line" style="font-size: 20px">{{ item.content }}</p>
+                                        <p class="auto-break-line web-content-font-size">{{ item.content }}</p>
                                         <p class="p-right"><Icon type="person"></Icon>&nbsp;{{ item.userName }}</p>
                                         <p class="p-right"><Icon type="calendar"></Icon>&nbsp;{{ item.createTime }}</p>
                                     </div>
