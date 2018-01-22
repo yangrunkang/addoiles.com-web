@@ -24,11 +24,11 @@ const business = {
             sessionStorage.setItem("userId",userId);
         },
         setNavList (state, navListJson) {
-            Cookies.remove('navList');
+            Cookies.remove('navList',{ path: '' });
             Cookies.set("navList",navListJson);
         },
         setEmail (state, email) {
-            Cookies.remove('email');
+            Cookies.remove('email',{ path: '' });
             Cookies.set("email",email);
         }
     },

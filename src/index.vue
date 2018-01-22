@@ -96,8 +96,6 @@
                         let navListJson = res.data.data;
                         this.$store.commit('setNavList',navListJson);
                         this.navList = this.$store.getters.getNavList;
-                        //初始化完成后跳转到首页
-                        this.$router.push('/');
                     }
                 }.bind(this));
             },
@@ -113,16 +111,15 @@
                 }
             },
             logOutCurrent(flag){
-                if(flag){//暂不退出
-                    this.showLogOutModal = false;
-                }else{//退出账号
+                if(!flag){//退出账号
                     sessionStorage.clear();
                     //退出浏览器自动清除
-                    Cookies.remove('newUser');
-                    Cookies.remove('email');
-                    this.showLogOutModal = false;
-                    
+                    Cookies.remove('newUser',{ path: '' });
+                    Cookies.remove('email',{ path: '' });
+                    location.reload();
                 }
+                //无论点击模态框哪个按钮,这个模态框都得关闭
+                this.showLogOutModal = false;
             },
             suggest(){
                 this.$store.commit('toSuggest',this);
@@ -132,17 +129,15 @@
             }
         },
         mounted() {
-            if(Cookies.get("newUser")){
-                //这个用户不再初始化导航栏,一直用他第一次进来是初始化好的导航栏
-                //声明周期一直到用户关闭浏览器
+            if(Cookies.get("newUser")){ //被标记用户
                 this.navList = this.$store.getters.getNavList;
-            }else{
-                //默认到首页 如果导航就不能执行下面的了,fuck
-                // this.$router.push('/');
+            }else{ //未被标记用户
                 //用户第一次打开浏览器进来,标记newUser
                 Cookies.set("newUser","1");
                 //初始化导航栏
                 this.initNavList();
+                //初始化完成后跳转到首页
+                this.$router.push('/');
                 //欢迎
                 setTimeout(function () {
                     this.$Notice.success({

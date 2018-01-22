@@ -222,7 +222,6 @@
                             }
                         }
                         this.$store.commit('setNavList',navList);
-                        console.log(navList);
                         //页面跳转
                         setTimeout(function () {
                             this.$router.push('/');
