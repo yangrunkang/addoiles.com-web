@@ -48,29 +48,27 @@
             <i-col :span="spanRight">
                 <div v-show="showDetailITTech">
                     <!--文章详情-->
-                    <Card style="background: transparent;border: transparent;border-radius: 30px">
-                        <div>
-                            <Card>
-                                <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
-                                    {{itTechDto.article.title}}
-                                    <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
-                                </p>
-                                <p v-html="itTechDto.article.content" class="auto-break-line"></p>
-                            </Card>
-                                <p>
-                                    <Tag type="dot" color="green">{{itTechDto.article.userName}}</Tag>
-                                    <Tag type="dot" color="green">{{itTechDto.article.createTime}}</Tag>
-                                </p>
-                            <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
-                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
-                            </Input>
-                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
-                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
-                                <Tag color="green">{{ comment.userName }}</Tag>
-                                {{ comment.content }}
-                            </Alert>
-                        </div>
-                    </Card>
+                    <div>
+                        <Card  dis-hover="false">
+                            <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
+                                {{itTechDto.article.title}}
+                                <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
+                            </p>
+                            <p v-html="itTechDto.article.content" class="auto-break-line"></p>
+                        </Card>
+                            <p>
+                                <Tag type="dot" color="green">{{itTechDto.article.userName}}</Tag>
+                                <Tag type="dot" color="green">{{itTechDto.article.createTime}}</Tag>
+                            </p>
+                        <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
+                            <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"></Button>
+                        </Input>
+                        <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
+                            <Tag type="border" color="green">{{ comment.createTime }}</Tag>
+                            <Tag color="green">{{ comment.userName }}</Tag>
+                            {{ comment.content }}
+                        </Alert>
+                    </div>
                 </div>
 
                 <!--点击展示更多,显示此区域-->

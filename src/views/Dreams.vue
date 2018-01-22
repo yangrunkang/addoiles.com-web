@@ -32,7 +32,7 @@
     <div>
 
         <transition name="fade">
-            <Card style="width: 94%;margin: 20px auto;" v-show="isShowAffix">
+            <Card style="width: 94%;margin: 20px auto;" v-show="isShowAffix"  dis-hover="false">
                 <Row type="flex">
                     <i-col span="20">
                         <Input v-model="dreamTitle" type="text"  placeholder="写下你的梦想" style="width: 99%;margin-bottom: 10px;" />
@@ -49,7 +49,7 @@
 
             <Row type="flex">
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol1" :key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol1" :key="item.id"  dis-hover="false">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
@@ -60,7 +60,7 @@
                     </Card>
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol2" :key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol2" :key="item.id"  dis-hover="false">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>
@@ -70,7 +70,7 @@
                     </Card>
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol3" :key="item.id">
+                    <Card class="dream-card" v-for="item in dreamListCol3" :key="item.id"  dis-hover="false">
                         <div style="margin: inherit">
                             <Alert :type="item.alertType" style="height: inherit">
                                 <strong class="auto-break-line">{{item.dreamTitle}}</strong>

@@ -5,7 +5,7 @@
     <div>
         <Row :gutter="16">
             <i-col span="6">
-                <Card>
+                <Card dis-hover="false">
                     <h3>用户资料</h3>
                     <div>
                         <!--<Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" />-->
@@ -14,7 +14,7 @@
                     </div>
                 </Card>
                 <br />
-                <Card>
+                <Card dis-hover="false">
                     <h3>我的</h3>
                     <div>
                         <Menu width="auto" @on-select="routerPush">
@@ -29,7 +29,7 @@
                 </Card>
             </i-col>
             <i-col span="18">
-                <Card>
+                <Card dis-hover="false">
                     <router-view></router-view>
                 </Card>
             </i-col>

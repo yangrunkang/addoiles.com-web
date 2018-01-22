@@ -4,7 +4,7 @@
 <template>
     <div>
         <!--编辑器-->
-        <Card class="edit-card">
+        <Card class="edit-card" dis-hover="false">
             <p slot="title" style="height: auto;font-size: 18px">
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
                 <span style="float: right;">
