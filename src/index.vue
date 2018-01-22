@@ -122,7 +122,7 @@
                     Cookies.remove('email');
                     //刷新用户正在看的页面
                     //会调用index.vue  mounted() 方法,因为已经sessionStorage.clear(),所以会当成新用户
-                    this.$router.go(0);
+                    this.$router.push("/");
                 }
             },
             suggest(){
