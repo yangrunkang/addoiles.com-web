@@ -63,22 +63,55 @@
                     <!--书本推荐-->
                     <Card shadow>
                         <div style="text-align:center">
-                            <img :src="filmDto.image">
-                            <h3>电影推荐之{{filmDto.title}}</h3>
+                            <Carousel
+                                    v-model="filmIndex"
+                                    :autoplay="setting.autoplay"
+                                    :autoplay-speed="setting.autoplaySpeed"
+                                    :dots="setting.dots"
+                                    :radius-dot="setting.radiusDot"
+                                    :trigger="setting.trigger"
+                                    :arrow="setting.arrow">
+                                <CarouselItem v-for="filmDto in filmDtoList" :key="filmDto.id">
+                                    <img :src="filmDto.image">
+                                    <h3>电影推荐之{{filmDto.title}}</h3>
+                                </CarouselItem>
+                            </Carousel>
                         </div>
                     </Card>
                     <br />
                     <Card shadow>
                         <div style="text-align:center">
-                            <img :src="bookDto.image">
-                            <h3>新书推荐之{{bookDto.title}}</h3>
+                            <Carousel
+                                    v-model="bookIndex"
+                                    :autoplay="setting.autoplay"
+                                    :autoplay-speed="setting.autoplaySpeed"
+                                    :dots="setting.dots"
+                                    :radius-dot="setting.radiusDot"
+                                    :trigger="setting.trigger"
+                                    :arrow="setting.arrow">
+                                <CarouselItem v-for="bookDto in bookDtoList" :key="bookDto.id">
+                                    <img :src="bookDto.image">
+                                    <h3>新书推荐之{{bookDto.title}}</h3>
+                                </CarouselItem>
+                            </Carousel>
                         </div>
                     </Card>
                     <br />
                     <Card shadow>
                         <div style="text-align:center">
-                            <img :src="picDto.image">
-                            <h3>图片分享之{{picDto.title}}</h3>
+                            <Carousel
+                                    v-model="picIndex"
+                                    :autoplay="setting.autoplay"
+                                    :autoplay-speed="setting.autoplaySpeed"
+                                    :dots="setting.dots"
+                                    :radius-dot="setting.radiusDot"
+                                    :trigger="setting.trigger"
+                                    :arrow="setting.arrow">
+                                <CarouselItem v-for="picDto in picDtoList" :key="picDto.id">
+                                    <img :src="picDto.image">
+                                    <h3>图片分享之{{picDto.title}}</h3>
+                                </CarouselItem>
+                            </Carousel>
                         </div>
                     </Card>
                 </div>
@@ -120,8 +153,6 @@
                         Tips:可使用截图工具截取指定尺寸
                     </Card>
                 </div>
-
-
             </i-col>
         </Row>
     </div>
@@ -130,6 +161,18 @@
     export default {
         data () {
             return {
+                filmIndex:0,
+                bookIndex:0,
+                picIndex:0,
+                setting: {
+                    index:0,
+                    autoplay: false,
+                    autoplaySpeed: 2000,
+                    dots: 'outside',
+                    radiusDot: true,
+                    trigger: 'click',
+                    arrow: 'hover'
+                },
 
                 //热门列表
                 hotsList:[],
@@ -146,9 +189,9 @@
                         pageSize: 10
                     }
                 },
-                filmDto:{},
-                bookDto:{},
-                picDto:{}
+                filmDtoList:[],
+                bookDtoList:[],
+                picDtoList:[]
             }
         },
         computed: {
@@ -191,21 +234,29 @@
                         for(let i =0 ;i<resp.length ; i++){
                             let image = resp[i];
                             if(image.type === 0){
-                                this.filmDto.title = image.title;
-                                this.filmDto.content = image.content;
-                                this.filmDto.image = image.image;
+                                this.filmDtoList.push({
+                                    title : image.title,
+                                    content : image.content,
+                                    image : image.image
+                                });
+                                continue;
                             }
 
                             if(image.type === 1){
-                                this.bookDto.title = image.title;
-                                this.bookDto.content = image.content;
-                                this.bookDto.image = image.image;
+                                this.bookDtoList.push({
+                                    title : image.title,
+                                    content : image.content,
+                                    image : image.image
+                                });
+                                continue;
                             }
 
                             if(image.type === 2){
-                                this.picDto.title = image.title;
-                                this.picDto.content = image.content;
-                                this.picDto.image = image.image;
+                                this.picDtoList.push({
+                                    title : image.title,
+                                    content : image.content,
+                                    image : image.image
+                                });
                             }
 
                         }
