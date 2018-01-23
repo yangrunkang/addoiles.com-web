@@ -74,7 +74,7 @@
                 </p>
             </Card>
         </div>
-        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
+        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()">加载更多</Button>
 
         <!--具体经历的模态框-->
         <Modal v-model="showExperienceModal"
@@ -124,6 +124,8 @@
     export default {
         data () {
             return {
+                //加载更多按钮是否可用
+                loadMoreBtnDisabled:false,
                 //是否展示具体经历的模态框
                 showExperienceModal:false,
                 //评论内容
@@ -258,6 +260,7 @@
                                 });
                             }
                         }else{
+                            this.loadMoreBtnDisabled = true;
                             this.$store.commit('loadAll',this);
                         }
                     }

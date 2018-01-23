@@ -82,7 +82,7 @@
                             <Icon type="calendar"></Icon>&nbsp;{{article.createTime}}
                         </p>
                     </Card>
-                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
+                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()">加载更多</Button>
                 </div>
 
             </i-col>
@@ -93,6 +93,8 @@
     export default {
         data () {
             return {
+                //加载更多按钮是否可用
+                loadMoreBtnDisabled:false,
                 //左边区域占 5/24
                 spanLeft : 5,
                 //右边区域占 19/24
@@ -181,6 +183,7 @@
                                 });
                             }
                         }else{
+                            this.loadMoreBtnDisabled = true;
                             this.$store.commit('loadAll',this);
                         }
                     }

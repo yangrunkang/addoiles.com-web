@@ -83,13 +83,14 @@
 
 
         </div>
-        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()" >加载更多</Button>
+        <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()" >加载更多</Button>
     </div>
 </template>
 <script>
     export default {
         data () {
             return {
+                loadMoreBtnDisabled:false, //加载更多按钮是否可用
                 isShowAffix : false, //一开始不显示,5秒后显示
                 dreamTitle : null, //梦想标题
                 dreamContent : null, //梦想内容
@@ -185,6 +186,7 @@
                         // 分配
                         this.splitDreamList(this.dreamList);
                     }else{
+                        this.loadMoreBtnDisabled = true;
                         this.$store.commit('loadAll',this);
                     }
                 }.bind(this));

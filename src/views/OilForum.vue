@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </Card>
-                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" @click="loadMore()">加载更多</Button>
+                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()">加载更多</Button>
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
@@ -97,6 +97,8 @@
     export default {
         data () {
             return {
+                //加载更多按钮是否可用
+                loadMoreBtnDisabled:false,
                 //问题
                 question : '',
                 //提问时,问题类型的placeholder
@@ -257,6 +259,7 @@
 
                             }
                         }else{
+                            this.loadMoreBtnDisabled = true;
                             this.$store.commit('loadAll',this);
                         }
                     }
