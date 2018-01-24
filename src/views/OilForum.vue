@@ -76,7 +76,7 @@
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
-                <Affix :offset-top="50">
+                <Affix :offset-top="10">
                     <div class="qa-area-right">
                         <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(0)">编程语言</Button></i-col></Row>
                         <br/>
