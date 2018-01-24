@@ -79,21 +79,6 @@ util.getRandAlertType = function () {
     return iconArr[index];
 };
 
-/**
- * 是否是草稿
- */
-util.isDraft = function(delete_status) {
-
-    return delete_status === 2 ? "[草稿]" : "";
-};
-
-/**
- * 是否公开
- */
-util.isHide = function(is_hide) {
-    return is_hide === 1 ? "[不公开]" : "";
-};
-
 util.getInputTypePlaceHolder = function (type) {
     switch(type){
         case 0:
