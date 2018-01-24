@@ -61,7 +61,7 @@
         </Alert>
 
         <div>
-            <Card class="experience-list" v-for="experience in experienceList" :key="experience.id"  shadow>
+            <Card class="experience-list" v-for="experience in experienceList" :key="experience.id">
                 <a class="experience-list-title auto-break-line" @click="getExperience(experience.id)">
                     {{experience.title}}
                 </a>

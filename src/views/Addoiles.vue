@@ -73,7 +73,7 @@
                                     :arrow="setting.arrow">
                                 <CarouselItem v-for="filmDto in filmDtoList" :key="filmDto.id">
                                     <img :src="filmDto.image">
-                                    <h3>电影推荐之{{filmDto.title}}</h3>
+                                    <h3>{{filmDto.title}}</h3>
                                 </CarouselItem>
                             </Carousel>
                         </div>
@@ -91,7 +91,7 @@
                                     :arrow="setting.arrow">
                                 <CarouselItem v-for="bookDto in bookDtoList" :key="bookDto.id">
                                     <img :src="bookDto.image">
-                                    <h3>新书推荐之{{bookDto.title}}</h3>
+                                    <h3>{{bookDto.title}}</h3>
                                 </CarouselItem>
                             </Carousel>
                         </div>
@@ -109,7 +109,7 @@
                                     :arrow="setting.arrow">
                                 <CarouselItem v-for="picDto in picDtoList" :key="picDto.id">
                                     <img :src="picDto.image">
-                                    <h3>图片分享之{{picDto.title}}</h3>
+                                    <h3>{{picDto.title}}</h3>
                                 </CarouselItem>
                             </Carousel>
                         </div>
@@ -145,7 +145,7 @@
                     </Card>
                 </div>
                 <div class="public-info">
-                    <Card shadow style="color: rgb(158, 167, 180);">
+                    <Card style="color: rgb(158, 167, 180);">
                         首页内容图片展示可投稿至yangrunkang53@gmail.com
                         <br /><br />
                         图片要求:813px*400px(宽*高)

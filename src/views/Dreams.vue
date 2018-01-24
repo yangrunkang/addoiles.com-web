@@ -11,7 +11,6 @@
     }
 
     .dream-card {
-        background: transparent;
         border-radius: 30px;
         margin-bottom: 6px;
         margin-left: 6px
@@ -46,42 +45,27 @@
         </transition>
 
         <div>
-
             <Row type="flex">
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol1" :key="item.id">
-                        <div style="margin: inherit">
-                            <Alert :type="item.alertType" style="height: inherit">
-                                <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
-                            </Alert>
-                            <!--<Button type="info" icon="thumbsup" style="width: 100%">点赞(99+)</Button>-->
-                        </div>
-                    </Card>
+                    <Alert :type="item.alertType" class="dream-card" v-for="item in dreamListCol1" :key="item.id">
+                        <strong class="auto-break-line">{{item.dreamTitle}}</strong>
+                        <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
+                    </Alert>
+                    <!--<Button type="info" icon="thumbsup" style="width: 100%">点赞(99+)</Button>-->
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol2" :key="item.id">
-                        <div style="margin: inherit">
-                            <Alert :type="item.alertType" style="height: inherit">
-                                <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
-                            </Alert>
-                        </div>
-                    </Card>
+                    <Alert :type="item.alertType" class="dream-card" v-for="item in dreamListCol2" :key="item.id">
+                        <strong class="auto-break-line">{{item.dreamTitle}}</strong>
+                        <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
+                    </Alert>
                 </i-col>
                 <i-col span="8">
-                    <Card class="dream-card" v-for="item in dreamListCol3" :key="item.id">
-                        <div style="margin: inherit">
-                            <Alert :type="item.alertType" style="height: inherit">
-                                <strong class="auto-break-line">{{item.dreamTitle}}</strong>
-                                <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
-                            </Alert>
-                        </div>
-                    </Card>
+                    <Alert :type="item.alertType" class="dream-card" v-for="item in dreamListCol3" :key="item.id">
+                        <strong class="auto-break-line">{{item.dreamTitle}}</strong>
+                        <span slot="desc" class="auto-break-line web-content-font-size" >{{item.dreamContent}}</span>
+                    </Alert>
                 </i-col>
             </Row>
-
-
         </div>
         <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()" >加载更多</Button>
     </div>
