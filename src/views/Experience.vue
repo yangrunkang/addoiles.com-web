@@ -53,7 +53,9 @@
 </style>
 <template>
     <div>
-        <Button class="share-btn" type="info" size="large" @click="toShareExperience()">我要分享</Button>
+        <Affix :offset-top="50">
+            <Button class="share-btn" type="info" size="large" @click="toShareExperience()">我要分享</Button>
+        </Affix>
         <Alert show-icon>
             已分享的经历列表
             <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
