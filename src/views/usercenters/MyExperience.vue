@@ -27,12 +27,53 @@
                 showModal:false,
                 experienceColumns:[
                     {
-                        title:"标题",
-                        key:"title"
+                        title:"状态",
+                        key:"status",
+                        render (h, params) {
+                            let row = params.row;
+                            if(row.deleteStatus === 2 && row.isHide === 1){
+                                return h('div', [
+                                    h('Tag', {
+                                        props: {
+                                            type:'dot',
+                                            color: 'red'
+                                        },
+                                    }, '不公开'),
+                                    h('Tag', {
+                                        props: {
+                                            type:'dot',
+                                            color: 'yellow'
+                                        },
+                                    }, '草稿')
+                                ]);
+                            }
+                            if(row.deleteStatus === 2){
+                                return h('Tag', {
+                                    props: {
+                                        type:'dot',
+                                        color: 'yellow'
+                                    },
+                                }, '草稿');
+                            }
+                            if(row.isHide === 1){
+                                return h('Tag', {
+                                    props: {
+                                        type:'dot',
+                                        color: 'red'
+                                    },
+                                }, '不公开');
+                            }
+                            return h('Tag', {
+                                props: {
+                                    type:'dot',
+                                    color: 'green'
+                                },
+                            }, '正常');
+                        }
                     },
                     {
-                        title:"时间",
-                        key:"createTime"
+                        title:"标题",
+                        key:"title"
                     },
                     {
                         title:"操作",
@@ -82,7 +123,10 @@
                             ]);
                         }
                     },
-
+                    {
+                        title:"创建时间",
+                        key:"createTime"
+                    }
                 ],
                 experienceList:[]
             }
@@ -105,14 +149,6 @@
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
                     if(resp.data.code == 0 && db_return_data != null){
-                        // let config = {
-                        //     title:db_return_data.title,
-                        //     content:db_return_data.content,
-                        //     width:832,
-                        //     scrollable:false,
-                        //     closable:true
-                        // };
-                        // this.$Modal.info(config);
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
                     }
@@ -179,7 +215,9 @@
                             let experience = resp.data[i];
                             this.experienceList.push({
                                 experienceId:experience.articleId,
-                                title:this.addoileUtil.isDraft(experience.deleteStatus) + this.addoileUtil.isHide(experience.isHide) + experience.title,
+                                title:experience.title,
+                                deleteStatus:experience.deleteStatus,
+                                isHide:experience.isHide,
                                 userId:experience.userId,
                                 rates:experience.rates,
                                 createTime:this.addoileUtil.formatUnixTime(experience.createTime)

@@ -19,10 +19,6 @@
                         key:"content"
                     },
                     {
-                        title:"时间",
-                        key:"createTime"
-                    },
-                    {
                         title:"操作",
                         key:"op",
                         align: 'center',
@@ -42,7 +38,10 @@
                             ]);
                         }
                     },
-
+                    {
+                        title:"创建时间",
+                        key:"createTime"
+                    }
                 ],
                 dreamList:[]
             }

@@ -17,9 +17,6 @@
 </template>
 
 <script>
-
-    import Cookies from 'js-cookie';
-
     export default {
         name: "my-articles",
         data() {
@@ -29,12 +26,54 @@
                 showModal:false,
                 articleColumns:[
                     {
-                        title:"标题",
-                        key:"title"
+                        title:"状态",
+                        key:"status",
+                        render (h, params) {
+                            let row = params.row;
+                            if(row.deleteStatus === 2 && row.isHide === 1){
+                                return h('div', [
+                                    h('Tag', {
+                                        props: {
+                                            type:'dot',
+                                            color: 'red'
+                                        },
+                                    }, '不公开'),
+                                    h('Tag', {
+                                        props: {
+                                            type:'dot',
+                                            color: 'yellow'
+                                        },
+                                    }, '草稿')
+                                ]);
+                            }
+                            if(row.deleteStatus === 2){
+                                return h('Tag', {
+                                    props: {
+                                        type:'dot',
+                                        color: 'yellow'
+                                    },
+                                }, '草稿');
+                            }
+                            if(row.isHide === 1){
+                                return h('Tag', {
+                                    props: {
+                                        type:'dot',
+                                        color: 'red'
+                                    },
+                                }, '不公开');
+                            }
+
+                            return h('Tag', {
+                                props: {
+                                    type:'dot',
+                                    color: 'green'
+                                },
+                            }, '正常');
+                        }
                     },
                     {
-                        title:"时间",
-                        key:"createTime"
+                        title:"标题",
+                        key:"title"
                     },
                     {
                         title:"操作",
@@ -84,7 +123,10 @@
                             ]);
                         }
                     },
-
+                    {
+                        title:"创建时间",
+                        key:"createTime"
+                    }
                 ],
                 articleList:[]
             }
@@ -178,7 +220,9 @@
                             let article = resp.data[i];
                             this.articleList.push({
                                 articleId:article.articleId,
-                                title:this.addoileUtil.isDraft(article.deleteStatus) + this.addoileUtil.isHide(article.isHide) + article.title,
+                                title:article.title,
+                                deleteStatus:article.deleteStatus,
+                                isHide:article.isHide,
                                 userId:article.userId,
                                 createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });
