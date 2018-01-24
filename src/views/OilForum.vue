@@ -76,19 +76,21 @@
                 </div>
             </i-col>
             <i-col span="6" class="main-col">
-                <div class="qa-area-right">
-                    <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(0)">编程语言</Button></i-col></Row>
-                    <br/>
-                    <Row><i-col><Button type="primary" shape="circle" long @click="toQuestionType(1)">开发问题</Button></i-col></Row>
-                    <br/>
-                    <Row><i-col><Button type="success" shape="circle" long @click="toQuestionType(2)">缓存技术</Button></i-col></Row>
-                    <br/>
-                    <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(3)">操作系统</Button></i-col></Row>
-                    <br/>
-                    <Row><i-col><Button type="ghost" shape="circle" long @click="toQuestionType(4)">学习</Button></i-col></Row>
-                    <!--<br/>-->
-                    <!--<Row><i-col><Button type="warning" shape="circle" long @click="initQuestionAnswer(5)">八卦</Button></i-col></Row>-->
-                </div>
+                <Affix :offset-top="50">
+                    <div class="qa-area-right">
+                        <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(0)">编程语言</Button></i-col></Row>
+                        <br/>
+                        <Row><i-col><Button type="primary" shape="circle" long @click="toQuestionType(1)">开发问题</Button></i-col></Row>
+                        <br/>
+                        <Row><i-col><Button type="success" shape="circle" long @click="toQuestionType(2)">缓存技术</Button></i-col></Row>
+                        <br/>
+                        <Row><i-col><Button type="info" shape="circle" long @click="toQuestionType(3)">操作系统</Button></i-col></Row>
+                        <br/>
+                        <Row><i-col><Button type="ghost" shape="circle" long @click="toQuestionType(4)">学习</Button></i-col></Row>
+                        <!--<br/>-->
+                        <!--<Row><i-col><Button type="warning" shape="circle" long @click="initQuestionAnswer(5)">八卦</Button></i-col></Row>-->
+                    </div>
+                </Affix>
             </i-col>
         </Row>
     </div>

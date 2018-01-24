@@ -29,20 +29,22 @@
             <!--左边:文章简表-->
             <i-col :span="spanLeft" class="layout-menu-left">
                 <div>
-                    <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 40px" >技术分享</Button>
-                    <Timeline pending>
-                        <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
-                            <a @click="getITArticleDetail(pithiness.articleId)" >
-                                <a class="pithiness-title auto-break-line" >{{pithiness.title}}</a>
-                            </a>
-                        </Timeline-item>
+                    <Affix :offset-top="50">
+                        <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 40px" >技术分享</Button>
+                        <Timeline pending>
+                            <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
+                                <a @click="getITArticleDetail(pithiness.articleId)" >
+                                    <a class="pithiness-title auto-break-line" >{{pithiness.title}}</a>
+                                </a>
+                            </Timeline-item>
 
-                        <Timeline-item>
-                            <a @click="showMore(true)">
-                                <a>查看更多</a>
-                            </a>
-                        </Timeline-item>
-                    </Timeline>
+                            <Timeline-item>
+                                <a @click="showMore(true)">
+                                    <a>查看更多</a>
+                                </a>
+                            </Timeline-item>
+                        </Timeline>
+                    </Affix>
                 </div>
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
