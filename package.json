@@ -1,6 +1,6 @@
 {
   "name": "Addoiles",
-  "version": "1.4",
+  "version": "0.1.4",
   "main": "index.js",
   "scripts": {
     "init": "webpack --progress --config build/webpack.dev.config.js",
