@@ -5,7 +5,20 @@
 </style>
 <template>
     <div>
-
+        <Card shadow>
+            <p slot="title">V1.3.5(20180127)</p>
+            <div>
+                <h4>优化:</h4>
+                <p>&nbsp;&nbsp;·&nbsp;网站字体大小统一</p>
+                <p>&nbsp;&nbsp;·&nbsp;’经历分享’改为’分享’,感觉更贴切一点</p>
+                <p>&nbsp;&nbsp;·&nbsp;首页图片支持多张,欢迎大家投稿至yangrunkang53@gmail.com</p>
+                <p>&nbsp;&nbsp;·&nbsp;添加网站域名解释</p>
+                <p>&nbsp;&nbsp;·&nbsp;导航栏不显示用户名,改为‘用户中心’</p>
+                <p>&nbsp;&nbsp;·&nbsp;用户中心将以前的[不公开][草稿]换成&nbsp;标签显示</p>
+                <p>&nbsp;&nbsp;·&nbsp;去除每个页面中重复和多余组件</p>
+            </div>
+        </Card>
+        <br />
         <Card shadow>
             <p slot="title">V1.3</p>
             <div>

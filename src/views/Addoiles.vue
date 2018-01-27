@@ -153,6 +153,19 @@
                         Tips:可使用截图工具截取指定尺寸
                     </Card>
                 </div>
+                <div class="public-info">
+                    <Card style="color: rgb(158, 167, 180);">
+                        网站域名addoiles解释:
+                        <br />
+                        add:加&nbsp;oil:油&nbsp;es:表示复数,多
+                        <br />
+                        生活不易,多多加油
+                        <br />
+                        做自己喜欢做的事情,并坚持下去
+                        <br />
+                        不要等你老了,才感到&nbsp;后悔
+                    </Card>
+                </div>
             </i-col>
         </Row>
     </div>

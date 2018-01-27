@@ -20,7 +20,7 @@
                         <div>
                             <Menu width="auto" @on-select="routerPush">
                                 <MenuItem name="/MyDreams">美好梦想</MenuItem>
-                                <MenuItem name="/MyExperience">经历分享</MenuItem>
+                                <MenuItem name="/MyExperience">分享</MenuItem>
                                 <MenuItem name="/MyITArticles">技术文章</MenuItem>
                                 <MenuItem name="/MyQuestions">问题疑惑</MenuItem>
                                 <MenuItem name="/MyHots">热门动弹</MenuItem>

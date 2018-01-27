@@ -57,7 +57,7 @@
             <Button class="share-btn" type="info" size="large" @click="toShareExperience()">我要分享</Button>
         </Affix>
         <Alert show-icon>
-            已分享的经历列表
+            已分享列表
             <Icon type="ios-lightbulb-outline" slot="icon"></Icon>
             <template slot="desc">不虚度人生,让自己的人生少点遗憾</template>
         </Alert>
