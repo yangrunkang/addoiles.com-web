@@ -210,7 +210,7 @@
                                 navList.push({
                                     navRouter : 'BestWishesToUser',
                                     navIcon : 'person',
-                                    navName : this.$store.getters.getUserName
+                                    navName : '用户中心'
                                 });
                                 //显示退出按钮
                                 navList.push({
