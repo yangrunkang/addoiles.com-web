@@ -3,7 +3,7 @@
         <Table border :columns="articleColumns" :data="articleList"></Table>
 
         <!--查看模态框-->
-        <Modal width="1140" v-model="showModal" :styles="{top: '20px'}">
+        <Modal width="1140" v-model="showModal" :styles="{top: '20px'}" :closable="true">
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>

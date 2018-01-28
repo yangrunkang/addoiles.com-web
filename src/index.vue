@@ -41,7 +41,7 @@
             <Footer>
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2018 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
-                    <p><a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.3.5(2018.01.27)</a>&nbsp;&nbsp;&nbsp;QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
+                    <p><a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.3.5(2018.01.28)</a>&nbsp;&nbsp;&nbsp;QQ交流群:595125384 &nbsp;&nbsp;&nbsp;电台:荔枝FM《程序员的生活记录》</p>
                 </div>
             </Footer>
         </Layout>

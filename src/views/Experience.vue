@@ -21,7 +21,6 @@
 
     /*分享内容*/
     .experience-content {
-        background:#eee;
         padding:7px
     }
 
@@ -82,20 +81,30 @@
         <Modal v-model="showExperienceModal"
                width="1200px"
                :styles="{top: '20px'}"
+               :closable="true"
         >
+            <div slot="header">
+                <p  style="height: inherit;font-size: 18px;font-weight: bold">
+                    {{experienceDto.title}}
+                </p>
+            </div>
             <Row class="experience-content" :gutter="16" style="margin-bottom: 10px">
                 <i-col span="18">
                     <!--具体的经历-->
-                    <Card  shadow style="margin-bottom: 5px">
-                        <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px;">
-                            {{experienceDto.title}}
-                            <Button type="info" shape="circle" style="float: right;" v-show="experienceDto.isShowEditBtn" @click="toEditExperience(experienceDto.id)">编辑</Button>
-                        </p>
-                        <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p> <!--显示html样式文本-->
-                    </Card>
+                    <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p> <!--显示html样式文本-->
                 </i-col>
                 <i-col span="6">
-                    <Card shadow>
+                    <Card style="margin-bottom: 10px">
+                        <h4>文章信息:</h4>
+                        <Tag type="border"  color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
+                        <Tag type="border"  color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
+                        <br />
+                        <h4 v-show="experienceDto.isShowEditBtn">操作:</h4>
+                        <div v-show="experienceDto.isShowEditBtn"><Button type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button></div>
+
+                    </Card>
+
+                    <Card>
                         <h2>感想+</h2>
                         <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent" />
                         <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
@@ -103,8 +112,6 @@
                             <strong>评分:</strong>
                             <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>
                         </Alert>
-                        <Tag type="border"  color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
-                        <Tag type="border"  color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
                         <!--评论-->
                         <h2>评论</h2>
                         <div v-for="comment in experienceDto.commentList" :key="comment.id" style="margin-bottom: 3px">
