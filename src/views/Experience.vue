@@ -80,7 +80,7 @@
 
         <!--具体经历的模态框-->
         <Modal v-model="showExperienceModal"
-               width="1195px"
+               width="1200px"
                :styles="{top: '20px'}"
         >
             <Row class="experience-content" :gutter="16" style="margin-bottom: 10px">
@@ -93,23 +93,31 @@
                         </p>
                         <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p> <!--显示html样式文本-->
                     </Card>
-                    <!--评论-->
-                    <h2>评论</h2>
-                    <Alert type="success" v-for="comment in experienceDto.commentList" :key="comment.id" style="margin: 3px auto;">
-                        <Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>
-                        {{comment.content}}
-                    </Alert>
                 </i-col>
                 <i-col span="6">
-                    <h2>感想+</h2>
-                    <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent" />
-                    <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
-                    <Alert style="margin: 3px auto;">
-                        <strong>评分:</strong>
-                        <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>
-                    </Alert>
-                    <Tag type="border"  color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
-                    <Tag type="border"  color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
+                    <Card shadow>
+                        <h2>感想+</h2>
+                        <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent" />
+                        <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
+                        <Alert style="margin: 3px auto;">
+                            <strong>评分:</strong>
+                            <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>
+                        </Alert>
+                        <Tag type="border"  color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
+                        <Tag type="border"  color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
+                        <!--评论-->
+                        <h2>评论</h2>
+                        <div v-for="comment in experienceDto.commentList" :key="comment.id" style="margin-bottom: 3px">
+                            <!--<Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>-->
+                            {{comment.content}}
+                            <p class="p-right">
+                                <Icon type="person"></Icon>{{comment.userName}}
+                            </p>
+                            <p class="p-right">
+                                <Icon type="calendar"></Icon>{{comment.createTime}}
+                            </p>
+                        </div>
+                    </Card>
                 </i-col>
             </Row>
             <div slot="footer">
