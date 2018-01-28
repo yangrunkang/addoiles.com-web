@@ -53,7 +53,7 @@
 </style>
 <template>
     <div>
-        <Affix :offset-top="50">
+        <Affix :offset-top="5">
             <Button class="share-btn" type="info" size="large" @click="toShareExperience()">我要分享</Button>
         </Affix>
         <Alert show-icon>
