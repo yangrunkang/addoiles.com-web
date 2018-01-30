@@ -3,7 +3,14 @@
         <Table border :columns="experienceColumns" :data="experienceList"></Table>
 
         <!--查看模态框-->
-        <Modal width="1140" v-model="showModal" :styles="{top: '20px'}" :closable="true">
+        <Modal
+                width="1140"
+                v-model="showModal"
+                :styles="{top: '20px'}"
+                :closable="true"
+                :mask-closable="false"
+                :transition-names="['fade','ease']"
+        >
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>

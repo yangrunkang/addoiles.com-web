@@ -6,7 +6,7 @@
 <template>
     <div>
         <Card shadow>
-            <p slot="title">V1.3.5(20180128)</p>
+            <p slot="title">V1.3.5</p>
             <div>
                 <h4>优化:</h4>
                 <p>&nbsp;&nbsp;·&nbsp;网站字体大小统一</p>

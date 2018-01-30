@@ -27,7 +27,7 @@
     <div>
         <Row type="flex" :gutter="10">
             <!--左边:文章简表-->
-            <i-col :span="spanLeft" class="layout-menu-left">
+            <i-col :span="spanLeft">
                 <div>
                     <Affix :offset-top="50">
                         <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 40px" >技术分享</Button>

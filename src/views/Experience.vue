@@ -82,6 +82,8 @@
                width="1200px"
                :styles="{top: '20px'}"
                :closable="true"
+               :mask-closable="false"
+               :transition-names="['fade','ease']"
         >
             <div slot="header">
                 <p  style="height: inherit;font-size: 18px;font-weight: bold">

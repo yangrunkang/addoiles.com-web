@@ -105,7 +105,7 @@
 
                 if(this.articleType < 0 || this.deleteStatus < 0){
                     this.$Notice.error({
-                        desc: '侦测到恶意请求,非正常入境访问油站编辑器'
+                        desc: '侦测到恶意请求,非正常途径访问油站编辑器'
                     });
                     return null;
                 }
@@ -172,7 +172,9 @@
                         this.clearContent();
                     }else if(resp.data.data == 1002){
                         this.$Notice.error({
-                            desc: '文本内容过长,请精简,或者减少部分图片内容'
+                            title:"操作失败,原因可能如下:",
+                            desc: '1.文本内容过余长了;2.图片占用存储太大;3.可能文本中包含非正常字符;',
+                            duration:0
                         });
                     }
                 }.bind(this));
