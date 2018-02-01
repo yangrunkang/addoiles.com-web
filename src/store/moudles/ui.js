@@ -48,17 +48,6 @@ const ui = {
             });
         },
         /**
-         * 文章已全部加载
-         * @param state
-         * @param vm
-         */
-        loadAll(state,vm){
-            vm.$Notice.info({
-                title: '已全部加载啦~~',
-                desc:'操作提示'
-            });
-        },
-        /**
          * 目标资源加载失败
          * @param state
          * @param vm

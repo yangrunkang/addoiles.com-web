@@ -86,7 +86,10 @@
                             <Icon type="calendar"></Icon>&nbsp;{{article.createTime}}
                         </p>
                     </Card>
-                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()">加载更多</Button>
+                    <Button type="info" size="large" long style="width: 100%;margin-top: 10px" :disabled="loadMoreBtnDisabled" @click="loadMore()">
+                        <div v-show="loadMoreBtnDisabled">已全部加载</div>
+                        <div v-show="!loadMoreBtnDisabled">加载更多</div>
+                    </Button>
                 </div>
 
             </i-col>
@@ -188,7 +191,6 @@
                             }
                         }else{
                             this.loadMoreBtnDisabled = true;
-                            this.$store.commit('loadAll',this);
                         }
                     }
                 }.bind(this));
