@@ -162,6 +162,7 @@
              * flag ：true 点击右侧[查看更多]进入 false 点击[加载更多]进入
              */
             showMore(flag){
+                this.loadMoreBtnDisabled = false;
                 this.isShowMoreITs = true;
                 if(flag){
                     this.showDetailITTech = false;
