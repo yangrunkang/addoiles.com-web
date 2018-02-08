@@ -56,7 +56,11 @@
                             {{itTechDto.article.title}}
                             <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                         </p>
-                        <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
+                        <div class="ql-snow">
+                            <div class="ql-editor">
+                                <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
+                            </div>
+                        </div>
                     </Card>
                     <p>
                         <Tag type="dot" color="green">作者:{{itTechDto.article.userName}}</Tag>
@@ -263,7 +267,7 @@
                                 articleId:_data.articleId,
                                 title:_data.title
                             });
-                            if(i === 10){ //简表只显示10+1条 ,显示更多 全部显示
+                            if(i === 6){ //简表只显示10+1条 ,显示更多 全部显示
                                 break;
                             }
                         }

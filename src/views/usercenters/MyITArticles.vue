@@ -13,8 +13,11 @@
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>
-            <p class="web-content-font-size auto-break-line" v-html="content"></p>
-
+            <div class="ql-snow">
+                <div class="ql-editor">
+                    <p class="web-content-font-size auto-break-line" v-html="content"></p>
+                </div>
+            </div>
             <div slot="footer">
                 <p style="text-align: center;font-weight: bold">来自油站:Show Yourself</p>
             </div>

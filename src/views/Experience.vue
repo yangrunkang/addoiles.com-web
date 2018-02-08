@@ -95,8 +95,11 @@
             </div>
             <Row class="experience-content" :gutter="16" style="margin-bottom: 10px">
                 <i-col span="18">
-                    <!--具体的经历-->
-                    <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p> <!--显示html样式文本-->
+                    <div class="ql-snow">
+                        <div class="ql-editor">
+                            <p v-html="experienceDto.content" class="web-content-font-size auto-break-line"></p>
+                        </div>
+                    </div>
                 </i-col>
                 <i-col span="6">
                     <Card style="margin-bottom: 10px">

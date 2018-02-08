@@ -14,8 +14,11 @@
             <p slot="header">
                 <strong>{{title}}</strong>
             </p>
-            <p class="auto-break-line web-content-font-size" v-html="content"></p>
-
+            <div class="ql-snow">
+                <div class="ql-editor">
+                    <p class="auto-break-line web-content-font-size" v-html="content"></p>
+                </div>
+            </div>
             <div slot="footer">
                 <p style="text-align: center;font-weight: bold">来自油站:不虚度人生,让自己的人生少点遗憾</p>
             </div>
