@@ -197,6 +197,14 @@
              * */
             remove(tableIndex){
                 let noteId = this.noteList[tableIndex].noteId;
+
+                if(noteId === this.noteBusinessId){
+                    this.$Notice.info({
+                        desc: '您正在编辑此条小记,不允许[删除]操作'
+                    });
+                    return;
+                }
+
                 let _this = this;
                 let config = {
                     content:'确定删除吗?',
