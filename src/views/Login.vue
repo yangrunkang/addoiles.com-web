@@ -177,19 +177,11 @@
                     return;
                 }
 
-                this.$Notice.info({
-                    desc: '正在登录请稍等',
-                    duration : 1
-                });
-
                 this.axios.post("login",{
                     email : email,
                     password : password
                 }).then(function (resp) {
                     if(resp.data.code == 0 && resp.data.data.userId != null){
-                        this.$Notice.success({
-                            desc: '登录成功,2s后转到首页'
-                        });
                         //提交到仓库
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
@@ -223,9 +215,7 @@
                         }
                         this.$store.commit('setNavList',navList);
                         //页面跳转
-                        setTimeout(function () {
-                            this.$router.push('/');
-                        }.bind(this), 2000);
+                        this.$router.push('/');
                     }else{
                         this.$Notice.warning({
                             desc: '登录失败,请检查信息后重新登录'
