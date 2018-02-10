@@ -35,18 +35,8 @@
                 <span>确定要清空吗?</span>
             </p>
             <div style="text-align:center;font-size: 18px">
-                <p>如果您写了很多内容,慎重考虑一下.</p>
-                <!--<p>或者可以保存为<strong style="color: #ff3300">草稿</strong>下一次可以继续编辑</p>-->
+                <p>如果您写了很多内容,可以考虑先保存为草稿</p>
             </div>
-           <!-- <div slot="footer">
-                <Button type="info" size="large" v-show="editDownBtn" long @click="saveArticle('addArticle',0)">编辑完成发表</Button>
-            </div>
-            <div slot="footer">
-                <Button type="info" size="large" v-show="saveBtn" long @click="saveArticle('addArticle',0)">立即发表</Button>
-            </div>
-            <div slot="footer" style="margin: 4px auto;">
-                <Button type="warning" size="large" v-show="draftBtn" long @click="saveArticle('addArticle',2)">保存为草稿</Button>
-            </div>-->
             <div slot="footer" style="margin: 4px auto;">
                 <Button type="error" size="large" long @click="confirmClearContent(true)">坚决清空内容</Button>
             </div>
@@ -275,7 +265,7 @@
         // 实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
         computed: {
             editor() {
-                return this.$refs.myTextEditor.quillEditor
+                return this.$refs.myTextEditor.quillEditor;
             }
         },
         mounted() {
