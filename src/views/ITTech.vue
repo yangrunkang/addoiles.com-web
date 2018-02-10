@@ -46,6 +46,7 @@
                             </Timeline-item>
                         </Timeline>
                     </Card>
+                    <Button type="info" size="large" long @click="toCommentITArticle()" style="margin-top: 10px">评论当前文章</Button>
                 </Affix>
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
@@ -252,6 +253,8 @@
                             },
                             articleCommentList : _articleCommentList
                         };
+                        //回到文章顶部
+                        window.scrollTo(0,0);
                     }else{
                         this.$store.commit('loadingFailed',this);
                     }
@@ -357,6 +360,9 @@
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.showMore(false);
+            },
+            toCommentITArticle(){
+                window.scrollTo(0,document.body.scrollHeight);
             }
         },
         mounted () {
