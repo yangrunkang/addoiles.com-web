@@ -16,6 +16,10 @@
                     </Card>
                     <br />
                     <Card shadow>
+                        <Button size="large" @click="routerPush('/Note')" style="border: white;background-color: white;font-size: 18px;width: 100% ">小记客栈Note</Button>
+                    </Card>
+                    <br />
+                    <Card shadow>
                         <h3>我的</h3>
                         <div>
                             <Menu width="auto" @on-select="routerPush">
@@ -25,6 +29,7 @@
                                 <MenuItem name="/MyQuestions">问题疑惑</MenuItem>
                                 <MenuItem name="/MyHots">热门动弹</MenuItem>
                                 <!--暂时不做                            <MenuItem name="/MyLogs">网站活动</MenuItem>-->
+                                <!--<MenuItem name="/MyDreams">回收站</MenuItem>-->
                             </Menu>
                         </div>
                     </Card>

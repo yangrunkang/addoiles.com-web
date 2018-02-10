@@ -70,6 +70,7 @@ const routers = [
         },
         component: (resolve) => require(['../views/UserCenter.vue'], resolve),
         children:[
+            {path: '/Note',meta:{title:'小记客栈'},component: (resolve) => require(['../views/usercenters/Note.vue'], resolve)},
             {path: '/MyDreams',meta:{title:'美好梦想'},component: (resolve) => require(['../views/usercenters/MyDreams.vue'], resolve)},
             {path: '/MyExperience',meta:{title:'经历分享'},component: (resolve) => require(['../views/usercenters/MyExperience.vue'], resolve)},
             {path: '/MyHots',meta:{title:'热门动弹'},component: (resolve) => require(['../views/usercenters/MyHots.vue'], resolve)},
