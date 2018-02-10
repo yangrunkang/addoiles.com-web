@@ -55,29 +55,12 @@
     color: #9ea7b4;
 }
 
-/*专门针对编辑器Code代码样式设置,效果很棒*/
-pre.ql-syntax{
-    background-color: #23241f;
-    color: #f8f8f2;
-    overflow: visible;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    padding: 7px 14px;
-    border-radius: 7px;
-}
-
-/*专门针对编辑器blockquote样式设置*/
-blockquote {
-    border-left: 4px solid #ccc;
-}
-
 /*统一P标签内容右移*/
 .p-right {
     text-align: right;
     color: rgba(91, 106, 97, 0.45);
     padding-right: 7px;
 }
-
 
 /*统一网站内容字体大小*/
 .web-content-font-size {
