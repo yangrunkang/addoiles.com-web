@@ -104,8 +104,9 @@
                 <i-col span="6">
                     <Card style="margin-bottom: 10px">
                         <h4>文章信息:</h4>
-                        <Tag type="border"  color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
-                        <Tag type="border"  color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
+                        <Tag type="border" color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
+                        <Tag type="border" color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
+                        <Tag type="border" color="green" v-if="experienceDto.updateTime !== '-1'"><strong>修改时间:</strong>{{experienceDto.updateTime}}</Tag>
                         <br />
                         <h4 v-show="experienceDto.isShowEditBtn">操作:</h4>
                         <div v-show="experienceDto.isShowEditBtn"><Button type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button></div>
@@ -174,6 +175,11 @@
             toShareExperience(){
 
                 this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return;
+                }
 
                 let editObj = {
                     articleType:0,
@@ -279,7 +285,7 @@
                                     userName:experience.userName,
                                     title:experience.title,
                                     rates:experience.rates,
-                                    createTime:this.addoileUtil.formatUnixTime(experience.createTime),
+                                    createTime:this.addoileUtil.formatUnixTime(experience.createTime)
                                 });
                             }
                         }else{
@@ -332,6 +338,7 @@
                             content:article.content,
                             rates:article.rates,
                             createTime:this.addoileUtil.formatUnixTime(article.createTime),
+                            updateTime:this.addoileUtil.formatUnixTime(article.updateTime),
                             commentList:_commentList,
                             isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
                         };

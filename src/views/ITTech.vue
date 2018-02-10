@@ -28,9 +28,10 @@
         <Row type="flex" :gutter="10">
             <!--左边:文章简表-->
             <i-col :span="spanLeft">
-                <div>
-                    <Affix :offset-top="50">
-                        <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 40px" >技术分享</Button>
+                <Affix :offset-top="10">
+                    <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 10px">技术分享</Button>
+                    <Card shadow>
+                        <h3 style="margin-bottom: 10px">文章列表</h3>
                         <Timeline pending>
                             <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
                                 <a @click="getITArticleDetail(pithiness.articleId)" >
@@ -44,8 +45,8 @@
                                 </a>
                             </Timeline-item>
                         </Timeline>
-                    </Affix>
-                </div>
+                    </Card>
+                </Affix>
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
             <i-col :span="spanRight">
@@ -56,18 +57,18 @@
                             {{itTechDto.article.title}}
                             <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                         </p>
+                        <p class="p-right"><Icon type="person"></Icon>作者:{{itTechDto.article.userName}}</p>
                         <div class="ql-snow">
                             <div class="ql-editor">
                                 <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
                             </div>
                         </div>
+                        <p class="p-right"><Icon type="calendar"></Icon>创建时间:{{itTechDto.article.createTime}}</p>
+                        <p class="p-right"><span v-if="itTechDto.article.updateTime !== '-1'"><Icon type="calendar"></Icon>修改时间:{{itTechDto.article.updateTime}}</span></p>
                     </Card>
-                    <p>
-                        <Tag type="dot" color="green">作者:{{itTechDto.article.userName}}</Tag>
-                        <Tag type="dot" color="green">创建时间:{{itTechDto.article.createTime}}</Tag>
-                    </p>
                     <!--评论区域-->
                     <Card>
+                        <h2>评论</h2>
                         <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
                         <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)" />
                         </Input>
@@ -107,9 +108,9 @@
                 //加载更多按钮是否可用
                 loadMoreBtnDisabled:false,
                 //左边区域占 5/24
-                spanLeft : 4,
+                spanLeft : 5,
                 //右边区域占 19/24
-                spanRight : 20,
+                spanRight : 19,
                 //是否显示文章列表
                 isShowMoreITs : false,
                 //是否显示文章详情
@@ -146,6 +147,11 @@
             toWriteITArticle(){
 
                 this.$store.commit('validateLogin',this);
+
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return;
+                }
 
                 let editObj = {
                     articleType:2,
@@ -241,6 +247,7 @@
                                 content : _article.content,
                                 userName : _article.userName,
                                 createTime:this.addoileUtil.formatUnixTime(_article.createTime),
+                                updateTime:this.addoileUtil.formatUnixTime(_article.updateTime),
                                 isShowEditBtn:this.addoileUtil.isCurrentUser(_article.userId,currentUserId)
                             },
                             articleCommentList : _articleCommentList
