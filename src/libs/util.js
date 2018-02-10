@@ -29,6 +29,9 @@ util.validateReq = function (content) {
  * @returns {string} 格式化后获得时间字符串
  */
 util.formatUnixTime = function(unixTime) {
+    if(unixTime === 0 || unixTime === null ){
+        return '-1';
+    }
     return new Date(parseInt(unixTime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
 };
 
