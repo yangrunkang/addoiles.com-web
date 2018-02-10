@@ -5,7 +5,7 @@
     <div>
         <Row :gutter="16">
             <i-col span="6">
-                <Affix :offset-top="50">
+                <Affix :offset-top="5">
                     <Card shadow>
                         <h3>用户资料</h3>
                         <div>
