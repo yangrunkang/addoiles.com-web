@@ -1,6 +1,7 @@
 <template>
     <div>
         <Table border :columns="experienceColumns" :data="experienceList"></Table>
+        <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
 
         <!--查看模态框-->
         <Modal
@@ -35,6 +36,8 @@
                 title:'加载中',
                 content:'正在加载...请稍等~~',
                 showModal:false,
+                //总数
+                totalCount:0,
                 experienceColumns:[
                     {
                         title:"状态",
@@ -142,7 +145,11 @@
             }
         },
         mounted() {
-            this.initExperienceList();
+            let page = {
+              pageSize:10,
+              pageNo:0
+            };
+            this.initExperienceList(page);
         },
         methods:{
             /**
@@ -205,7 +212,7 @@
                 };
                 this.$Modal.confirm(config);
             },
-            initExperienceList(){
+            initExperienceList(page){
                 this.$store.commit('validateLogin',this);
 
                 let userId = sessionStorage.getItem("userId");
@@ -215,14 +222,16 @@
 
                 let queryDto = {
                     userId:userId,
-                    articleType:0
+                    articleType:0,
+                    page:page
                 };
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
-                        for(let i = 0; i< resp.data.length;i++){
-                            let experience = resp.data[i];
+                        this.experienceList = [];
+                        for(let i = 0; i< resp.data.articleList.length;i++){
+                            let experience = resp.data.articleList[i];
                             this.experienceList.push({
                                 experienceId:experience.articleId,
                                 title:experience.title,
@@ -233,8 +242,16 @@
                                 createTime:this.addoileUtil.formatUnixTime(experience.createTime)
                             });
                         }
+                        this.totalCount = resp.data.totalCount;
                     }
                 }.bind(this));
+            },
+            changePage(value){
+                let page = {
+                    pageSize:10,
+                    pageNo:(value -1) * 10
+                };
+                this.initExperienceList(page);
             }
         }
     }

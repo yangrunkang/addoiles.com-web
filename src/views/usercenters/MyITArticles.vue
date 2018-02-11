@@ -1,6 +1,7 @@
 <template>
     <div>
         <Table border :columns="articleColumns" :data="articleList"></Table>
+        <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
 
         <!--查看模态框-->
         <Modal width="1140"
@@ -32,6 +33,8 @@
             return {
                 title:'',
                 content:'',
+                //总数
+                totalCount:0,
                 showModal:false,
                 articleColumns:[
                     {
@@ -141,7 +144,11 @@
             }
         },
         mounted() {
-            this.initITArticleList();
+            let page = {
+                pageSize:10,
+                pageNo:0
+            };
+            this.initITArticleList(page);
         },
         methods:{
             /**
@@ -210,7 +217,7 @@
                 };
                 this.$Modal.confirm(config);
             },
-            initITArticleList(){
+            initITArticleList(page){
                 this.$store.commit('validateLogin',this);
 
                 let userId = sessionStorage.getItem("userId");
@@ -219,14 +226,16 @@
                 }
                 let queryDto = {
                     userId:userId,
-                    articleType:2
+                    articleType:2,
+                    page:page
                 };
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
-                        for(let i = 0; i< resp.data.length;i++){
-                            let article = resp.data[i];
+                        this.articleList = [];
+                        for(let i = 0; i< resp.data.articleList.length;i++){
+                            let article = resp.data.articleList[i];
                             this.articleList.push({
                                 articleId:article.articleId,
                                 title:article.title,
@@ -236,8 +245,16 @@
                                 createTime:this.addoileUtil.formatUnixTime(article.createTime)
                             });
                         }
+                        this.totalCount = resp.data.totalCount;
                     }
                 }.bind(this));
+            },
+            changePage(value){
+                let page = {
+                    pageSize:10,
+                    pageNo:(value -1) * 10
+                };
+                this.initITArticleList(page);
             }
         }
     }
