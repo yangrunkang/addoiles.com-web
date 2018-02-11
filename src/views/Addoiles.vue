@@ -171,6 +171,8 @@
     </div>
 </template>
 <script>
+    import $ from "jquery";
+
     export default {
         data () {
             return {
@@ -190,6 +192,8 @@
                 //热门列表
                 hotsList:[],
                 hotsActiveIndex: 0,
+                //热门列表定时器
+                interval:null,
 
                 //热门标题
                 hotTitle : '',
@@ -231,14 +235,6 @@
                         }
                     }
                 }.bind(this));
-
-                setInterval(_ => {
-                    if(this.hotsActiveIndex < this.hotsList.length) {
-                        this.hotsActiveIndex += 1;
-                    } else {
-                        this.hotsActiveIndex = 0;
-                    }
-                }, 1000);
             },
             initImages(){
                 this.axios.post('getFistPageImage').then(function (res) {
@@ -328,10 +324,27 @@
                 }.bind(this));
 
             },
+            setHotsInterval(){
+                this.interval = setInterval(_ => {
+                    if(this.hotsActiveIndex < this.hotsList.length) {
+                        this.hotsActiveIndex += 1;
+                    } else {
+                        this.hotsActiveIndex = 0;
+                    }
+                }, 1000);
+            }
         },
         mounted() {
             this.initHots();
             this.initImages();
+            //首次运行
+            this.setHotsInterval();
+            //鼠标移至目标后停止轮播
+            $(".scroll-content").hover(function () {
+                window.clearInterval(this.interval);
+            }.bind(this),function () {
+                this.setHotsInterval();
+            }.bind(this));
         }
     }
 </script>
