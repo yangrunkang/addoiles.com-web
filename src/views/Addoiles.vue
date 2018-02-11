@@ -326,10 +326,11 @@
             },
             setHotsInterval(){
                 this.interval = setInterval(_ => {
-                    if(this.hotsActiveIndex < this.hotsList.length) {
+                    let hotLength = this.hotsList.length;
+                    if(this.hotsActiveIndex < hotLength) {
                         this.hotsActiveIndex += 1;
                     } else {
-                        this.hotsActiveIndex = 0;
+                        this.hotsActiveIndex = -1;
                     }
                 }, 1000);
             }
