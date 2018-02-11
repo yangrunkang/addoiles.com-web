@@ -14,6 +14,7 @@
         <br />
         <br />
         <Table border :columns="noteColumns" :data="noteList"></Table>
+        <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
 
         <!--输入标题的模态框-->
         <Modal
@@ -49,7 +50,7 @@
                 </div>
             </div>
             <div slot="footer">
-                <p style="text-align: center;font-weight: bold">来自油站:不虚度人生,让自己的人生少点遗憾</p>
+                <p style="text-align: center;font-weight: bold">小记客栈</p>
             </div>
         </Modal>
 
@@ -69,6 +70,8 @@
                 title:'',
                 //内容
                 content : '',
+                //总数
+                totalCount:0,
                 //查看模态框的内容和标题
                 noteContent : '',
                 noteTitle : '',
@@ -286,7 +289,7 @@
                         });
                         this.showInputTitleModal = false;
                         setTimeout(function () {
-                            this.$router.go(-1);
+                            this.$router.go(0);
                         }.bind(this), 1000);
                         this.clearContent();
                     }else if(resp.data.data == 1002){
@@ -301,7 +304,7 @@
             /**
              * 初始化用户笔记
              */
-            initUserNotes(){
+            initUserNotes(page){
                 this.$store.commit('validateLogin',this);
 
                 let userId = sessionStorage.getItem("userId");
@@ -311,14 +314,16 @@
 
                 let queryDto = {
                     userId:userId,
-                    articleType:1
+                    articleType:1,
+                    page:page
                 };
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
                     if(resp.code == 0){
-                        for(let i = 0; i< resp.data.length;i++){
-                            let note = resp.data[i];
+                        this.noteList = [];
+                        for(let i = 0; i< resp.data.articleList.length;i++){
+                            let note = resp.data.articleList[i];
                             this.noteList.push({
                                 noteId:note.articleId,
                                 title:note.title,
@@ -327,6 +332,7 @@
                                 createTime:this.addoileUtil.formatUnixTime(note.createTime)
                             });
                         }
+                        this.totalCount = resp.data.totalCount;
                     }
                 }.bind(this));
 
@@ -335,6 +341,13 @@
                 this.content = '';
                 this.title = '';
                 this.noteBusinessId = '';
+            },
+            changePage(value){
+                let page = {
+                    pageSize:10,
+                    pageNo:(value -1) * 10
+                };
+                this.initUserNotes(page);
             }
 
         },
@@ -344,7 +357,11 @@
             }
         },
         mounted() {
-            this.initUserNotes();
+            let page = {
+                pageSize:10,
+                pageNo:0
+            };
+            this.initUserNotes(page);
         }
     }
 </script>
