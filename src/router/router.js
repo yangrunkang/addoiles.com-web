@@ -72,7 +72,7 @@ const routers = [
         children:[
             {path: '/Note',meta:{title:'小记客栈'},component: (resolve) => require(['../views/usercenters/Note.vue'], resolve)},
             {path: '/MyDreams',meta:{title:'美好梦想'},component: (resolve) => require(['../views/usercenters/MyDreams.vue'], resolve)},
-            {path: '/MyExperience',meta:{title:'经历分享'},component: (resolve) => require(['../views/usercenters/MyExperience.vue'], resolve)},
+            {path: '/MyExperience',meta:{title:'分享'},component: (resolve) => require(['../views/usercenters/MyExperience.vue'], resolve)},
             {path: '/MyHots',meta:{title:'热门动弹'},component: (resolve) => require(['../views/usercenters/MyHots.vue'], resolve)},
             {path: '/MyITArticles',meta:{title:'技术文章'},component: (resolve) => require(['../views/usercenters/MyITArticles.vue'], resolve)},
             {path: '/MyLogs',meta:{title:'网站活动'},component: (resolve) => require(['../views/usercenters/MyLogs.vue'], resolve)},
