@@ -160,6 +160,7 @@
 
                 let queryDto = {
                     businessId : experienceId,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.showModal = true;
@@ -193,7 +194,7 @@
                 let experienceId = this.experienceList[tableIndex].experienceId;
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要删除【' + this.experienceList[tableIndex].title + '】 这个分享吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -213,8 +214,6 @@
                 this.$Modal.confirm(config);
             },
             initExperienceList(page){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;

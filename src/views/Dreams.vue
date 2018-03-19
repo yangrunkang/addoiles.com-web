@@ -1,15 +1,6 @@
 <style scoped lang="less">
     @import "../styles/common.css";
 
-    .demo-affix {
-        display: inline-block;
-        color: #fff;
-        padding: 10px 30px;
-        text-align: center;
-        background: white;
-        border-radius: 30px;
-    }
-
     .dream-card {
         border-radius: 30px;
         margin-bottom: 6px;

@@ -152,7 +152,7 @@
                 });
                 //调用服务端接口
                 this.axios.post(operation,article).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
+                    if(resp.data.code === 0 && resp.data.data === 1){
                         this.$Notice.success({
                             desc: '完成'
                         });
@@ -160,7 +160,7 @@
                             this.$router.go(-1);
                         }.bind(this), 1000);
                         this.clearContent();
-                    }else if(resp.data.data == 1002){
+                    }else if(resp.data.data === 1002){
                         this.$Notice.error({
                             title:"操作失败,原因可能如下:",
                             desc: '1.文本内容过余长了;2.图片占用存储太大;3.可能文本中包含非正常字符;',
@@ -228,19 +228,22 @@
                         this.saveBtnText = "发表";
 
                         let queryDto = {
-                            businessId:editObj.businessId
+                            businessId:editObj.businessId,
+                            tokenId:sessionStorage.getItem("tokenId")
                         };
 
                         //safe
                         sessionStorage.removeItem("editObj");
                         this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                             let db_return_data = resp.data.data;
-                            if(resp.data.code == 0 && db_return_data != null){
+                            if(resp.data.code === 0 && db_return_data != null){
                                 this.title = db_return_data.title;
                                 this.content = db_return_data.content;
                                 this.articleType = db_return_data.articleType;
                                 this.deleteStatus = db_return_data.deleteStatus;
                                 this.isHide = db_return_data.isHide == 0 ? true : false;
+                            }else {
+                                this.$store.commit('loadingFailed',this);
                             }
                         }.bind(this));
                         return null;

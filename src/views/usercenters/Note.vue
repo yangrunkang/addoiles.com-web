@@ -167,6 +167,8 @@
                     if(resp.data.code === 0 && db_return_data != null){
                         this.noteTitle = db_return_data.title;
                         this.noteContent = db_return_data.content;
+                    }else{
+                        this.$store.commit('loadingFailed',this);
                     }
                 }.bind(this));
 
@@ -192,6 +194,8 @@
                         this.noteBtn = false;
                         //定位到顶部
                         window.scrollTo(0, 0);
+                    }else{
+                        this.$store.commit('loadingFailed',this);
                     }
                 }.bind(this));
             },
@@ -210,7 +214,7 @@
 
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要从小记客栈中删除【'+this.noteList[tableIndex].title+'】 这个小计吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -305,8 +309,6 @@
              * 初始化用户笔记
              */
             initUserNotes(page){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
@@ -358,18 +360,13 @@
         },
         mounted() {
 
-            this.$store.commit('validateLogin',this);
-            let userId = sessionStorage.getItem("userId");
-            if(userId == null){
-                return;
-            }
-
-
             let page = {
                 pageSize:10,
                 pageNo:0
             };
             this.initUserNotes(page);
+
+
         }
     }
 </script>

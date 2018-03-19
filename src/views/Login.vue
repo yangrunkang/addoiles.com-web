@@ -181,12 +181,12 @@
                     email : email,
                     password : password
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data.userId != null){
+                    if(resp.data.code === 0 && resp.data.data.userId != null){
                         //提交到仓库
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
                         this.$store.commit('setEmail',email);
-                        this.$store.commit('tokenId',resp.data.data.tokenId);
+                        sessionStorage.setItem('tokenId',resp.data.data.tokenId);
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         let navList = this.$store.getters.getNavList;
@@ -237,7 +237,7 @@
                 this.axios.get("checkHasRegister",{
                     params:{email:this.email}
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data < 1){
+                    if(resp.data.code === 0 && resp.data.data < 1){
                         this.$Notice.warning({
                             desc: 'Hi,您未在网站注册过(又想骗我)'
                         });
@@ -254,13 +254,13 @@
                                     email : _this.email,
                                     type : 1
                                 }).then(function (resp) {
-                                    if(resp.data.code == 0 && resp.data.data == true){
+                                    if(resp.data.code === 0 && resp.data.data === true){
                                         _this.showForgetPasswordForm = true;
                                         _this.showLoginForm=false;
                                         _this.resetPassword = false;
                                         _this.showSendVerifyCodeModal = false;
                                     }else{
-                                        this.$Notice.warning({
+                                        _this.$Notice.warning({
                                             desc: '验证码发送失败'
                                         });
                                     }
@@ -280,7 +280,7 @@
                     email : this.email,
                     code : this.verificationCode
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == true){
+                    if(resp.data.code === 0 && resp.data.data === true){
                         this.resetPassword = true;
                         this.showLoginForm = false;
                         this.showForgetPasswordForm = false;
@@ -316,7 +316,7 @@
                     email : this.email,
                     password : this.resetPassword1
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data  > 0){
+                    if(resp.data.code === 0 && resp.data.data  > 0){
                         this.$Notice.success({
                             desc: '密码重设成功,请登录'
                         });

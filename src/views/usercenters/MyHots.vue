@@ -54,7 +54,7 @@
                 let hotId = this.hotsList[tableIndex].hotId;
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要删除【' +this.hotsList[tableIndex].title + '】 这个你曾发过的热门动弹吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -74,8 +74,6 @@
                 this.$Modal.confirm(config);
             },
             initHotsList(){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;

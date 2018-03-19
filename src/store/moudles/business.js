@@ -14,8 +14,6 @@ const business = {
         userId: '',
         /*邮箱*/
         email: '',
-        /*user tokenId*/
-        tokenId: '',
         /*导航栏*/
         navList: [],
     },
@@ -33,9 +31,6 @@ const business = {
         setEmail(state, email) {
             Cookies.remove('email', {path: ''});
             Cookies.set("email", email);
-        },
-        setTokenId(state, tokenId) {
-            sessionStorage.setItem("tokenId", tokenId);
         }
     },
     getters: {
@@ -45,9 +40,6 @@ const business = {
         },
         getUserId: state => {
             return sessionStorage.getItem("userId") + '';
-        },
-        getTokenId: state => {
-            return sessionStorage.getItem("tokenId") + '';
         },
         getNavList: state => {
             return Cookies.getJSON("navList");

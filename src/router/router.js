@@ -17,7 +17,7 @@ const routers = [
     {
         path: '/Experience',
         meta: {
-            title: '经历分享'
+            title: '分享'
         },
         component: (resolve) => require(['../views/Experience.vue'], resolve)
     },

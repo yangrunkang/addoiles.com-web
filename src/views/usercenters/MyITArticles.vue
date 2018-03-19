@@ -159,6 +159,7 @@
 
                 let queryDto = {
                     businessId : articleId,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
@@ -190,7 +191,7 @@
                 let articleId = this.articleList[tableIndex].articleId;
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要删除【'+this.articleList[tableIndex].title+'】这篇来之不易的技术文章吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -210,8 +211,6 @@
                 this.$Modal.confirm(config);
             },
             initITArticleList(page){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;

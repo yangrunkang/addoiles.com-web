@@ -221,7 +221,7 @@
                 this.queryDto.articleType=2;
                 this.queryDto.businessId=articleId;
 
-                this.axios.post('getITArticleList',this.queryDto).then(function (resp) {
+                this.axios.post('getITArticle',this.queryDto).then(function (resp) {
                     if(resp.data.code === 0){
                         let data = resp.data.data;
 

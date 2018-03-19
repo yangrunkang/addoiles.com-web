@@ -50,7 +50,7 @@
                 let questionId = this.questionsList[tableIndex].questionId;
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要删除您选中的疑问吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -70,8 +70,6 @@
                 this.$Modal.confirm(config);
             },
             initQuestionList(){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;

@@ -54,7 +54,7 @@
                 let dreamId = this.dreamList[tableIndex].dreamId;
                 let _this = this;
                 let config = {
-                    content:'确定删除吗?',
+                    content:'确定要放弃【'+ this.dreamList[tableIndex].title +'】 这个梦想吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -77,8 +77,6 @@
              * 初始化界面
              */
             initDreamList(){
-                this.$store.commit('validateLogin',this);
-
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
