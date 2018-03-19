@@ -186,6 +186,7 @@
                         this.$store.commit('setUserName',resp.data.data.userName);
                         this.$store.commit('setUserId',resp.data.data.userId);
                         this.$store.commit('setEmail',email);
+                        this.$store.commit('tokenId',resp.data.data.tokenId);
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         let navList = this.$store.getters.getNavList;

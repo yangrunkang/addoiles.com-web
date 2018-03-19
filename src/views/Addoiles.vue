@@ -59,8 +59,6 @@
         <Row class="row">
             <i-col span="18" class="main-col">
                 <div id="cycle-pics">
-                    <!--电影推荐-->
-                    <!--书本推荐-->
                     <Card shadow>
                         <div style="text-align:center">
                             <Carousel
@@ -222,7 +220,7 @@
                 this.queryDto.microType = 0;
 
                 this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
-                    if(res.data.code == 0){
+                    if(res.data.code === 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){
                             this.hotsList.push({
@@ -238,7 +236,7 @@
             },
             initImages(){
                 this.axios.post('getFistPageImage').then(function (res) {
-                    if(res.data.code == 0){
+                    if(res.data.code === 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){
                             let image = resp[i];
@@ -303,7 +301,7 @@
                     userId:userId,
                     microType:0
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data > 0){
+                    if(resp.data.code === 0 && resp.data.data > 0){
                         this.$Notice.info({
                             title: '<h3>动弹成功</h3>'
                         });

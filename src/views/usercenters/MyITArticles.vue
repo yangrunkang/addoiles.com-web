@@ -163,15 +163,7 @@
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
-                    if(resp.data.code == 0 && db_return_data != null){
-                        // let config = {
-                        //     title:db_return_data.title,
-                        //     content:db_return_data.content,
-                        //     width:832,
-                        //     scrollable:false,
-                        //     closable:true
-                        // };
-                        // this.$Modal.info(config);
+                    if(resp.data.code === 0 && db_return_data != null){
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
                     }
@@ -206,7 +198,7 @@
                         };
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.articleList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -232,7 +224,7 @@
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         this.articleList = [];
                         for(let i = 0; i< resp.data.articleList.length;i++){
                             let article = resp.data.articleList[i];

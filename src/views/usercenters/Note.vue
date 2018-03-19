@@ -164,7 +164,7 @@
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
-                    if(resp.data.code == 0 && db_return_data != null){
+                    if(resp.data.code === 0 && db_return_data != null){
                         this.noteTitle = db_return_data.title;
                         this.noteContent = db_return_data.content;
                     }
@@ -183,7 +183,7 @@
 
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
-                    if(resp.data.code == 0 && db_return_data != null){
+                    if(resp.data.code === 0 && db_return_data != null){
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
                         this.noteBusinessId = db_return_data.articleId;
@@ -218,7 +218,7 @@
                         };
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.noteList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -283,7 +283,7 @@
                 }
 
                 this.axios.post(operation,note).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data == 1){
+                    if(resp.data.code === 0 && resp.data.data == 1){
                         this.$Notice.success({
                             desc: this.noteBtn?'保存成功':'编辑成功'
                         });
@@ -292,7 +292,7 @@
                             this.$router.go(0);
                         }.bind(this), 1000);
                         this.clearContent();
-                    }else if(resp.data.data == 1002){
+                    }else if(resp.data.data === 1002){
                         this.$Notice.error({
                             title:"操作失败,原因可能如下:",
                             desc: '1.文本内容过余长了;2.图片占用存储太大;3.可能文本中包含非正常字符;',
@@ -320,7 +320,7 @@
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         this.noteList = [];
                         for(let i = 0; i< resp.data.articleList.length;i++){
                             let note = resp.data.articleList[i];
@@ -357,6 +357,14 @@
             }
         },
         mounted() {
+
+            this.$store.commit('validateLogin',this);
+            let userId = sessionStorage.getItem("userId");
+            if(userId == null){
+                return;
+            }
+
+
             let page = {
                 pageSize:10,
                 pageNo:0

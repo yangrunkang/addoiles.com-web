@@ -220,7 +220,7 @@
                     content : commentContent
                 }).then(function (res) {
                     let response = res.data;
-                    if(response.code == 0 && response.data == 1){
+                    if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({
                             title: '<h6>评论成功</h6>'
@@ -273,7 +273,7 @@
                 this.queryDto.articleType = 0;
 
                 this.axios.post('getExperienceList',this.queryDto).then(function (response) {
-                    if(response.data.code == 0){
+                    if(response.data.code === 0){
                         let experienceList = response.data.data; //List<ExperienceDto>
                         if(experienceList.length > 0){
                             for(let i = 0; i < experienceList.length; i++){ //ExperienceDto
@@ -304,7 +304,7 @@
                 this.queryDto.businessId = experienceId;
 
                 this.axios.post('getExperience',this.queryDto).then(function (response) {
-                    if(response.data.code == 0){
+                    if(response.data.code === 0){
                         // ExperienceDto
                         let _experienceDto = response.data.data;
 

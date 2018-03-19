@@ -190,7 +190,7 @@
                 this.queryDto.articleType = 2;
                 //展示文章列表
                 this.axios.post('showMoreITTechArticles',this.queryDto).then(function (resp) {
-                    if (resp.data.code == 0) {
+                    if (resp.data.code === 0) {
                         let dataArray = resp.data.data;
                         if(dataArray.length > 0){
                             for(let i = 0; i < dataArray.length; i++){
@@ -222,7 +222,7 @@
                 this.queryDto.businessId=articleId;
 
                 this.axios.post('getITArticleList',this.queryDto).then(function (resp) {
-                    if(resp.data.code == 0){
+                    if(resp.data.code === 0){
                         let data = resp.data.data;
 
                         //文章评论
@@ -267,7 +267,7 @@
             initPithinessList(){
                 this.queryDto.articleType=2;
                 this.axios.post('getITArticlePithinessList',this.queryDto).then(function (resp) {
-                    if(resp.data.code == 0){
+                    if(resp.data.code === 0){
                         let data = resp.data.data;
                         //右侧列表简表
                         let _pithinessList = [];
@@ -320,7 +320,7 @@
                     content:commentContent
                 }).then(function (res) {
                     let response = res.data;
-                    if(response.code == 0 && response.data == 1){
+                    if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({
                             title: '<h6>评论成功</h6>'

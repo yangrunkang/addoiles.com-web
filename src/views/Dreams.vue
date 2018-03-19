@@ -138,7 +138,7 @@
                     microType:1
                 }).then(function (res) {
                     let response = res.data;
-                    if(response.code == 0 && response.data == 1){
+                    if(response.code === 0 && response.data === 1){
                         this.dreamList.unshift({dreamTitle:dreamTitle,dreamContent:dreamContent});
                         this.splitDreamList(this.dreamList);
                         //弹窗提示
@@ -164,7 +164,7 @@
                 this.queryDto.microType=1;
 
                 this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
-                    if(res.data.code == 0 && res.data.data.length > 0){
+                    if(res.data.code === 0 && res.data.data.length > 0){
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
                             let dream = response[i];
@@ -183,7 +183,7 @@
              */
             splitDreamList(dreamList){
                if(dreamList instanceof Array){
-                   if(dreamList.length == 0){
+                   if(dreamList.length === 0){
                        return;
                    }
                    let dreamListSize = dreamList.length;

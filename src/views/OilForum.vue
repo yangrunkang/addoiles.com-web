@@ -149,7 +149,7 @@
                     content : questionContent,
                     userId : userId
                 }).then(function (resp) {
-                    if(resp.data.code == 0 && resp.data.data > 0){
+                    if(resp.data.code === 0 && resp.data.data > 0){
                         this.$Notice.success({
                             desc: '已经提问,2s后刷新本页面'
                         });
@@ -190,7 +190,7 @@
                     content:answerContent
                 }).then(function (res) {
                     let response = res.data;
-                    if(response.code == 0 && response.data == 1){
+                    if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({
                             title: '<h6>回答成功</h6>'
@@ -232,7 +232,7 @@
             //初始化问题区域
             initQuestionAnswer(){
                 this.axios.post("getQuestionAnswerList",this.queryDto).then(function (resp) {
-                    if(resp.data.code == 0){
+                    if(resp.data.code === 0){
                         let questionAnswerDtoList = resp.data.data;
                         if(questionAnswerDtoList.length > 0){
                             for(let i = 0;i < questionAnswerDtoList.length; i++){

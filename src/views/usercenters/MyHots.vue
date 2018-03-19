@@ -62,7 +62,7 @@
                         };
                         _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.hotsList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -88,7 +88,7 @@
 
                 this.axios.post("getMicroContentList",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         for(let i = 0; i< resp.data.length;i++){
                             let hot = resp.data[i];
                             this.hotsList.push({

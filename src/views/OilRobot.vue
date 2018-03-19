@@ -56,7 +56,7 @@
 
                 let userName = this.$store.getters.getUserName;
 
-                if(userName == 'null' || userId == 'null'){
+                if(userName === 'null' || userId === 'null'){
                     userId = "www.addoiles.com"; //不是网站用户,是访客
                     userName = "我";
                 }

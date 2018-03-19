@@ -91,7 +91,7 @@
 
                 this.axios.post("getMicroContentList",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         for(let i = 0; i< resp.data.length;i++){
                             let _dream = resp.data[i];
                             this.dreamList.push({

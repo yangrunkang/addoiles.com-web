@@ -165,7 +165,7 @@
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let db_return_data = resp.data.data;
-                    if(resp.data.code == 0 && db_return_data != null){
+                    if(resp.data.code === 0 && db_return_data != null){
                         this.title = db_return_data.title;
                         this.content = db_return_data.content;
                     }
@@ -201,7 +201,7 @@
                         };
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.experienceList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -228,7 +228,7 @@
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         this.experienceList = [];
                         for(let i = 0; i< resp.data.articleList.length;i++){
                             let experience = resp.data.articleList[i];

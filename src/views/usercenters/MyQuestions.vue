@@ -58,7 +58,7 @@
                         };
                         _this.axios.post("deleteByQuestionId",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.questionsList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -83,7 +83,7 @@
 
                 this.axios.post("getQuestionsByUserId",queryDto).then(function (response) {
                     let resp = response.data;
-                    if(resp.code == 0){
+                    if(resp.code === 0){
                         for(let i = 0; i< resp.data.length;i++){
                             let question = resp.data[i];
                             this.questionsList.push({
