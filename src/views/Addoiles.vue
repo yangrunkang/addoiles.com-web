@@ -219,7 +219,7 @@
             initHots(){
                 this.queryDto.microType = 0;
 
-                this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
+                this.axios.post('microContentList',this.queryDto).then(function (res) {
                     if(res.data.code === 0){
                         let resp = res.data.data;
                         for(let i =0 ;i<resp.length ; i++){

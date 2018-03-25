@@ -154,7 +154,7 @@
 
                 this.queryDto.microType=1;
 
-                this.axios.post('getMicroContentList',this.queryDto).then(function (res) {
+                this.axios.post('microContentList',this.queryDto).then(function (res) {
                     if(res.data.code === 0 && res.data.data.length > 0){
                         let response = res.data.data;
                         for(let i = 0 ; i < response.length ; i++){
