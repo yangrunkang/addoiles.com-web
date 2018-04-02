@@ -257,6 +257,7 @@
                         this.saveBtnText = "发表";
 
                         let queryDto = {
+                            userId:sessionStorage.getItem("userId"),
                             businessId:editObj.businessId,
                             tokenId:sessionStorage.getItem("tokenId")
                         };
