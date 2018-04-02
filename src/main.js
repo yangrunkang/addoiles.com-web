@@ -16,11 +16,18 @@ Vue.use(Util);
 // axios教程:http://blog.csdn.net/binginsist/article/details/65630547
 // Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 Vue.prototype.axios = axios;
-//dev
-axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
-//prod
-//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.3';
 
+//###########################dev#############################################
+axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
+//图片上传url dev
+Vue.prototype.uploadImage = 'http://localhost:8081/addoiles.com/uploadImage';
+//###########################dev_end#########################################
+
+//###########################prd#############################################
+//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.3';
+//图片上传url prd
+//Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.3/';
+//###########################prd_end#########################################
 //工具类
 Vue.prototype.addoileUtil = Util;
 
