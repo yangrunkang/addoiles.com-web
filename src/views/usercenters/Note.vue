@@ -61,6 +61,9 @@
 <script>
     import Vue from 'vue';
     import VueQuillEditor from 'vue-quill-editor';
+    //https://github.com/NextBoy/quill-image-extend-module
+    import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module';
+    Quill.register('modules/ImageExtend', ImageExtend);
     Vue.use(VueQuillEditor);
     export default {
         name: "note",
@@ -85,8 +88,31 @@
                 //编辑器配置
                 editorOption: {
                     // something to config
-                    placeholder: '在这里书写'
-
+                    placeholder: '在这里书写',
+                    modules: {
+                        ImageExtend: {
+                            loading: true,
+                            name: 'file',  // 图片参数名,notice:if write img,upload will fail
+                            size: 50,  // 可选参数 图片大小，单位为M，1M = 1024kb
+                            action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
+                            response: (res) => {
+                                if(res.code === 0){
+                                    console.log(res.data);
+                                    return res.data;
+                                }else{
+                                    return 'failed' + res.message;
+                                }
+                            },
+                        },
+                        toolbar: {
+                            container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
+                            handlers: {
+                                'image': function () {  // 劫持原来的图片点击按钮事件
+                                    QuillWatch.emit(this.quill.id)
+                                }
+                            }
+                        }
+                    }
                 },
 
                 noteColumns:[
