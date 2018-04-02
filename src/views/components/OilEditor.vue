@@ -87,6 +87,9 @@
                                     console.log(res.data);
                                     return res.data;
                                 }else{
+                                    this.$Notice.warning({
+                                        desc: res.message
+                                    });
                                     return 'failed' + res.message;
                                 }
                             },
