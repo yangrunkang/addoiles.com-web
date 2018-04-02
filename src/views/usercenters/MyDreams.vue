@@ -58,11 +58,13 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:dreamId
+                            businessId:dreamId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
                         _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
                             let resp = response.data;
-                            if(resp.code == 0 && resp.data > 0){
+                            if(resp.code === 0 && resp.data > 0){
                                 _this.dreamList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
                             }else {
@@ -78,13 +80,15 @@
              */
             initDreamList(){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
 
                 let queryDto = {
                     userId:userId,
-                    microType:1
+                    microType:1,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.axios.post("getMicroContentList",queryDto).then(function (response) {

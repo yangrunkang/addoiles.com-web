@@ -58,7 +58,9 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:hotId
+                            businessId:hotId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
                         _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
                             let resp = response.data;
@@ -75,13 +77,15 @@
             },
             initHotsList(){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
 
                 let queryDto = {
                     userId:userId,
-                    microType:0
+                    microType:0,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.axios.post("getMicroContentList",queryDto).then(function (response) {

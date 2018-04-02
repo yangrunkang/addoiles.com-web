@@ -188,6 +188,8 @@
 
                 let queryDto = {
                     businessId : noteId,
+                    userId: sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.showModal = true;
@@ -209,7 +211,7 @@
                 let noteId = this.noteList[tableIndex].noteId;
 
                 let queryDto = {
-                    businessId:noteId,
+                    businessId:noteId
                 };
 
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
@@ -247,7 +249,9 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:noteId
+                            businessId:noteId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
@@ -304,7 +308,8 @@
                     title : this.title,
                     content : this.content,
                     isHide : 0,
-                    deleteStatus : 0
+                    deleteStatus : 0,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 let operation = '';
@@ -339,14 +344,16 @@
              */
             initUserNotes(page){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
 
                 let queryDto = {
                     userId:userId,
                     articleType:1,
-                    page:page
+                    page:page,
+                    tokenId:tokenId
                 };
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {

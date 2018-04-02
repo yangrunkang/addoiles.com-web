@@ -54,7 +54,9 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:questionId
+                            businessId:questionId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
                         _this.axios.post("deleteByQuestionId",queryDto).then(function (response) {
                             let resp = response.data;
@@ -71,12 +73,14 @@
             },
             initQuestionList(){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
 
                 let queryDto = {
-                    userId:userId
+                    userId:userId,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.axios.post("getQuestionsByUserId",queryDto).then(function (response) {

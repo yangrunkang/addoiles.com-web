@@ -160,6 +160,7 @@
 
                 let queryDto = {
                     businessId : experienceId,
+                    userId: sessionStorage.getItem("userId"),
                     tokenId: sessionStorage.getItem("tokenId")
                 };
 
@@ -198,8 +199,11 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:experienceId
+                            businessId:experienceId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
+                        console.log(sessionStorage.getItem("tokenId"));
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
                             if(resp.code === 0 && resp.data > 0){
@@ -215,12 +219,14 @@
             },
             initExperienceList(page){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
 
                 let queryDto = {
                     userId:userId,
+                    tokenId: sessionStorage.getItem("tokenId"),
                     articleType:0,
                     page:page
                 };

@@ -159,6 +159,7 @@
 
                 let queryDto = {
                     businessId : articleId,
+                    userId: sessionStorage.getItem("userId"),
                     tokenId: sessionStorage.getItem("tokenId")
                 };
                 this.showModal = true;
@@ -195,7 +196,9 @@
                     okText:'确认',
                     onOk(){
                         let queryDto = {
-                            businessId:articleId
+                            businessId:articleId,
+                            userId: sessionStorage.getItem("userId"),
+                            tokenId: sessionStorage.getItem("tokenId")
                         };
                         _this.axios.post("deleteArticle",queryDto).then(function (response) {
                             let resp = response.data;
@@ -212,13 +215,16 @@
             },
             initITArticleList(page){
                 let userId = sessionStorage.getItem("userId");
-                if(userId == null){
+                let tokenId = sessionStorage.getItem("tokenId");
+                if(userId == null || tokenId === null){
                     return;
                 }
+
                 let queryDto = {
                     userId:userId,
                     articleType:2,
-                    page:page
+                    page:page,
+                    tokenId: sessionStorage.getItem("tokenId")
                 };
 
                 this.axios.post("getSimpleList",queryDto).then(function (response) {
