@@ -168,7 +168,8 @@
                     // rates:0,
                     // rateCount:0,
                     isHide:this.isHide?0:1,
-                    deleteStatus:deleteStatus
+                    deleteStatus:deleteStatus,
+                    tokenId:sessionStorage.getItem("tokenId")
                 };
 
                 //保存为草稿,说明之前已经有了,改为编辑
