@@ -64,6 +64,28 @@ router.afterEach((to, from, next) => {
 	window.scrollTo(0, 0); 
 });
 
+/**
+ * 请求拦截器
+ */
+axios.interceptors.request.use(function (req) {
+	console.log(req);
+	let urlMethod = req.url.substring(req.url.lastIndexOf('/') + 1,req.url.length);
+	console.log(urlMethod);
+    return req
+}, function (error) {
+    return Promise.reject(error)
+});
+
+/**
+ * 响应拦截器
+ */
+axios.interceptors.response.use(function (resp) {
+
+    return resp
+}, function (error) {
+    return Promise.reject(error)
+});
+
 new Vue({ // 创建一个 Vue 的根实例
 	el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
 	store: store,//使用仓库
