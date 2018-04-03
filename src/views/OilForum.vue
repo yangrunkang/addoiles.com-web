@@ -126,12 +126,6 @@
             //提问
             askQuestion(){
 
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
                 let questionContent = this.question;
 
                 if(!this.addoileUtil.validateReq(questionContent)){
@@ -147,9 +141,10 @@
                 this.axios.post("addQuestion",{
                     type : this.queryDto.questionType,
                     content : questionContent,
-                    userId : userId
+                    userId : sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId")
                 }).then(function (resp) {
-                    if(resp.data.code === 0 && resp.data.data > 0){
+                    if(resp.code === 0 && resp.data > 0){
                         this.$Notice.success({
                             desc: '已经提问,2s后刷新本页面'
                         });
@@ -164,12 +159,6 @@
             },
             //回答问题
             toAnswer(questionId,index){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
 
                 let answerContent = this.answerContent[index];
 
@@ -185,11 +174,11 @@
                 }
 
                 this.axios.post("addComment",{
-                    userId:userId,
+                    userId : sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId"),
                     targetId:questionId,
                     content:answerContent
-                }).then(function (res) {
-                    let response = res.data;
+                }).then(function (response) {
                     if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({
@@ -231,9 +220,9 @@
             },
             //初始化问题区域
             initQuestionAnswer(){
-                this.axios.post("getQuestionAnswerList",this.queryDto).then(function (resp) {
-                    if(resp.data.code === 0){
-                        let questionAnswerDtoList = resp.data.data;
+                this.axios.post("questionAnswerList",this.queryDto).then(function (resp) {
+                    if(resp.code === 0){
+                        let questionAnswerDtoList = resp.data;
                         if(questionAnswerDtoList.length > 0){
                             for(let i = 0;i < questionAnswerDtoList.length; i++){
                                 let questionAnswerDto = questionAnswerDtoList[i];

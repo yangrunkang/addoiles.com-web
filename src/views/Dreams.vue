@@ -97,13 +97,6 @@
         methods:{
             //许下梦想
             toDreamWall() {
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
                 let dreamTitle = this.dreamTitle;
                 let dreamContent = this.dreamContent;
                 //参数校验
@@ -125,20 +118,22 @@
                 this.axios.post('addMicroContent',{
                     title:dreamTitle,
                     content:dreamContent,
-                    userId:userId,
+                    userId:sessionStorage.getItem("userId"),
+                    tokenId:sessionStorage.getItem("tokenId"),
                     microType:1
-                }).then(function (res) {
-                    let response = res.data;
+                }).then(function (response) {
                     if(response.code === 0 && response.data === 1){
                         this.dreamList.unshift({dreamTitle:dreamTitle,dreamContent:dreamContent});
                         this.splitDreamList(this.dreamList);
                         //弹窗提示
                         this.$Notice.success({
-                            title: '<h6>许愿成功,愿您早日实现自己的梦想,加油!</h6>'
+                            title: '许愿成功,愿您早日实现自己的梦想',
+                            desc: '加油!'
                         });
                     }else{
                         this.$Notice.info({
-                            title: '<h6>抱歉,您的梦想已经跳出系统,一定可以成真</h6><h4>其实,是我们系统出错了,抱歉</h4>'
+                            title: '抱歉',
+                            desc: '我们系统出错了~'
                         });
                     }
                     //清空数据
@@ -155,8 +150,8 @@
                 this.queryDto.microType=1;
 
                 this.axios.post('microContentList',this.queryDto).then(function (res) {
-                    if(res.data.code === 0 && res.data.data.length > 0){
-                        let response = res.data.data;
+                    if(res.code === 0 && res.data.length > 0){
+                        let response = res.data;
                         for(let i = 0 ; i < response.length ; i++){
                             let dream = response[i];
                             this.dreamList.push({dreamTitle : dream.title , dreamContent : dream.content,alertType:this.addoileUtil.getRandAlertType()});

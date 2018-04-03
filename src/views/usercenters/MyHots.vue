@@ -62,8 +62,7 @@
                             userId: sessionStorage.getItem("userId"),
                             tokenId: sessionStorage.getItem("tokenId")
                         };
-                        _this.axios.post("deleteMicroContent",queryDto).then(function (response) {
-                            let resp = response.data;
+                        _this.axios.post("deleteMicroContent",queryDto).then(function (resp) {
                             if(resp.code === 0 && resp.data > 0){
                                 _this.hotsList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
@@ -88,8 +87,7 @@
                     tokenId: sessionStorage.getItem("tokenId")
                 };
 
-                this.axios.post("getMicroContentList",queryDto).then(function (response) {
-                    let resp = response.data;
+                this.axios.post("getMicroContentList",queryDto).then(function (resp) {
                     if(resp.code === 0){
                         for(let i = 0; i< resp.data.length;i++){
                             let hot = resp.data[i];

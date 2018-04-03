@@ -194,10 +194,10 @@
 
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
-                    let db_return_data = resp.data.data;
-                    if(resp.data.code === 0 && db_return_data != null){
-                        this.noteTitle = db_return_data.title;
-                        this.noteContent = db_return_data.content;
+                    let data = resp.data;
+                    if(resp.code === 0 && data != null){
+                        this.noteTitle = data.title;
+                        this.noteContent = data.content;
                     }else{
                         this.$store.commit('loadingFailed',this);
                     }
@@ -211,15 +211,16 @@
                 let noteId = this.noteList[tableIndex].noteId;
 
                 let queryDto = {
-                    businessId:noteId
+                    businessId:noteId,
+                    tokenId:sessionStorage.getItem("tokenId")
                 };
 
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
-                    let db_return_data = resp.data.data;
-                    if(resp.data.code === 0 && db_return_data != null){
-                        this.title = db_return_data.title;
-                        this.content = db_return_data.content;
-                        this.noteBusinessId = db_return_data.articleId;
+                    let data = resp.data;
+                    if(resp.code === 0 && data != null){
+                        this.title = data.title;
+                        this.content = data.content;
+                        this.noteBusinessId = data.articleId;
 
                         //按钮变换
                         this.noteBtn = false;
@@ -270,12 +271,6 @@
              * 准备保存笔记
              */
             prepareNote(){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
 
                 if(!this.addoileUtil.validateReq(this.content)){
                     this.$Notice.info({
@@ -321,7 +316,7 @@
                 }
 
                 this.axios.post(operation,note).then(function (resp) {
-                    if(resp.data.code === 0 && resp.data.data == 1){
+                    if(resp.code === 0 && resp.data == 1){
                         this.$Notice.success({
                             desc: this.noteBtn?'保存成功':'编辑成功'
                         });
@@ -330,7 +325,7 @@
                             this.$router.go(0);
                         }.bind(this), 1000);
                         this.clearContent();
-                    }else if(resp.data.data === 1002){
+                    }else if(resp.data === 1002){
                         this.$Notice.error({
                             title:"操作失败,原因可能如下:",
                             desc: '1.文本内容过余长了;2.图片占用存储太大;3.可能文本中包含非正常字符;',
@@ -356,8 +351,7 @@
                     tokenId:tokenId
                 };
 
-                this.axios.post("getSimpleList",queryDto).then(function (response) {
-                    let resp = response.data;
+                this.axios.post("getSimpleList",queryDto).then(function (resp) {
                     if(resp.code === 0){
                         this.noteList = [];
                         for(let i = 0; i< resp.data.articleList.length;i++){
@@ -395,14 +389,11 @@
             }
         },
         mounted() {
-
             let page = {
                 pageSize:10,
                 pageNo:0
             };
             this.initUserNotes(page);
-
-
         }
     }
 </script>

@@ -166,10 +166,10 @@
 
                 this.showModal = true;
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
-                    let db_return_data = resp.data.data;
-                    if(resp.data.code === 0 && db_return_data != null){
-                        this.title = db_return_data.title;
-                        this.content = db_return_data.content;
+                    let data = resp.data;
+                    if(resp.code === 0 && data != null){
+                        this.title = data.title;
+                        this.content = data.content;
                     }
                 }.bind(this));
 
@@ -204,8 +204,7 @@
                             tokenId: sessionStorage.getItem("tokenId")
                         };
                         console.log(sessionStorage.getItem("tokenId"));
-                        _this.axios.post("deleteArticle",queryDto).then(function (response) {
-                            let resp = response.data;
+                        _this.axios.post("deleteArticle",queryDto).then(function (resp) {
                             if(resp.code === 0 && resp.data > 0){
                                 _this.experienceList.splice(tableIndex,1);
                                 this.$store.commit('deleteSuccess',_this);
@@ -218,21 +217,15 @@
                 this.$Modal.confirm(config);
             },
             initExperienceList(page){
-                let userId = sessionStorage.getItem("userId");
-                let tokenId = sessionStorage.getItem("tokenId");
-                if(userId == null || tokenId === null){
-                    return;
-                }
 
                 let queryDto = {
-                    userId:userId,
+                    userId:sessionStorage.getItem("userId"),
                     tokenId: sessionStorage.getItem("tokenId"),
                     articleType:0,
                     page:page
                 };
 
-                this.axios.post("getSimpleList",queryDto).then(function (response) {
-                    let resp = response.data;
+                this.axios.post("getSimpleList",queryDto).then(function (resp) {
                     if(resp.code === 0){
                         this.experienceList = [];
                         for(let i = 0; i< resp.data.articleList.length;i++){

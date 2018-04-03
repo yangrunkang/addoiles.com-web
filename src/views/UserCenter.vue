@@ -67,8 +67,6 @@
                 //统一用户校验
                 let userId = sessionStorage.getItem("userId");
                 let tokenId = sessionStorage.getItem("tokenId");
-                console.log(userId);
-                console.log(tokenId);
                 if(userId == null || tokenId == null){
                     this.$store.commit('validateLogin',this);
                     return;

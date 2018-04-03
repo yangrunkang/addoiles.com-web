@@ -47,35 +47,26 @@
         },
         methods: {
             toChat(){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
 
                 let userName = this.$store.getters.getUserName;
-
-                if(userName === 'null' || userId === 'null'){
-                    userId = "www.addoiles.com"; //不是网站用户,是访客
-                    userName = "我";
-                }
+                let userId = sessionStorage.getItem("userId");
 
                 //用户输入的聊天内容,更新到页面
                 this.historyChatList.unshift({
-                    userId:userId,
+                    userId : userId,
                     userName:userName,
                     chatContent:this.chatContent
                 });
                 //接口请求
-                this.axios.post("chat",{
+                this.axios.post("addChat",{
                     key:this.tulingKey,
                     info:this.chatContent,
                     api:this.tulingAPI,
-                    userid:userId
+                    userId:userId,
+                    tokenId: sessionStorage.getItem("tokenId")
                 }).then(function (resp) {
                     //这里的OilRobot不变 - From Server
-                    this.historyChatList.unshift({userId:"OilRobot",userName:"OilRobot",chatContent:resp.data.data});
+                    this.historyChatList.unshift({userId:"OilRobot",userName:"OilRobot",chatContent:resp.data});
                 }.bind(this));
 
                 //清空聊天框

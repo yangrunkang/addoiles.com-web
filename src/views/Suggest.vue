@@ -30,8 +30,9 @@
                     return;
                 }
 
-                this.axios.post('suggest',{
+                this.axios.post('addSuggest',{
                     userId:this.$store.getters.getUserId,
+                    tokenId: sessionStorage.getItem("tokenId"),
                     content:this.content
                 }).then(function () {
                     this.$Notice.success({

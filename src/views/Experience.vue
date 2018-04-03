@@ -174,13 +174,6 @@
             /*去分享*/
             toShareExperience(){
 
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
                 let editObj = {
                     articleType:0,
                 };
@@ -191,13 +184,6 @@
             },
             /*去评论*/
             toComment(experienceId){
-
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
 
                 let commentContent = this.commentContent;
 
@@ -215,11 +201,11 @@
 
                 //请求后台
                 this.axios.post('addComment',{
-                    userId : userId,
+                    userId : sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId"),
                     targetId : experienceId,
                     content : commentContent
-                }).then(function (res) {
-                    let response = res.data;
+                }).then(function (response) {
                     if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({
@@ -243,27 +229,20 @@
             },
             //去评分
             toRates(experienceId,$event){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
-                let rate = $event;
-                this.$Notice.success({
-                    title : '感谢您的评分',
-                    desc : '系统将根据平局值显示结果'
-                });
 
                 let rateDto = {
-                  businessId:experienceId,
-                  rate:rate
+                    userId : sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId"),
+                    businessId:experienceId,
+                    rate:$event
                 };
 
                 this.axios.post("updateRates",rateDto).then(function (response) {
-                    //nothing
-                })
+                    this.$Notice.success({
+                        title : '感谢您的评分',
+                        desc : '系统将根据平局值显示结果'
+                    });
+                }.bind(this))
             },
             /**
              * 获取经历列表
@@ -272,9 +251,9 @@
 
                 this.queryDto.articleType = 0;
 
-                this.axios.post('getExperienceList',this.queryDto).then(function (response) {
-                    if(response.data.code === 0){
-                        let experienceList = response.data.data; //List<ExperienceDto>
+                this.axios.post('experienceList',this.queryDto).then(function (response) {
+                    if(response.code === 0){
+                        let experienceList = response.data; //List<ExperienceDto>
                         if(experienceList.length > 0){
                             for(let i = 0; i < experienceList.length; i++){ //ExperienceDto
                                 //经历
@@ -303,10 +282,10 @@
 
                 this.queryDto.businessId = experienceId;
 
-                this.axios.post('getExperience',this.queryDto).then(function (response) {
-                    if(response.data.code === 0){
+                this.axios.post('experience',this.queryDto).then(function (response) {
+                    if(response.code === 0){
                         // ExperienceDto
-                        let _experienceDto = response.data.data;
+                        let _experienceDto = response.data;
 
                         //评论
                         let commentList = _experienceDto.commentList;

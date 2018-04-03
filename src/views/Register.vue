@@ -206,7 +206,7 @@
                             email : _this.email,
                             type : 2
                         }).then(function (resp) {
-                            if(resp.data.code === 0 && resp.data.data === true){
+                            if(resp.code === 0 && resp.data === true){
                                 //
                                 _this.registerForm = false;
                                 _this.verifyForm=true;
@@ -230,7 +230,7 @@
                     email : this.email,
                     code : this.verificationCode
                 }).then(function (resp) {
-                    if(resp.data.code === 0 && resp.data.data === true){
+                    if(resp.code === 0 && resp.data === true){
 
                         //begin to register
                         this.axios.post("register",{
@@ -238,12 +238,12 @@
                             email : email,
                             password : password
                         }).then(function (resp) {
-                            if(resp.data.code === 0 && resp.data.data === 1001){
+                            if(resp.code === 0 && resp.data === 1001){
                                 this.$Message.warning(email+'已经注册过');
                                 return;
                             }
 
-                            if(resp.data.code === 0 && resp.data.data === true){
+                            if(resp.code === 0 && resp.data === true){
                                 this.$Notice.success({
                                     desc: '注册成功,2s后转到登录页'
                                 });

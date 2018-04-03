@@ -64,14 +64,21 @@ router.afterEach((to, from, next) => {
 	window.scrollTo(0, 0); 
 });
 
+//note: get 是后台manager操作
+let requestUrlRegex = /^.*(add|update|delete|get|edit).[A-Za-z0-9]+$/;
 /**
  * 请求拦截器
  */
 axios.interceptors.request.use(function (req) {
-	console.log(req);
-	let urlMethod = req.url.substring(req.url.lastIndexOf('/') + 1,req.url.length);
-	console.log(urlMethod);
-    return req
+    if(requestUrlRegex.test(req.url)){
+        let userId = sessionStorage.getItem("userId");
+        let tokenId = sessionStorage.getItem("tokenId");
+        if(userId == null || tokenId == null){
+            window.vm.$store.commit('validateLogin',window.vm);
+            return Promise.reject('亲,您还登录,已拦截您的当前请求');
+        }
+    }
+    return req;
 }, function (error) {
     return Promise.reject(error)
 });
@@ -80,15 +87,43 @@ axios.interceptors.request.use(function (req) {
  * 响应拦截器
  */
 axios.interceptors.response.use(function (resp) {
+    //直接取到data
+    let response = resp.data;
 
-    return resp
+    if(response.code === 9){
+        window.vm.$Notice.warning({
+            title:'亲,您还登录,已拦截您的当前请求',
+            desc:'提示'
+        });
+        return Promise.reject('亲,您还登录,已拦截您的当前请求');
+    }else if(response.code === 2){
+        window.vm.$Notice.warning({
+            title:'系统异常~',
+            desc:'提示'
+        });
+        return Promise.reject('系统异常~');
+    }else if(response.code === 6){
+        window.vm.$Notice.warning({
+            title:'非法请求~',
+            desc:'提示'
+        });
+        return Promise.reject('非法请求~');
+    }else if(response.code === 9){
+        window.vm.$Notice.warning({
+            title:'令牌验证失败~',
+            desc:'提示'
+        });
+        return Promise.reject('令牌验证失败~');
+    }
+
+    return response;
 }, function (error) {
     return Promise.reject(error)
 });
 
-new Vue({ // 创建一个 Vue 的根实例
-	el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
-	store: store,//使用仓库
-	router: router, // 注入路由配置
-	render: h => h(Index)
+window.vm = new Vue({ // 创建一个 Vue 的根实例
+    el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
+    store: store,//使用仓库
+    router: router, // 注入路由配置
+    render: h => h(Index)
 });

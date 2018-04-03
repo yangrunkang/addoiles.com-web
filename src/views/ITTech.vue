@@ -147,13 +147,6 @@
             /*去写文章*/
             toWriteITArticle(){
 
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
                 let editObj = {
                     articleType:2,
                 };
@@ -189,9 +182,9 @@
 
                 this.queryDto.articleType = 2;
                 //展示文章列表
-                this.axios.post('showMoreITTechArticles',this.queryDto).then(function (resp) {
-                    if (resp.data.code === 0) {
-                        let dataArray = resp.data.data;
+                this.axios.post('moreArticles',this.queryDto).then(function (resp) {
+                    if (resp.code === 0) {
+                        let dataArray = resp.data;
                         if(dataArray.length > 0){
                             for(let i = 0; i < dataArray.length; i++){
                                 this.moreITArticleList.push({
@@ -221,9 +214,9 @@
                 this.queryDto.articleType=2;
                 this.queryDto.businessId=articleId;
 
-                this.axios.post('getITArticle',this.queryDto).then(function (resp) {
-                    if(resp.data.code === 0){
-                        let data = resp.data.data;
+                this.axios.post('ITArticle',this.queryDto).then(function (resp) {
+                    if(resp.code === 0){
+                        let data = resp.data;
 
                         //文章评论
                         let _articleCommentList = [];
@@ -266,9 +259,9 @@
              */
             initPithinessList(){
                 this.queryDto.articleType=2;
-                this.axios.post('getITArticlePithinessList',this.queryDto).then(function (resp) {
-                    if(resp.data.code === 0){
-                        let data = resp.data.data;
+                this.axios.post('ITPithinessList',this.queryDto).then(function (resp) {
+                    if(resp.code === 0){
+                        let data = resp.data;
                         //右侧列表简表
                         let _pithinessList = [];
                         for(let i = 0; i < data.length; i++){
@@ -291,13 +284,6 @@
             },
             toComment(articleId){
 
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
                 let commentContent = this.commentContent;
                 /*下面的和Experience.vue不一样,不要头脑热改了..*/
                 if(!this.addoileUtil.validateReq(commentContent)){
@@ -312,14 +298,13 @@
                     return;
                 }
 
-
                 //请求后台
                 this.axios.post('addComment',{
-                    userId:userId,
+                    userId : sessionStorage.getItem("userId"),
+                    tokenId: sessionStorage.getItem("tokenId"),
                     targetId:articleId,
                     content:commentContent
-                }).then(function (res) {
-                    let response = res.data;
+                }).then(function (response) {
                     if(response.code === 0 && response.data === 1){
                         //弹窗提示
                         this.$Notice.success({

@@ -220,8 +220,8 @@
                 this.queryDto.microType = 0;
 
                 this.axios.post('microContentList',this.queryDto).then(function (res) {
-                    if(res.data.code === 0){
-                        let resp = res.data.data;
+                    if(res.code === 0){
+                        let resp = res.data;
                         for(let i =0 ;i<resp.length ; i++){
                             this.hotsList.push({
                                 title : resp[i].title ,
@@ -235,9 +235,9 @@
                 }.bind(this));
             },
             initImages(){
-                this.axios.post('getFistPageImage').then(function (res) {
-                    if(res.data.code === 0){
-                        let resp = res.data.data;
+                this.axios.post('recommendList').then(function (res) {
+                    if(res.code === 0){
+                        let resp = res.data;
                         for(let i =0 ;i<resp.length ; i++){
                             let image = resp[i];
                             if(image.type === 0){
@@ -272,13 +272,6 @@
             },
             //发表热门
             addHots(){
-                this.$store.commit('validateLogin',this);
-
-                let userId = sessionStorage.getItem("userId");
-                if(userId == null){
-                    return;
-                }
-
                 let hotTitle = this.hotTitle;
                 let hotContent = this.hotContent;
                 if(!this.addoileUtil.validateReq(hotTitle) || !this.addoileUtil.validateReq(hotContent)){
@@ -298,12 +291,14 @@
                 this.axios.post('addMicroContent',{
                     title:hotTitle,
                     content:hotContent,
-                    userId:userId,
+                    userId:sessionStorage.getItem("userId"),
+                    tokenId:sessionStorage.getItem("tokenId"),
                     microType:0
                 }).then(function (resp) {
-                    if(resp.data.code === 0 && resp.data.data > 0){
+                    if(resp.code === 0 && resp.data > 0){
                         this.$Notice.info({
-                            title: '<h3>动弹成功</h3>'
+                            title: '动弹成功',
+                            desc:'提示'
                         });
                         this.hotsList.unshift({
                             title : hotTitle,
@@ -316,7 +311,8 @@
                         this.hotContent = '';
                     }else{
                         this.$Notice.warning({
-                            title: '<h3>动弹失败</h3>'
+                            title: '动弹失败~~',
+                            desc:'提示'
                         });
                     }
                 }.bind(this));

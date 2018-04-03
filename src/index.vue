@@ -92,9 +92,9 @@
         methods: {
             //初始化导航栏
             initNavList(){
-                this.axios.get('getNavList').then(function (res) {
-                    if(res.data.code == 0){
-                        let navListJson = res.data.data;
+                this.axios.get('navList').then(function (res) {
+                    if(res.code == 0){
+                        let navListJson = res.data;
                         this.$store.commit('setNavList',navListJson);
                         this.navList = this.$store.getters.getNavList;
                     }
