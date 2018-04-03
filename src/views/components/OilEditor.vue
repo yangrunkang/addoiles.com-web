@@ -49,11 +49,11 @@
     //安装vue-quill-editor富文本编辑器
     import Vue from 'vue';
     import VueQuillEditor from 'vue-quill-editor';
-    //https://github.com/NextBoy/quill-image-extend-module
-    import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module';
-    Quill.register('modules/ImageExtend', ImageExtend);
+    import {quillRedefine} from 'vue-quill-editor-upload'
+
     Vue.use(VueQuillEditor);
     export default {
+        components: {VueQuillEditor, quillRedefine},
         data () {
             return {
 
@@ -73,37 +73,7 @@
                 /*****************/
 
                 //编辑器配置
-                editorOption: {
-                    // something to config
-                    placeholder: '在这里书写',
-                    modules: {
-                        ImageExtend: {
-                            loading: true,
-                            name: 'file',  // 图片参数名,notice:if write img,upload will fail
-                            size: 50,  // 可选参数 图片大小，单位为M，1M = 1024kb
-                            action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
-                            response: (res) => {
-                                if(res.code === 0){
-                                    console.log(res.data);
-                                    return res.data;
-                                }else{
-                                    this.$Notice.warning({
-                                        desc: res.message
-                                    });
-                                    return 'failed' + res.message;
-                                }
-                            },
-                        },
-                        toolbar: {
-                            container: container,  // container为工具栏，此次引入了全部工具栏，也可自行配置
-                            handlers: {
-                                'image': function () {  // 劫持原来的图片点击按钮事件
-                                    QuillWatch.emit(this.quill.id)
-                                }
-                            }
-                        }
-                    }
-                },
+                editorOption: {},
                 //确认清除模态框显示与隐藏
                 confirmModal : false,
                 //发表按钮
@@ -301,6 +271,26 @@
             editor() {
                 return this.$refs.myTextEditor.quillEditor;
             }
+        },
+        created() {
+            this.editorOption = quillRedefine({
+                // 图片上传的设置
+                uploadConfig: {
+                    action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
+                    res: (res) => {
+                        if(res.code === 0){
+                            console.log(res.data);
+                            return res.data;
+                        }else{
+                            this.$Notice.warning({
+                                desc: res.message
+                            });
+                            return 'failed' + res.message;
+                        }
+                    },
+                    name: 'file'  // 图片上传参数名
+                }
+            })
         },
         mounted() {
            this.initOilEditor();
