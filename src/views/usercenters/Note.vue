@@ -212,6 +212,7 @@
 
                 let queryDto = {
                     businessId:noteId,
+                    userId:sessionStorage.getItem("userId"),
                     tokenId:sessionStorage.getItem("tokenId")
                 };
 
