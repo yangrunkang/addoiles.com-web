@@ -217,7 +217,7 @@
 
                 let _this = this;
                 let config = {
-                    content:'确定要从小记客栈中删除【'+this.noteList[tableIndex].title+'】 这个小计吗?',
+                    content:'确定要从小记客栈中删除【'+this.noteList[tableIndex].title+'】 这则小记吗?',
                     okText:'确认',
                     onOk(){
                         let queryDto = {
@@ -360,10 +360,12 @@
         },
         created() {
             this.editorOption = quillRedefine({
-
                 // 图片上传的设置
                 uploadConfig: {
+                    methods: 'POST',  // 可选参数 图片上传方式  默认为post
                     action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
+                    size: 10240,//可选参数   图片限制大小，单位为Kb, 1M = 1024Kb
+                    accept: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon,image/jpg',// 可选参数 可上传的图片格式
                     res: (res) => {
                         if(res.code === 0){
                             console.log(res.data);
@@ -375,8 +377,34 @@
                             return 'failed' + res.message;
                         }
                     },
-                    name: 'file'  // 图片上传参数名
-                }
+                    name: 'file',  // 图片上传参数名,
+                    start: () => { // 可选参数 接收一个函数 开始上传数据时会触发
+                        this.$Notice.info({
+                            title:'正在上传,请稍等',
+                            desc: '提示'
+                        });
+                    },
+                    end: () => { // 可选参数 接收一个函数 上传数据完成（成功或者失败）时会触发
+                        this.$Notice.info({
+                            title:'服务器正在接受并处理中,请稍等',
+                            desc: '提示',
+                        });
+                    },
+                    success: () => { // 可选参数 接收一个函数 上传数据成功时会触发
+                        this.$Notice.success({
+                            title:'图片上传成功',
+                            desc: '提示'
+                        });
+                    },
+                    error: () => {// 可选参数 接收一个函数 上传数据中断时会触发
+                        this.$Notice.error({
+                            title:'图片上传失败',
+                            desc: '提示'
+                        });
+                    }
+                },
+                // 以下所有设置都和vue-quill-editor本身所对应
+                placeholder: '在这里书写',  // 可选参数 富文本框内的提示语
             })
         },
         mounted() {
