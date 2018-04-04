@@ -24,9 +24,9 @@ Vue.prototype.uploadImage = 'http://localhost:8081/addoiles.com/uploadImage';
 //###########################dev_end#########################################
 
 //###########################prd#############################################
-//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.3';
+//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5';
 //图片上传url prd
-//Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.3/';
+//Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5/uploadImage';
 //###########################prd_end#########################################
 //工具类
 Vue.prototype.addoileUtil = Util;
