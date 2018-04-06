@@ -326,7 +326,7 @@
                     } else {
                         this.hotsActiveIndex = -1;
                     }
-                }, 1000);
+                }, 3000);
             }
         },
         mounted() {
