@@ -75,7 +75,7 @@ axios.interceptors.request.use(function (req) {
         let tokenId = sessionStorage.getItem("tokenId");
         if(userId == null || tokenId == null){
             window.vm.$store.commit('validateLogin',window.vm);
-            return Promise.reject('亲,您还登录,已拦截您的当前请求');
+            return Promise.reject('亲,您还未登录,已拦截您的当前请求');
         }
     }
     return req;
@@ -92,10 +92,10 @@ axios.interceptors.response.use(function (resp) {
 
     if(response.code === 9){
         window.vm.$Notice.warning({
-            title:'亲,您还登录,已拦截您的当前请求',
+            title:'亲,您还未登录,已拦截您的当前请求',
             desc:'提示'
         });
-        return Promise.reject('亲,您还登录,已拦截您的当前请求');
+        return Promise.reject('亲,您还未登录,已拦截您的当前请求');
     }else if(response.code === 2){
         window.vm.$Notice.warning({
             title:'系统异常~',
