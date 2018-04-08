@@ -88,14 +88,14 @@
                 <div class="log-cloud cloud3"></div>
                 <div class="log-cloud cloud4"></div>
 
-                <div class="log-logo">Welcome Addoiles!<br />Register</div>
+                <div class="log-logo">Welcome Addoiles!<br />注册</div>
             </div>
             <div class="log-email" v-show="registerForm">
                 <input type="text" placeholder="用户名" :class="'log-input' + (userName==''?' log-input-empty':'')" v-model="userName">
                 <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
                 <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
-                <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:注册</a>
+                <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:立即注册</a>
                 <p style="text-align: center;margin-bottom: 10px">
                     <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
                 </p>

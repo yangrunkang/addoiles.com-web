@@ -88,15 +88,15 @@
                 <div class="log-cloud cloud3"></div>
                 <div class="log-cloud cloud4"></div>
 
-                <div class="log-logo">Welcome Addoiles!<br />Login</div>
+                <div class="log-logo">Welcome Addoiles!<br />登录</div>
             </div>
             <div class="log-email" v-show="showLoginForm">
                 <input type="text" placeholder="输入邮箱登录" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
                 <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <a href="javascript:;" class="log-btn" @click="toLogin">登录</a>
+                <a href="javascript:;" class="log-btn" @click="toLogin">立即登录</a>
             </div>
             <p style="text-align: center;margin-bottom: 10px" v-show="showLoginForm">
-                <a class="a-tips" @click="forgetPassword()">忘记密码</a> &nbsp;&nbsp;
+                <a class="a-tips" @click="forgetPassword()">忘记密码</a>
                 <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
             </p>
 
