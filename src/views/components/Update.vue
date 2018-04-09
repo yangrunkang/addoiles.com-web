@@ -6,6 +6,44 @@
 <template>
     <div>
         <Card shadow>
+            <p slot="title">V1.4.0</p>
+            <div>
+                <h4>新增:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>用户管理新增【小记客栈】,方便您记录一些待办事项,日记,随笔等</li>
+                            <li>用户管理添加分页功能</li>
+                        </ol>
+                    </div>
+                </div>
+                <h4>优化:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>文章展示修改时间</li>
+                            <li>登录成功立即跳转首页</li>
+                            <li>热门动弹鼠标移至内容上方,停止滚动</li>
+                            <li>IT文章添加快速抵达评论区域按钮</li>
+                            <li>添加网站icon--哈士奇</li>
+                            <li>点击加载按钮当无内容时禁止点击</li>
+                        </ol>
+                    </div>
+                </div>
+                <h4>修复:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>修复文章中排版与编辑器中样式不一致Bug</li>
+                            <li>修复文章中图片size过大导致在浏览时图片超过阅读区边界Bug</li>
+                            <li>修复首页推荐栏未按照推荐先后顺序排列Bug</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </Card>
+        <br />
+        <Card shadow>
             <p slot="title">V1.3.5</p>
             <div>
                 <h4>优化:</h4>
