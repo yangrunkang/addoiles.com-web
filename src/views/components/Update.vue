@@ -6,6 +6,20 @@
 <template>
     <div>
         <Card shadow>
+            <p slot="title">V1.4.5</p>
+            <div>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>用户非公开数据更加安全</li>
+                            <li>优化文章图片上传及浏览</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </Card>
+        <br />
+        <Card shadow>
             <p slot="title">V1.4.0</p>
             <div>
                 <h4>新增:</h4>
