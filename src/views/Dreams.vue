@@ -97,6 +97,15 @@
         methods:{
             //许下梦想
             toDreamWall() {
+
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
+
                 let dreamTitle = this.dreamTitle;
                 let dreamContent = this.dreamContent;
                 //参数校验
@@ -118,7 +127,7 @@
                 this.axios.post('addMicroContent',{
                     title:dreamTitle,
                     content:dreamContent,
-                    userId:sessionStorage.getItem("userId"),
+                    userId:userId,
                     tokenId:sessionStorage.getItem("tokenId"),
                     microType:1
                 }).then(function (response) {

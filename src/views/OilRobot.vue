@@ -48,9 +48,15 @@
         methods: {
             toChat(){
 
-                let userName = this.$store.getters.getUserName;
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
                 let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
 
+                let userName = this.$store.getters.getUserName;
                 //用户输入的聊天内容,更新到页面
                 this.historyChatList.unshift({
                     userId : userId,

@@ -174,6 +174,14 @@
             /*去分享*/
             toShareExperience(){
 
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
+
                 let editObj = {
                     articleType:0,
                 };

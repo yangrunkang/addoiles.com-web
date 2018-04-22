@@ -146,6 +146,13 @@
 
             /*去写文章*/
             toWriteITArticle(){
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
 
                 let editObj = {
                     articleType:2,

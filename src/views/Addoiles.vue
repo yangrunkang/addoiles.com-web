@@ -272,6 +272,14 @@
             },
             //发表热门
             addHots(){
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
+
                 let hotTitle = this.hotTitle;
                 let hotContent = this.hotContent;
                 if(!this.addoileUtil.validateReq(hotTitle) || !this.addoileUtil.validateReq(hotContent)){
@@ -291,7 +299,7 @@
                 this.axios.post('addMicroContent',{
                     title:hotTitle,
                     content:hotContent,
-                    userId:sessionStorage.getItem("userId"),
+                    userId:userId,
                     tokenId:sessionStorage.getItem("tokenId"),
                     microType:0
                 }).then(function (resp) {

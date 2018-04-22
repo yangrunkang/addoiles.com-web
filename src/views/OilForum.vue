@@ -125,6 +125,13 @@
         methods: {
             //提问
             askQuestion(){
+                /*入口校验*/
+                this.$store.commit('validateLogin',this);
+                let userId = sessionStorage.getItem("userId");
+                if(userId == null){
+                    return null;
+                }
+                /*入口校验End*/
 
                 let questionContent = this.question;
 
@@ -141,7 +148,7 @@
                 this.axios.post("addQuestion",{
                     type : this.queryDto.questionType,
                     content : questionContent,
-                    userId : sessionStorage.getItem("userId"),
+                    userId : userId,
                     tokenId: sessionStorage.getItem("tokenId")
                 }).then(function (resp) {
                     if(resp.code === 0 && resp.data > 0){
