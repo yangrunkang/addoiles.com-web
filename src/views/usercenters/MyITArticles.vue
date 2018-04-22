@@ -216,6 +216,7 @@
                 let queryDto = {
                     userId:sessionStorage.getItem("userId"),
                     articleType:2,
+                    sortBy:1,
                     page:page,
                     tokenId: sessionStorage.getItem("tokenId")
                 };

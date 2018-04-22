@@ -317,6 +317,7 @@
                 let queryDto = {
                     userId:userId,
                     articleType:1,
+                    sortBy:1,
                     page:page,
                     tokenId:tokenId
                 };

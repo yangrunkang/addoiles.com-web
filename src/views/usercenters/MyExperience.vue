@@ -222,6 +222,7 @@
                     userId:sessionStorage.getItem("userId"),
                     tokenId: sessionStorage.getItem("tokenId"),
                     articleType:0,
+                    sortBy:1,
                     page:page
                 };
 
