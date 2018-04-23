@@ -15,7 +15,7 @@ const routers = [
         component: (resolve) => require(['../views/Dreams.vue'], resolve)
     },
     {
-        path: '/Experience',
+        path: '/Experience/:businessId',
         meta: {
             title: '分享'
         },
@@ -29,7 +29,7 @@ const routers = [
         component: (resolve) => require(['../views/OilForum.vue'], resolve)
     },
     {
-        path: '/ITTech',
+        path: '/ITTech/:businessId',
         meta: {
             title: '技术沉淀'
         },

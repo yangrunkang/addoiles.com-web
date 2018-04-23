@@ -359,6 +359,8 @@
         },
 
         mounted() {
+            let businessId = this.$route.params.businessId;
+            console.log(businessId);
             this.getExperienceList();
         }
     }
