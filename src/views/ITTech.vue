@@ -284,7 +284,10 @@
                         this.pithinessList = _pithinessList;
 
                         //显示第一篇文章详情
-                        this.getITArticleDetail(this.pithinessList[0].articleId);
+                        let businessId = this.$route.params.businessId;
+                        if(businessId === 'list'){
+                            this.getITArticleDetail(this.pithinessList[0].articleId);
+                        }
                     }
                 }.bind(this));
             },
@@ -358,7 +361,9 @@
         },
         mounted () {
             let businessId = this.$route.params.businessId;
-            console.log(businessId);
+            if(businessId != 'list'){
+                this.getITArticleDetail(businessId);
+            }
             this.initPithinessList();
         }
     }
