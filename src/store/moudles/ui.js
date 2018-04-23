@@ -54,7 +54,7 @@ const ui = {
          */
         loadingFailed(state,vm){
             vm.$Notice.error({
-                title: '目标资源加载失败,请重试',
+                title: '目标资源ID不存在,请重试',
                 desc: '出错啦'
             });
         },
