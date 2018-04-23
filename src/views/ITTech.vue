@@ -31,7 +31,6 @@
                 <Affix :offset-top="10">
                     <Button type="info" size="large" long @click="toWriteITArticle()" style="margin-bottom: 10px">技术分享</Button>
                     <Card shadow>
-                        <h3 style="margin-bottom: 10px">文章列表</h3>
                         <Timeline pending>
                             <Timeline-item v-for="pithiness in pithinessList" :key="pithiness.id">
                                 <a @click="getITArticleDetail(pithiness.articleId)" >
