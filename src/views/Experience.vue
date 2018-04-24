@@ -334,7 +334,7 @@
                             isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
                         };
                         //分享链接
-                        this.experienceShareUrl = this.axios.defaults.webSite+'Experience/' + experienceId;
+                        this.experienceShareUrl = this.axios.defaults.webSite+'Experience?businessId=' + experienceId;
                     }else{
                         this.$store.commit('loadingFailed',this);
                         this.showExperienceModal = false;
@@ -385,8 +385,8 @@
         },
 
         mounted() {
-            let businessId = this.$route.params.businessId;
-            if(businessId != 'list'){
+            let businessId = this.$route.query.businessId;
+            if(this.addoileUtil.validateReq(businessId)){
                 this.getExperience(businessId);
             }
             this.getExperienceList();

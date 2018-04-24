@@ -258,7 +258,7 @@
                         window.scrollTo(0,0);
 
                         //分享链接
-                        this.itArticleShareUrl = this.axios.defaults.webSite+'ITTech/' + articleId;
+                        this.itArticleShareUrl = this.axios.defaults.webSite+'ITTech?businessId=' + articleId;
                     }else{
                         this.$store.commit('loadingFailed',this);
                     }
@@ -288,9 +288,9 @@
                         //封装
                         this.pithinessList = _pithinessList;
 
-                        //显示第一篇文章详情
-                        let businessId = this.$route.params.businessId;
-                        if(businessId === 'list'){
+                        //按照url参数来判断显示url链接文章还是默认第一个文章
+                        let businessId = this.$route.query.businessId;
+                        if(!this.addoileUtil.validateReq(businessId)){
                             this.getITArticleDetail(this.pithinessList[0].articleId);
                         }
                     }
@@ -388,8 +388,8 @@
             }
         },
         mounted () {
-            let businessId = this.$route.params.businessId;
-            if(businessId != 'list'){
+            let businessId = this.$route.query.businessId;
+            if(this.addoileUtil.validateReq(businessId)){
                 this.getITArticleDetail(businessId);
             }
             this.initPithinessList();
