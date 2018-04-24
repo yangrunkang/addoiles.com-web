@@ -203,7 +203,6 @@
                             userId: sessionStorage.getItem("userId"),
                             tokenId: sessionStorage.getItem("tokenId")
                         };
-                        console.log(sessionStorage.getItem("tokenId"));
                         _this.axios.post("deleteArticle",queryDto).then(function (resp) {
                             if(resp.code === 0 && resp.data > 0){
                                 _this.experienceList.splice(tableIndex,1);

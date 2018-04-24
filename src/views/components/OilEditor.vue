@@ -282,7 +282,6 @@
                     accept: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon,image/jpg',// 可选参数 可上传的图片格式
                     res: (res) => {
                         if(res.code === 0){
-                            console.log(res.data);
                             return res.data;
                         }else{
                             this.$Notice.warning({

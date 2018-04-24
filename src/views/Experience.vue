@@ -294,7 +294,6 @@
                 this.queryDto.businessId = experienceId;
 
                 this.axios.post('experience',this.queryDto).then(function (response) {
-                    console.log(response);
                     if(response.code === 0){
                         // ExperienceDto
                         let _experienceDto = response.data;
