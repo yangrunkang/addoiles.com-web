@@ -109,8 +109,10 @@
                         <Tag type="border" color="green" v-if="experienceDto.updateTime !== '-1'"><strong>修改时间:</strong>{{experienceDto.updateTime}}</Tag>
                         <br />
                         <h4 v-show="experienceDto.isShowEditBtn">操作:</h4>
-                        <div v-show="experienceDto.isShowEditBtn"><Button type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button></div>
-
+                        <div>
+                            <Button type="info" shape="circle" v-clipboard="experienceShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
+                            <div v-show="experienceDto.isShowEditBtn" style="margin-top: 2px"><Button type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button></div>
+                        </div>
                     </Card>
 
                     <Card>
@@ -166,7 +168,8 @@
                         pageNo: 0,
                         pageSize: 10
                     }
-                }
+                },
+                experienceShareUrl: ''
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
@@ -330,6 +333,8 @@
                             commentList:_commentList,
                             isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
                         };
+                        //分享链接
+                        this.experienceShareUrl = this.axios.defaults.webSite+'Experience/' + experienceId;
                     }else{
                         this.$store.commit('loadingFailed',this);
                         this.showExperienceModal = false;
@@ -351,10 +356,30 @@
                 this.$router.push("/OilEditor");
 
             },
-
+            /**
+             * 加载更多
+             */
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.getExperienceList();
+            },
+            /**
+             * 复制成功
+             */
+            copySuccess(){
+                this.$Notice.success({
+                    title: '分享链接已复制至剪贴板',
+                    desc: '可以分享给好友啦~'
+                });
+            },
+            /**
+             * 复制失败
+             */
+            copyError(){
+                this.$Notice.error({
+                    title: '复制分享链接失败',
+                    desc: '出错啦'
+                });
             }
 
         },

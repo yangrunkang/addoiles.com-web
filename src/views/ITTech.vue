@@ -55,6 +55,7 @@
                     <Card  shadow>
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                             {{itTechDto.article.title}}
+                            <Button type="info" shape="circle" style="float: right;margin-left: 2px;" v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
                             <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                         </p>
                         <p class="p-right"><Icon type="person"></Icon>作者:{{itTechDto.article.userName}}</p>
@@ -138,7 +139,8 @@
                         pageNo: 0,
                         pageSize: 10
                     }
-                }
+                },
+                itArticleShareUrl:''
             }
         },
         methods: {
@@ -254,6 +256,9 @@
                         };
                         //回到文章顶部
                         window.scrollTo(0,0);
+
+                        //分享链接
+                        this.itArticleShareUrl = this.axios.defaults.webSite+'ITTech/' + articleId;
                     }else{
                         this.$store.commit('loadingFailed',this);
                     }
@@ -350,13 +355,36 @@
                 this.$router.push("/OilEditor");
 
             },
-
+            /**
+             * 加载更多
+             */
             loadMore(){
                 this.queryDto.page.pageNo += this.queryDto.page.pageSize;
                 this.showMore(false);
             },
+            /**
+             * 到达评论区位置
+             */
             toCommentITArticle(){
                 window.scrollTo(0,document.body.scrollHeight);
+            },
+            /**
+             * 复制成功
+             */
+            copySuccess(){
+                this.$Notice.success({
+                    title: '分享链接已复制至剪贴板',
+                    desc: '可以分享给好友啦~'
+                });
+            },
+            /**
+             * 复制失败
+             */
+            copyError(){
+                this.$Notice.error({
+                    title: '复制分享链接失败',
+                    desc: '出错啦'
+                });
             }
         },
         mounted () {
