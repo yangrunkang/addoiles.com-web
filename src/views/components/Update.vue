@@ -6,8 +6,34 @@
 <template>
     <div>
         <Card shadow>
+            <p slot="title">V1.5.0</p>
+            <div>
+                <h4>新增:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>分享,IT技术文章支持链接分享</li>
+                            <li>图片上传支持GIF</li>
+                        </ol>
+                    </div>
+                </div>
+                <h4>优化:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ol>
+                            <li>用户管理文章最近更新内容显示在第一条</li>
+                            <li>热梦动弹滚动速度降低</li>
+                            <li>图片上传各个阶段优化提示</li>
+                            <li>文章删除时,展示即将要删除的文章标题</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </Card>
+        <Card shadow>
             <p slot="title">V1.4.5</p>
             <div>
+                <h4>新增:</h4>
                 <div class="ql-snow">
                     <div class="ql-editor">
                         <ol>
