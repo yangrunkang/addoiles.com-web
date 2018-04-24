@@ -26,7 +26,7 @@
                                 <MenuItem name="/MyDreams">美好梦想</MenuItem>
                                 <MenuItem name="/MyExperience">分享</MenuItem>
                                 <MenuItem name="/MyITArticles">技术文章</MenuItem>
-                                <MenuItem name="/MyQuestions">问题疑惑</MenuItem>
+                                <MenuItem name="/MyQuestions">论坛足迹</MenuItem>
                                 <MenuItem name="/MyHots">热门动弹</MenuItem>
                                 <!--暂时不做                            <MenuItem name="/MyLogs">网站活动</MenuItem>-->
                                 <!--<MenuItem name="/MyDreams">回收站</MenuItem>-->
