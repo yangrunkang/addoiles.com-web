@@ -6,24 +6,31 @@ import axios from 'axios';
 import Routers from './router/router'; // 引入路由配置文件
 import Util from './libs/util';
 import Index from './index.vue'; // //引入vue组件
-
+import VueClipboards from 'vue-clipboards';
 import 'iview/dist/styles/iview.css'; // 使用 CSS
 
 Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(Util);
+Vue.use(VueClipboards);
 
 // axios教程:http://blog.csdn.net/binginsist/article/details/65630547
 // Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 Vue.prototype.axios = axios;
 
 //###########################dev#############################################
+//网站网址
+axios.defaults.webSite = 'http://localhost:8080/';
+//网站数据请求地址
 axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
 //图片上传url dev
 Vue.prototype.uploadImage = 'http://localhost:8081/addoiles.com/uploadImage';
 //###########################dev_end#########################################
 
 //###########################prd#############################################
+//网站网址
+//axios.defaults.webSite = 'http://www.addoiles.com/';
+//网站数据请求地址
 //axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5';
 //图片上传url prd
 //Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5/uploadImage';
