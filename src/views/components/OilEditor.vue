@@ -8,16 +8,19 @@
             <p slot="title" style="height: auto;font-size: 18px">
                 <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
                 <span style="float: right;">
-                    是否公开:
-                     <Switch size="large" :value="isHide" @on-change="changeHide">
+                    <Switch size="large" :value="isHide" @on-change="changeHide">
                         <span slot="open">公开</span>
                         <span slot="close">隐藏</span>
                     </Switch>
+                    <!--临时保存-->
+                    <Button type="warning" shape="circle" v-show="tmpSaveBtn" @click="saveArticle('editArticle',2,true)">{{this.tmpSaveBtnText}}</Button>
                     <!--在发表的时候检测是否有businessId,如果有,是编辑完成了,想发表;这样文章可以随意编辑多少次-->
-                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0)">{{this.saveBtnText}}</Button>
-                    <!--编辑完成:是在有文章的基础上编辑,不论文章时什么状态,此时编辑完成就有歧义了,应该为:保存为草稿;下面的立即发表应该为:发表-->
-                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2)">{{this.editDownBtnText}}</Button>
-                    <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2)">保存为草稿</Button>
+                    <Button type="info" shape="circle" v-show="saveBtn" @click="saveArticle('addArticle',0,false)">{{this.saveBtnText}}</Button>
+                    <!--编辑完成:是在有文章的基础上编辑,不论文章时什么状态,此时编辑完成就有歧义了,应该为:草稿;下面的立即发表应该为:发表-->
+                    <Button type="success" shape="circle" v-show="editDownBtn" @click="saveArticle('editArticle',2,false)">{{this.editDownBtnText}}</Button>
+                    <!--草稿-->
+                    <Button type="warning" shape="circle" v-show="draftBtn" @click="saveArticle('addArticle',2,false)">草稿</Button>
+                    <!--清空内容-->
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
             </p>
@@ -80,17 +83,26 @@
                 saveBtn: true,
                 //编辑完成
                 editDownBtn:false,
-                //保存为草稿按钮
+                //草稿按钮
                 draftBtn:true,
+                //临时保存 只有有文章时才可以临时保存
+                tmpSaveBtn:false,
                 //解决不同操作 歧义的按钮文字
-                editDownBtnText:"编辑完成",
-                saveBtnText:"立即发表",
+                editDownBtnText:"草稿",
+                saveBtnText:"发表",
+                tmpSaveBtnText:'临时保存'
             }
         },
         // 如果需要手动控制数据同步，父组件需要显式地处理changed事件
         methods: {
-            //编辑完成
-            saveArticle(operation,deleteStatus){
+            /**
+             * 报错文章
+             * @param operation 操作描述 'addArticle'-添加文章 'editArticle'-编辑文章
+             * @param deleteStatus 文章删除状态 0-正常 2-草稿
+             * @param isTmpDraft 是否是临时保存 true-是 false-否
+             * @returns {null}
+             */
+            saveArticle(operation,deleteStatus,isTmpDraft){
 
                 if(this.articleType < 0 || this.deleteStatus < 0){
                     this.$Notice.error({
@@ -142,24 +154,35 @@
                     deleteStatus:deleteStatus
                 };
 
-                //保存为草稿,说明之前已经有了,改为编辑
+                //草稿,说明之前已经有了,改为编辑
                 // if(deleteStatus === 2){
                 //     operation = 'editArticle';
                 // }
                 this.$Notice.info({
                     desc: '正在执行您的指令..稍等片刻',
-                    duration: 2
+                    duration: 1
                 });
                 //调用服务端接口
                 this.axios.post(operation,article).then(function (resp) {
                     if(resp.code === 0 && resp.data === 1){
                         this.$Notice.success({
-                            desc: '完成'
+                            desc: '完成',
+                            duration: 2
                         });
-                        setTimeout(function () {
-                            this.$router.go(-1);
-                        }.bind(this), 1000);
-                        this.clearContent();
+
+                        if(isTmpDraft){
+                            this.$Notice.success({
+                                title:"已临时保存为[草稿]",
+                                desc: '可以继续您的编辑任务了',
+                                duration: 5
+                            });
+                        }else{
+                            setTimeout(function () {
+                                this.$router.go(-1);
+                            }.bind(this), 1000);
+                            this.clearContent();
+                        }
+
                     }else if(resp.data === 1002){
                         this.$Notice.error({
                             title:"操作失败,原因可能如下:",
@@ -210,7 +233,7 @@
                     //发表
                     if(editObj.businessId == null){
                         this.editDownBtn = false;
-
+                        this.tmpSaveBtn = false;
                         this.clearContent();
                         this.articleType = editObj.articleType;
                         this.deleteStatus = 0; //默认新增,状态为正常
@@ -224,8 +247,9 @@
                         this.editDownBtn = true;
                         this.saveBtn = true;
                         this.draftBtn = false;
-                        this.editDownBtnText = "保存为草稿";
+                        this.editDownBtnText = "草稿";
                         this.saveBtnText = "发表";
+                        this.tmpSaveBtn = true;
 
                         let queryDto = {
                             userId:sessionStorage.getItem("userId"),
