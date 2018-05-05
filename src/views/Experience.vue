@@ -102,28 +102,24 @@
                     </div>
                 </i-col>
                 <i-col span="6">
-                    <Card style="margin-bottom: 10px">
+                    <Card>
                         <h4>文章信息:</h4>
                         <Tag type="border" color="blue"><strong>作者:</strong>{{experienceDto.userName}}</Tag>
                         <Tag type="border" color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
                         <Tag type="border" color="green" v-if="experienceDto.updateTime !== '-1'"><strong>修改时间:</strong>{{experienceDto.updateTime}}</Tag>
                         <br />
-                        <h4 v-show="experienceDto.isShowEditBtn">操作:</h4>
-                        <div>
+                        <h4>操作:</h4>
+                        <div style="margin-top: 3px">
                             <Button type="info" shape="circle" v-clipboard="experienceShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
-                            <div v-show="experienceDto.isShowEditBtn" style="margin-top: 2px"><Button type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button></div>
+                            <Button v-show="experienceDto.isShowEditBtn" type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button>
                         </div>
-                    </Card>
-
-                    <Card>
+                        <br />
+                        <!--评论区域-->
+                        <h4>评论</h4>
                         <Input type="textarea" :rows="3" placeholder="写下您此刻想说的" v-model="commentContent" />
                         <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
-                        <Alert style="margin: 3px auto;">
-                            <strong>评分:</strong>
-                            <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>
-                        </Alert>
-                        <!--评论-->
-                        <h2>评论</h2>
+                        <!--<strong>评分:</strong>
+                        <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>-->
                         <div v-for="comment in experienceDto.commentList" :key="comment.id" style="margin-bottom: 3px">
                             <!--<Tag type="border" color="green">{{comment.createTime}}</Tag><Tag color="green">{{comment.userName}}</Tag>-->
                             {{comment.content}}
