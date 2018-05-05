@@ -116,8 +116,7 @@
                     </Card>
 
                     <Card>
-                        <h2>感想+</h2>
-                        <Input type="textarea" :rows="3" placeholder="写下你此刻想说的" v-model="commentContent" />
+                        <Input type="textarea" :rows="3" placeholder="写下您此刻想说的" v-model="commentContent" />
                         <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
                         <Alert style="margin: 3px auto;">
                             <strong>评分:</strong>

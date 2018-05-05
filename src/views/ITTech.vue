@@ -58,26 +58,24 @@
                             <Button type="info" shape="circle" style="float: right;margin-left: 2px;" v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
                             <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                         </p>
-                        <p class="p-right"><Icon type="person"></Icon>作者:{{itTechDto.article.userName}}</p>
                         <div class="ql-snow">
                             <div class="ql-editor">
                                 <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
                             </div>
                         </div>
                         <p class="p-right"><Icon type="calendar"></Icon>创建时间:{{itTechDto.article.createTime}}</p>
-                        <p class="p-right"><span v-if="itTechDto.article.updateTime !== '-1'"><Icon type="calendar"></Icon>修改时间:{{itTechDto.article.updateTime}}</span></p>
-                    </Card>
-                    <!--评论区域-->
-                    <Card>
-                        <h2>评论</h2>
-                        <Input style="margin-top: 6px" placeholder="想说点儿" v-model="commentContent">
-                        <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)" />
-                        </Input>
-                        <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
-                            <Tag type="border" color="green">{{ comment.createTime }}</Tag>
-                            <Tag color="green">{{ comment.userName }}</Tag>
-                            {{ comment.content }}
-                        </Alert>
+                        <p class="p-right"><Icon type="person"></Icon>作者:{{itTechDto.article.userName}}</p>
+                        <!--评论区域-->
+                        <Card shaow>
+                            <Input style="margin-top: 6px" placeholder="评论" v-model="commentContent">
+                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"/>
+                            </Input>
+                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
+                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
+                                <Tag color="green">{{ comment.userName }}</Tag>
+                                {{ comment.content }}
+                            </Alert>
+                        </Card>
                     </Card>
                 </div>
 
