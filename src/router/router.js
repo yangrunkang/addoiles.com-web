@@ -64,6 +64,13 @@ const routers = [
         component: (resolve) => require(['../views/Suggest.vue'], resolve)
     },
     {
+        path: '/donate',
+        meta: {
+            title: '支持一下'
+        },
+        component: (resolve) => require(['../views/components/Donate.vue'], resolve)
+    },
+    {
         path: '/UserCenter',
         meta: {
             title: '用户中心'
