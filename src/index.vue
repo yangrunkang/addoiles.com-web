@@ -47,19 +47,19 @@
             </Footer>
         </Layout>
 
-        <!--支持一下-->
-        <Back-top :height="100" :bottom="150" @on-click="donate">
-            <div class="top">支持一下</div>
+        <!--返回到顶部-->
+        <Back-top :height="100" :bottom="150">
+            <div class="top">&nbsp;返回顶端&nbsp;</div>
         </Back-top>
 
-        <!--返回到顶部-->
-        <Back-top :height="100" :bottom="100">
-            <div class="top">返回顶端</div>
+        <!--支持一下-->
+        <Back-top :height="100" :bottom="100" @on-click="donate">
+            <div class="top">&nbsp;支持一下&nbsp;</div>
         </Back-top>
 
         <!--反馈及建议图钉-->
         <Back-top :height="100" :bottom="50" @on-click="suggest">
-            <div class="top">建议 反馈</div>
+            <div class="top">反馈+建议</div>
         </Back-top>
 
         <!--确认注销模态框-->
