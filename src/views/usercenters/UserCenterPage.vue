@@ -61,8 +61,7 @@
                     userId: sessionStorage.getItem("userId"),
                     tokenId: sessionStorage.getItem("tokenId")
                 };
-                this.axios.post("userLatest",latest).then(function (response) {
-                    console.log(response);
+                this.axios.post("getUserLatest",latest).then(function (response) {
                     if(response.code === 0){
                         let dataSource = response.data;
                         let allArticles = dataSource.articleList;
