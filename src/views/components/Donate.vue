@@ -1,7 +1,9 @@
 <template>
     <div>
-        <p style="font-size: larger; font-weight: bolder; color: #716769">收到的赞助用于该网站日常维护</p>
         <Card>
+            <p style="font-size:20px; font-weight: bolder; color: #716769">收到的赞助将用于该网站维护</p>
+            <hr/>
+            <br/>
             <Row justify="center" align="middle">
                 <Col span="8"  align="center">
                     <p style="font-size: large; font-weight: bolder; color: #716769">Paypal</p>
