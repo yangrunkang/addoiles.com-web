@@ -6,7 +6,22 @@
 <template>
     <div>
         <Card>
-            <p slot="title">V1.5.5</p>
+            <p slot="title">V1.5.2-</p>
+            <div>
+                <h4>新增:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ul>
+                            <li>添加<a href="donate" style="color: #1c2438">支持一下</a>页面</li>
+                            <li>用户登录后,用户中心展示用户最近活动信息</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </Card>
+        <br />
+        <Card>
+            <p slot="title">V1.5.1</p>
             <div>
                 <h4>新增:</h4>
                 <div class="ql-snow">
