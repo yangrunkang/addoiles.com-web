@@ -100,6 +100,13 @@ const routers = [
             title: '更新日志'
         },
         component: (resolve) => require(['../views/components/Update.vue'], resolve)
+    },
+    {
+        path: '/fm',
+        meta: {
+            title: '程序员的生活记录'
+        },
+        component: (resolve) => require(['../views/components/Fm.vue'], resolve)
     }
 ];
 export default routers;
