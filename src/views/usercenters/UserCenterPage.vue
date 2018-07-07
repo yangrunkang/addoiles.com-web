@@ -4,37 +4,37 @@
         <p style="font-size: xx-large;color: #bababa" v-show="tipsShow === true">最近活动</p>
         <Card v-show="experienceList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>分享</p>
-            <div class="latest-content" v-for="experience in experienceList" :key="experience.articleId">
+            <li class="latest-content" v-for="experience in experienceList" :key="experience.articleId">
                 <a v-bind:href="experience.hrefUrl">{{experience.title}}</a>
-            </div>
+            </li>
         </Card>
 
         <Card v-show="itTechList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>技术分享</p>
-            <div class="latest-content" v-for="itTech in itTechList" :key="itTech.articleId">
+            <li class="latest-content" v-for="itTech in itTechList" :key="itTech.articleId">
                 <a v-bind:href="itTech.hrefUrl">{{itTech.title}}</a>
-            </div>
+            </li>
         </Card>
 
         <Card v-show="hotsList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>动弹</p>
-            <div class="latest-content" v-for="hots in hotsList" :key="hots.microId">
+            <li class="latest-content" v-for="hots in hotsList" :key="hots.microId">
                 {{hots.content}}
-            </div>
+            </li>
         </Card>
 
         <Card v-show="dreamsList.length > 0" class="card-style">
             <p style="font-weight: bold">DO NOT FORGET YOUR DREAMS&nbsp;<span style="color: #bababa;font-size: 10px">别忘记你的梦想</span></p>
-            <div class="latest-content" v-for="dream in dreamsList" :key="dream.microId">
+            <li class="latest-content" v-for="dream in dreamsList" :key="dream.microId">
                 {{dream.content}}
-            </div>
+            </li>
         </Card>
 
         <Card v-show="questionList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>讨论的问题</p>
-            <div class="latest-content" v-for="question in questionList" :key="question.questionId">
+            <li class="latest-content" v-for="question in questionList" :key="question.questionId">
                 {{question.content}}
-            </div>
+            </li>
         </Card>
 
     </div>
@@ -116,11 +116,7 @@
     }
 
     .latest-content {
-        text-indent: 5px;
-        padding-left: 7px;
-        background-color: rgb(242, 247, 251);
         margin-top: 5px;
-        border-radius: 5px;
         font-size: 18px;
         color: rgb(73, 80,	96);
     }
