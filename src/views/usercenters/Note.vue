@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 v-show="!noteBtn">小记标题:{{this.title}}</h2>
+        <h2>标题:&nbsp;<i-input v-model="title" placeholder="标题" size="large" style="width:605px;margin-bottom: 3px;" /></h2>
 
         <div style="height: 367px">
             <quill-editor ref="myTextEditor"
@@ -9,28 +9,12 @@
                           style="height: 300px">
             </quill-editor>
         </div>
-        <Button v-show="noteBtn" type="info" size="large" long @click="prepareNote()">小记</Button>
-        <Button v-show="!noteBtn" type="info" size="large" long @click="prepareNote()">保存</Button>
+        <Button v-show="noteBtn" type="info" size="large" long @click="toNote()">小记</Button>
+        <Button v-show="!noteBtn" type="info" size="large" long @click="toNote()">保存</Button>
         <br />
         <br />
         <Table border :columns="noteColumns" :data="noteList"></Table>
         <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
-
-        <!--输入标题的模态框-->
-        <Modal
-                width="500"
-                v-model="showInputTitleModal"
-                :styles="{top: '20px'}"
-                :closable="false"
-                :mask-closable="true"
-                :transition-names="['fade','ease']"
-        >
-            <i-input v-model="title" placeholder="亲,给小记起个名字吧,方面你后面管理" size="large" />
-            <div slot="footer" style="margin: 0px auto;">
-                <Button type="error" size="large" long @click="toNote()">确定</Button>
-            </div>
-        </Modal>
-
 
         <!--查看模态框-->
         <Modal
@@ -84,7 +68,6 @@
                 noteBusinessId:'',
                 //是否展示模态框
                 showModal:false,
-                showInputTitleModal:false,
                 //编辑器配置
                 editorOption: {},
 
@@ -189,6 +172,9 @@
                 this.axios.post('getArticleByBusinessId',queryDto).then(function (resp) {
                     let data = resp.data;
                     if(resp.code === 0 && data != null){
+
+                        this.clearContent();
+
                         this.title = data.title;
                         this.content = data.content;
                         this.noteBusinessId = data.articleId;
@@ -238,19 +224,6 @@
                 this.$Modal.confirm(config);
             },
             /**
-             * 准备保存笔记
-             */
-            prepareNote(){
-
-                if(!this.addoileUtil.validateReq(this.content)){
-                    this.$Notice.info({
-                        desc: '亲,您还未写任何内容哦～～'
-                    });
-                    return null;
-                }
-                this.showInputTitleModal = true;
-            },
-            /**
              * 去保存笔记
              */
             toNote(){
@@ -258,6 +231,13 @@
                 let userId = sessionStorage.getItem("userId");
                 if(userId == null){
                     return;
+                }
+
+                if(!this.addoileUtil.validateReq(this.content)){
+                    this.$Notice.info({
+                        desc: '亲,您还未写任何内容哦～～'
+                    });
+                    return null;
                 }
 
                 if(!this.addoileUtil.validateReq(this.title)){
@@ -286,15 +266,16 @@
                 }
 
                 this.axios.post(operation,note).then(function (resp) {
-                    if(resp.code === 0 && resp.data == 1){
+                    if(resp.code === 0 && resp.data === 1){
                         this.$Notice.success({
-                            desc: this.noteBtn?'保存成功':'编辑成功'
+                            desc: this.noteBtn?'已经保存成功':'已经编辑成功,您可以继续编辑《'+this.title+'》'
                         });
-                        this.showInputTitleModal = false;
-                        setTimeout(function () {
-                            this.$router.go(0);
-                        }.bind(this), 1000);
-                        this.clearContent();
+                        //保存成功,跳转
+                        if(this.noteBtn){
+                            setTimeout(function () {
+                                this.$router.go(0);
+                            }.bind(this), 1000);
+                        }
                     }else if(resp.data === 1002){
                         this.$Notice.error({
                             title:"操作失败,原因可能如下:",

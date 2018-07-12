@@ -22,8 +22,12 @@
                     <div class="ql-editor">
                         <ul>
                             <li>更改荔枝FM电台到<a href="http://music.163.com/#/djradio?id=341445058" target="_blank" style="color: #1c2438">网易云音乐电台</a></li>
+                            <li>小记客栈编辑小记后不重新加载页面,可以继续编辑</li>
+                            <li>
+                                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
+                            </li>
                         </ul>
-                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
+
                     </div>
                 </div>
             </div>
