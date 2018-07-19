@@ -20,20 +20,20 @@ Vue.prototype.axios = axios;
 
 //###########################dev#############################################
 //网站网址
-axios.defaults.webSite = 'http://localhost:8080/';
+// axios.defaults.webSite = 'http://localhost:8080/';
 //网站数据请求地址
-axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
+// axios.defaults.baseURL = 'http://localhost:8081/addoiles.com';
 //图片上传url dev
-Vue.prototype.uploadImage = 'http://localhost:8081/addoiles.com/uploadImage';
+// Vue.prototype.uploadImage = 'http://localhost:8081/addoiles.com/uploadImage';
 //###########################dev_end#########################################
 
 //###########################prd#############################################
 //网站网址
-//axios.defaults.webSite = 'http://www.addoiles.com/';
+axios.defaults.webSite = 'http://www.addoiles.com/';
 //网站数据请求地址
-//axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5';
+axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5.2';
 //图片上传url prd
-//Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5/uploadImage';
+Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5.2/uploadImage';
 //###########################prd_end#########################################
 //工具类
 Vue.prototype.addoileUtil = Util;

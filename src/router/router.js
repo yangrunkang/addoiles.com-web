@@ -64,6 +64,13 @@ const routers = [
         component: (resolve) => require(['../views/Suggest.vue'], resolve)
     },
     {
+        path: '/donate',
+        meta: {
+            title: '支持一下'
+        },
+        component: (resolve) => require(['../views/components/Donate.vue'], resolve)
+    },
+    {
         path: '/UserCenter',
         meta: {
             title: '用户中心'
@@ -93,6 +100,13 @@ const routers = [
             title: '更新日志'
         },
         component: (resolve) => require(['../views/components/Update.vue'], resolve)
+    },
+    {
+        path: '/fm',
+        meta: {
+            title: '程序员的生活记录'
+        },
+        component: (resolve) => require(['../views/components/Fm.vue'], resolve)
     }
 ];
 export default routers;

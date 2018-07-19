@@ -6,7 +6,35 @@
 <template>
     <div>
         <Card>
-            <p slot="title">V1.5.5</p>
+            <p slot="title">V1.5.2-</p>
+            <div>
+                <h4>新增:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ul>
+                            <li>添加<a href="donate" style="color: #1c2438">支持一下</a>页面</li>
+                            <li>用户登录后,用户中心展示用户最近活动信息</li>
+                        </ul>
+                    </div>
+                </div>
+                <h4>修改:</h4>
+                <div class="ql-snow">
+                    <div class="ql-editor">
+                        <ul>
+                            <li>更改荔枝FM电台到<a href="http://music.163.com/#/djradio?id=341445058" target="_blank" style="color: #1c2438">网易云音乐电台</a></li>
+                            <li>小记客栈编辑小记后不重新加载页面,可以继续编辑</li>
+                            <li>
+                                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </Card>
+        <br />
+        <Card>
+            <p slot="title">V1.5.1</p>
             <div>
                 <h4>新增:</h4>
                 <div class="ql-snow">

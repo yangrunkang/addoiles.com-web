@@ -41,20 +41,27 @@
             <Footer>
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2018 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
-                    <p><a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.0(2018.05.01)</a>&nbsp;&nbsp;&nbsp;
-                        <a style="color: #9ea7b4;" href="https://www.lizhi.fm/1353231" target="_blank">电台:荔枝FM《程序员的生活记录》</a></p>
+                    <p>
+                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.2-&nbsp;(2018.07.12)</a>&nbsp;&nbsp;&nbsp;
+                        <a style="color: #9ea7b4;" @click="toWangYiDianTai()">网易云音乐电台《程序员的生活记录》</a>
+                    </p>
                 </div>
             </Footer>
         </Layout>
 
         <!--返回到顶部-->
-        <Back-top :height="100" :bottom="100">
-            <div class="top">返回顶端</div>
+        <Back-top :height="100" :bottom="150">
+            <div class="top">&nbsp;返回顶端&nbsp;</div>
+        </Back-top>
+
+        <!--支持一下-->
+        <Back-top :height="100" :bottom="100" @on-click="donate">
+            <div class="top">&nbsp;支持一下&nbsp;</div>
         </Back-top>
 
         <!--反馈及建议图钉-->
         <Back-top :height="100" :bottom="50" @on-click="suggest">
-            <div class="top">反馈及建议</div>
+            <div class="top">反馈+建议</div>
         </Back-top>
 
         <!--确认注销模态框-->
@@ -127,6 +134,12 @@
             },
             toUpdate(){
                 this.$router.push('/Update')
+            },
+            donate(){
+                this.$router.push('/donate')
+            },
+            toWangYiDianTai(){
+                this.$router.push('/fm')
             }
         },
         mounted() {
