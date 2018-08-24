@@ -43,7 +43,6 @@
 
 <script>
 
-
     import { VueEditor } from "vue2-editor";
 
     export default {
@@ -330,27 +329,39 @@
                 };
                 this.initUserNotes(page);
             },
-            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+            handleImageAdded: function(file, Editor, cursorLocation) {
                 // An example of using FormData
                 // NOTE: Your key could be different such as:
                 // formData.append('file', file)
                 let formData = new FormData();
-                formData.append("image", file);
+                formData.append("file", file);
+
+                this.$Notice.info({
+                    title:'正在上传,请稍等',
+                    desc: '提示'
+                });
 
                 this.axios({
                     url: this.uploadImage,
                     method: "POST",
                     data: formData
-                })
-                    .then(result => {
-                        console.log(result);
-                        let url = result.data.url; // Get url from response
+                }).then(result => {
+                    if(result.code !== 0){
+                        this.$Notice.error({
+                            title:'图片上传失败:' + result.message,
+                            desc: '提示'
+                        });
+                    }else{
+                        let url = result.data;
                         Editor.insertEmbed(cursorLocation, "image", url);
-                        resetUploader();
-                    })
-                    .catch(err => {
-                        console.log(err);
+                    }
+                })
+                .catch(err => {
+                    this.$Notice.error({
+                        title:'图片上传失败' + err,
+                        desc: '提示'
                     });
+                });
             }
 
         },

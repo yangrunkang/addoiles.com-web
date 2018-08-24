@@ -47,14 +47,8 @@
 <script>
     //编辑器: 统一发表/编辑内容
 
-    //安装vue-quill-editor富文本编辑器
-    import Vue from 'vue';
     // Basic Use - Covers most scenarios
     import { VueEditor } from "vue2-editor";
-
-    // Advanced Use - Hook into Quill's API for Custom Functionality
-    //import { VueEditor, Quill } from "vue2-editor";
-
 
     export default {
         components: {VueEditor},
@@ -287,12 +281,17 @@
             changeHide(status){
                 this.isHide = status;
             },
-            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+            handleImageAdded: function(file, Editor, cursorLocation) {
                 // An example of using FormData
                 // NOTE: Your key could be different such as:
                 // formData.append('file', file)
                 let formData = new FormData();
-                formData.append("image", file);
+                formData.append("file", file);
+
+                this.$Notice.info({
+                    title:'正在上传,请稍等',
+                    desc: '提示'
+                });
 
                 this.axios({
                     url: this.uploadImage,
@@ -300,12 +299,21 @@
                     data: formData
                 })
                 .then(result => {
-                    let url = result.data.url; // Get url from response
-                    Editor.insertEmbed(cursorLocation, "image", url);
-                    resetUploader();
+                    if(result.code !== 0){
+                        this.$Notice.error({
+                            title:'图片上传失败:' + result.message,
+                            desc: '提示'
+                        });
+                    }else{
+                        let url = result.data;
+                        Editor.insertEmbed(cursorLocation, "image", url);
+                    }
                 })
                 .catch(err => {
-                console.log(err);
+                    this.$Notice.error({
+                        title:'图片上传失败' + err,
+                        desc: '提示'
+                    });
                 });
             }
         },
