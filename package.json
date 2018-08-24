@@ -28,11 +28,11 @@
     "iview-loader": "^1.1.0",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
-    "less": "^2.7.1",
+    "less": "^3.8.1",
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
     "text-loader": "0.0.1",
-    "url-loader": "^0.5.7",
+    "url-loader": "^1.1.1",
     "vue": "^2.2.6",
     "vue-clipboards": "^1.2.4",
     "vue-hot-reload-api": "^1.3.3",
@@ -44,7 +44,7 @@
     "vue2-editor": "^2.0.42-images",
     "vuex": "^2.4.1",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1",
+    "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^3.0.0"
   },
   "devDependencies": {}
