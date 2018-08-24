@@ -24,9 +24,12 @@
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
             </p>
-            <vue-editor v-model="content"
+            <vue-editor class="OilVue2editor"
+                        v-model="content"
                         useCustomImageHandler
                         @imageAdded="handleImageAdded"
+                        placeholder="在这里书写~~"
+                        :editorToolbar="customToolbar"
             ></vue-editor>
         </Card>
 
@@ -69,6 +72,21 @@
                 //文章是否公开
                 isHide:true,
                 /*****************/
+                customToolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['blockquote', 'code-block'],
+                    ['link','image'],
+                    [{ 'align': [] }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
+                    [{ 'font': [] }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    [{ 'direction': 'rtl' }],
+                    ['clean']
+                ],
 
                 //确认清除模态框显示与隐藏
                 confirmModal : false,

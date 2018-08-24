@@ -1,17 +1,18 @@
 <template>
     <div>
-        <h2>标题:&nbsp;<i-input v-model="title" placeholder="标题" size="large" style="width:605px;margin-bottom: 3px;" /></h2>
-
+        <i-input v-model="title" placeholder="标题" size="large" style="width:100%;margin-bottom: 3px;" />
         <div style="height: 367px">
-            <vue-editor v-model="content"
+            <vue-editor class="NoteVue2editor"
+                        v-model="content"
                         useCustomImageHandler
                         @imageAdded="handleImageAdded"
+                        placeholder="在这里书写~~"
+                        :editorToolbar="customToolbar"
             ></vue-editor>
         </div>
         <Button v-show="noteBtn" type="info" size="large" long @click="toNote()">小记</Button>
         <Button v-show="!noteBtn" type="info" size="large" long @click="toNote()">保存</Button>
-        <br />
-        <br />
+        <div style="margin-bottom: 1%"></div>
         <Table border :columns="noteColumns" :data="noteList"></Table>
         <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
 
@@ -65,7 +66,18 @@
                 //是否展示模态框
                 showModal:false,
                 //编辑器配置
-                editorOption: {},
+                customToolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                    ['blockquote', 'code-block'],
+                    ['link','image'],
+                    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                    [{ 'align': [] }],
+                    ['clean']
+                ],
 
                 noteColumns:[
                     {
