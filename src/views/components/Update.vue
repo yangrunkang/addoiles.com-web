@@ -27,7 +27,7 @@
                     src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
         <br/>
         <Card>
-            <p slot="title">V1.5.2-</p>
+            <p slot="title">V1.5.2</p>
             <h4>新增:</h4>
             <ul>
                 <li>用户登录后,用户中心展示用户最近活动信息</li>
