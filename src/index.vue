@@ -55,7 +55,7 @@
         </Back-top>
 
         <!--支持一下-->
-        <Back-top :height="100" :bottom="100" @on-click="donate">
+        <Back-top :height="100" :bottom="100" @on-click="support">
             <div class="top">&nbsp;支持一下&nbsp;</div>
         </Back-top>
 
@@ -135,8 +135,8 @@
             toUpdate(){
                 this.$router.push('/Update')
             },
-            donate(){
-                this.$router.push('/donate')
+            support(){
+                this.$router.push('/support')
             },
             toWangYiDianTai(){
                 this.$router.push('/fm')
