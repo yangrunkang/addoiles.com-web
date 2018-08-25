@@ -43,11 +43,8 @@
 </template>
 
 <script>
-
-    import { VueEditor } from "vue2-editor";
-
     export default {
-        components: {VueEditor},
+        components: {},
         data() {
             return {
                 //标题
