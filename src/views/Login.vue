@@ -97,8 +97,8 @@
                     <a href="javascript:;" class="log-btn" @click="toLogin">立即登录</a>
                 </div>
                 <p style="text-align: center;margin-bottom: 10px" v-show="showLoginForm">
-                    <a class="a-tips" @click="forgetPassword()">忘记密码</a>
-                    <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+                    <a class="a-tips" @click="forgetPassword()">忘记密码&nbsp;&nbsp;|</a>
+                    <a class="a-tips" @click="receiveEmailFailed()">&nbsp;未收到邮件反馈</a>
                 </p>
 
                 <div class="log-email" v-show="showForgetPasswordForm">
