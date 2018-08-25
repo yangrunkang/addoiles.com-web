@@ -46,12 +46,8 @@
 </template>
 <script>
     //编辑器: 统一发表/编辑内容
-
-    // Basic Use - Covers most scenarios
-    import { VueEditor } from "vue2-editor";
-
     export default {
-        components: {VueEditor},
+        components: {},
         data () {
             return {
 

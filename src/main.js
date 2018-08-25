@@ -8,11 +8,15 @@ import Util from './libs/util';
 import Index from './index.vue'; // //引入vue组件
 import VueClipboards from 'vue-clipboards';
 import 'iview/dist/styles/iview.css'; // 使用 CSS
+import Vue2Editor from 'vue2-editor';
 
 Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(Util);
 Vue.use(VueClipboards);
+//经历分享和技术页面图片超出范围，在main提前导入，所有的js，css就不会丢失
+//编辑页也可以去除import了，因为已经公共导入了
+Vue.use(Vue2Editor);
 
 // axios教程:http://blog.csdn.net/binginsist/article/details/65630547
 // Promise API:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
