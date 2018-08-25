@@ -80,37 +80,39 @@
 </style>
 <template>
     <div>
-        <div class="login" id="login">
-            <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
-            <div class="log-bg">
-                <div class="log-cloud cloud1"></div>
-                <div class="log-cloud cloud2"></div>
-                <div class="log-cloud cloud3"></div>
-                <div class="log-cloud cloud4"></div>
+        <form>
+            <div class="login" id="login">
+                <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
+                <div class="log-bg">
+                    <div class="log-cloud cloud1"></div>
+                    <div class="log-cloud cloud2"></div>
+                    <div class="log-cloud cloud3"></div>
+                    <div class="log-cloud cloud4"></div>
 
-                <div class="log-logo">Welcome Addoiles!<br />登录</div>
-            </div>
-            <div class="log-email" v-show="showLoginForm">
-                <input type="text" placeholder="输入邮箱登录" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
-                <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <a href="javascript:;" class="log-btn" @click="toLogin">立即登录</a>
-            </div>
-            <p style="text-align: center;margin-bottom: 10px" v-show="showLoginForm">
-                <a class="a-tips" @click="forgetPassword()">忘记密码</a>
-                <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
-            </p>
+                    <div class="log-logo">Welcome Addoiles!<br />登录</div>
+                </div>
+                <div class="log-email" v-show="showLoginForm">
+                    <input type="text" placeholder="输入邮箱登录" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
+                    <input type="password" placeholder="输入密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+                    <a href="javascript:;" class="log-btn" @click="toLogin">立即登录</a>
+                </div>
+                <p style="text-align: center;margin-bottom: 10px" v-show="showLoginForm">
+                    <a class="a-tips" @click="forgetPassword()">忘记密码</a>
+                    <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+                </p>
 
-            <div class="log-email" v-show="showForgetPasswordForm">
-                <input type="text" placeholder="请输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
-                <a href="javascript:;" class="log-btn" @click="verifyCode()">验证</a>
+                <div class="log-email" v-show="showForgetPasswordForm">
+                    <input type="text" placeholder="请输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
+                    <a href="javascript:;" class="log-btn" @click="verifyCode()">验证</a>
+                </div>
+                <div class="log-email" v-show="resetPassword">
+                    <p style="text-align: center;margin-bottom: 10px;font-size: 18px">验证成功,重设密码</p>
+                    <input type="password" placeholder="输入密码" :class="'log-input' + (resetPassword1==''?' log-input-empty':'')"  v-model="resetPassword1">
+                    <input type="password" placeholder="再次输入密码" :class="'log-input' + (resetPassword2==''?' log-input-empty':'')"  v-model="resetPassword2">
+                    <a href="javascript:;" class="log-btn" @click="confirmResetPassword()">确认</a>
+                </div>
             </div>
-            <div class="log-email" v-show="resetPassword">
-                <p style="text-align: center;margin-bottom: 10px;font-size: 18px">验证成功,重设密码</p>
-                <input type="password" placeholder="输入密码" :class="'log-input' + (resetPassword1==''?' log-input-empty':'')"  v-model="resetPassword1">
-                <input type="password" placeholder="再次输入密码" :class="'log-input' + (resetPassword2==''?' log-input-empty':'')"  v-model="resetPassword2">
-                <a href="javascript:;" class="log-btn" @click="confirmResetPassword()">确认</a>
-            </div>
-        </div>
+        </form>
 
         <!--发送验证码时提高用户体验-->
         <Modal v-model="showSendVerifyCodeModal"

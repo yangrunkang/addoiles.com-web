@@ -80,31 +80,33 @@
 </style>
 <template>
     <div>
-        <div class="login" id="login">
-            <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
-            <div class="log-bg">
-                <div class="log-cloud cloud1"></div>
-                <div class="log-cloud cloud2"></div>
-                <div class="log-cloud cloud3"></div>
-                <div class="log-cloud cloud4"></div>
+        <form>
+            <div class="login" id="login">
+                <a href="javascript:;" class="log-close"><i class="icons close"></i></a>
+                <div class="log-bg">
+                    <div class="log-cloud cloud1"></div>
+                    <div class="log-cloud cloud2"></div>
+                    <div class="log-cloud cloud3"></div>
+                    <div class="log-cloud cloud4"></div>
 
-                <div class="log-logo">Welcome Addoiles!<br />注册</div>
+                    <div class="log-logo">Welcome Addoiles!<br />注册</div>
+                </div>
+                <div class="log-email" v-show="registerForm">
+                    <input type="text" placeholder="用户名" :class="'log-input' + (userName==''?' log-input-empty':'')" v-model="userName">
+                    <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
+                    <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+                    <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
+                    <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:立即注册</a>
+                    <p style="text-align: center;margin-bottom: 10px">
+                        <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+                    </p>
+                </div>
+                <div class="log-email" v-show="verifyForm">
+                    <input type="text" placeholder="输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
+                    <a href="javascript:;" class="log-btn" @click="register()">第二步:完成注册</a>
+                </div>
             </div>
-            <div class="log-email" v-show="registerForm">
-                <input type="text" placeholder="用户名" :class="'log-input' + (userName==''?' log-input-empty':'')" v-model="userName">
-                <input type="text" placeholder="邮箱" :class="'log-input' + (email==''?' log-input-empty':'')" v-model="email">
-                <input type="password" placeholder="密码" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
-                <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
-                <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:立即注册</a>
-                <p style="text-align: center;margin-bottom: 10px">
-                    <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
-                </p>
-            </div>
-            <div class="log-email" v-show="verifyForm">
-                <input type="text" placeholder="输入验证码" :class="'log-input' + (verificationCode==''?' log-input-empty':'')"  v-model="verificationCode">
-                <a href="javascript:;" class="log-btn" @click="register()">第二步:完成注册</a>
-            </div>
-        </div>
+        </form>
 
         <!--发送验证码时提高用户体验-->
         <Modal v-model="showSendVerifyCodeModal"

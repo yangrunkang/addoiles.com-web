@@ -1,18 +1,18 @@
 <template>
     <div>
-        <h2>标题:&nbsp;<i-input v-model="title" placeholder="标题" size="large" style="width:605px;margin-bottom: 3px;" /></h2>
-
+        <i-input v-model="title" placeholder="标题" size="large" style="width:100%;margin-bottom: 3px;" />
         <div style="height: 367px">
-            <quill-editor ref="myTextEditor"
-                          v-model="content"
-                          :options="editorOption"
-                          style="height: 300px">
-            </quill-editor>
+            <vue-editor id="editor1"
+                        v-model="content"
+                        useCustomImageHandler
+                        @imageAdded="handleImageAdded"
+                        placeholder="在这里书写~~"
+                        :editorToolbar="customToolbar"
+            ></vue-editor>
         </div>
         <Button v-show="noteBtn" type="info" size="large" long @click="toNote()">小记</Button>
         <Button v-show="!noteBtn" type="info" size="large" long @click="toNote()">保存</Button>
-        <br />
-        <br />
+        <div style="margin-bottom: 1%"></div>
         <Table border :columns="noteColumns" :data="noteList"></Table>
         <Page :total="totalCount" @on-change="changePage" show-total style="text-align: right;"></Page>
 
@@ -44,13 +44,10 @@
 
 <script>
 
-    import Vue from 'vue';
-    import VueQuillEditor from 'vue-quill-editor';
-    import {quillRedefine} from 'vue-quill-editor-upload'
+    import { VueEditor } from "vue2-editor";
 
-    Vue.use(VueQuillEditor);
     export default {
-        components: {VueQuillEditor, quillRedefine},
+        components: {VueEditor},
         data() {
             return {
                 //标题
@@ -69,7 +66,18 @@
                 //是否展示模态框
                 showModal:false,
                 //编辑器配置
-                editorOption: {},
+                customToolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                    ['blockquote', 'code-block'],
+                    ['link','image'],
+                    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+                    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+                    [{ 'align': [] }],
+                    ['clean']
+                ],
 
                 noteColumns:[
                     {
@@ -332,61 +340,48 @@
                     pageNo:(value -1) * 10
                 };
                 this.initUserNotes(page);
+            },
+            handleImageAdded: function(file, Editor, cursorLocation) {
+                // An example of using FormData
+                // NOTE: Your key could be different such as:
+                // formData.append('file', file)
+                let formData = new FormData();
+                formData.append("file", file);
+
+                this.$Notice.info({
+                    title:'正在上传,请稍等',
+                    desc: '提示'
+                });
+
+                this.axios({
+                    url: this.uploadImage,
+                    method: "POST",
+                    data: formData
+                }).then(result => {
+                    if(result.code !== 0){
+                        this.$Notice.error({
+                            title:'图片上传失败:' + result.message,
+                            desc: '提示'
+                        });
+                    }else{
+                        let url = result.data;
+                        Editor.insertEmbed(cursorLocation, "image", url);
+                    }
+                })
+                .catch(err => {
+                    this.$Notice.error({
+                        title:'图片上传失败' + err,
+                        desc: '提示'
+                    });
+                });
             }
 
         },
         computed: {
-            editor() {
-                return this.$refs.myTextEditor.quillEditor
-            }
+
         },
         created() {
-            this.editorOption = quillRedefine({
-                // 图片上传的设置
-                uploadConfig: {
-                    methods: 'POST',  // 可选参数 图片上传方式  默认为post
-                    action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
-                    size: 10240,//可选参数   图片限制大小，单位为Kb, 1M = 1024Kb
-                    accept: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon,image/jpg',// 可选参数 可上传的图片格式
-                    res: (res) => {
-                        if(res.code === 0){
-                            return res.data;
-                        }else{
-                            this.$Notice.warning({
-                                desc: res.message
-                            });
-                            return 'failed' + res.message;
-                        }
-                    },
-                    name: 'file',  // 图片上传参数名,
-                    start: () => { // 可选参数 接收一个函数 开始上传数据时会触发
-                        this.$Notice.info({
-                            title:'正在上传,请稍等',
-                            desc: '提示'
-                        });
-                    },
-                    end: () => { // 可选参数 接收一个函数 上传数据完成（成功或者失败）时会触发
-                        this.$Notice.info({
-                            title:'服务器正在接受并处理中,请稍等',
-                            desc: '提示',
-                        });
-                    },
-                    success: () => { // 可选参数 接收一个函数 上传数据成功时会触发
-                        this.$Notice.success({
-                            title:'图片上传成功',
-                            desc: '提示'
-                        });
-                    },
-                    error: () => {// 可选参数 接收一个函数 上传数据中断时会触发
-                        this.$Notice.error({
-                            title:'图片上传失败',
-                            desc: '提示'
-                        });
-                    }
-                },
-                // 以下所有设置都和vue-quill-editor本身所对应
-                placeholder: '在这里书写',  // 可选参数 富文本框内的提示语
-            })
+
         },
         mounted() {
             let page = {
@@ -397,7 +392,8 @@
         }
     }
 </script>
-
-<style scoped>
-
+<style>
+    #editor1 {
+        height: 318px;
+    }
 </style>

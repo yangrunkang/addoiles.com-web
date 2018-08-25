@@ -1,6 +1,3 @@
-<style scoped lang="less">
-    @import "../../styles/common.css";
-</style>
 <template>
     <div>
         <!--编辑器-->
@@ -24,12 +21,13 @@
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
             </p>
-            <!--https://surmon-china.github.io/vue-quill-editor -->
-            <quill-editor ref="myTextEditor"
-                          v-model="content"
-                          :options="editorOption"
-                          class="quill-editor-style">
-            </quill-editor>
+            <vue-editor id="editor"
+                        v-model="content"
+                        useCustomImageHandler
+                        @imageAdded="handleImageAdded"
+                        placeholder="在这里书写~~"
+                        :editorToolbar="customToolbar"
+            ></vue-editor>
         </Card>
 
         <Modal v-model="confirmModal">
@@ -49,14 +47,11 @@
 <script>
     //编辑器: 统一发表/编辑内容
 
-    //安装vue-quill-editor富文本编辑器
-    import Vue from 'vue';
-    import VueQuillEditor from 'vue-quill-editor';
-    import {quillRedefine} from 'vue-quill-editor-upload'
+    // Basic Use - Covers most scenarios
+    import { VueEditor } from "vue2-editor";
 
-    Vue.use(VueQuillEditor);
     export default {
-        components: {VueQuillEditor, quillRedefine},
+        components: {VueEditor},
         data () {
             return {
 
@@ -74,9 +69,22 @@
                 //文章是否公开
                 isHide:true,
                 /*****************/
+                customToolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['blockquote', 'code-block'],
+                    ['link','image'],
+                    [{ 'align': [] }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
+                    [{ 'font': [] }],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    [{ 'direction': 'rtl' }],
+                    ['clean']
+                ],
 
-                //编辑器配置
-                editorOption: {},
                 //确认清除模态框显示与隐藏
                 confirmModal : false,
                 //发表按钮
@@ -287,66 +295,57 @@
              */
             changeHide(status){
                 this.isHide = status;
+            },
+            handleImageAdded: function(file, Editor, cursorLocation) {
+                // An example of using FormData
+                // NOTE: Your key could be different such as:
+                // formData.append('file', file)
+                let formData = new FormData();
+                formData.append("file", file);
+
+                this.$Notice.info({
+                    title:'正在上传,请稍等',
+                    desc: '提示'
+                });
+
+                this.axios({
+                    url: this.uploadImage,
+                    method: "POST",
+                    data: formData
+                })
+                .then(result => {
+                    if(result.code !== 0){
+                        this.$Notice.error({
+                            title:'图片上传失败:' + result.message,
+                            desc: '提示'
+                        });
+                    }else{
+                        let url = result.data;
+                        Editor.insertEmbed(cursorLocation, "image", url);
+                    }
+                })
+                .catch(err => {
+                    this.$Notice.error({
+                        title:'图片上传失败' + err,
+                        desc: '提示'
+                    });
+                });
             }
         },
-        // 如果你需要得到当前的editor对象来做一些事情，你可以像下面这样定义一个方法属性来获取当前的editor对象，
-        // 实际上这里的$refs对应的是当前组件内所有关联了ref属性的组件元素对象
         computed: {
-            editor() {
-                return this.$refs.myTextEditor.quillEditor;
-            }
+            
         },
         created() {
-            this.editorOption = quillRedefine({
-                // 图片上传的设置
-                uploadConfig: {
-                    methods: 'POST',  // 可选参数 图片上传方式  默认为post
-                    action: this.uploadImage,  // 服务器地址, 如果action为空，则采用base64插入图片
-                    size: 10240,//可选参数   图片限制大小，单位为Kb, 1M = 1024Kb
-                    accept: 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon,image/jpg',// 可选参数 可上传的图片格式
-                    res: (res) => {
-                        if(res.code === 0){
-                            return res.data;
-                        }else{
-                            this.$Notice.warning({
-                                desc: res.message
-                            });
-                            return 'failed' + res.message;
-                        }
-                    },
-                    name: 'file',  // 图片上传参数名,
-                    start: () => { // 可选参数 接收一个函数 开始上传数据时会触发
-                        this.$Notice.info({
-                            title:'正在上传,请稍等',
-                            desc: '提示'
-                        });
-                    },
-                    end: () => { // 可选参数 接收一个函数 上传数据完成（成功或者失败）时会触发
-                        this.$Notice.info({
-                            title:'服务器正在接受并处理中,请稍等',
-                            desc: '提示'
-                        });
-                    },
-                    success: () => { // 可选参数 接收一个函数 上传数据成功时会触发
-                        this.$Notice.success({
-                            title:'图片上传成功',
-                            desc: '提示'
-                        });
-                    },
-                    error: () => {// 可选参数 接收一个函数 上传数据中断时会触发
-                        this.$Notice.error({
-                            title:'图片上传失败',
-                            desc: '提示'
-                        });
-                    }
-                },
-                // 以下所有设置都和vue-quill-editor本身所对应
-                placeholder: '在这里书写',  // 可选参数 富文本框内的提示语
-            })
+            
         },
         mounted() {
            this.initOilEditor();
         }
     }
-
 </script>
+<style>
+    /*如果试用less 和 scope 下面的样式会失效，找了很久，比对文件，找到是这个问题...*/
+    #editor {
+        height: 909px;
+    }
+</style>
