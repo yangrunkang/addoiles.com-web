@@ -1,7 +1,7 @@
 <template>
     <div>
         <Card>
-            <p style="font-size:20px; font-weight: bolder; color: #716769">收到的赞助将用于该网站维护</p>
+            <p style="font-size:20px; font-weight: bolder; color: #716769">收到的赞助将用于网站维护</p>
             <hr/>
             <br/>
             <Row justify="center" align="middle">
@@ -20,6 +20,11 @@
                     <img src="../../images/weixinyrk.png" width="360" height="500" alt="微信扫码"/>
                 </Col>
             </Row>
+            <br/>
+            <iframe frameborder="no"
+                    border="0"
+                    width=100%
+                    height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
         </Card>
     </div>
 </template>

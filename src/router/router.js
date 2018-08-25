@@ -64,11 +64,11 @@ const routers = [
         component: (resolve) => require(['../views/Suggest.vue'], resolve)
     },
     {
-        path: '/donate',
+        path: '/support',
         meta: {
             title: '支持一下'
         },
-        component: (resolve) => require(['../views/components/Donate.vue'], resolve)
+        component: (resolve) => require(['../views/components/Support.vue'], resolve)
     },
     {
         path: '/UserCenter',

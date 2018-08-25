@@ -3,7 +3,7 @@
         <!--编辑器-->
         <Card class="edit-card" shadow>
             <p slot="title" style="height: auto;font-size: 18px">
-                <i-input v-model="title" placeholder="标题" size="large" style="width:605px;" />
+                <i-input v-model="title" placeholder="标题" size="large" style="width:605px;float:left" />
                 <span style="float: right;">
                     <Switch size="large" :value="isHide" @on-change="changeHide">
                         <span slot="open">公开</span>

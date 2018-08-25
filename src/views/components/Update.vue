@@ -32,7 +32,7 @@
             <ul>
                 <li>用户登录后,用户中心展示用户最近活动信息</li>
                 <li>更换新的编辑器</li>
-                <li>添加<a href="donate" style="color: #1c2438">支持一下</a>页面</li>
+                <li>添加<a href="support" style="color: #1c2438">支持一下</a>页面</li>
             </ul>
             <h4>优化:</h4>
             <ul>
