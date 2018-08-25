@@ -6,7 +6,7 @@
         <Card style="text-align: center">
             <iframe frameborder="no"
                     border="0"
-                    width=330
+                    width=100%
                     height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
             <br />
             <br />

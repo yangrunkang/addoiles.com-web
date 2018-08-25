@@ -1,6 +1,3 @@
-<style scoped lang="less">
-    @import "../../styles/common.css";
-</style>
 <template>
     <div>
         <!--编辑器-->
@@ -24,7 +21,7 @@
                     <Button type="error" shape="circle" @click="confirmModal = true">清空内容</Button>
                 </span>
             </p>
-            <vue-editor class="OilVue2editor"
+            <vue-editor id="editor"
                         v-model="content"
                         useCustomImageHandler
                         @imageAdded="handleImageAdded"
@@ -345,5 +342,10 @@
            this.initOilEditor();
         }
     }
-
 </script>
+<style>
+    /*如果试用less 和 scope 下面的样式会失效，找了很久，比对文件，找到是这个问题...*/
+    #editor {
+        height: 909px;
+    }
+</style>

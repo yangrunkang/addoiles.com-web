@@ -2,7 +2,7 @@
     <div>
         <i-input v-model="title" placeholder="标题" size="large" style="width:100%;margin-bottom: 3px;" />
         <div style="height: 367px">
-            <vue-editor class="NoteVue2editor"
+            <vue-editor id="editor1"
                         v-model="content"
                         useCustomImageHandler
                         @imageAdded="handleImageAdded"
@@ -392,7 +392,8 @@
         }
     }
 </script>
-
-<style scoped>
-
+<style>
+    #editor1 {
+        height: 318px;
+    }
 </style>
