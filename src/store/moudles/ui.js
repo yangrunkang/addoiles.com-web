@@ -21,6 +21,9 @@ const ui = {
                     title:'您还未登录,请登录',
                     desc:'登录提示'
                 });
+                setTimeout(function () {
+                    vm.$router.push('/Login');
+                }.bind(this),600);
                 return;
             }
             return userId;
