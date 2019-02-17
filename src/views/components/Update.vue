@@ -27,6 +27,14 @@
                     src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
         <br/>
         <Card>
+            <p slot="title">v1.5.3</p>
+            <h4>优化:</h4>
+            <ul>
+                <li>页面数据,每次操作显示20条</li>
+            </ul>
+        </Card>
+        <br/>
+        <Card>
             <p slot="title">2019</p>
             <h4>新年快乐~ 感谢大家一直以来的关注</h4>
         </Card>
