@@ -116,7 +116,7 @@
                 queryDto : {
                     page : {
                         pageNo: 0,
-                        pageSize: 10
+                        pageSize: 20
                     },
                     questionType:0
                 }
@@ -218,7 +218,7 @@
                 this.queryDto = {
                     page : {
                         pageNo: 0,
-                        pageSize: 10
+                        pageSize: 20
                     }
                 };
                 this.queryDto.questionType = questionType;
