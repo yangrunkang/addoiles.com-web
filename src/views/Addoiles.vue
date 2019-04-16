@@ -155,6 +155,13 @@
                         不要等你老了,才感到&nbsp;后悔
                     </Card>
                 </div>
+                  <div class="public-info">
+                    <Card style="color: rgb(158, 167, 180);">
+                        站内链接：
+                        <br />
+                        <a style="color: #9ea7b4;" href="http://www.addoiles.com:8008/" target="_blank">Semantic UI</a>
+                    </Card>
+                </div>
             </i-col>
         </Row>
     </div>
