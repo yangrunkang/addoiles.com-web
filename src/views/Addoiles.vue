@@ -144,18 +144,9 @@
                 </div>
                 <div class="public-info">
                     <Card style="color: rgb(158, 167, 180);">
-                        首页内容图片展示可投稿至yangrunkang53@gmail.com
-                        <br /><br />
-                        图片要求:813px*400px(宽*高)
-                        <br /><br />
-                        Tips:可使用截图工具截取指定尺寸
-                    </Card>
-                </div>
-                <div class="public-info">
-                    <Card style="color: rgb(158, 167, 180);">
                         网站域名addoiles解释:
                         <br />
-                        add:加&nbsp;oil:油&nbsp;es:表示复数,多
+                        add:加&nbsp;oil:稀缺资源-油&nbsp;es:复数,多
                         <br />
                         生活不易,多多加油
                         <br />

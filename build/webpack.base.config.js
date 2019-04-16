@@ -7,6 +7,12 @@ function resolve (dir) {
 }
 
 module.exports = {
+    plugins: [
+        new webpack.ProvidePlugin({
+            'window.Quill': 'quill/dist/quill.js',
+            'Quill': 'quill/dist/quill.js'
+        })
+    ],
     entry: {
         main: '@/main.js',
     },
