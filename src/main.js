@@ -8,6 +8,9 @@ import Util from './libs/util';
 import Index from './index.vue'; // //引入vue组件
 import VueClipboards from 'vue-clipboards';
 import 'iview/dist/styles/iview.css'; // 使用 CSS
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 import Vue2Editor from 'vue2-editor';
 
 Vue.use(VueRouter);
