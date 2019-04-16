@@ -98,7 +98,7 @@
                     <input type="password" placeholder="重复密码" :class="'log-input' + (rePassword==''?' log-input-empty':'')"  v-model="rePassword">
                     <a href="javascript:;" class="log-btn" @click="beginRegister()">第一步:立即注册</a>
                     <p style="text-align: center;margin-bottom: 10px">
-                        <a class="a-tips" @click="receiveEmailFailed()">未收到邮件反馈</a>
+                        <a class="a-tips" @click="receiveEmailFailed()">未收到验证码反馈</a>
                     </p>
                 </div>
                 <div class="log-email" v-show="verifyForm">
@@ -108,25 +108,7 @@
             </div>
         </form>
 
-        <!--发送验证码时提高用户体验-->
-        <Modal v-model="showSendVerifyCodeModal"
-               :mask-closable="!showSendVerifyCodeModal"
-               :closable="!showSendVerifyCodeModal">
-            <p slot="header" style="color:#f60;text-align:left">
-                请稍等...木有钱买邮件服务,呜呜
-            </p>
-            <div style="text-align:center">
-                <Row>
-                    <i-col span="24">
-                        <h3>程序正在努力发邮件中...请稍等</h3>
-                        <Spin size="large" style="width: 10%;margin: 0 auto;"></Spin>
-                    </i-col>
-                </Row>
-            </div>
-            <div slot="footer">
-            </div>
 
-        </Modal>
     </div>
 </template>
 <script>
@@ -147,8 +129,6 @@
                 registerForm:true,
                 //展示验证框
                 verifyForm:false,
-                //发送验证时展示
-                showSendVerifyCodeModal:false
             }
         },
         methods:{
@@ -198,23 +178,27 @@
 
                 let _this = this;
                 let config = {
-                    content:'即将发送验证码到您的邮箱,请注意查收',
+                    content:'即将发送验证码,请在页面查收',
                     okText:'确认',
                     onOk() {
 
-                        _this.showSendVerifyCodeModal = true;
+
                         //发送验证码
                         _this.axios.post("sendVerificationCode",{
                             email : _this.email,
                             type : 2
                         }).then(function (resp) {
-                            if(resp.code === 0 && resp.data === true){
+                            if(resp.code === 0){
                                 //
                                 _this.registerForm = false;
                                 _this.verifyForm=true;
 
-                                //关闭模态框
-                                _this.showSendVerifyCodeModal = false;
+                                //显示验证码
+                                _this.$Notice.success({
+                                    title:"验证码",
+                                    desc: resp.data,
+                                    duration:5
+                                });
 
                             }
                         }.bind(_this));

@@ -35,9 +35,9 @@ Vue.prototype.axios = axios;
 //网站网址
 axios.defaults.webSite = 'http://www.addoiles.com/';
 //网站数据请求地址
-axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5.2';
+axios.defaults.baseURL = 'http://www.addoiles.com:8081/addoiles.com-1.5.3';
 //图片上传url prd
-Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5.2/uploadImage';
+Vue.prototype.uploadImage = 'http://www.addoiles.com:8081/addoiles.com-1.5.3/uploadImage';
 //###########################prd_end#########################################
 //工具类
 Vue.prototype.addoileUtil = Util;
