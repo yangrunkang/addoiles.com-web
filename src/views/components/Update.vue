@@ -22,9 +22,23 @@
 </style>
 <template>
     <div>
-        <p class="wy">
-            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450
-                    src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
+        <Card>
+            <p slot="title" style="font-size:17px; font-weight: bolder; color: #716769">电台《程序员的生活记录》  目前在网易云音乐/网易云电台,荔枝FM,喜马拉雅,苹果播客可获得收听</p>
+            <p class="wy">
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450
+                        src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
+        </Card>
+
+        <br/>
+        <Card>
+            <p slot="title">v1.5.4</p>
+            <h4>优化:</h4>
+            <ul>
+                <li>用户登陆后,移除经历分享页面/IT技术页面的编辑按钮,统一编辑入口在[用户中心]</li>
+                <li>移除经历分享页面[获得评分]信息</li>
+                <li>部分页面优化,电台页面</li>
+            </ul>
+        </Card>
         <br/>
         <Card>
             <p slot="title">v1.5.3</p>

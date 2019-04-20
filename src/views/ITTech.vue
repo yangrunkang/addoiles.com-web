@@ -56,7 +56,6 @@
                         <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                             {{itTechDto.article.title}}
                             <Button type="info" shape="circle" style="float: right;margin-left: 2px;" v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
-                            <Button type="info" shape="circle" style="float: right" v-show="itTechDto.article.isShowEditBtn" @click="toEditITArticle(itTechDto.article.articleId)">编辑</Button>
                         </p>
                         <div class="ql-snow">
                             <div class="ql-editor">
@@ -123,7 +122,6 @@
                         userId:'',
                         title : '',
                         content : '',
-                        isShowEditBtn:false //是否显示编辑按钮
                     },
                     articleCommentList:[]
                 },
@@ -247,8 +245,7 @@
                                 content : _article.content,
                                 userName : _article.userName,
                                 createTime:this.addoileUtil.formatUnixTime(_article.createTime),
-                                updateTime:this.addoileUtil.formatUnixTime(_article.updateTime),
-                                isShowEditBtn:this.addoileUtil.isCurrentUser(_article.userId,currentUserId)
+                                updateTime:this.addoileUtil.formatUnixTime(_article.updateTime)
                             },
                             articleCommentList : _articleCommentList
                         };
@@ -336,22 +333,6 @@
                         });
                     }
                 }.bind(this));
-            },
-            /**
-             * 编辑IT文章
-             * @param articleId 文章id
-             * @param title 大名
-             * @param content 内容
-             */
-            toEditITArticle(articleId){
-                let editObj = {
-                    businessId:articleId,
-                };
-
-                sessionStorage.setItem("editObj",JSON.stringify(editObj));
-
-                this.$router.push("/OilEditor");
-
             },
             /**
              * 加载更多

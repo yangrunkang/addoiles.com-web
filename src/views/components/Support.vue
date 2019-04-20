@@ -25,6 +25,7 @@
                     border="0"
                     width=100%
                     height=450 src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
+            <p  style="text-align:center;font-size:15px; font-weight: bolder; color: #716769">电台《程序员的生活记录》  目前在网易云音乐/网易云电台,荔枝FM,喜马拉雅,苹果播客可获得收听</p>
         </Card>
     </div>
 </template>

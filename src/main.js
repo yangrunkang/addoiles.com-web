@@ -75,7 +75,7 @@ router.beforeEach((to, from, next) => {
  */
 router.afterEach((to, from, next) => {
 	iView.LoadingBar.finish();
-	window.scrollTo(0, 0); 
+	window.scrollTo(0, 0);
 });
 
 //note: get 是后台manager操作

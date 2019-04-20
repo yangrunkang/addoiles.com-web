@@ -69,8 +69,6 @@
                 <p class="p-left">
                     <Icon type="calendar"></Icon>&nbsp;{{experience.createTime}}
                     &nbsp;&nbsp;&nbsp;
-                    <Icon type="ios-speedometer-outline"></Icon>&nbsp;获得评分:{{experience.rates}}
-                    &nbsp;&nbsp;&nbsp;
                     <Icon type="person"></Icon>&nbsp;{{experience.userName}}
                 </p>
             </Card>
@@ -108,16 +106,16 @@
                         <Tag type="border" color="green"><strong>发布时间:</strong>{{experienceDto.createTime}}</Tag>
                         <Tag type="border" color="green" v-if="experienceDto.updateTime !== '-1'"><strong>修改时间:</strong>{{experienceDto.updateTime}}</Tag>
                         <br />
-                        <h4>操作:</h4>
                         <div style="margin-top: 3px">
                             <Button type="info" shape="circle" v-clipboard="experienceShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
-                            <Button v-show="experienceDto.isShowEditBtn" type="info" shape="circle" @click="toEditExperience(experienceDto.id)">编辑</Button>
                         </div>
                         <br />
                         <!--评论区域-->
                         <h4>评论</h4>
                         <Input type="textarea" :rows="3" placeholder="写下您此刻想说的" v-model="commentContent" />
                         <Button type="success" long style="margin-top: 5px" @click="toComment(experienceDto.id)">评价</Button><!--experienceDto.id是experienceId-->
+                        <br />
+                        <br />
                         <!--<strong>评分:</strong>
                         <Rate v-model="experienceDto.rates" @on-change="toRates(experienceDto.id,$event)"></Rate>-->
                         <div v-for="comment in experienceDto.commentList" :key="comment.id" style="margin-bottom: 3px">
@@ -155,8 +153,6 @@
                 experienceList:[],
                 //具体的经历
                 experienceDto:{},
-                //列表页是否显示编辑按钮
-                isShowEditBtn : false,
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -233,23 +229,6 @@
                 }.bind(this));
 
             },
-            //去评分
-            toRates(experienceId,$event){
-
-                let rateDto = {
-                    userId : sessionStorage.getItem("userId"),
-                    tokenId: sessionStorage.getItem("tokenId"),
-                    businessId:experienceId,
-                    rate:$event
-                };
-
-                this.axios.post("updateRates",rateDto).then(function (response) {
-                    this.$Notice.success({
-                        title : '感谢您的评分',
-                        desc : '系统将根据平局值显示结果'
-                    });
-                }.bind(this))
-            },
             /**
              * 获取经历列表
              */
@@ -283,7 +262,7 @@
             getExperience(experienceId){
 
                 this.experienceDto.title = "请稍等...客官~";
-                this.experienceDto.content = "正在马不停蹄的从服务器上加载资源,请稍等";
+                this.experienceDto.content = "正在马不停蹄的从服务器上加载资源,请您稍等";
                 this.showExperienceModal = true;
 
                 this.queryDto.businessId = experienceId;
@@ -309,7 +288,7 @@
                             _commentList.push({
                                 createTime:"Now",
                                 userName:"系统提示",
-                                content:"本文暂无评论,你的机会来了,快在右边写下你的感想吧"});
+                                content:"本文暂无评论,您的机会来了,快在右边写下你的感想吧"});
                         }
                         //经历
                         let article = _experienceDto.article;
@@ -324,8 +303,7 @@
                             rates:article.rates,
                             createTime:this.addoileUtil.formatUnixTime(article.createTime),
                             updateTime:this.addoileUtil.formatUnixTime(article.updateTime),
-                            commentList:_commentList,
-                            isShowEditBtn : this.addoileUtil.isCurrentUser(article.userId,currentUserId)
+                            commentList:_commentList
                         };
                         //分享链接
                         this.experienceShareUrl = this.axios.defaults.webSite+'Experience?businessId=' + experienceId;
@@ -334,21 +312,6 @@
                         this.showExperienceModal = false;
                     }
                 }.bind(this));
-            },
-            /**
-             * 去编辑
-             * @param experienceId 经历id
-             */
-            toEditExperience(experienceId){
-
-                let editObj = {
-                    businessId:experienceId,
-                };
-
-                sessionStorage.setItem("editObj",JSON.stringify(editObj));
-
-                this.$router.push("/OilEditor");
-
             },
             /**
              * 加载更多
