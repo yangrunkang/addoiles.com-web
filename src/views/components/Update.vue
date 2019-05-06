@@ -31,6 +31,13 @@
 
         <br/>
         <Card>
+            <h4>付费问答</h4>
+            <ul>
+                <li><a href="https://segmentfault.com/u/yangrunkang">思否:https://segmentfault.com/u/yangrunkang</a></li>
+            </ul>
+        </Card>
+        <br/>
+        <Card>
             <p slot="title">v1.5.4</p>
             <h4>优化:</h4>
             <ul>
