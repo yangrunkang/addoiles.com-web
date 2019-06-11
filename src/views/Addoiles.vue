@@ -162,7 +162,8 @@
                         <a style="color: #9ea7b4;" href="https://segmentfault.com/u/yangrunkang" target="_blank">思否付费问答</a>
                         <br />
                         <a style="color: #9ea7b4;" href="http://www.addoiles.com:8008/" target="_blank">Semantic UI</a>
-
+                        <br />
+                        <a style="color: #9ea7b4;" href="http://www.addoiles.com:8109/" target="_blank">公共工具</a>
                     </Card>
                 </div>
             </i-col>

@@ -31,6 +31,18 @@
 
         <br/>
         <Card>
+        <h4>付费问答</h4>
+        <ul>
+            <li><a href="http://www.addoiles.com:8109">公共工具服务</a></li>
+            <ul>
+                <li>时间戳转化</li>
+                <li>json格式化</li>
+                <li>行转列处理</li>
+            </ul>
+        </ul>
+        </Card>
+        <br/>
+        <Card>
             <h4>付费问答</h4>
             <ul>
                 <li><a href="https://segmentfault.com/u/yangrunkang">思否:https://segmentfault.com/u/yangrunkang</a></li>
