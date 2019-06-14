@@ -28,10 +28,17 @@
                 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450
                         src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
         </Card>
+        <br/>
 
+        <Card>
+            <h4>2019年06月14日 加载速度优化</h4>
+            <ul>
+                <li>压缩网页,提高网页加载速度</li>
+            </ul>
+        </Card>
         <br/>
         <Card>
-        <h4>公共工具服务</h4>
+        <h4>2019年06月11日 公共工具服务</h4>
         <ul>
             <li><a href="http://www.addoiles.com:8109">公共工具服务</a></li>
             <ul>

@@ -4,6 +4,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
+/* 加载 compression-webpack-plugin 插件 */
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const fs = require('fs');
 const path = require('path');
 
@@ -20,6 +22,17 @@ module.exports = merge(webpackBaseConfig, {
         chunkFilename: '[name].[hash].chunk.js'
     },
     plugins: [
+        /* 使用 compression-webpack-plugin 插件进行压缩 */
+        new CompressionWebpackPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            // 压缩js,css
+            test: new RegExp('\\.(js|css)$'),
+            //// 资源文件大于10240B=10kB时会被压缩
+            threshold: 10240,
+            // 最小压缩比达到0.8时才会被压缩
+            minRatio: 0.8
+        }),
         new cleanWebpackPlugin(['../dist/*'], {
             root: path.resolve(__dirname, '../dist')
         }),
