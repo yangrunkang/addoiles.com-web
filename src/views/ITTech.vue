@@ -50,37 +50,10 @@
             </i-col>
             <!--右边: 文章编辑/展示/添加-->
             <i-col :span="spanRight">
-                <div v-show="showDetailITTech">
-                    <!--文章详情-->
-                    <Card  shadow>
-                        <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
-                            {{itTechDto.article.title}}
-                            <Button type="info" shape="circle" style="float: right;margin-left: 2px;" v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接</Button>
-                        </p>
-                        <div class="ql-snow">
-                            <div class="ql-editor">
-                                <p class="auto-break-line web-content-font-size" v-html="itTechDto.article.content"></p>
-                            </div>
-                        </div>
-                        <p class="p-right"><Icon type="calendar"></Icon>创建时间:{{itTechDto.article.createTime}}</p>
-                        <p class="p-right"><Icon type="person"></Icon>作者:{{itTechDto.article.userName}}</p>
-                        <!--评论区域-->
-                        <Card shaow>
-                            <Input style="margin-top: 6px" placeholder="评论" v-model="commentContent">
-                                <Button slot="append" icon="compose" @click="toComment(itTechDto.article.articleId)"/>
-                            </Input>
-                            <Alert type="success" v-for="comment in itTechDto.articleCommentList" :key="comment.id" style="margin-top: 6px">
-                                <Tag type="border" color="green">{{ comment.createTime }}</Tag>
-                                <Tag color="green">{{ comment.userName }}</Tag>
-                                {{ comment.content }}
-                            </Alert>
-                        </Card>
-                    </Card>
-                </div>
-
-                <!--点击展示更多,显示此区域-->
-                <div v-show="isShowMoreITs" style="width: 100%">
-
+                <!--路由-->
+                <router-view v-if="isRouterAlive"></router-view>
+                <!--文章列表-->
+                <div style="width: 100%" v-if="!isRouterAlive">
                     <Card v-for="article in moreITArticleList" :key="article.id" class="it-article-list">
                         <a class="it-article-title auto-break-line" @click="showMoreITTechArticles(article.articleId)">
                             <Icon :type="article.iconType"></Icon> &nbsp; {{article.title}}
@@ -94,13 +67,18 @@
                         <div v-show="!loadMoreBtnDisabled">加载更多</div>
                     </Button>
                 </div>
-
             </i-col>
         </Row>
     </div>
 </template>
 <script>
     export default {
+        //在本页注册一个方法
+        provide() {
+            return {
+                reload: this.reload
+            }
+        },
         data () {
             return {
                 //加载更多按钮是否可用
@@ -109,26 +87,10 @@
                 spanLeft : 5,
                 //右边区域占 19/24
                 spanRight : 19,
-                //是否显示文章列表
-                isShowMoreITs : false,
-                //是否显示文章详情
-                showDetailITTech: true,
                 //IT文章简表
                 pithinessList:[],
-                //IT文章详情
-                itTechDto : { //对象不同于数组,数组不需要定义这么详细,例如Experience.vue中的,对象需要定义详细点,否则找不到相关属性,虽然页面可以渲染出来
-                    article : {
-                        articleId : '',
-                        userId:'',
-                        title : '',
-                        content : '',
-                    },
-                    articleCommentList:[]
-                },
                 //点击 显示更多 显示的列表
                 moreITArticleList : [],
-                //评论内容
-                commentContent : '',
                 //页面查询基础Dto
                 queryDto : {
                     page : {
@@ -136,7 +98,8 @@
                         pageSize: 20
                     }
                 },
-                itArticleShareUrl:''
+                // ITArticleView 路由是否激活
+                isRouterAlive: true
             }
         },
         methods: {
@@ -161,19 +124,23 @@
             },
             //控制展示具体的文章详情
             getITArticleDetail(articleId) {
-                this.isShowMoreITs = false;
-                this.showDetailITTech = true;
-                this.initITTech(articleId);
+                // 显示ITArticleView页面
+                this.isRouterAlive = true;
+                // 需要展示的IT文章Id
+                sessionStorage.setItem("ITArticleViewId",articleId);
+                this.$router.replace("/ITArticleView");
+                // 调用reload方法来局部刷新展示ITArticleView
+                this.reload();
             },
             /**
              * 控制右边区域是否展示文章列表
              * flag ：true 点击右侧[查看更多]进入 false 点击[加载更多]进入
              */
             showMore(flag){
+                // 移除ITArticleView页面
+                this.isRouterAlive = false;
                 this.loadMoreBtnDisabled = false;
-                this.isShowMoreITs = true;
                 if(flag){
-                    this.showDetailITTech = false;
                     this.moreITArticleList = [];
                     //分页要恢复,如果不恢复再回去点击[查看更多]会查不到数据,因为分页数已经超过实际条数了
                     this.queryDto = {
@@ -208,58 +175,7 @@
                 this.getITArticleDetail(articleId);
                 this.moreITArticleList = [];
             },
-            //文章显示
-            initITTech(articleId){
 
-                if(articleId == null){
-                    articleId = this.pithinessList[0].articleId;
-                }
-
-                this.queryDto.articleType=2;
-                this.queryDto.businessId=articleId;
-
-                this.axios.post('ITArticle',this.queryDto).then(function (resp) {
-                    if(resp.code === 0){
-                        let data = resp.data;
-
-                        //文章评论
-                        let _articleCommentList = [];
-                        for(let i = 0; i < data.articleCommentList.length; i++){
-                            let _data = data.articleCommentList[i];
-                            _articleCommentList.push({
-                                userName : _data.userName,
-                                createTime:this.addoileUtil.formatUnixTime(_data.createTime),
-                                content:_data.content
-                            });
-                        }
-                        //具体文章
-                        let _article = data.article;
-
-                        let currentUserId = sessionStorage.getItem("userId");
-                        //封装
-                        this.itTechDto = {
-                            article : {
-                                articleId : _article.articleId,
-                                userId:_article.userId,
-                                title : _article.title,
-                                content : _article.content,
-                                userName : _article.userName,
-                                createTime:this.addoileUtil.formatUnixTime(_article.createTime),
-                                updateTime:this.addoileUtil.formatUnixTime(_article.updateTime)
-                            },
-                            articleCommentList : _articleCommentList
-                        };
-                        //回到文章顶部
-                        window.scrollTo(0,0);
-
-                        //分享链接
-                        this.itArticleShareUrl = this.axios.defaults.webSite+'ITTech?businessId=' + articleId;
-                    }else{
-                        this.$store.commit('loadingFailed',this);
-                    }
-
-                }.bind(this));
-            },
             /**
              * 初始化文章简表
              */
@@ -291,49 +207,7 @@
                     }
                 }.bind(this));
             },
-            toComment(articleId){
 
-                let commentContent = this.commentContent;
-                /*下面的和Experience.vue不一样,不要头脑热改了..*/
-                if(!this.addoileUtil.validateReq(commentContent)){
-                    this.$Notice.info({
-                        desc: '评论内容为空'
-                    });
-                    return;
-                }
-
-                if(commentContent.length > 100){
-                    this.$Message.warning("评论字数不能多余100个",3);
-                    return;
-                }
-
-                //请求后台
-                this.axios.post('addComment',{
-                    userId : sessionStorage.getItem("userId"),
-                    tokenId: sessionStorage.getItem("tokenId"),
-                    targetId:articleId,
-                    content:commentContent
-                }).then(function (response) {
-                    if(response.code === 0 && response.data === 1){
-                        //弹窗提示
-                        this.$Notice.success({
-                            title: '<h6>评论成功</h6>'
-                        });
-                        //显示评论信息
-                        this.itTechDto.articleCommentList.unshift({
-                            createTime:'刚刚',
-                            userName:'我',
-                            content:commentContent
-                        });
-                        //清空数据
-                        this.commentContent = '';
-                    }else{
-                        this.$Notice.info({
-                            title: '<h6>系统出错了,抱歉</h6>'
-                        });
-                    }
-                }.bind(this));
-            },
             /**
              * 加载更多
              */
@@ -347,23 +221,12 @@
             toCommentITArticle(){
                 window.scrollTo(0,document.body.scrollHeight);
             },
-            /**
-             * 复制成功
-             */
-            copySuccess(){
-                this.$Notice.success({
-                    title: '分享链接已复制至剪贴板',
-                    desc: '可以分享给好友啦~'
-                });
-            },
-            /**
-             * 复制失败
-             */
-            copyError(){
-                this.$Notice.error({
-                    title: '复制分享链接失败',
-                    desc: '出错啦'
-                });
+            // 注册到方法
+            reload() {
+                this.isRouterAlive = false
+                this.$nextTick(function() {
+                    this.isRouterAlive = true
+                })
             }
         },
         mounted () {
