@@ -33,7 +33,10 @@ const routers = [
         meta: {
             title: '技术沉淀'
         },
-        component: (resolve) => require(['../views/ITTech.vue'], resolve)
+        component: (resolve) => require(['../views/ITTech.vue'], resolve),
+        children:[
+            {path: '/ITArticleView',meta:{title:'技术沉淀'},component: (resolve) => require(['../views/components/ITArticleView.vue'], resolve)},
+        ]
     },
     {
         path: '/OilRobot',
