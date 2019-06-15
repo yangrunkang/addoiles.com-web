@@ -26,8 +26,8 @@ module.exports = merge(webpackBaseConfig, {
         new CompressionWebpackPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
-            // 压缩js,css
-            test: new RegExp('\\.(js|css)$'),
+            // 压缩js,css.....
+            test: new RegExp('\\.(js|css|png|ttf|eot|svg|jpg)$'),
             //// 资源文件大于10240B=10kB时会被压缩
             threshold: 10240,
             // 最小压缩比达到0.8时才会被压缩
