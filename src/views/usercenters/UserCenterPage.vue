@@ -1,7 +1,7 @@
 <template>
     <div class="web-content-font-size">
-        <p style="font-size: xx-large;color: #bababa" v-show="tipsShow === false">最近您没有任何动态</p>
-        <p style="font-size: xx-large;color: #bababa" v-show="tipsShow === true">最近活动</p>
+        <p style="font-size: xx-large;color: #bababa" v-show="!tipsShow">最近您没有任何动态</p>
+        <p style="font-size: xx-large;color: #bababa" v-show="tipsShow">最近活动</p>
         <Card v-show="experienceList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>分享</p>
             <li class="latest-content" v-for="experience in experienceList" :key="experience.articleId">
