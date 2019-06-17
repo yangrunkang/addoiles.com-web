@@ -29,9 +29,15 @@
                         src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
         </Card>
         <br/>
-
         <Card>
-            <h4>2019年06月15日更新日志</h4>
+            <h4>v1.5.5修复</h4>
+            <ul>
+                <li>修复重复点击【IT技术】导航按钮导致技术文章详情内容页面空白</li>
+            </ul>
+        </Card>
+        <br />
+        <Card>
+            <h4>v1.5.5</h4>
             <ul>
                 <li>技术沉淀文章展示部分使用局部单独view呈现</li>
             </ul>

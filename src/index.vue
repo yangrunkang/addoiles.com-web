@@ -42,7 +42,7 @@
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2019 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
                     <p>
-                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.5&nbsp;(2019.06.15)</a>&nbsp;&nbsp;&nbsp;
+                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.5&nbsp;(2019.06.17)</a>&nbsp;&nbsp;&nbsp;
                         <a style="color: #9ea7b4;" @click="toWangYiDianTai()">网易云音乐电台《程序员的生活记录》</a>
                     </p>
                 </div>
@@ -109,6 +109,19 @@
             },
             //导航栏栏目选择
             onSelect(activeRouterUrl){
+
+                // 解决相同路由继续push错误, ITTech页面使用单独页面呈现内容如果不使用下面的方法,会导致再次点击ITTech,单独的页面会是
+                // 空白页面
+                if(activeRouterUrl === sessionStorage.getItem('cur_route_urk')){
+                    console.log("current:"+activeRouterUrl);
+                    return
+                }
+
+                // 存储当前路由
+                sessionStorage.setItem("cur_route_urk",activeRouterUrl);
+
+
+
                 if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;
                 }else if('BestWishesToUser' === activeRouterUrl){
