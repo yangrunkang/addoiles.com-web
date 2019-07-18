@@ -26,7 +26,11 @@
             <p slot="title" style="font-size:17px; font-weight: bolder; color: #716769">电台《程序员的生活记录》  目前在网易云音乐/网易云电台,荔枝FM,喜马拉雅,苹果播客可获得收听</p>
             <p class="wy">
                 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450
-                        src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe></p>
+                        src="//music.163.com/outchain/player?type=4&id=341445058&auto=1&height=430"></iframe>
+            </p>
+            <br />
+            <p style="text-align: right"><a style="color: #9ea7b4;" target="_blank" href="https://t.me/coderLifeLog">《程序员的生活记录》电报(Telegram)讨论组</a></p>
+            <br />
         </Card>
         <br/>
         <Card>

@@ -16,6 +16,9 @@
                    href="http://music.163.com/djradio?id=341445058"
                    target="_blank">去网易云音乐电台直接收听《程序员的生活记录》</a>
             </p>
+            <br />
+            <p style="text-align: right"><a style="color: #9ea7b4;" target="_blank" href="https://t.me/coderLifeLog">《程序员的生活记录》电报(Telegram)讨论组</a></p>
+            <br />
         </Card>
     </div>
 </template>
