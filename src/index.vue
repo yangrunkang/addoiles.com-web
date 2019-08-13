@@ -42,7 +42,7 @@
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2019 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
                     <p>
-                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.5&nbsp;(2019.06.17)</a>&nbsp;&nbsp;&nbsp;
+                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.6&nbsp;(2019.08.13)</a>&nbsp;&nbsp;&nbsp;
                         <a style="color: #9ea7b4;" @click="toWangYiDianTai()">网易云音乐电台《程序员的生活记录》</a>
                     </p>
                 </div>
@@ -120,7 +120,10 @@
                 // 存储当前路由
                 sessionStorage.setItem("cur_route_urk",activeRouterUrl);
 
-
+                // 解决缓存问题: 用户一打开页面就有[用户中心],如果有就进行,否则不能自动到登录页面
+                if(sessionStorage.getItem("cur_route_urk") === 'BestWishesToUser'){
+                    sessionStorage.removeItem("cur_route_urk");
+                }
 
                 if(activeRouterUrl === 'logOutCurrent'){ //点击注销,
                     this.showLogOutModal = true;

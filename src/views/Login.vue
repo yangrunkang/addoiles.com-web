@@ -168,6 +168,8 @@
                         this.$store.commit('setUserId',resp.data.userId);
                         this.$store.commit('setEmail',email);
                         sessionStorage.setItem('tokenId',resp.data.tokenId);
+                        // 解决登录成功后的特定问题,比如在分享页面进入登录页面,登录成功后,到首页,如果再点击分享页则点不进去,需要再次点击其他的,再点击回来,才能点回来
+                        sessionStorage.removeItem("cur_route_urk");
 
                         //获取导航栏后,操作如下: 1.去除注册 2.修改登录为注销
                         let navList = this.$store.getters.getNavList;
