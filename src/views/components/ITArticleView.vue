@@ -4,9 +4,9 @@
         <Card shadow>
             <p slot="title" class="auto-break-line" style="height: auto;font-size: 18px">
                 {{itTechDto.article.title}}
-                <Button type="info" shape="circle" style="float: right;margin-left: 2px;"
-                        v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接
-                </Button>
+                <!--<Button type="info" shape="circle" style="float: right;margin-left: 2px;"-->
+                        <!--v-clipboard="itArticleShareUrl" @success="copySuccess" @error="copyError">获取分享链接-->
+                <!--</Button>-->
             </p>
             <div class="ql-snow">
                 <div class="ql-editor">

@@ -32,12 +32,20 @@
             <p style="text-align: right"><a style="color: #9ea7b4;" target="_blank" href="https://t.me/coderLifeLog">《程序员的生活记录》电报(Telegram)讨论组</a></p>
             <br />
         </Card>
-        <br/><Card>
-        <h4>v1.5.6修复</h4>
-        <ul>
-            <li>修复页面导航栏缓存问题,点击无效Bug</li>
-        </ul>
-    </Card>
+        <br/>
+        <Card>
+            <h4>v1.5.7</h4>
+            <ul>
+                <li>移除[技术沉淀]页面 [获取分享] 按钮</li>
+            </ul>
+        </Card>
+        <br/>
+        <Card>
+            <h4>v1.5.6修复</h4>
+            <ul>
+                <li>修复页面导航栏缓存问题,点击无效Bug</li>
+            </ul>
+        </Card>
         <br />
         <Card>
             <h4>v1.5.5修复</h4>
