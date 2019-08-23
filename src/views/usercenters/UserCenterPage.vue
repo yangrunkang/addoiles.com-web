@@ -12,7 +12,7 @@
         <Card v-show="itTechList.length > 0" class="card-style">
             <p><span class="latest-span">最近</span>技术分享</p>
             <li class="latest-content" v-for="itTech in itTechList" :key="itTech.articleId">
-                <a v-bind:href="itTech.hrefUrl">{{itTech.title}}</a>
+                {{itTech.title}}
             </li>
         </Card>
 
