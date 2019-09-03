@@ -135,6 +135,9 @@ axios.interceptors.response.use(function (resp) {
     return Promise.reject(error)
 });
 
+// 定义window for vue, 主要是做一些全局管控
+Vue.prototype.window = window;
+
 window.vm = new Vue({ // 创建一个 Vue 的根实例
     el: '#app', //挂载id,这个实例下所有的内容都会在index.html 一个id为app的div下显示
     store: store,//使用仓库

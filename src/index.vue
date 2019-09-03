@@ -42,8 +42,9 @@
                 <div class="layout-bottom">
                     <p>Copyright ©2017-2019 Addoiles.All Rights Reserved.为梦想加油 备案号:皖ICP备17015935号-1</p>
                     <p>
-                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.7&nbsp;(2019.08.18)</a>&nbsp;&nbsp;&nbsp;
+                        <a style="color: #9ea7b4;" @click="toUpdate()">网站当前版本:v1.5.8&nbsp;(2019.09.03)</a>&nbsp;&nbsp;&nbsp;
                         <a style="color: #9ea7b4;" @click="toWangYiDianTai()">网易云音乐电台《程序员的生活记录》</a>
+                        <a style="color: #9ea7b4;" @click="$store.commit('toJianLi',window)">个人简历</a>
                     </p>
                 </div>
             </Footer>

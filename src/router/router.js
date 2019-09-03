@@ -110,6 +110,13 @@ const routers = [
             title: '程序员的生活记录'
         },
         component: (resolve) => require(['../views/components/Fm.vue'], resolve)
+    },
+    {
+        path: '/AddoilesTechs',
+        meta: {
+            title: '程序员的生活记录'
+        },
+        component: (resolve) => require(['../views/components/AddoilesTechs.vue'], resolve)
     }
 ];
 export default routers;

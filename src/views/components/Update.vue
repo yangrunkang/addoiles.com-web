@@ -22,6 +22,8 @@
 </style>
 <template>
     <div>
+        <p @click="$store.commit('toJianLi',window)"><Card :bordered="false" >👉个人简历</Card></p>
+        <br />
         <Card>
             <p slot="title" style="font-size:17px; font-weight: bolder; color: #716769">电台《程序员的生活记录》  目前在网易云音乐/网易云电台,荔枝FM,喜马拉雅,苹果播客可获得收听</p>
             <p class="wy">
@@ -34,31 +36,37 @@
         </Card>
         <br/>
         <Card>
-            <h4>v1.5.7</h4>
-            <ul>
-                <li>移除[技术沉淀]页面 [获取分享] 按钮</li>
-            </ul>
-        </Card>
-        <br/>
-        <Card>
-            <h4>v1.5.6修复</h4>
-            <ul>
-                <li>修复页面导航栏缓存问题,点击无效Bug</li>
-            </ul>
-        </Card>
-        <br />
-        <Card>
-            <h4>v1.5.5修复</h4>
-            <ul>
-                <li>修复重复点击【IT技术】导航按钮导致技术文章详情内容页面空白</li>
-            </ul>
-        </Card>
-        <br />
-        <Card>
             <h4>v1.5.5</h4>
             <ul>
                 <li>技术沉淀文章展示部分使用局部单独view呈现</li>
             </ul>
+            <Card>
+                <h4>v1.5.8</h4>
+                <ul>
+                    <li><a @click="$store.commit('toJianLi',window)">添加个人简历</a></li>
+                </ul>
+            </Card>
+            <br/>
+            <Card>
+                <h4>v1.5.7</h4>
+                <ul>
+                    <li>移除[技术沉淀]页面 [获取分享] 按钮</li>
+                </ul>
+            </Card>
+            <br/>
+            <Card>
+                <h4>v1.5.6修复</h4>
+                <ul>
+                    <li>修复页面导航栏缓存问题,点击无效Bug</li>
+                </ul>
+            </Card>
+            <br />
+            <Card>
+                <h4>v1.5.5修复</h4>
+                <ul>
+                    <li>修复重复点击【IT技术】导航按钮导致技术文章详情内容页面空白</li>
+                </ul>
+            </Card>
         </Card>
         <br/>
         <Card>
@@ -318,6 +326,6 @@
     import {VueEditor} from "vue2-editor";
 
     export default {
-        components: {VueEditor}
+        components: {VueEditor},
     }
 </script>

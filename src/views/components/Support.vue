@@ -20,6 +20,8 @@
                     <img src="../../images/weixinyrk.png" width="360" height="500" alt="微信扫码"/>
                 </Col>
             </Row>
+            <br />
+            <p @click="$store.commit('toJianLi',window)"><Card :bordered="true" >👉个人简历</Card></p>
             <br/>
             <iframe frameborder="no"
                     border="0"

@@ -157,7 +157,8 @@
                 </div>
                   <div class="public-info">
                     <Card style="color: rgb(158, 167, 180);">
-                        站内链接：
+                        站内链接：<br />
+                        <a style="color: #9ea7b4;" @click="$store.commit('toJianLi',window)">💡个人简历</a>
                         <br />
                         <a style="color: #9ea7b4;" href="https://segmentfault.com/u/yangrunkang" target="_blank">思否付费问答</a>
                         <br />

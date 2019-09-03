@@ -46,6 +46,8 @@
                         </Timeline>
                     </Card>
                     <Button type="info" size="large" long @click="toCommentITArticle()" style="margin-top: 10px">评论当前文章</Button>
+                    <!--本站技术栈-->
+                    <!--<Alert style="margin-top: 2px;background-color:orange;padding-left: 76px"><a style="color: white;font-size: 15px;">本站技术栈</a></Alert>-->
                 </Affix>
             </i-col>
             <!--右边: 文章编辑/展示/添加-->

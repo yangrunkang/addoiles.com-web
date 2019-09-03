@@ -68,6 +68,9 @@ const ui = {
          */
         toSuggest(state,vm){
             vm.$router.push('/Suggest');
+        },
+        toJianLi(state,window){
+            window.vm.$router.push('/AddoilesTechs');
         }
 
     },
