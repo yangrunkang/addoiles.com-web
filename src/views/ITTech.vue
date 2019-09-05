@@ -40,7 +40,7 @@
 
                             <Timeline-item>
                                 <a @click="showMore(true)">
-                                    <a>查看更多</a>
+                                    <a>🐳查看更多</a>
                                 </a>
                             </Timeline-item>
                         </Timeline>
@@ -56,7 +56,7 @@
                 <router-view v-if="isRouterAlive"></router-view>
                 <!--文章列表-->
                 <div style="width: 100%" v-if="!isRouterAlive">
-                    <Card v-for="article in moreITArticleList" :key="article.id" class="it-article-list">
+                    <Card v-for="article in moreITArticleList" :key="article.id" class="it-article-list" :bordered="false">
                         <a class="it-article-title auto-break-line" @click="showMoreITTechArticles(article.articleId)">
                             <Icon :type="article.iconType"></Icon> &nbsp; {{article.title}}
                         </a>

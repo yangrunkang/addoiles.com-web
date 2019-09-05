@@ -143,7 +143,7 @@
                     </Card>
                 </div>
                 <div class="public-info">
-                    <Card style="color: rgb(158, 167, 180);">
+                    <Card style="color: rgb(158, 167, 180);" :bordered="false">
                         网站域名addoiles解释:
                         <br />
                         add:加&nbsp;oil:稀缺资源-油&nbsp;es:复数,多
@@ -155,8 +155,8 @@
                         不要等你老了,才感到&nbsp;后悔
                     </Card>
                 </div>
-                  <div class="public-info">
-                    <Card style="color: rgb(158, 167, 180);">
+                  <div class="public-info" >
+                    <Card style="color: rgb(158, 167, 180);" :bordered="false">
                         站内链接：<br />
                         <a style="color: #9ea7b4;" @click="$store.commit('toJianLi',window)">💡个人简历</a>
                         <br />
