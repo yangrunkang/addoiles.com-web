@@ -21,7 +21,7 @@
             <br />
         </Card>
         <br />
-        <p @click="$store.commit('toJianLi',window)"><Card :bordered="false" >👉个人简历</Card></p>
+        <p @click="$store.commit('toJianLi',window)"><Card :bordered="false" >个人简历</Card></p>
     </div>
 </template>
 <script>

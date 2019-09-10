@@ -22,7 +22,7 @@
 </style>
 <template>
     <div>
-        <p @click="$store.commit('toJianLi',window)"><Card :bordered="false" >👉个人简历</Card></p>
+        <p @click="$store.commit('toJianLi',window)"><Card :bordered="false" >个人简历</Card></p>
         <br />
         <Card>
             <p slot="title" style="font-size:17px; font-weight: bolder; color: #716769">电台《程序员的生活记录》  目前在网易云音乐/网易云电台,荔枝FM,喜马拉雅,苹果播客可获得收听</p>

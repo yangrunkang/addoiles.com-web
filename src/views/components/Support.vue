@@ -21,7 +21,7 @@
                 </Col>
             </Row>
             <br />
-            <p @click="$store.commit('toJianLi',window)"><Card :bordered="true" >👉个人简历</Card></p>
+            <p @click="$store.commit('toJianLi',window)"><Card :bordered="true" >个人简历</Card></p>
             <br/>
             <iframe frameborder="no"
                     border="0"

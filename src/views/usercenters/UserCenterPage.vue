@@ -5,35 +5,35 @@
         <Card v-show="experienceList.length > 0" class="card-style" :bordered="false">
             <p><span class="latest-span">最近</span>分享</p>
             <p class="latest-content" v-for="experience in experienceList" :key="experience.articleId">
-                <a v-bind:href="experience.hrefUrl">🏃{{experience.title}}</a>
+                <a v-bind:href="experience.hrefUrl"><Icon type="ios-git-branch" /> {{experience.title}}</a>
             </p>
         </Card>
 
         <Card v-show="itTechList.length > 0" class="card-style" :bordered="false">
             <p><span class="latest-span">最近</span>技术分享</p>
             <p class="latest-content" v-for="itTech in itTechList" :key="itTech.articleId">
-                💡{{itTech.title}}
+                 {{itTech.title}}
             </p>
         </Card>
 
         <Card v-show="hotsList.length > 0" class="card-style" :bordered="false">
             <p><span class="latest-span">最近</span>动弹</p>
             <p class="latest-content" v-for="hots in hotsList" :key="hots.microId">
-                🏷 {{hots.content}}
+                <Icon type="ios-git-network" /> {{hots.content}}
             </p>
         </Card>
 
         <Card v-show="dreamsList.length > 0" class="card-style" :bordered="false">
             <p style="font-weight: bold">DO NOT FORGET YOUR DREAMS&nbsp;<span style="color: #bababa;font-size: 10px">别忘记你的梦想</span></p>
             <p class="latest-content" v-for="dream in dreamsList" :key="dream.microId">
-                🏷 {{dream.content}}
+                <Icon type="ios-git-pull-request" /> {{dream.content}}
             </p>
         </Card>
 
        <Card v-show="questionList.length > 0" class="card-style" :bordered="false">
             <p><span class="latest-span">最近</span>讨论的问题</p>
             <p class="latest-content" v-for="question in questionList" :key="question.questionId">
-                🏷 {{question.content}}
+                <Icon type="ios-git-pull-request" /> {{question.content}}
             </p>
         </Card>
 
